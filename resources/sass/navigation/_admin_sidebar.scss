@@ -1,0 +1,181 @@
+#zapAdminMenuBg,#zapAdminMenuWrap{
+	width: 210px;
+	background-color: $admin-persian-green;
+}
+#zapAdminMenuBg{
+	position: fixed;
+	top: 0;
+	bottom: -120px;
+	z-index: 1;
+}
+.sticky-menu{
+	#zapAdminMenuWrap{
+		position: fixed;
+	}
+}
+#zapAdminMenuWrap{
+	position: relative;
+	float: left;
+	z-index: 9990;
+
+	.nav{
+		padding: 0;
+		margin: 0;
+	}
+	.nav-link{
+		color: #fff;
+    	&.active,
+    	&:hover, &:focus{
+    		background-color: $admin-pine-green;
+    	}
+
+	}
+    .zap-user-info{
+	    position: relative;
+	    // height: 105px;
+	    // padding: 13px 15px 12px 15px;
+	    height: 80px;
+	    padding: 10px 15px 10px 15px;
+	    white-space: nowrap;
+	    p{
+	    	margin: 0;
+	    }
+    }
+    .zap-image{
+	    // float: left;
+	    // width: 60px;
+	    // display: inline-block;
+	    // margin-right: 12px;
+    	// margin-top: 11px;
+	    margin-right: 12px;
+	    display: inline-block;
+	    // margin-top: 20px;
+	    margin-top: 6px;
+	    float: left;
+    }
+    img.img-circle {
+		-webkit-border-radius: 50%;
+		-moz-border-radius: 50%;
+		-ms-border-radius: 50%;
+		border-radius: 50%;
+		vertical-align: bottom !important;
+	}
+
+	.zap-info-wrap {
+	    margin-left: 60px;
+	    position: relative;
+	    // top: 17px;
+	    top: 12px;
+	    display: block;
+	    color: #fff;
+	}
+
+	.name {
+	    white-space: nowrap;
+	    -ms-text-overflow: ellipsis;
+	    -o-text-overflow: ellipsis;
+	    text-overflow: ellipsis;
+	    overflow: hidden;
+	    font-size: 14px;
+	    max-width: 200px;
+	    margin: 0;
+	}
+
+	.position {
+	    white-space: nowrap;
+	    -ms-text-overflow: ellipsis;
+	    -o-text-overflow: ellipsis;
+	    text-overflow: ellipsis;
+	    overflow: hidden;
+	    font-size: 12px;
+	    max-width: 200px;
+	    margin: 0;
+	}
+}
+
+
+// .jc-sidebar{
+//     position: fixed;
+//     background: #007c7c;
+//     z-index: 9999;
+//     width: 240px;
+//     float: left;
+//     height: 100%;
+//     top: 0;
+//     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+//     .jc-sidebar-wrap {
+// 		margin-top: 3.5em;
+// 		position: relative;
+// 		overflow-y: auto;
+//     }
+//     .jc-user-info{
+// 	    position: relative;
+// 	    height: 105px;
+// 	    padding: 13px 15px 12px 15px;
+// 	    white-space: nowrap;
+// 	    p{
+// 	    	margin: 0;
+// 	    }
+//     }
+//     .jc-user-image{
+// 	    float: left;
+// 	    width: 60px;
+// 	    display: inline-block;
+// 	    margin-right: 12px;
+//     	margin-top: 11px;
+//     }
+//     img.img-cirle {
+// 	    border-radius: 50%;
+// 	}
+
+// 	.jc-info-wrap {
+// 	    margin-left: 60px;
+// 	    position: relative;
+// 	    top: 17px;
+// 	    display: block;
+// 	    color: #fff;
+// 	}
+
+// 	.name {
+// 	    white-space: nowrap;
+// 	    -ms-text-overflow: ellipsis;
+// 	    -o-text-overflow: ellipsis;
+// 	    text-overflow: ellipsis;
+// 	    overflow: hidden;
+// 	    font-size: 14px;
+// 	    max-width: 200px;
+// 	    margin: 0;
+// 	}
+
+// 	.position {
+// 	    white-space: nowrap;
+// 	    -ms-text-overflow: ellipsis;
+// 	    -o-text-overflow: ellipsis;
+// 	    text-overflow: ellipsis;
+// 	    overflow: hidden;
+// 	    font-size: 12px;
+// 	    max-width: 200px;
+// 	    margin: 0;
+// 	}
+//     ul{
+//     	padding: 10px 0;
+//     	margin: 0;
+//     }
+//     .nav-link{
+//     	color: #fff;
+//     	span{
+//     		margin: 5px 0 0px 12px;
+// 		    font-weight: 500;
+// 		    font-size: 13px;
+// 		    overflow: hidden
+//     	}
+//     	&.active,
+//     	&:hover, &:focus{
+//     		background-color: #009090;
+//     	}
+//     }
+//     .separator{
+// 	    border-bottom: 1px solid #eee;
+// 	    padding: 8px 16px;	
+//     }
+// }
