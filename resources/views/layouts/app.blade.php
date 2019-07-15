@@ -41,7 +41,7 @@
                             <div class="card-body"> 
                                 @yield('dash-content')
                             </div>
-                        </div>                        
+                        </div>
                     </div>
 
                 </main>
