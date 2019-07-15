@@ -39,7 +39,7 @@
                         <div class="card">
                             <div class="card-header">@yield('dash-title')</div>
                             <div class="card-body"> 
-                                @yield('dash-content')
+                                @yield('dash-content') 
                             </div>
                         </div>
                     </div>
