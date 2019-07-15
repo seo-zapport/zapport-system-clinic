@@ -38,7 +38,7 @@
                     <div class="container container-lg-w12">
                         <div class="card">
                             <div class="card-header">@yield('dash-title')</div>
-                            <div class="card-body">
+                            <div class="card-body"> 
                                 @yield('dash-content')
                             </div>
                         </div>                        
