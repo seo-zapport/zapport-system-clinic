@@ -1,5 +1,5 @@
 @extends('hr.employee.create')
-@section('title', 'Edit Employee')
+@section('title', 'Edit Employees Profile')
 {{-- @section('employees', 'active') --}}
 @section('dash-title', 'Edit Employees Profile')
 @section('dash-content')

@@ -34,7 +34,7 @@
             </div>
             <div id="zapContent">
                 @include('layouts.includes.top')
-                <main class="primary-site" role="main">
+                <main id="app" class="primary-site" role="main">
                     <div class="container container-lg-w12">
                         <div class="card">
                             <div class="card-header">@yield('dash-title')</div>

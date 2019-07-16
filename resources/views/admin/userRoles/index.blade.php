@@ -79,7 +79,6 @@
 				</div>
 				<div class="modal-body">
 					@if ($noRoles->count() < 1)
-						<label for="name">User</label>
 							{{ "All users has role" }}
 						@else
 					<form method="post" action="{{ route('dashboard.addUserRoles') }}">

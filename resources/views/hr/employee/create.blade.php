@@ -12,13 +12,13 @@
 		<div class="form-row">
 			<div class="form-group col-md-4">
 				<label for="emp_id">Employee ID</label>
-				<input type="text" name="emp_id" value="@yield('editEmpID', old('emp_id'))" class="form-control" placeholder="Employee ID" {{-- required --}}>
+				<input type="text" name="emp_id" value="@yield('editEmpID', old('emp_id'))" class="form-control" placeholder="Employee ID" required>
 			</div>
 
 			@if (substr(url()->current(), 27) == 'create')
 				<div class="form-group col-md-4">
 					<label for="department_id">Department</label>
-					<select name="department_id" id="department_id" class="form-control" {{-- required --}}>
+					<select name="department_id" id="department_id" class="form-control" required>
 						<option selected="true" disabled="disabled"> Select Department </option>
 						@foreach ($departments as $department)
 							<option value="{{ $department->id }}">{{ $department->department }}</option>
@@ -28,7 +28,7 @@
 		
 				<div class="form-group col-md-4">
 					<label for="position">Position</label>
-					<select name="position_id" id="position_id" class="form-control" {{-- required --}}>
+					<select name="position_id" id="position_id" class="form-control" required>
 						<option selected="true" disabled="disabled"> Select Posotion </option>
 					</select>
 				</div>
@@ -49,30 +49,30 @@
 		<div class="form-row">
 			<div class="form-group col-md-4">
 				<label for="first_name">First Name</label>
-				<input type="text" name="first_name" value="@yield('editFname', old('first_name'))" class="form-control" placeholder="First Name" {{-- required --}}>
+				<input type="text" name="first_name" value="@yield('editFname', old('first_name'))" class="form-control" placeholder="First Name" required>
 			</div>
 			<div class="form-group col-md-4">
 				<label for="last_name">Last Name</label>
-				<input type="text" name="last_name" value="@yield('editLname', old('last_name'))" class="form-control" placeholder="Last Name" {{-- required --}}>
+				<input type="text" name="last_name" value="@yield('editLname', old('last_name'))" class="form-control" placeholder="Last Name" required>
 			</div>
 			<div class="form-group col-md-4">
 				<label for="middle_name">Middle Name</label>
-				<input type="text" name="middle_name" value="@yield('editMname', old('middle_name'))" class="form-control" placeholder="Middle Name" {{-- required --}}>
+				<input type="text" name="middle_name" value="@yield('editMname', old('middle_name'))" class="form-control" placeholder="Middle Name" required>
 			</div>
 		</div>
 		<div class="form-row">
 			<div class="form-group col-md-4">
 				<label for="present_address">Present Address</label>
-				<input type="text" name="present_address" value="@yield('editPresentAddress', old('present_address'))" class="form-control" placeholder="Present Address" {{-- required --}}>
+				<input type="text" name="present_address" value="@yield('editPresentAddress', old('present_address'))" class="form-control" placeholder="Present Address" required>
 			</div>
 			<div class="form-group col-md-4">
 				<label for="permanent_address">Permanent Address</label>
-				<input type="text" name="permanent_address" value="@yield('editPermanentAddress', old('permanent_address'))" class="form-control" placeholder="Permanent Address" {{-- required --}}>
+				<input type="text" name="permanent_address" value="@yield('editPermanentAddress', old('permanent_address'))" class="form-control" placeholder="Permanent Address" required>
 			</div>
 
 			<div class="form-group col-md-2">
 				<label for="contact">contact</label>
-				<input type="number" name="contact" value="@yield('editContact', old('contact'))" class="form-control" placeholder="Contact Number" {{-- required --}}>
+				<input type="number" name="contact" value="@yield('editContact', old('contact'))" class="form-control" placeholder="Contact Number" required>
 			</div>
 		</div>
 
@@ -81,31 +81,31 @@
 		<div class="form-row">
 			<div class="form-group col-md-4">
 				<label for="college">Tertiary / College</label>
-				<input type="text" name="college" value="@yield('editCollege', old('college'))" class="form-control" placeholder="Tertiary / College" {{-- required --}}>
+				<input type="text" name="college" value="@yield('editCollege', old('college'))" class="form-control" placeholder="Tertiary / College" required>
 			</div>
 			<div class="form-group col-md-4">
 				<label for="college_grad_date">Year Graduated</label>
-				<input type="date" name="college_grad_date" value="@yield('editCollegeGrad', old('college_grad_date'))" class="form-control" {{-- required --}}>
+				<input type="date" name="college_grad_date" value="@yield('editCollegeGrad', old('college_grad_date'))" class="form-control" required>
 			</div>
 		</div>
 		<div class="form-row">
 			<div class="form-group col-md-4">
 				<label for="highschool">Secondary / High School</label>
-				<input type="text" name="highschool" value="@yield('editHighschool', old('highschool'))" class="form-control" placeholder="Secondary / High School" {{-- required --}}>
+				<input type="text" name="highschool" value="@yield('editHighschool', old('highschool'))" class="form-control" placeholder="Secondary / High School" required>
 			</div>
 			<div class="form-group col-md-4">
 				<label for="highschool_grad_date">Year Graduated</label>
-				<input type="date" name="highschool_grad_date" value="@yield('editHighschoolGrad', old('highschool_grad_date'))" class="form-control" {{-- required --}}>
+				<input type="date" name="highschool_grad_date" value="@yield('editHighschoolGrad', old('highschool_grad_date'))" class="form-control" required>
 			</div>
 		</div>
 		<div class="form-row">
 			<div class="form-group col-md-4">
 				<label for="elementary">Primary / Elementary</label>
-				<input type="text" name="elementary" value="@yield('editElementary', old('elementary'))" class="form-control" placeholder="Primary / Elementary" {{-- required --}}>
+				<input type="text" name="elementary" value="@yield('editElementary', old('elementary'))" class="form-control" placeholder="Primary / Elementary" required>
 			</div>
 			<div class="form-group col-md-4">
 				<label for="elementary_grad_date">Year Graduated</label>
-				<input type="date" name="elementary_grad_date" value="@yield('editElementaryGrad', old('elementary_grad_date'))" class="form-control" {{-- required --}}>
+				<input type="date" name="elementary_grad_date" value="@yield('editElementaryGrad', old('elementary_grad_date'))" class="form-control" required>
 			</div>
 		</div>
 
@@ -145,17 +145,17 @@
 		<div class="form-row">
 			<div class="form-group col-md-2">
 				<label for="birthday">Birthday</label>
-				<input type="date" name="birthday" value="@yield('editBday', old('birthday'))" class="form-control" {{-- required --}}>
+				<input type="date" name="birthday" value="@yield('editBday', old('birthday'))" class="form-control" required>
 			</div>
 			<div class="form-group col-md-4">
 				<label for="birth_place">Birth Place</label>
-				<input type="text" name="birth_place" value="@yield('editBplace', old('birth_place'))" class="form-control" placeholder="Birth Place" {{-- required --}}>
+				<input type="text" name="birth_place" value="@yield('editBplace', old('birth_place'))" class="form-control" placeholder="Birth Place" required>
 			</div>
 
 			@if (substr(url()->current(), 27) == 'create')
 				<div class="form-group col-md-2">
 					<label for="birth_place">Gender</label>
-					<select name="gender" id="gender" class="form-control" {{-- required --}}>
+					<select name="gender" id="gender" class="form-control" required>
 						<option value="0">Male</option>
 						<option value="1">Female</option>
 					</select>
@@ -165,11 +165,11 @@
 			@endif
 			<div class="form-group col-md-2">
 				<label for="height">Height</label>
-				<input type="text" name="height" value="@yield('editHeight', old('height'))" class="form-control" placeholder="Height" {{-- required --}}>
+				<input type="text" name="height" value="@yield('editHeight', old('height'))" class="form-control" placeholder="Height" required>
 			</div>
 			<div class="form-group col-md-2">
 				<label for="weight">Weight</label>
-				<input type="text" name="weight" value="@yield('editWeight', old('weight'))" class="form-control" placeholder="Weight" {{-- required --}}>
+				<input type="text" name="weight" value="@yield('editWeight', old('weight'))" class="form-control" placeholder="Weight" required>
 			</div>
 		</div>
 
@@ -177,7 +177,7 @@
 			@if (substr(url()->current(), 27) == 'create')
 				<div class="form-group col-md-2">
 					<label for="civil_status">Civil Status</label>
-					<select name="civil_status" id="civil_status" class="form-control" {{-- required --}}>
+					<select name="civil_status" id="civil_status" class="form-control" required>
 						<option value="single">Single</option>
 						<option value="married">Married</option>
 						<option value="widowed">Widowed</option>
@@ -191,11 +191,11 @@
 
 			<div class="form-group col-md-2">
 				<label for="citizenship">Citizenship</label>
-				<input type="text" name="citizenship" value="@yield('editNationality', old('citizenship'))" class="form-control" placeholder="Citizenship" {{-- required --}}>
+				<input type="text" name="citizenship" value="@yield('editNationality', old('citizenship'))" class="form-control" placeholder="Citizenship" required>
 			</div>
 			<div class="form-group col-md-2">
 				<label for="religion">Religion</label>
-				<input type="text" name="religion" value="@yield('editReligion', old('religion'))" class="form-control" placeholder="Religion" {{-- required --}}>
+				<input type="text" name="religion" value="@yield('editReligion', old('religion'))" class="form-control" placeholder="Religion" required>
 			</div>
 		</div>
 
@@ -203,33 +203,33 @@
 		<div class="form-row">
 			<div class="form-group col-md-6">
 				<label for="father_name">Father's Name</label>
-				<input type="text" name="father_name" value="@yield('editFatherName', old('father_name'))" class="form-control" placeholder="Father's Name" {{-- required --}}>
+				<input type="text" name="father_name" value="@yield('editFatherName', old('father_name'))" class="form-control" placeholder="Father's Name" required>
 			</div>
 			<div class="form-group col-md-4">
 				<label for="father_birthday">Father's Birthday</label>
-				<input type="date" name="father_birthday" value="@yield('editFatherBday', old('father_birthday'))" class="form-control" {{-- required --}}>
+				<input type="date" name="father_birthday" value="@yield('editFatherBday', old('father_birthday'))" class="form-control" required>
 			</div>
 		</div>
 
 		<div class="form-row">
 			<div class="form-group col-md-6">
 				<label for="mother_name">Mother's Name</label>
-				<input type="text" name="mother_name" value="@yield('editMotherName', old('mother_name'))" class="form-control" placeholder="Mother's Name" {{-- required --}}>
+				<input type="text" name="mother_name" value="@yield('editMotherName', old('mother_name'))" class="form-control" placeholder="Mother's Name" required>
 			</div>
 			<div class="form-group col-md-4">
 				<label for="mother_birthday">Mother's Birthday</label>
-				<input type="date" name="mother_birthday" value="@yield('editMotherBday', old('mother_birthday'))" class="form-control" {{-- required --}}>
+				<input type="date" name="mother_birthday" value="@yield('editMotherBday', old('mother_birthday'))" class="form-control" required>
 			</div>
 		</div>
 
 		<div class="form-row">
 			<div class="form-group col-md-6">
 				<label for="mother_name">Spouse Name</label>
-				<input type="text" name="spouse_name" value="@yield('editSpouse', old('spouse_name'))" class="form-control" placeholder="Spouse Name" {{-- required --}}>
+				<input type="text" name="spouse_name" value="@yield('editSpouse', old('spouse_name'))" class="form-control" placeholder="Spouse Name">
 			</div>
 			<div class="form-group col-md-4">
 				<label for="mother_birthday">Date of marriage</label>
-				<input type="date" name="date_of_merriage" value="@yield('editMarriageDate', old('date_of_marriage'))" class="form-control" {{-- required --}}>
+				<input type="date" name="date_of_merriage" value="@yield('editMarriageDate', old('date_of_marriage'))" class="form-control">
 			</div>
 		</div>
 		<hr>
@@ -264,15 +264,15 @@
 		<div class="form-row">
 			<div class="form-group col-md-4">
 				<label for="person_to_contact">Name</label>
-				<input type="text" name="person_to_contact" value="@yield('editPersonContactName', old('person_to_contact'))" class="form-control" placeholder="Name" {{-- required --}}>
+				<input type="text" name="person_to_contact" value="@yield('editPersonContactName', old('person_to_contact'))" class="form-control" placeholder="Name" required>
 			</div>
 			<div class="form-group col-md-4">
 				<label for="person_to_contact_address">Address</label>
-				<input type="text" name="person_to_contact_address" value="@yield('editPersonContactAddress', old('person_to_contact_address'))" class="form-control" placeholder="Address" {{-- required --}}>
+				<input type="text" name="person_to_contact_address" value="@yield('editPersonContactAddress', old('person_to_contact_address'))" class="form-control" placeholder="Address" required>
 			</div>
 			<div class="form-group col-md-4">
 				<label for="person_to_contact_number">Contact Number</label>
-				<input type="number" name="person_to_contact_number" value="@yield('editPersonContactNumber', old('person_to_contact_number'))" class="form-control" placeholder="Contact Number" {{-- required --}}>
+				<input type="number" name="person_to_contact_number" value="@yield('editPersonContactNumber', old('person_to_contact_number'))" class="form-control" placeholder="Contact Number" required>
 			</div>
 		</div>
 		<hr>
@@ -280,25 +280,25 @@
 		<div class="form-row">
 			<div class="form-group col-md-4">
 				<label for="tin_no">TIN Number</label>
-				<input type="number" name="tin_no" value="@yield('editTin', old('tin_no'))" class="form-control" placeholder="TIN Number" {{-- required --}}>
+				<input type="number" name="tin_no" value="@yield('editTin', old('tin_no'))" class="form-control" placeholder="TIN Number">
 			</div>
 		</div>
 		<div class="form-row">
 			<div class="form-group col-md-4">
 				<label for="sss_no">SSS Number</label>
-				<input type="number" name="sss_no" value="@yield('editSSS', old('sss_no'))" class="form-control" placeholder="SSS Number" {{-- required --}}>
+				<input type="number" name="sss_no" value="@yield('editSSS', old('sss_no'))" class="form-control" placeholder="SSS Number">
 			</div>
 		</div>
 		<div class="form-row">
 			<div class="form-group col-md-4">
 				<label for="philhealth_no">Philhealth Number</label>
-				<input type="number" name="philhealth_no" value="@yield('editPhilhealth', old('philhealth_no'))" class="form-control" placeholder="Philhealth Number" {{-- required --}}>
+				<input type="number" name="philhealth_no" value="@yield('editPhilhealth', old('philhealth_no'))" class="form-control" placeholder="Philhealth Number">
 			</div>
 		</div>
 		<div class="form-row">
 			<div class="form-group col-md-4">
 				<label for="hdmf_no">HDMF Number</label>
-				<input type="number" name="hdmf_no" value="@yield('editHdmf', old('hdmf_no'))" class="form-control" placeholder="HDMF Number" {{-- required --}}>
+				<input type="number" name="hdmf_no" value="@yield('editHdmf', old('hdmf_no'))" class="form-control" placeholder="HDMF Number">
 			</div>
 		</div>
 
