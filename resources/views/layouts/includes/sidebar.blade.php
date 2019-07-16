@@ -9,11 +9,24 @@
     <ul class="nav flex-column">
         <div class="zap-user-info">
             <div class="zap-image">
+                @auth()
+                @if (!empty(auth()->user()->employee->profile_img))
+                <img src="{{ asset('storage/uploaded/'.auth()->user()->employee->profile_img) }}" border="0" width="48" class="img-circle">
+                @else
                 <img src="http://sximo5.sximoinc.com/uploads/users/1.jpg" border="0" width="48" class="img-circle">
+                @endif
+                @endauth
             </div>
             <div class="zap-info-wrap">
-                <div class="name">John Doe</div>
-                <div class="position">Dope</div>
+                @auth()
+                @if (!empty(auth()->user()->employee))
+                <div class="name">{{ auth()->user()->employee->first_name }}</div>
+                <div class="position">{{ auth()->user()->employee->positions->position }}</div>
+                @else
+                <div class="name">Link your</div>
+                <div class="position">employee ID first.</div>
+                @endif
+                @endauth
             </div>
         </div>
         <li class="nav-item"><a href="{{ route('dashboard.main') }}" class="nav-link @yield('overview')">OverView</a></li>
