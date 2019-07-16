@@ -16,7 +16,20 @@
 	<tbody>
 		@forelse ($deps as $dep)
 			<tr>
-				<td>{{ $dep->department }}</td>
+				<td>
+	        	<form method="post" action="{{ route('hr.dep.deleteDep', ['department' => $dep->id]) }}">
+	        		@csrf
+	        		@method('DELETE')
+	        		<div class="form-row align-items-center">
+	            		<div class="col-auto my-1 form-inline">
+	        				{{ $dep->department }}
+							<button class="btn btn-link"  onclick="return confirm('Are you sure you want to delete {{ ucfirst($dep->department) }} Department?')" data-id="{{ $dep->id }}">
+								<i class="fas fa-times-circle"></i>
+							</button>
+						</div>
+					</div>
+	        	</form>
+				</td>
 				<td>{{ $dep->employee->count() }}</td>
 			</tr>
 			@empty
@@ -27,6 +40,11 @@
 	</tbody>
 </table>
 @include('layouts.errors')
+@if (session('dep_message'))
+	<div class="alert alert-danger alert-posts">
+		{{ session('dep_message') }}
+	</div>
+@endif
 
 <!-- Modal Add -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

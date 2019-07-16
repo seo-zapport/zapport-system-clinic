@@ -49,7 +49,7 @@ class CreateEmployeesTable extends Migration
             $table->string('mother_name');
             $table->date('mother_birthday');
             $table->string('spouse_name')->nullable();
-            $table->date('date_of_merriage')->nullable();
+            $table->date('date_of_marriage')->nullable();
             $table->text('children')->nullable();
             // notify incase of emergency
             $table->string('person_to_contact');

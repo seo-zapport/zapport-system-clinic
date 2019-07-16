@@ -117,26 +117,26 @@
 		<div id="work" class="form-row align-items-center">
 			<div class="col-auto my-1 form-inline">
 				{{-- <div class="form-group col-md-4"> --}}
-					<label for="work" class="mr-2">Name of Company</label>
-					<input type="text" class="form-control mr-2" name="work[0][]" placeholder="Name of Company">
+					<label for="experience" class="mr-2">Name of Company</label>
+					<input type="text" class="form-control mr-2" name="experience[0][]" placeholder="Name of Company">
 				{{-- </div> --}}
 				{{-- <div class="form-group col-md-4"> --}}
-					<label for="work" class="mr-2">Position</label>
-					<input type="text" class="form-control mr-2" name="work[0][]" placeholder="Position">
+					<label for="experience" class="mr-2">Position</label>
+					<input type="text" class="form-control mr-2" name="experience[0][]" placeholder="Position">
 				{{-- </div> --}}
 				{{-- <div class="form-group col-md-4"> --}}
-					<label for="work" class="mr-2">Period Covered</label>
-					<input type="date" class="form-control " name="work[0][]">
+					<label for="experience" class="mr-2">Period Covered</label>
+					<input type="date" class="form-control " name="experience[0][]">
 				{{-- </div> --}}
 				{{-- <div class="form-group col-md-4"> --}}
-					<label for="work" class="ml-2 mr-2">To</label>
-					<input type="date" class="form-control " name="work[0][]">
+					<label for="experience" class="ml-2 mr-2">To</label>
+					<input type="date" class="form-control " name="experience[0][]">
 				{{-- </div> --}}
 			</div>
 		</div>
 		</div>
 		@else
-		    @yield('editChildren')
+		    @yield('editExp')
 		@endif	
 
 		<hr>
@@ -163,7 +163,17 @@
 			@else
 				@yield('editGender')
 			@endif
+			<div class="form-group col-md-2">
+				<label for="height">Height</label>
+				<input type="text" name="height" value="@yield('editHeight', old('height'))" class="form-control" placeholder="Height" {{-- required --}}>
+			</div>
+			<div class="form-group col-md-2">
+				<label for="weight">Weight</label>
+				<input type="text" name="weight" value="@yield('editWeight', old('weight'))" class="form-control" placeholder="Weight" {{-- required --}}>
+			</div>
+		</div>
 
+		<div class="form-row">
 			@if (substr(url()->current(), 27) == 'create')
 				<div class="form-group col-md-2">
 					<label for="civil_status">Civil Status</label>
@@ -183,24 +193,12 @@
 				<label for="citizenship">Citizenship</label>
 				<input type="text" name="citizenship" value="@yield('editNationality', old('citizenship'))" class="form-control" placeholder="Citizenship" {{-- required --}}>
 			</div>
-		</div>
-
-		<div class="form-row">
-			<div class="form-group col-md-2">
-				<label for="height">Height</label>
-				<input type="text" name="height" value="@yield('editHeight', old('height'))" class="form-control" placeholder="Height" {{-- required --}}>
-			</div>
-			<div class="form-group col-md-2">
-				<label for="weight">Weight</label>
-				<input type="text" name="weight" value="@yield('editWeight', old('weight'))" class="form-control" placeholder="Weight" {{-- required --}}>
-			</div>
 			<div class="form-group col-md-2">
 				<label for="religion">Religion</label>
 				<input type="text" name="religion" value="@yield('editReligion', old('religion'))" class="form-control" placeholder="Religion" {{-- required --}}>
 			</div>
 		</div>
-		<hr>
-		<h3>Siblings Data</h3>
+
 		<hr>
 		<div class="form-row">
 			<div class="form-group col-md-6">
@@ -209,7 +207,7 @@
 			</div>
 			<div class="form-group col-md-4">
 				<label for="father_birthday">Father's Birthday</label>
-				<input type="date" name="father_birthday" value="@yield('editBday', old('father_birthday'))" class="form-control" {{-- required --}}>
+				<input type="date" name="father_birthday" value="@yield('editFatherBday', old('father_birthday'))" class="form-control" {{-- required --}}>
 			</div>
 		</div>
 
@@ -224,21 +222,33 @@
 			</div>
 		</div>
 
+		<div class="form-row">
+			<div class="form-group col-md-6">
+				<label for="mother_name">Spouse Name</label>
+				<input type="text" name="spouse_name" value="@yield('editSpouse', old('spouse_name'))" class="form-control" placeholder="Spouse Name" {{-- required --}}>
+			</div>
+			<div class="form-group col-md-4">
+				<label for="mother_birthday">Date of marriage</label>
+				<input type="date" name="date_of_merriage" value="@yield('editMarriageDate', old('date_of_marriage'))" class="form-control" {{-- required --}}>
+			</div>
+		</div>
+		<hr>
+		<h4>Add Children if any</h4>
 		@if(substr(url()->current(),27) =="create")
 		<a id="addChildren" class="btn btn-success text-white mb-2"><i class="fa fa-plus"></i> Add more children</a>
 		<div class="form-row">
 		<div id="children" class="form-row align-items-center">
 			<div class="col-auto my-1 form-inline">
 				{{-- <div class="form-group col-md-4"> --}}
-					<label for="children" class="mr-2">Children's Name</label>
+					<label for="children" class="mr-2">Child's Name</label>
 					<input type="text" class="form-control mr-2" name="children[0][]" placeholder="Children's Name">
 				{{-- </div> --}}
 				{{-- <div class="form-group col-md-4"> --}}
-					<label for="children" class="mr-2">Children's Birthday</label>
+					<label for="children" class="mr-2">Birthday</label>
 					<input type="date" class="form-control mr-2" name="children[0][]" placeholder="Add children description">
 				{{-- </div> --}}
 				{{-- <div class="form-group col-md-4"> --}}
-					<label for="children" class="mr-2">Children's Gender</label>
+					<label for="children" class="mr-2">Gender</label>
 					<input type="text" class="form-control " name="children[0][]" placeholder="Gender">
 				{{-- </div> --}}
 			</div>
@@ -267,7 +277,6 @@
 		</div>
 		<hr>
 		<h3>Others</h3>
-		<hr>
 		<div class="form-row">
 			<div class="form-group col-md-4">
 				<label for="tin_no">TIN Number</label>

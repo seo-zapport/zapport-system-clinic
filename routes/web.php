@@ -39,6 +39,7 @@ Route::group(['prefix' => 'hr'], function(){
 	// Department
 	Route::get('department', 'DepartmentController@index')->name('hr.dep.department');
 	Route::post('department', 'DepartmentController@store')->name('hr.dep.addDep');
+	Route::delete('department/{department}', 'DepartmentController@destroy')->name('hr.dep.deleteDep');
 
 	// Employee
 	Route::get('employees', 'EmployeeController@index')->name('hr.employees');
@@ -53,6 +54,7 @@ Route::group(['prefix' => 'hr'], function(){
 	// Position
 	Route::get('position', 'PositionController@index')->name('hr.pos.position');
 	Route::post('position', 'PositionController@store')->name('hr.pos.addPos');
+	Route::delete('position/{position}', 'PositionController@destroy')->name('hr.pos.deletePos');
 
 });
 

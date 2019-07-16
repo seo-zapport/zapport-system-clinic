@@ -78,7 +78,7 @@ class EmployeesProfileController extends Controller
     public function update(Request $request, Employee $employee)
     {
         $userID = auth()->user()->id;
-        $emp = $employee::find($request->input('emp_id'));
+        $emp = $employee::find($request->input('id'));
         $emp->user_id = $userID;
         $emp->save();
         return redirect('employees/profile/employee/'.$emp->id);

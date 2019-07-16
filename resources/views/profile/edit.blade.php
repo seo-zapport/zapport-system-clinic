@@ -10,13 +10,14 @@
 			@foreach ($emp as $info)
 				<p>Employee ID: {{ $info->emp_id }}</p>
 				<p>Name: {{ ucwords($info->last_name) }} {{ ucwords($info->first_name) }} {{ ucwords($info->middle_name) }}</p>
-				<p>Address: {{ ucwords($info->address) }}</p>
+				<p>Present Address: {{ ucwords(@$info->present_address) }}</p>
+				<p>Permanent Address: {{ ucwords(@$info->permanent_address) }}</p>
 				<p>Contact number: {{ ucwords($info->contact) }}</p>
 			<form method="post" action="{{ route('employee.update', ['emp_id' => $info->emp_id]) }}">
 				@csrf
 				@method('PUT')
 				<div class="form-group">
-					<input type="hidden" name="emp_id" value="{{ $info->emp_id }}">
+					<input type="hidden" name="id" value="{{ $info->id }}">
 					<button type="submit" class="btn btn-info">Save</button>
 				</div>
 			</form>

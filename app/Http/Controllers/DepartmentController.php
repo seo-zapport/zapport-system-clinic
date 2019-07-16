@@ -100,7 +100,15 @@ class DepartmentController extends Controller
      */
     public function destroy(Department $department)
     {
-        //
+        if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
+            if (count($department->positions) > 0) {
+                return back()->with('dep_message', 'You cannot delete a department with positions');
+            }
+            $department->delete();
+            return back();
+        }else{
+            abort(403, 'You are not Authorized on this page!');
+        }
     }
 
     public function departmentValidation()

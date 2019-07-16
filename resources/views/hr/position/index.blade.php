@@ -16,7 +16,20 @@
 	<tbody>
 		@forelse ($positions as $position)
 			<tr>
-				<td>{{ $position->position }}</td>
+				<td>
+	        	<form method="post" action="{{ route('hr.pos.deletePos', ['position' => $position->id]) }}">
+	        		@csrf
+	        		@method('DELETE')
+	        		<div class="form-row align-items-center">
+	            		<div class="col-auto my-1 form-inline">
+	        				{{ $position->position }}
+							<button class="btn btn-link"  onclick="return confirm('Are you sure you want to delete {{ ucfirst($position->position) }} Position?')" data-id="{{ $position->id }}">
+								<i class="fas fa-times-circle"></i>
+							</button>
+						</div>
+					</div>
+	        	</form>
+				</td>
 				<td>{{ $position->employee->count() }}</td>
 			</tr>
 			@empty

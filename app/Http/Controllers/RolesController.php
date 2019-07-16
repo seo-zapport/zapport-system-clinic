@@ -101,6 +101,9 @@ class RolesController extends Controller
     public function destroy(Role $role)
     {
         if (Gate::allows('isAdmin')) {
+            if ($role->role == 'admin') {
+                return back()->with('role_msg', 'You cannot delete ADMIN role');
+            }
             $role->delete();
             return back();
         }else{

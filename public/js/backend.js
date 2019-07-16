@@ -44,13 +44,13 @@ jQuery(document).ready(function($){
     var o = $('#editChildren').length;
     // Children
     $("#addChildren").click(function(event) {
-      $('<div id="childrenField" class="col-12 my-1 form-inline"><label for="children" class="mr-2">Childrens Name</label><input type="text" class="form-control mr-2" name="children['+i+'][]" placeholder="Add children" value=""><label for="children" class="mr-2">Childrens Birthday</label><input type="date" class="form-control mr-2" name="children['+i+'][]" " value=""><label for="children" class="mr-2">Childrens Gender</label><input type="text" class="form-control mr-2" name="children['+i+'][]" placeholder="Add icon class" value=""><a id="removeChildren" class="btn btn-danger text-white"><i class="fa fa-times"></i></a></div>').appendTo('#children');
+      $('<div id="childrenField" class="col-12 my-1 form-inline"><label for="children" class="mr-2">Child\'s Name</label><input type="text" class="form-control mr-2" name="children['+i+'][]" placeholder="Child\'s Name" value=""><label for="children" class="mr-2">Birthday</label><input type="date" class="form-control mr-2" name="children['+i+'][]" " value=""><label for="children" class="mr-2">Gender</label><input type="text" class="form-control mr-2" name="children['+i+'][]" placeholder="Gender" value=""><a id="removeChildren" class="btn btn-danger text-white"><i class="fa fa-times"></i></a></div>').appendTo('#children');
     i++;
 
     });
     // Children
     $("#editChildren").click(function(event) {
-      $('<div id="childrenField" class="col-auto my-1 form-inline editchildren"><input type="text" class="form-control mr-2" name="children['+e+'][]" placeholder="Add children" value=""><input type="text" class="form-control mr-2" name="children['+e+'][]" placeholder="Add children description" value=""><input type="text" class="form-control mr-2" name="children['+e+'][]" placeholder="Add icon class" value=""><a id="removeSkill" class="btn btn-danger text-white"><i class="fa fa-times"></i></a></div>').appendTo('#children');
+      $('<div id="childrenField" class="col-auto my-1 form-inline editchildren"><label for="children" class="mr-2">Child\'s Name</label><input type="text" class="form-control mr-2" name="children['+e+'][]" placeholder="Child\'s Name" value=""><label for="children" class="mr-2">Birthday</label><input type="date" class="form-control mr-2" name="children['+e+'][]" " value=""><label for="children" class="mr-2">Gender</label><input type="text" class="form-control mr-2" name="children['+e+'][]" placeholder="Gender" value=""><a id="removeChildren" class="btn btn-danger text-white"><i class="fa fa-times"></i></a></div>').appendTo('#children');
     e++;
 
     });
@@ -65,27 +65,27 @@ jQuery(document).ready(function($){
 
 
     // Work
-    var i = $('#addWork').length;
-    var e = $(this).find('.editwork').length;
+    var a = $('#addWork').length;
+    var b = $(this).find('.editwork').length;
     var o = $('#editWork').length;
     // Work
     $("#addWork").click(function(event) {
-      $('<div id="workField" class="col-12 my-1 form-inline"><label for="work" class="mr-2">Name of Company</label><input type="text" class="form-control mr-2" name="work['+i+'][]" placeholder="Name of Company" value=""><label for="work" class="mr-2">Position</label><input type="text" class="form-control mr-2" name="work['+i+'][]" " value="" placeholder="Position"><label for="work" class="mr-2">Period Covered</label><input type="date" class="form-control mr-2" name="work['+i+'][]" value=""><label for="work" class="ml-2 mr-2">To</label><input type="date" class="form-control mr-2" name="work['+i+'][]" value=""><a id="removeWork" class="btn btn-danger text-white"><i class="fa fa-times"></i></a></div>').appendTo('#work');
-    i++;
+      $('<div id="workField" class="col-12 my-1 form-inline"><label for="work" class="mr-2">Name of Company</label><input type="text" class="form-control mr-2" name="experience['+a+'][]" placeholder="Name of Company" value=""><label for="work" class="mr-2">Position</label><input type="text" class="form-control mr-2" name="experience['+a+'][]" " value="" placeholder="Position"><label for="work" class="mr-2">Period Covered</label><input type="date" class="form-control" name="experience['+a+'][]" value=""><label for="work" class="ml-2 mr-2">To</label><input type="date" class="form-control mr-2" name="experience['+a+'][]" value=""><a id="removeWork" class="btn btn-danger text-white"><i class="fa fa-times"></i></a></div>').appendTo('#work');
+    a++;
 
     });
     // Work
     $("#editWork").click(function(event) {
-      $('<div id="workField" class="col-auto my-1 form-inline editchildren"><input type="text" class="form-control mr-2" name="work['+e+'][]" placeholder="Add work" value=""><input type="text" class="form-control mr-2" name="work['+e+'][]" placeholder="Add work description" value=""><input type="text" class="form-control mr-2" name="work['+e+'][]" placeholder="Add icon class" value=""><a id="removeSkill" class="btn btn-danger text-white"><i class="fa fa-times"></i></a></div>').appendTo('#work');
-    e++;
+      $('<div id="workField" class="col-auto my-1 form-inline editwork"><label for="work" class="mr-2">Name of Company</label><input type="text" class="form-control mr-2" name="experience['+b+'][]" placeholder="Name of Company" value=""><label for="work" class="mr-2">Position</label><input type="text" class="form-control mr-2" name="experience['+b+'][]" " value="" placeholder="Position"><label for="work" class="mr-2">Period Covered</label><input type="date" class="form-control mr-2" name="experience['+b+'][]" value=""><label for="work" class="ml-2 mr-2">To</label><input type="date" class="form-control ml-2 mr-2" name="experience['+b+'][]" value=""><a id="removeWork" class="btn btn-danger text-white"><i class="fa fa-times"></i></a></div>').appendTo('#work');
+    b++;
 
     });
     // Work
     $("body").on("click", "#removeWork", function(event){
-      if (i > 1 || e > 1) {
+      if (a > 1 || b > 1) {
         $(this).parents("#workField").remove();
-        i--;
-        e--;
+        a--;
+        b--;
       }
     });
     
