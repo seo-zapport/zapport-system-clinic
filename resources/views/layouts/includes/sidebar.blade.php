@@ -37,6 +37,11 @@
             <li class="nav-item"><a href="{{ route('hr.employees') }}" class="nav-link @yield('employees')">Employees</a></li>
             <li class="nav-item"><a href="{{ route('hr.emp.emp_form') }}" class="nav-link @yield('reg_emp')">Add Employee</a></li>
         @endif
+        {{-- For ADMIN, HR, DOCTOR, NURSE --}}
+        @if (Gate::check('isAdmin') || Gate::check('isHr') || Gate::check('isDoctor'))
+            <li class="nav-item"><a href="{{ route('brandname') }}" class="nav-link @yield('brandname')">Brand Name</a></li>
+            <li class="nav-item"><a href="{{ route('medicine') }}" class="nav-link @yield('medicine')">Medicines</a></li>
+        @endif
         {{-- For Admin --}}
         @if(Gate::check('isAdmin'))
             <li class="nav-item"><a href="{{ route('register') }}" class="nav-link @yield('register')">Register User</a></li>
@@ -72,6 +77,10 @@
                     <a href="{{ route('hr.pos.position') }}" class="list-group-item list-group-item-action @yield('reg_pos')">Position</a>
                     <a href="{{ route('hr.employees') }}" class="list-group-item list-group-item-action @yield('employees')">Employees</a>
                     <a href="{{ route('hr.emp.emp_form') }}" class="list-group-item list-group-item-action @yield('reg_emp')">Add Employee</a>
+                @endif
+                {{-- For ADMIN, HR, DOCTOR, NURSE --}}
+                @if (Gate::check('isAdmin') || Gate::check('isHr') || Gate::check('isDoctor'))
+                    <li class="nav-item"><a href="{{ route('brandname') }}" class="nav-link @yield('brandname')">Brand Name</a></li>
                 @endif
                 {{-- For Admin --}}
                 @if(Gate::check('isAdmin'))

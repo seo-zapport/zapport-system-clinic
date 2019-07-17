@@ -68,3 +68,18 @@ Route::group(['prefix' => 'employees'], function(){
 	Route::put('profile/search/{emp_id}', 'EmployeesProfileController@update')->name('employee.update');
 
 });
+
+Route::group(['prefix' => 'inventory'], function(){
+
+	// BrandName
+	Route::get('medicine/brandname', 'MedbrandController@index')->name('brandname');
+	Route::post('medicine/brandname', 'MedbrandController@store')->name('brandname.add');
+	Route::delete('medicine/brandname/{medbrand}', 'MedbrandController@destroy')->name('brandname.delete');
+
+	// GenericName
+
+	// Medicine
+	Route::get('medicine', 'MedicineController@index')->name('medicine');
+	Route::post('medicine', 'MedicineController@store')->name('medicine.add');
+
+});
