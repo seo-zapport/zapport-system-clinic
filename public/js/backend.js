@@ -88,5 +88,30 @@ jQuery(document).ready(function($){
         b--;
       }
     });
+
+    /**
+     * Folded Menu
+     -------------------------*/
+    $('#collapse-button').on('click', function(e){
+      e.preventDefault();
+      $('#zapWrap').toggleClass('folded');
+      localStorage.setItem( 'state', (($("#zapWrap").hasClass("folded")) ? "folded" : "") );
+      
+      $('.collapse-button-icon > i', this).toggleClass("fa-chevron-left fa-chevron-right");
+      localStorage.setItem( 'icon', (($(".collapse-button-icon > i").hasClass("fa-chevron-left")) ? "fa-chevron-left" : "fa-chevron-right") );
+      // console.log("Local Storage Set to: " + (($(".collapse-button-icon > i").hasClass("fa-chevron-left")) ? "fa-chevron-left" : "fa-chevron-right") );
+    });
+
+    if (!!localStorage.getItem("state") && localStorage.getItem("state") == "folded"){
+      $("#zapWrap").addClass("folded"); 
+    }
+
+    if (!!localStorage.getItem("icon") && localStorage.getItem("icon") == "fa-chevron-left"){
+      $("#zapWrap").addClass("fa-chevron-left");
+      // $("#zapWrap").removeClass("fa-chevron-left");
+    }else{
+      $("#zapWrap").removeClass("fa-chevron-right");
+      // $("#zapWrap").AddClass("fa-chevron-left");
+    }
     
 });

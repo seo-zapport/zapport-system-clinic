@@ -35,13 +35,15 @@
             <div id="zapContent">
                 @include('layouts.includes.top')
                 <main id="app" class="primary-site" role="main">
-                    <div class="container container-lg-w12">
-                        <div class="card">
-                            <div class="card-header">@yield('dash-title')</div>
-                            <div class="card-body">
-                                @yield('dash-content') 
-                            </div> 
-                        </div>
+                    <div class="wrap">
+                        <div class="container-fluid">
+                            <div class="card">
+                                <div class="card-header">@yield('dash-title')</div>
+                                <div class="card-body">
+                                    @yield('dash-content') 
+                                </div> 
+                            </div>
+                        </div>                        
                     </div>
                 </main>
             </div>
