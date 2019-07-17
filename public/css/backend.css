@@ -5949,7 +5949,7 @@ figure {
 #zapAdminMenuWrap {
   position: relative;
   float: left;
-  z-index: 9990;
+  z-index: 1000;
 }
 
 #zapAdminMenuWrap .nav {
@@ -5961,15 +5961,57 @@ figure {
   user-select: none;
 }
 
-#zapAdminMenuWrap .nav-link {
+#zapAdminMenuWrap .nav i {
+  line-height: 1.5;
+  margin-right: 5px;
+  text-align: center;
+  width: 25px;
+}
+
+#zapAdminMenuWrap .nav-item {
+  position: relative;
+}
+
+#zapAdminMenuWrap .nav-item .nav-link {
   color: #fff;
 }
 
-#zapAdminMenuWrap .nav-link.active,
-#zapAdminMenuWrap .nav-link:hover,
-#zapAdminMenuWrap .nav-link:focus {
+#zapAdminMenuWrap .nav-item .nav-link:hover,
+#zapAdminMenuWrap .nav-item .nav-link:focus {
   background-color: #007c73;
   color: #b2e5e1;
+}
+
+#zapAdminMenuWrap .nav-item .nav-link:hover:before,
+#zapAdminMenuWrap .nav-item .nav-link:focus:before {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: 8px solid transparent;
+  border-right-color: #f1f1f1;
+  right: 0;
+  top: 50%;
+  margin-top: -8px;
+}
+
+#zapAdminMenuWrap .nav-item .nav-link.active {
+  background-color: #004742;
+  color: #fff;
+}
+
+#zapAdminMenuWrap .nav-item .nav-link.active:before {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: 8px solid transparent;
+  border-right-color: #f1f1f1;
+  right: 0;
+  top: 50%;
+  margin-top: -8px;
 }
 
 #zapAdminMenuWrap .zap-user-info {
@@ -6043,6 +6085,20 @@ figure {
 #collapse-button:focus {
   background-color: #007c73;
   color: #b2e5e1;
+}
+
+#collapse-button:hover:before,
+#collapse-button:focus:before {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: 8px solid transparent;
+  border-right-color: #f1f1f1;
+  right: 0;
+  top: 50%;
+  margin-top: -8px;
 }
 
 /**Collapsed*/

@@ -16,7 +16,7 @@
 #zapAdminMenuWrap{
 	position: relative;
 	float: left;
-	z-index: 9990;
+	z-index: 1000;
 
 	.nav{
 		padding: 0;
@@ -25,15 +25,50 @@
 		-moz-user-select: none;
 		-ms-user-select: none;
 		user-select: none;
+		i{
+			line-height: 1.5;
+			margin-right: 5px;
+			text-align: center;
+			width: 25px;
+		}
 	}
-	.nav-link{
-		color: #fff;
-    	&.active,
-    	&:hover, &:focus{
-    		background-color: $admin-pine-green;
-    		color: $admin-powder-blue;
-    	}
-
+	.nav-item{
+		position: relative;
+		.nav-link{
+			color: #fff;
+	    	&:hover, &:focus{
+	    		background-color: $admin-pine-green;
+	    		color: $admin-powder-blue;
+				&:before{
+					content: '';
+					display: block;
+					position: absolute;
+					width: 0;
+					height: 0;
+					border: 8px solid transparent;
+					border-right-color: #f1f1f1;
+					right: 0;
+					top: 50%;
+					margin-top: -8px;
+				}
+	    	}
+	    	&.active{
+				background-color: $admin-cyprus;
+				color: $navbar-default-bg;
+				&:before{
+					content: '';
+					display: block;
+					position: absolute;
+					width: 0;
+					height: 0;
+					border: 8px solid transparent;
+					border-right-color: #f1f1f1;
+					right: 0;
+					top: 50%;
+					margin-top: -8px;
+				}
+	    	}
+		}
 	}
     .zap-user-info{
 	    position: relative;
@@ -114,6 +149,18 @@
     &:hover,&:focus{
     	background-color: $admin-pine-green;
     	color: $admin-powder-blue;
+		&:before{
+			content: '';
+			display: block;
+			position: absolute;
+			width: 0;
+			height: 0;
+			border: 8px solid transparent;
+			border-right-color: #f1f1f1;
+			right: 0;
+			top: 50%;
+			margin-top: -8px;
+		}
     }
 }
 

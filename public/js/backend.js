@@ -107,11 +107,11 @@ jQuery(document).ready(function($){
     }
 
     if (!!localStorage.getItem("icon") && localStorage.getItem("icon") == "fa-chevron-left"){
-      $("#zapWrap").addClass("fa-chevron-left");
-      // $("#zapWrap").removeClass("fa-chevron-left");
+      $(".collapse-button-icon > i").addClass("fa-chevron-left");
+      // $(".collapse-button-icon > i").removeClass("fa-chevron-left");
     }else{
-      $("#zapWrap").removeClass("fa-chevron-right");
-      // $("#zapWrap").AddClass("fa-chevron-left");
+      $(".collapse-button-icon > i").removeClass("fa-chevron-right");
+      // $(".collapse-button-icon > i").AddClass("fa-chevron-left");
     }
     
 });
