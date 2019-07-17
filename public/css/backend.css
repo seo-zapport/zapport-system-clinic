@@ -5921,6 +5921,10 @@ figure {
  * Top Navigation
  *----------------------*/
 
+.top-navbar img {
+  width: 140px;
+}
+
 /**
  * Sidebar Navigation
  *----------------------*/
@@ -5951,6 +5955,10 @@ figure {
 #zapAdminMenuWrap .nav {
   padding: 0;
   margin: 0;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 #zapAdminMenuWrap .nav-link {
@@ -5961,6 +5969,7 @@ figure {
 #zapAdminMenuWrap .nav-link:hover,
 #zapAdminMenuWrap .nav-link:focus {
   background-color: #007c73;
+  color: #b2e5e1;
 }
 
 #zapAdminMenuWrap .zap-user-info {
@@ -6014,6 +6023,61 @@ figure {
   margin: 0;
 }
 
+#collapse-button {
+  display: block;
+  width: 100%;
+  background: 0 0;
+  border: none;
+  overflow: visible;
+  position: relative;
+  margin: 0;
+  cursor: pointer;
+  height: 39px;
+  padding: 0.5rem 1rem;
+  text-align: left;
+  color: #fff;
+  outline: none;
+}
+
+#collapse-button:hover,
+#collapse-button:focus {
+  background-color: #007c73;
+  color: #b2e5e1;
+}
+
+/**Collapsed*/
+
+.folded #zapAdminMenuBg,
+.folded #zapAdminMenuWrap {
+  width: 50px;
+}
+
+.folded #zapAdminMenuWrap .nav {
+  width: 50px;
+}
+
+.folded #zapAdminMenuWrap .zap-user-info {
+  padding: 10px 6px;
+}
+
+.folded #zapAdminMenuWrap .zap-image {
+  margin-right: 0;
+  width: 38px;
+}
+
+.folded #zapAdminMenuWrap .zap-info-wrap {
+  display: none;
+}
+
+.folded #zapAdminMenuWrap .collapse-label {
+  display: none;
+}
+
+.folded #zapContent,
+.folded #zapFooter {
+  margin-left: 50px;
+}
+
 /**
  * Primary admin
  *----------------------*/
@@ -6036,6 +6100,10 @@ figure {
 
 #zapContent .primary-site {
   padding-left: 20px;
+}
+
+#zapContent .wrap {
+  margin: 10px 20px 0 2px;
 }
 
 /**
