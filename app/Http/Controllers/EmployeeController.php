@@ -55,9 +55,18 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
         if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
             $atts = $this->employeeValidation();
+
+            // dd($atts);
+            $arr = array(request('experience'));
+            $works  = serialize($arr[0]);
+
+            $arr1 = array(request('children'));
+            $childrens  = serialize($arr1[0]);
+
+
             if ($request->hasFile('profile_img')) {
                 $filePath = 'public/uploaded';
                 $fileExtension = $request->file('profile_img')->getClientOriginalExtension();
@@ -91,7 +100,9 @@ class EmployeeController extends Controller
             $newEmp->father_birthday            = $request->father_birthday;
             $newEmp->mother_name                = $request->mother_name;
             $newEmp->mother_birthday            = $request->mother_birthday;
-            $newEmp->children                   = $request->children;
+            $newEmp->spouse_name                = $request->spouse_name;
+            $newEmp->date_of_marriage           = $request->date_of_marriage;
+            $newEmp->children                   = $childrens;
             $newEmp->elementary                 = $request->elementary;
             $newEmp->elementary_grad_date       = $request->elementary_grad_date;
             $newEmp->highschool                 = $request->highschool;
@@ -105,6 +116,8 @@ class EmployeeController extends Controller
             $newEmp->sss_no                     = $request->sss_no;
             $newEmp->philhealth_no              = $request->philhealth_no;
             $newEmp->hdmf_no                    = $request->hdmf_no;
+            $newEmp->experience                 = $works;
+            // dd($newEmp);
             $newEmp->save();
 
             return back();
@@ -183,8 +196,10 @@ class EmployeeController extends Controller
                     "father_name"               => ['required'],
                     "father_birthday"           => ['required'],
                     "mother_name"               => ['required'],
-                    "mother_birthday"           => ['required'],
-                    "children"                  => ['required'],
+                    // "mother_birthday"           => ['required'],
+                    // "spouse_name"               => ['required'],
+                    // "date_of_marriage"          => ['required'],
+                    // "children"                  => ['required'],
                     "elementary"                => ['required'],
                     "elementary_grad_date"      => ['required'],
                     "highschool"                => ['required'],
@@ -193,12 +208,18 @@ class EmployeeController extends Controller
                     "college_grad_date"         => ['required'],
                     "person_to_contact"         => ['required'],
                     "person_to_contact_address" => ['required'],
-                    "person_to_contact_number"  => ['required'],
-                    "tin_no"                    => ['required'],
-                    "sss_no"                    => ['required'],
-                    "philhealth_no"             => ['required'],
-                    "hdmf_no"                   => ['required'],
+                    "person_to_contact_number"  => ['required', 'numeric'],
+                    // "tin_no"                    => ['numeric'],
+                    // "sss_no"                    => ['numneric'],
+                    // "philhealth_no"             => ['numneric'],
+                    // "hdmf_no"                   => ['numneric'],
             ]);
+
+            $arr = array(request('experience'));
+            $works  = serialize($arr[0]);
+
+            $arr1 = array(request('children'));
+            $childrens  = serialize($arr1[0]);
 
             if ($employee->profile_img != null && $request->hasFile('profile_img')) {
 
@@ -242,7 +263,9 @@ class EmployeeController extends Controller
             $employee->father_birthday              = $request->father_birthday;
             $employee->mother_name                  = $request->mother_name;
             $employee->mother_birthday              = $request->mother_birthday;
-            $employee->children                     = $request->children;
+            $employee->spouse_name                  = $request->spouse_name;
+            $employee->date_of_marriage             = $request->date_of_marriage;
+            $employee->children                     = $childrens;
             $employee->elementary                   = $request->elementary;
             $employee->elementary_grad_date         = $request->elementary_grad_date;
             $employee->highschool                   = $request->highschool;
@@ -256,6 +279,7 @@ class EmployeeController extends Controller
             $employee->sss_no                       = $request->sss_no;
             $employee->philhealth_no                = $request->philhealth_no;
             $employee->hdmf_no                      = $request->hdmf_no;
+            $employee->experience                   = $works;
             $employee->save();
 
             return redirect(route('hr.emp.show', ['employee' => $employee->id]));
@@ -323,7 +347,9 @@ class EmployeeController extends Controller
             "father_birthday"           => ['required'],
             "mother_name"               => ['required'],
             "mother_birthday"           => ['required'],
-            "children"                  => ['required'],
+            // "spouse_name"               => ['required'],
+            // "date_of_marriage"          => ['required'],
+            // "children"                  => ['required'],
             "elementary"                => ['required'],
             "elementary_grad_date"      => ['required'],
             "highschool"                => ['required'],
@@ -332,11 +358,11 @@ class EmployeeController extends Controller
             "college_grad_date"         => ['required'],
             "person_to_contact"         => ['required'],
             "person_to_contact_address" => ['required'],
-            "person_to_contact_number"  => ['required'],
-            "tin_no"                    => ['required'],
-            "sss_no"                    => ['required'],
-            "philhealth_no"             => ['required'],
-            "hdmf_no"                   => ['required'],
+            "person_to_contact_number"  => ['required', 'numeric'],
+            // "tin_no"                    => ['numeric'],
+            // "sss_no"                    => ['numeric'],
+            // "philhealth_no"             => ['numeric'],
+            // "hdmf_no"                   => ['numeric'],
         ]);
     }
 }

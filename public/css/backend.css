@@ -5921,6 +5921,10 @@ figure {
  * Top Navigation
  *----------------------*/
 
+.top-navbar img {
+  width: 140px;
+}
+
 /**
  * Sidebar Navigation
  *----------------------*/
@@ -5945,22 +5949,69 @@ figure {
 #zapAdminMenuWrap {
   position: relative;
   float: left;
-  z-index: 9990;
+  z-index: 1000;
 }
 
 #zapAdminMenuWrap .nav {
   padding: 0;
   margin: 0;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
-#zapAdminMenuWrap .nav-link {
+#zapAdminMenuWrap .nav i {
+  line-height: 1.5;
+  margin-right: 5px;
+  text-align: center;
+  width: 25px;
+}
+
+#zapAdminMenuWrap .nav-item {
+  position: relative;
+}
+
+#zapAdminMenuWrap .nav-item .nav-link {
   color: #fff;
 }
 
-#zapAdminMenuWrap .nav-link.active,
-#zapAdminMenuWrap .nav-link:hover,
-#zapAdminMenuWrap .nav-link:focus {
+#zapAdminMenuWrap .nav-item .nav-link:hover,
+#zapAdminMenuWrap .nav-item .nav-link:focus {
   background-color: #007c73;
+  color: #b2e5e1;
+}
+
+#zapAdminMenuWrap .nav-item .nav-link:hover:before,
+#zapAdminMenuWrap .nav-item .nav-link:focus:before {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: 8px solid transparent;
+  border-right-color: #f1f1f1;
+  right: 0;
+  top: 50%;
+  margin-top: -8px;
+}
+
+#zapAdminMenuWrap .nav-item .nav-link.active {
+  background-color: #004742;
+  color: #fff;
+}
+
+#zapAdminMenuWrap .nav-item .nav-link.active:before {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: 8px solid transparent;
+  border-right-color: #f1f1f1;
+  right: 0;
+  top: 50%;
+  margin-top: -8px;
 }
 
 #zapAdminMenuWrap .zap-user-info {
@@ -6014,6 +6065,75 @@ figure {
   margin: 0;
 }
 
+#collapse-button {
+  display: block;
+  width: 100%;
+  background: 0 0;
+  border: none;
+  overflow: visible;
+  position: relative;
+  margin: 0;
+  cursor: pointer;
+  height: 39px;
+  padding: 0.5rem 1rem;
+  text-align: left;
+  color: #fff;
+  outline: none;
+}
+
+#collapse-button:hover,
+#collapse-button:focus {
+  background-color: #007c73;
+  color: #b2e5e1;
+}
+
+#collapse-button:hover:before,
+#collapse-button:focus:before {
+  content: "";
+  display: block;
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: 8px solid transparent;
+  border-right-color: #f1f1f1;
+  right: 0;
+  top: 50%;
+  margin-top: -8px;
+}
+
+/**Collapsed*/
+
+.folded #zapAdminMenuBg,
+.folded #zapAdminMenuWrap {
+  width: 50px;
+}
+
+.folded #zapAdminMenuWrap .nav {
+  width: 50px;
+}
+
+.folded #zapAdminMenuWrap .zap-user-info {
+  padding: 10px 6px;
+}
+
+.folded #zapAdminMenuWrap .zap-image {
+  margin-right: 0;
+  width: 38px;
+}
+
+.folded #zapAdminMenuWrap .zap-info-wrap {
+  display: none;
+}
+
+.folded #zapAdminMenuWrap .collapse-label {
+  display: none;
+}
+
+.folded #zapContent,
+.folded #zapFooter {
+  margin-left: 50px;
+}
+
 /**
  * Primary admin
  *----------------------*/
@@ -6036,6 +6156,10 @@ figure {
 
 #zapContent .primary-site {
   padding-left: 20px;
+}
+
+#zapContent .wrap {
+  margin: 10px 20px 0 2px;
 }
 
 /**

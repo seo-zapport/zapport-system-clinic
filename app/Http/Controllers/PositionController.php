@@ -108,7 +108,12 @@ class PositionController extends Controller
      */
     public function destroy(Position $position)
     {
-        //
+        if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
+            $position->delete();
+            return back();
+        }else{
+            abort(403, 'You are not Authorized on this page!');
+        }
     }
 
     public function positionValidation()
