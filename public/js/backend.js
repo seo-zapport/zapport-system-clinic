@@ -38,6 +38,38 @@ jQuery(document).ready(function($){
        }
     });
 
+
+
+  // AJAX
+    jQuery('select[name="brand_id"]').on('change',function(){
+       var brand_id = jQuery(this).val();
+       var myUrl = 'medicine/brnd/';
+
+       if(brand_id)
+       {
+          console.log(myUrl + brand_id);
+          jQuery.ajax({
+             url : myUrl + brand_id,
+             type : "GET",
+             dataType : "json",
+             success:function(data)
+             {
+                jQuery('select[name="generic_id"]').empty();
+                jQuery.each(data, function(key,value){
+                   $('select[name="generic_id"]').append('<option value="'+ key +'">'+ value +'</option>');
+                });
+             }
+          });
+       }
+       else
+       {
+          $('select[name="generic_id"]').empty();
+       }
+    });
+
+
+
+
     // Children
     var i = $('#addChildren').length;
     var e = $(this).find('.editchildren').length;

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\GenericName;
+use App\medbrandsGenericNames;
 use Illuminate\Http\Request;
 
-class GenericNameController extends Controller
+class MedbrandsGenericNamesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class GenericNameController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\GenericName  $genericName
+     * @param  \App\medbrandsGenericNames  $medbrandsGenericNames
      * @return \Illuminate\Http\Response
      */
-    public function show(GenericName $genericName)
+    public function show(medbrandsGenericNames $medbrandsGenericNames)
     {
         //
     }
@@ -52,10 +52,10 @@ class GenericNameController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\GenericName  $genericName
+     * @param  \App\medbrandsGenericNames  $medbrandsGenericNames
      * @return \Illuminate\Http\Response
      */
-    public function edit(GenericName $genericName)
+    public function edit(medbrandsGenericNames $medbrandsGenericNames)
     {
         //
     }
@@ -64,10 +64,10 @@ class GenericNameController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\GenericName  $genericName
+     * @param  \App\medbrandsGenericNames  $medbrandsGenericNames
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, GenericName $genericName)
+    public function update(Request $request, medbrandsGenericNames $medbrandsGenericNames)
     {
         //
     }
@@ -75,10 +75,10 @@ class GenericNameController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\GenericName  $genericName
+     * @param  \App\medbrandsGenericNames  $medbrandsGenericNames
      * @return \Illuminate\Http\Response
      */
-    public function destroy(GenericName $genericName)
+    public function destroy(medbrandsGenericNames $medbrandsGenericNames)
     {
         //
     }

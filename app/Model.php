@@ -12,6 +12,8 @@ class Model extends Eloquent
 		"role_id", 
 		"department_id", 
 		"position_id",
+		"brand_id",
+		"generic_id",
 ];
 	protected $dates = [
 		"birthday", 
@@ -23,5 +25,6 @@ class Model extends Eloquent
 		"father_birthday", 
 		"mother_birthday", 
 		"date_of_merriage",
+		"expiration_date",
 	];
 }

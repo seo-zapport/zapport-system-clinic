@@ -32380,9 +32380,9 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\www.sandbox.clinic.com\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! C:\xampp\htdocs\www.sandbox.clinic.com\resources\sass\site.scss */"./resources/sass/site.scss");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\www.sandbox.clinic.com\resources\sass\backend.scss */"./resources/sass/backend.scss");
+__webpack_require__(/*! C:\xampp\htdocs\clinic\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! C:\xampp\htdocs\clinic\resources\sass\site.scss */"./resources/sass/site.scss");
+module.exports = __webpack_require__(/*! C:\xampp\htdocs\clinic\resources\sass\backend.scss */"./resources/sass/backend.scss");
 
 
 /***/ })

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Medicine;
 use App\Medbrand;
+use App\Generic;
 use Illuminate\Http\Request;
 
 class MedicineController extends Controller
@@ -15,7 +16,7 @@ class MedicineController extends Controller
      */
     public function index()
     {
-        $meds = Medicine::orderBy('generic_name', 'asc')->get();
+        $meds = Medicine::orderBy('generic_id', 'asc')->get();
         $brands = Medbrand::orderBy('bname', 'asc')->get();
         return view('inventory.medicine.index', compact('meds', 'brands'));
     }
@@ -42,16 +43,50 @@ class MedicineController extends Controller
         $atts = $request->except('qty_input');
         $multiplier = $request->input('qty_input');
         $atts['qty_stock'] = $request->input('qty_input');
-        // dd($multiplier);
-        $arr = array();
-        for ($i=1; $i <= $multiplier; $i++) { 
-            $arr[] = $atts;
-        }
 
-        foreach ($arr as $data) {
-            auth()->user()->addMeds(
-                new Medicine($data)
-            );
+        $meds = Medicine::where('brand_id', $request->brand_id)->where('generic_id', $request->generic_id)->get();
+
+        if (count($meds) > 0) {
+
+            // $logsArr = array();
+            foreach ($meds as $med) {
+                $med->qty_stock = $med->qty_stock + $request->qty_input;
+                $med->save();
+                // $logsArr[] = $med->qty_stock + $request->qty_input;
+            }
+
+             $arr = array();
+            for ($i=1; $i <= $multiplier; $i++) { 
+                $arr[] = $request;
+            }
+
+            foreach ($arr as $data) {
+                $newMeds = new Medicine;
+                $newMeds->qty_stock       = count($meds) + $request->qty_input;
+                $newMeds->expiration_date = $data->expiration_date;
+                $newMeds->generic_id      = $data->generic_id;
+                $newMeds->brand_id        = $data->brand_id;
+                $newMeds->user_id         = auth()->user()->id;
+                $newMeds->save();
+            }
+
+        }else{
+
+            $arr = array();
+            for ($i=1; $i <= $multiplier; $i++) { 
+                $arr[] = $request;
+            }
+
+            foreach ($arr as $data) {
+                $newMeds = new Medicine;
+                $newMeds->qty_stock       = $data->qty_input;
+                $newMeds->expiration_date = $data->expiration_date;
+                $newMeds->generic_id      = $data->generic_id;
+                $newMeds->brand_id        = $data->brand_id;
+                $newMeds->user_id         = auth()->user()->id;
+                $newMeds->save();
+            }
+
         }
 
         return back();
@@ -102,11 +137,25 @@ class MedicineController extends Controller
         //
     }
 
+    public function getGeneric($id)
+    {
+        $brnd = Medbrand::find($id);
+        $generic_id = $brnd->generic->pluck('gname', 'id');
+        return json_encode($generic_id);
+    }
+
+    public function logs(Medbrand $medbrand, Generic $generic)
+    {
+        $logs = Medicine::where('brand_id', $medbrand->id)->where('generic_id', $generic->id)->get();
+        // dd($logs);
+        return view('inventory.medicine.logs', compact('logs', 'medbrand', 'generic'));
+    }
+
     public function medicineValidation()
     {
         return request()->validate([
             'brand_id'          =>  ['required'],
-            'generic_name'      =>  ['required'],
+            'generic_id'        =>  ['required'],
             'expiration_date'   =>  ['required'],
             'qty_input'         =>  ['required']
         ]);

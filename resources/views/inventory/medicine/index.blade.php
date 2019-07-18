@@ -14,15 +14,16 @@
 		<th>Brand Name</th>
 		<th>Quantity</th>
 		<th>Stock Logs</th>
+		<th></th>
 	</thead>
 	<tbody>
-		@forelse ($meds->unique('generic_name') as $med)
+		@forelse ($meds->unique('generic_id') as $med)
 			<tr>
-				<td>{{ $med->generic_name }}</td>
+				<td>{{ $med->generic->gname }}</td>
 				<td>{{ $med->medBrand->bname }}</td>
-				{{-- <td>{{ $meds->count() }}</td> --}}
-				<td>{{ $meds->where('generic_name', $med->generic_name)->count() }}</td>
+				<td>{{ $meds->where('generic_id', $med->generic_id)->count() }}</td>
 				<td>{{ $med->qty_stock }}</td>
+				<td><a href="{{ route('medicine.log', ['medbrand' => $med->medBrand->id, 'generic' => $med->generic->id]) }}" class="btn btn-info text-white">View</a></td>
 			</tr>
 			@empty
 				<tr>
@@ -58,7 +59,9 @@
 					</div>
 					<div class="form-group">
 						<label for="generic_name">Generic Name</label>
-						<input type="text" name="generic_name" class="form-control" placeholder="Generic Name" value="{{ old('generic_name') }}" {{-- required --}}>
+						<select name="generic_id" id="generic_id" class="form-control" required>
+							<option selected="true" disabled="disabled"> Select Posotion </option>
+						</select>
 					</div>
 					<div class="form-group">
 						<label for="expiration_date">Expiration Date</label>

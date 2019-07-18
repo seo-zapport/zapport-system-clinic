@@ -10,4 +10,9 @@ class Medbrand extends Model
     {
     	return $this->hasMany(Medicine::class, 'brand_id');
     }
+
+    public function generic()
+    {
+    	return $this->belongsToMany(Generic::class, 'medbrand_generics', 'medbrand_id');
+    }
 }

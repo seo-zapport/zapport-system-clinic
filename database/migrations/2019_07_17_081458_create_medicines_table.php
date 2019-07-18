@@ -18,14 +18,13 @@ class CreateMedicinesTable extends Migration
             $table->unsignedBigInteger('brand_id');
             $table->unsignedBigInteger('generic_id');
             $table->unsignedBigInteger('user_id');
-            $table->string('generic_name');
             // $table->bigInteger('qty_input');
             $table->bigInteger('qty_stock')->nullable();
             $table->date('expiration_date');
             $table->timestamps();
 
             $table->foreign('brand_id')->references('id')->on('medbrands')->onDelete('cascade');
-            $table->foreign('generic_id')->references('id')->on('medicines')->onDelete('cascade');
+            $table->foreign('generic_id')->references('id')->on('generics')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
