@@ -22,7 +22,7 @@
 			</tr>
 			@empty
 				<tr>
-					<td colspan="4" class="text-center">{{ "No registered Medicine yet!" }}</td>
+					<td colspan="4" class="text-center">{{ "No registered Medicine yet!" }}</td> 
 				</tr>
 		@endforelse
 	</tbody>
