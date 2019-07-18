@@ -13,6 +13,6 @@ class Generic extends Model
 
     public function medicines()
     {
-    	return $this->hasMany(Medicine::class, 'brand_id');
+    	return $this->hasMany(Medicine::class, 'generic_id');
     }
 }

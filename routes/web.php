@@ -75,6 +75,7 @@ Route::group(['prefix' => 'inventory'], function(){
 	Route::get('medicine/brandname', 'MedbrandController@index')->name('brandname');
 	Route::post('medicine/brandname', 'MedbrandController@store')->name('brandname.add');
 	Route::delete('medicine/brandname/{medbrand}', 'MedbrandController@destroy')->name('brandname.delete');
+	Route::get('medicine/brandname/{medbrand}', 'MedbrandController@show')->name('brandname.show');
 
 	// Generic
 	Route::get('medicine/generic', 'GenericController@index')->name('genericname');

@@ -18,7 +18,7 @@
 			<tr>
 				<td class="{{ ($log->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">{{ $log->created_at->format('M d, Y') }}</td>
 				<td class="{{ ($log->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">{{ $log->expiration_date->format('M d, Y') }}</td>
-				<td class="{{ ($log->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">{{ $logs->where('expiration_date', $log->expiration_date)->count() }}</td>
+				<td class="{{ ($log->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">{{ $logs->where('expiration_date', $log->expiration_date)->where('availability', 0)->count() }}</td>
 			</tr>
 			@empty
 				<tr>

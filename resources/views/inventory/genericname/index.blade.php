@@ -30,7 +30,7 @@
 					</div>
 	        	</form>
 				</td>
-				<td>{{ $gen->medbrand->count() }}</td>
+				<td>{{ $gen->medicines->where('availability', 0)->count() }}</td>
 			</tr>
 			@empty
 				<tr>
@@ -40,7 +40,11 @@
 	</tbody>
 </table>
 @include('layouts.errors')
-
+@if (session('generic_message'))
+	<div class="alert alert-danger alert-posts">
+		{{ session('generic_message') }}
+	</div>
+@endif
 <!-- Modal Add -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">

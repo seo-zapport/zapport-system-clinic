@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\Gate;
 
 class MedbrandController extends Controller
 {
+    public function __construct()
+    {
+        return $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -58,7 +63,11 @@ class MedbrandController extends Controller
      */
     public function show(Medbrand $medbrand)
     {
-        //
+        if (Gate::allows('isAdmin') || Gate::allows('isHr') || Gate::allows('isDoctor')) {
+            return view('inventory.brandname.show', compact('medbrand'));
+        }else{
+            abort(403, 'You are not Authorized on this page!');
+        }
     }
 
     /**
@@ -93,6 +102,9 @@ class MedbrandController extends Controller
     public function destroy(Medbrand $medbrand)
     {
         if (Gate::allows('isAdmin') || Gate::allows('isHr') || Gate::allows('isDoctor')) {
+            if (count($medbrand->generic) > 0) {
+                return back()->with('brand_message', 'You cannot delete a brand with generics');
+            }
             $medbrand->delete();
             return back();
         }else{

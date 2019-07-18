@@ -11,7 +11,8 @@
 <table class="table">
 	<thead class="thead-dark">
 		<th>Brand Name</th>
-		<th>No. of Medecines</th>
+		<th>No. of Generics</th>
+		<th></th>
 	</thead>
 	<tbody>
 		@forelse ($brands as $brand)
@@ -30,7 +31,8 @@
 					</div>
 	        	</form>
 				</td>
-				<td></td>
+				<td>{{ $brand->generic->count() }}</td>
+				<td><a href="{{ route('brandname.show', ['medbrand' => $brand->id]) }}" class="btn btn-info text-white">View</a></td>
 			</tr>
 			@empty
 				<tr>
@@ -40,7 +42,11 @@
 	</tbody>
 </table>
 @include('layouts.errors')
-
+@if (session('brand_message'))
+	<div class="alert alert-danger alert-posts">
+		{{ session('brand_message') }}
+	</div>
+@endif
 <!-- Modal Add -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">

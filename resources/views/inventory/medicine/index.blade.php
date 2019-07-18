@@ -21,7 +21,7 @@
 			<tr>
 				<td>{{ $med->generic->gname }}</td>
 				<td>{{ $med->medBrand->bname }}</td>
-				<td>{{ $meds->where('generic_id', $med->generic_id)->count() }}</td>
+				<td>{{ $meds->where('generic_id', $med->generic_id)->where('availability', 0)->count() }}</td>
 				<td>{{ $med->qty_stock }}</td>
 				<td><a href="{{ route('medicine.log', ['medbrand' => $med->medBrand->id, 'generic' => $med->generic->id]) }}" class="btn btn-info text-white">View</a></td>
 			</tr>

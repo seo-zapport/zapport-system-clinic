@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 class MedicineController extends Controller
 {
+    public function __construct()
+    {
+        return $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -66,6 +71,7 @@ class MedicineController extends Controller
                 $newMeds->expiration_date = $data->expiration_date;
                 $newMeds->generic_id      = $data->generic_id;
                 $newMeds->brand_id        = $data->brand_id;
+                $newMeds->availability    = 0;
                 $newMeds->user_id         = auth()->user()->id;
                 $newMeds->save();
             }
@@ -83,6 +89,7 @@ class MedicineController extends Controller
                 $newMeds->expiration_date = $data->expiration_date;
                 $newMeds->generic_id      = $data->generic_id;
                 $newMeds->brand_id        = $data->brand_id;
+                $newMeds->availability    = 0;
                 $newMeds->user_id         = auth()->user()->id;
                 $newMeds->save();
             }

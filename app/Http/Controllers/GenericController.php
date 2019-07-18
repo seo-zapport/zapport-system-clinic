@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Gate;
 
 class GenericController extends Controller
 {
+    public function __construct()
+    {
+        return $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -98,6 +103,9 @@ class GenericController extends Controller
     public function destroy(Generic $generic)
     {
         if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
+            if (count($generic->medicines) > 0) {
+                return back()->with('generic_message', 'You cannot delete a Generic name with record in inventory');
+            }
             $generic->delete();
             return back();
         }else{

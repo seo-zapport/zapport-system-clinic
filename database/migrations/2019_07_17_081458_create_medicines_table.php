@@ -21,6 +21,7 @@ class CreateMedicinesTable extends Migration
             // $table->bigInteger('qty_input');
             $table->bigInteger('qty_stock')->nullable();
             $table->date('expiration_date');
+            $table->boolean('availability');
             $table->timestamps();
 
             $table->foreign('brand_id')->references('id')->on('medbrands')->onDelete('cascade');
