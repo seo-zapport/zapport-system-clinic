@@ -24,7 +24,7 @@ class EmployeeController extends Controller
     public function index()
     {
         if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
-            $employees = Employee::orderBy('first_name', 'asc')->get();
+            $employees = Employee::orderBy('first_name', 'asc')->paginate(10);
             return view('hr.employee.index', compact('employees'));
         }else{
             abort(403, 'You are not Authorized on this page!');

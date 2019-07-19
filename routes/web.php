@@ -76,15 +76,17 @@ Route::group(['prefix' => 'inventory'], function(){
 	Route::post('medicine/brandname', 'MedbrandController@store')->name('brandname.add');
 	Route::delete('medicine/brandname/{medbrand}', 'MedbrandController@destroy')->name('brandname.delete');
 	Route::get('medicine/brandname/{medbrand}', 'MedbrandController@show')->name('brandname.show');
+	Route::put('medicine/brandname/{medbrand}', 'MedbrandController@update')->name('brandname.update');
 
 	// Generic
 	Route::get('medicine/generic', 'GenericController@index')->name('genericname');
 	Route::post('medicine/generic', 'GenericController@store')->name('genericname.add');
 	Route::delete('medicine/generic/{generic}', 'GenericController@destroy')->name('genericname.delete');
+	Route::get('medicine/generic/{generic}', 'GenericController@show')->name('genericname.show');
 
 	// Medicine
 	Route::get('medicine', 'MedicineController@index')->name('medicine');
 	Route::post('medicine', 'MedicineController@store')->name('medicine.add');
-	Route::get('medicine/brnd/{id}', 'MedicineController@getGeneric');
+	Route::get('medicine/gen/{id}', 'MedicineController@getBrand');
 	Route::get('medicine/logs/brand/{medbrand}/generic/{generic}', 'MedicineController@logs')->name('medicine.log');
 });

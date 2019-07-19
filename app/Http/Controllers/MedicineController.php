@@ -21,9 +21,9 @@ class MedicineController extends Controller
      */
     public function index()
     {
-        $meds = Medicine::orderBy('generic_id', 'asc')->get();
-        $brands = Medbrand::orderBy('bname', 'asc')->get();
-        return view('inventory.medicine.index', compact('meds', 'brands'));
+        $meds = Medicine::select('brand_id', 'generic_id', 'qty_stock')->groupBy('brand_id', 'generic_id', 'qty_stock')->orderBy('id', 'desc')->paginate(10);
+        $gens = Generic::orderBy('gname', 'asc')->get();
+        return view('inventory.medicine.index', compact('meds', 'gens'));
     }
 
     /**
@@ -144,11 +144,11 @@ class MedicineController extends Controller
         //
     }
 
-    public function getGeneric($id)
+    public function getBrand($id)
     {
-        $brnd = Medbrand::find($id);
-        $generic_id = $brnd->generic->pluck('gname', 'id');
-        return json_encode($generic_id);
+        $gen = Generic::find($id);
+        $brand_id = $gen->medbrand->pluck('bname', 'id');
+        return json_encode($brand_id);
     }
 
     public function logs(Medbrand $medbrand, Generic $generic)

@@ -41,29 +41,29 @@ jQuery(document).ready(function($){
 
 
   // AJAX
-    jQuery('select[name="brand_id"]').on('change',function(){
-       var brand_id = jQuery(this).val();
-       var myUrl = 'medicine/brnd/';
+    jQuery('select[name="generic_id"]').on('change',function(){
+       var generic_id = jQuery(this).val();
+       var myUrl = 'medicine/gen/';
 
-       if(brand_id)
+       if(generic_id)
        {
-          console.log(myUrl + brand_id);
+          console.log(myUrl + generic_id);
           jQuery.ajax({
-             url : myUrl + brand_id,
+             url : myUrl + generic_id,
              type : "GET",
              dataType : "json",
              success:function(data)
              {
-                jQuery('select[name="generic_id"]').empty();
+                jQuery('select[name="brand_id"]').empty();
                 jQuery.each(data, function(key,value){
-                   $('select[name="generic_id"]').append('<option value="'+ key +'">'+ value +'</option>');
+                   $('select[name="brand_id"]').append('<option value="'+ key +'">'+ value +'</option>');
                 });
              }
           });
        }
        else
        {
-          $('select[name="generic_id"]').empty();
+          $('select[name="brand_id"]').empty();
        }
     });
 

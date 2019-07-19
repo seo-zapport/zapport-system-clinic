@@ -10,7 +10,6 @@
 		<th>First Name</th>
 		<th>Last Name</th>
 		<th>Middle Name</th>
-		<th></th>
 	</thead>
 	<tbody>
 		@forelse ($employees as $employee)
@@ -18,8 +17,7 @@
 				<td>{{ $employee->emp_id }}</td>
 				<td>{{ ucwords($employee->first_name) }}</td>
 				<td>{{ ucwords($employee->last_name) }}</td>
-				<td>{{ ucwords($employee->middle_name) }}</td>
-				<td><a href="{{ route('hr.emp.show', ['employee' => $employee->id]) }}" class="btn btn-info text-white">View</a></td>
+				<td>{{ ucwords($employee->middle_name) }} <a href="{{ route('hr.emp.show', ['employee' => $employee->id]) }}" class="btn btn-info text-white float-right">View</a></td>
 			</tr>
 			@empty
 				<tr>
@@ -28,5 +26,6 @@
 		@endforelse
 	</tbody>
 </table>
+{{ $employees->links() }}
 
 @endsection

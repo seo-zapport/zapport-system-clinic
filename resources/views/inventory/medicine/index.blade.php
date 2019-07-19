@@ -8,22 +8,23 @@
 	<a class="btn btn-info text-white" href="#" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus"></i> Add New</a>
 </div>
 
-<table class="table">
+<table class="table table-hover">
 	<thead class="thead-dark">
 		<th>Generic Name</th>
 		<th>Brand Name</th>
 		<th>Quantity</th>
 		<th>Stock Logs</th>
-		<th></th>
 	</thead>
 	<tbody>
-		@forelse ($meds->unique('generic_id') as $med)
+		@forelse ($meds as $med)
 			<tr>
-				<td>{{ $med->generic->gname }}</td>
-				<td>{{ $med->medBrand->bname }}</td>
-				<td>{{ $meds->where('generic_id', $med->generic_id)->where('availability', 0)->count() }}</td>
-				<td>{{ $med->qty_stock }}</td>
-				<td><a href="{{ route('medicine.log', ['medbrand' => $med->medBrand->id, 'generic' => $med->generic->id]) }}" class="btn btn-info text-white">View</a></td>
+				<td>{{ ucfirst($med->generic->gname) }}</td>
+				<td>{{ ucwords($med->medBrand->bname) }}</td>
+				<td>{{ $med->where('generic_id', $med->generic_id)->where('brand_id', $med->brand_id)->where('availability', 0)->count() }}</td>
+				<td>
+					{{ $med->qty_stock }}
+					<a href="{{ route('medicine.log', ['medbrand' => $med->medBrand->id, 'generic' => $med->generic->id]) }}" class="btn btn-info text-white float-right">View</a>
+				</td>
 			</tr>
 			@empty
 				<tr>
@@ -32,6 +33,7 @@
 		@endforelse
 	</tbody>
 </table>
+{{ $meds->links() }}
 <br>
 @include('layouts.errors')
 
@@ -48,21 +50,24 @@
 			<div class="modal-body">
 				<form method="post" action="{{ route('medicine.add') }}">
 					@csrf
+
 					<div class="form-group">
-						<label for="generic_name">Brand Name</label>
-						<select name="brand_id" id="brand_id" class="form-control">
-							<option selected="true" disabled="disabled"> Select Brand name </option>
-							@foreach ($brands as $brand)
-								<option value="{{ $brand->id }}">{{ $brand->bname }}</option>
+						<label for="generic_id">Generic Name</label>
+						<select name="generic_id" id="generic_id" class="form-control">
+							<option selected="true" disabled="disabled"> Select Generic name </option>
+							@foreach ($gens as $gen)
+								<option value="{{ $gen->id }}">{{ $gen->gname }}</option>
 							@endforeach
 						</select>
 					</div>
+
 					<div class="form-group">
-						<label for="generic_name">Generic Name</label>
-						<select name="generic_id" id="generic_id" class="form-control" required>
-							<option selected="true" disabled="disabled"> Select Posotion </option>
+						<label for="brand_id">Brand Name</label>
+						<select name="brand_id" id="brand_id" class="form-control" required>
+							<option selected="true" disabled="disabled"> Select Brand </option>
 						</select>
 					</div>
+
 					<div class="form-group">
 						<label for="expiration_date">Expiration Date</label>
 						<input type="date" name="expiration_date" class="form-control" placeholder="Expiration Date" value="{{ old('expiration_date') }}" {{-- required --}}>

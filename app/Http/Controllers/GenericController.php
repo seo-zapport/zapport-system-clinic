@@ -21,9 +21,13 @@ class GenericController extends Controller
      */
     public function index()
     {
-        $gens = Generic::get();
-        $brands = Medbrand::get();
-        return view('inventory.genericname.index', compact('gens', 'brands'));
+        if (Gate::allows('isAdmin') || Gate::allows('isHr') || Gate::allows('isDoctor')) {
+            $gens = Generic::orderBy('gname', 'asc')->paginate(10);
+            $brands = Medbrand::get();
+            return view('inventory.genericname.index', compact('gens', 'brands'));
+        }else{
+            abort(403, 'You are not Authorized on this page!');
+        }
     }
 
     /**
@@ -46,13 +50,14 @@ class GenericController extends Controller
     {
         if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
             $atts = $this->genericValidation();
-            $atts = $request->except('medbrand_id');
-            $data = Generic::create($atts);
-            $lastID = $data->id;
-            $genID['generic_id'] = $lastID;
-            $bndID = $request->input('medbrand_id');
-            $bnd = Medbrand::find($bndID);
-            $bnd->generic()->attach($genID);
+            Generic::create($atts);
+            // $atts = $request->except('medbrand_id');
+            // $data = Generic::create($atts);
+            // $lastID = $data->id;
+            // $genID['generic_id'] = $lastID;
+            // $bndID = $request->input('medbrand_id');
+            // $bnd = Medbrand::find($bndID);
+            // $bnd->generic()->attach($genID);
             return back();
         }else{
             abort(403, 'You are not Authorized on this page!');
@@ -68,7 +73,11 @@ class GenericController extends Controller
      */
     public function show(Generic $generic)
     {
-        //
+        if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
+            return view('inventory.genericname.show', compact('generic'));
+        }else{
+            abort(403, 'You are not Authorized on this page!');
+        }
     }
 
     /**
@@ -103,8 +112,8 @@ class GenericController extends Controller
     public function destroy(Generic $generic)
     {
         if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
-            if (count($generic->medicines) > 0) {
-                return back()->with('generic_message', 'You cannot delete a Generic name with record in inventory');
+            if (count($generic->medbrand) > 0) {
+                return back()->with('generic_message', 'You cannot delete a Generic name registered with Brand');
             }
             $generic->delete();
             return back();
@@ -117,7 +126,6 @@ class GenericController extends Controller
     {
         return request()->validate([
             'gname'            =>  ['required', 'unique:generics'],
-            'medbrand_id'      =>  ['required'],
         ]);
     }
 }

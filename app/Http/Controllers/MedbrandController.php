@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Generic;
 use App\Medbrand;
+use App\MedbrandGeneric;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 
@@ -21,8 +23,9 @@ class MedbrandController extends Controller
     public function index()
     {
         if (Gate::allows('isAdmin') || Gate::allows('isHr') || Gate::allows('isDoctor')) {
-            $brands = Medbrand::orderBy('bname', 'asc')->get();
-            return view('inventory.brandname.index', compact('brands'));
+            $gens = Generic::get();
+            $brands = Medbrand::orderBy('bname', 'asc')->paginate(10);
+            return view('inventory.brandname.index', compact('brands', 'gens'));
         }else{
             abort(403, 'You are not Authorized on this page!');
         }
@@ -47,9 +50,27 @@ class MedbrandController extends Controller
     public function store(Request $request)
     {
         if (Gate::allows('isAdmin') || Gate::allows('isHr') || Gate::allows('isDoctor')) {
-            $atts = $this->brandNameValidation();
-            Medbrand::create($atts);
+            $this->brandNameValidation();
+            $atts = $request->except('generic_id');
+
+            $check = Medbrand::where('bname', $request->bname)->first();
+            if (!empty($check)) {
+                $data = $check;
+            }else{
+                $data = Medbrand::create($atts);
+            }
+
+            $check2 = MedbrandGeneric::where('medbrand_id', $data->id)->where('generic_id', $request->generic_id)->first();
+            if (!empty($check2)) {
+                return back()->with('pivot_validation', 'Brand Name and Generic Name already exists!');
+            }
+            $lastID = $data->id;
+            $brndID['medbrand_id'] = $lastID;
+            $genID = $request->input('generic_id');
+            $gen = Generic::find($genID);
+            $gen->medbrand()->attach($brndID);
             return back();
+
         }else{
             abort(403, 'You are not Authorized on this page!');
         }
@@ -90,7 +111,15 @@ class MedbrandController extends Controller
      */
     public function update(Request $request, Medbrand $medbrand)
     {
-        //
+        if (Gate::allows('isAdmin') || Gate::allows('isHr') || Gate::allows('isDoctor')) {
+            $atts = $request->validate([
+                    'bname' => ['required', 'unique:medbrands,bname,'.$medbrand->id],
+                ]);
+            $medbrand->update($atts);
+            return back();
+        }else{
+            abort(403, 'You are not Authorized on this page!');
+        }
     }
 
     /**
@@ -102,8 +131,8 @@ class MedbrandController extends Controller
     public function destroy(Medbrand $medbrand)
     {
         if (Gate::allows('isAdmin') || Gate::allows('isHr') || Gate::allows('isDoctor')) {
-            if (count($medbrand->generic) > 0) {
-                return back()->with('brand_message', 'You cannot delete a brand with generics');
+            if (count($medbrand->medicines) > 0) {
+                return back()->with('brand_message', 'You cannot delete a brand with record in inventory');
             }
             $medbrand->delete();
             return back();
@@ -115,7 +144,8 @@ class MedbrandController extends Controller
     public function brandNameValidation()
     {
         return request()->validate([
-            'bname' =>  ['required', 'unique:medbrands']
+            'bname'         =>  ['required'],
+            'generic_id'    =>  ['required']
         ]);
     }
 }
