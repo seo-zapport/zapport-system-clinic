@@ -43,7 +43,14 @@ jQuery(document).ready(function($){
   // AJAX
     jQuery('select[name="generic_id"]').on('change',function(){
        var generic_id = jQuery(this).val();
-       var myUrl = 'medicine/gen/';
+       // var myUrl = 'medicine/gen/';
+       var url   = window.location.href;
+
+       if (url === "http://clinic/inventory/medicine") {
+         var myUrl = 'medicine/gen/';
+       }else {
+          var myUrl = 'http://clinic/medical/employees/gen/';
+       }
 
        if(generic_id)
        {
@@ -66,8 +73,6 @@ jQuery(document).ready(function($){
           $('select[name="brand_id"]').empty();
        }
     });
-
-
 
 
     // Children

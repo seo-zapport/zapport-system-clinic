@@ -89,4 +89,15 @@ Route::group(['prefix' => 'inventory'], function(){
 	Route::post('medicine', 'MedicineController@store')->name('medicine.add');
 	Route::get('medicine/gen/{id}', 'MedicineController@getBrand');
 	Route::get('medicine/logs/brand/{medbrand}/generic/{generic}', 'MedicineController@logs')->name('medicine.log');
+
+});
+
+Route::group(['prefix' => 'medical'], function(){
+
+	Route::get('employees', 'EmployeesMedicalController@listofEmployee')->name('medical.listsofemployees');
+	Route::get('employees/{employee}', 'EmployeesMedicalController@employeeinfo')->name('medical.employeeInfo');
+	Route::get('employees/gen/{id}', 'EmployeesMedicalController@getMedBrand')->name('getBrand');
+	Route::post('employees/{employee}', 'EmployeesMedicalController@store')->name('medical.store');
+	Route::get('employees/generic_id/{generic_id}/brand_id/{brand_id}', 'EmployeesMedicalController@getMedGenBrd')->name('getGenBrd');
+
 });

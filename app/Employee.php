@@ -25,4 +25,9 @@ class Employee extends Model
     {
         return Carbon::parse($this->attributes['birthday'])->age;
     }
+
+    public function employeesMedical()
+    {
+        return $this->hasMany(Employeesmedical::class, 'employee_id');
+    }
 }

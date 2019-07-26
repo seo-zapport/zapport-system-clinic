@@ -15,6 +15,7 @@ class Model extends Eloquent
 		"brand_id",
 		"generic_id",
 		"medbrand_id",
+		"medicine_id",
 ];
 	protected $dates = [
 		"birthday", 

@@ -18,4 +18,9 @@ class Medicine extends Model
     {
     	return $this->belongsTo(User::class, 'user_id');
     }
+
+    public function employeesMedical()
+    {
+        return $this->belongsToMany(Employeesmedical::class, 'employeesmedical_medicines', 'medicine_id');
+    }
 }
