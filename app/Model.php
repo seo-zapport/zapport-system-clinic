@@ -16,6 +16,9 @@ class Model extends Eloquent
 		"generic_id",
 		"medbrand_id",
 		"medicine_id",
+		"employeesmedical_id",
+		"employee_id",
+		"mednote_id",
 ];
 	protected $dates = [
 		"birthday", 
@@ -29,4 +32,6 @@ class Model extends Eloquent
 		"date_of_merriage",
 		"expiration_date",
 	];
+
+	// protected $dateFormat = 'Y-m-d H:i';
 }

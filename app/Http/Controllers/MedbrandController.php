@@ -22,12 +22,12 @@ class MedbrandController extends Controller
      */
     public function index()
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isHr') || Gate::allows('isDoctor')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isHr') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
             $gens = Generic::get();
             $brands = Medbrand::orderBy('bname', 'asc')->paginate(10);
             return view('inventory.brandname.index', compact('brands', 'gens'));
         }else{
-            abort(403, 'You are not Authorized on this page!');
+            return back();
         }
     }
 
@@ -49,7 +49,7 @@ class MedbrandController extends Controller
      */
     public function store(Request $request)
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isHr') || Gate::allows('isDoctor')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
             $this->brandNameValidation();
             $atts = $request->except('generic_id');
 
@@ -72,7 +72,7 @@ class MedbrandController extends Controller
             return back();
 
         }else{
-            abort(403, 'You are not Authorized on this page!');
+            return back();
         }
     }
 
@@ -84,10 +84,10 @@ class MedbrandController extends Controller
      */
     public function show(Medbrand $medbrand)
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isHr') || Gate::allows('isDoctor')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isHr') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
             return view('inventory.brandname.show', compact('medbrand'));
         }else{
-            abort(403, 'You are not Authorized on this page!');
+            return back();
         }
     }
 
@@ -111,14 +111,14 @@ class MedbrandController extends Controller
      */
     public function update(Request $request, Medbrand $medbrand)
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isHr') || Gate::allows('isDoctor')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
             $atts = $request->validate([
                     'bname' => ['required', 'unique:medbrands,bname,'.$medbrand->id],
                 ]);
             $medbrand->update($atts);
             return back();
         }else{
-            abort(403, 'You are not Authorized on this page!');
+            return back();
         }
     }
 
@@ -130,14 +130,14 @@ class MedbrandController extends Controller
      */
     public function destroy(Medbrand $medbrand)
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isHr') || Gate::allows('isDoctor')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
             if (count($medbrand->medicines) > 0) {
                 return back()->with('brand_message', 'You cannot delete a brand with record in inventory');
             }
             $medbrand->delete();
             return back();
         }else{
-            abort(403, 'You are not Authorized on this page!');
+            return back();
         }
     }
 

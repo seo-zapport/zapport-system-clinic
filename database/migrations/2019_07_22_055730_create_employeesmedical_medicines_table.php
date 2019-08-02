@@ -13,12 +13,16 @@ class CreateEmployeesmedicalMedicinesTable extends Migration
      */
     public function up()
     {
-        Schema::create('employeesmedical_medicines', function (Blueprint $table) {
+        Schema::create('employeesmedical_medicine_users', function (Blueprint $table) {
             $table->unsignedBigInteger('employeesmedical_id');
             $table->unsignedBigInteger('medicine_id');
+            $table->unsignedBigInteger('user_id');
+            $table->bigInteger('quantity');
+            $table->timestamps();
 
             $table->foreign('employeesmedical_id')->references('id')->on('employeesmedicals')->onDelete('cascade');
             $table->foreign('medicine_id')->references('id')->on('medicines')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

@@ -24,7 +24,7 @@ class RolesController extends Controller
             $roles = Role::get();
             return view('admin.roles.index', compact('roles'));
         }else{
-            abort(403, "Hindi ka admin bitch!");
+            return back();
         }
 
     }
@@ -54,7 +54,7 @@ class RolesController extends Controller
 
             return back();
         }else{
-            abort(403, "Hindi ka admin bitch!");
+            return back();
         }
     }
 
@@ -107,7 +107,7 @@ class RolesController extends Controller
             $role->delete();
             return back();
         }else{
-            abort(403, "Hindi ka admin bitch!");
+            return back();
         }
     }
 

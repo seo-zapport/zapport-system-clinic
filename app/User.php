@@ -67,4 +67,14 @@ class User extends Authenticatable
         return $this->medicine()->save($medicine);
     }
 
+    public function employeesMedicals()
+    {
+        return $this->belongsToMany(Employeesmedical::class, 'employeesmedical_medicine_users', 'user_id')->withPivot('quantity')->withTimestamps();
+    }
+
+    public function medicines()
+    {
+        return $this->belongsToMany(Medicine::class, 'employeesmedical_medicine_users', 'user_id')->withPivot('quantity')->withTimestamps();
+    }
+
 }

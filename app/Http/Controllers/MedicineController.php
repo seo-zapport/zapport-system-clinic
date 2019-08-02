@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Medicine;
-use App\Medbrand;
 use App\Generic;
+use App\Medbrand;
+use App\Medicine;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class MedicineController extends Controller
 {
@@ -19,11 +20,28 @@ class MedicineController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $meds = Medicine::select('brand_id', 'generic_id', 'qty_stock')->groupBy('brand_id', 'generic_id', 'qty_stock')->orderBy('id', 'desc')->paginate(10);
-        $gens = Generic::orderBy('gname', 'asc')->get();
-        return view('inventory.medicine.index', compact('meds', 'gens'));
+        if (Gate::allows('isAdmin') || Gate::allows('isHr') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
+            if ($request->has('search')) {
+                $searchGen = Generic::where('gname', $request->search)->first();
+                if ($searchGen != null) {
+                    $meds = Medicine::select('brand_id', 'generic_id', 'qty_stock')->groupBy('brand_id', 'generic_id', 'qty_stock')->where('generic_id', $searchGen->id)->orderBy('id', 'desc')->paginate(10);
+                    $meds->appends(['search' => $request->search]);
+                }else{
+                    $meds = null;
+                }
+                $search = $request->search;
+            }else{
+                $meds = Medicine::select('brand_id', 'generic_id', 'qty_stock')->groupBy('brand_id', 'generic_id', 'qty_stock')->orderBy('id', 'desc')->paginate(10);
+            }
+            $gens = Generic::orderBy('gname', 'asc')->get();
+            return view('inventory.medicine.index', compact('meds', 'gens', 'search'));
+        }else{
+
+           return back();
+
+        }
     }
 
     /**
@@ -44,59 +62,66 @@ class MedicineController extends Controller
      */
     public function store(Request $request)
     {
-        $atts = $this->medicineValidation();
-        $atts = $request->except('qty_input');
-        $multiplier = $request->input('qty_input');
-        $atts['qty_stock'] = $request->input('qty_input');
+        if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
+            $atts = $this->medicineValidation();
+            $atts = $request->except('qty_input');
+            $multiplier = $request->input('qty_input');
+            $atts['qty_stock'] = $request->input('qty_input');
 
-        $meds = Medicine::where('brand_id', $request->brand_id)->where('generic_id', $request->generic_id)->get();
+            $meds = Medicine::where('brand_id', $request->brand_id)->where('generic_id', $request->generic_id)->get();
 
-        if (count($meds) > 0) {
+            if (count($meds) > 0) {
 
-            // $logsArr = array();
-            foreach ($meds as $med) {
-                $med->qty_stock = $med->qty_stock + $request->qty_input;
-                $med->save();
-                // $logsArr[] = $med->qty_stock + $request->qty_input;
+                // $logsArr = array();
+                foreach ($meds as $med) {
+                    $med->qty_stock = $med->qty_stock + $request->qty_input;
+                    $med->save();
+                    // $logsArr[] = $med->qty_stock + $request->qty_input;
+                }
+
+                 $arr = array();
+                for ($i=1; $i <= $multiplier; $i++) { 
+                    $arr[] = $request;
+                }
+
+                foreach ($arr as $data) {
+                    $newMeds = new Medicine;
+                    $newMeds->qty_stock       = count($meds) + $request->qty_input;
+                    $newMeds->expiration_date = $data->expiration_date;
+                    $newMeds->generic_id      = $data->generic_id;
+                    $newMeds->brand_id        = $data->brand_id;
+                    $newMeds->availability    = 0;
+                    $newMeds->user_id         = auth()->user()->id;
+                    $newMeds->save();
+                }
+
+            }else{
+
+                $arr = array();
+                for ($i=1; $i <= $multiplier; $i++) { 
+                    $arr[] = $request;
+                }
+
+                foreach ($arr as $data) {
+                    $newMeds = new Medicine;
+                    $newMeds->qty_stock       = $data->qty_input;
+                    $newMeds->expiration_date = $data->expiration_date;
+                    $newMeds->generic_id      = $data->generic_id;
+                    $newMeds->brand_id        = $data->brand_id;
+                    $newMeds->availability    = 0;
+                    $newMeds->user_id         = auth()->user()->id;
+                    $newMeds->save();
+                }
+
             }
 
-             $arr = array();
-            for ($i=1; $i <= $multiplier; $i++) { 
-                $arr[] = $request;
-            }
-
-            foreach ($arr as $data) {
-                $newMeds = new Medicine;
-                $newMeds->qty_stock       = count($meds) + $request->qty_input;
-                $newMeds->expiration_date = $data->expiration_date;
-                $newMeds->generic_id      = $data->generic_id;
-                $newMeds->brand_id        = $data->brand_id;
-                $newMeds->availability    = 0;
-                $newMeds->user_id         = auth()->user()->id;
-                $newMeds->save();
-            }
+            return back();
 
         }else{
 
-            $arr = array();
-            for ($i=1; $i <= $multiplier; $i++) { 
-                $arr[] = $request;
-            }
-
-            foreach ($arr as $data) {
-                $newMeds = new Medicine;
-                $newMeds->qty_stock       = $data->qty_input;
-                $newMeds->expiration_date = $data->expiration_date;
-                $newMeds->generic_id      = $data->generic_id;
-                $newMeds->brand_id        = $data->brand_id;
-                $newMeds->availability    = 0;
-                $newMeds->user_id         = auth()->user()->id;
-                $newMeds->save();
-            }
+           return back();
 
         }
-
-        return back();
     }
 
     /**
@@ -146,16 +171,28 @@ class MedicineController extends Controller
 
     public function getBrand($id)
     {
-        $gen = Generic::find($id);
-        $brand_id = $gen->medbrand->pluck('bname', 'id');
-        return json_encode($brand_id);
+        if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
+            $gen = Generic::find($id);
+            $brand_id = $gen->medbrand->pluck('bname', 'id');
+            return json_encode($brand_id);
+        }else{
+
+           return back();
+
+        }
     }
 
     public function logs(Medbrand $medbrand, Generic $generic)
     {
-        $logs = Medicine::where('brand_id', $medbrand->id)->where('generic_id', $generic->id)->get();
-        // dd($logs);
-        return view('inventory.medicine.logs', compact('logs', 'medbrand', 'generic'));
+        if (Gate::allows('isAdmin') || Gate::allows('isHr') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
+            $logs = Medicine::where('brand_id', $medbrand->id)->where('generic_id', $generic->id)->orderBy('id', 'desc')->get();
+            // dd($logs);
+            return view('inventory.medicine.logs', compact('logs', 'medbrand', 'generic'));
+        }else{
+
+           return back();
+
+        }
     }
 
     public function medicineValidation()

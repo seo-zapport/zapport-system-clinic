@@ -7,7 +7,7 @@
 <form method="get">
 	<div class="form-row">
 		<div class="form-group col-md-4">
-			<input type="search" name="search" class="form-control" placeholder="Search for Employee ID or Name of Employee">
+			<input type="search" name="search" class="form-control" value="{{ (!empty($search)) ? $search : '' }}" placeholder="Search for Employee ID or Name of Employee">
 		</div>
 		<div class="form-group col-md-1 d-inline-flex">
 			<button type="submit" class="btn btn-success mr-2">Search</button>
@@ -40,6 +40,6 @@
 		@endforelse
 	</tbody>
 </table>
-{{ $emps->links() }}
+{{-- {{ $emps->links() }} --}}
 
 @endsection

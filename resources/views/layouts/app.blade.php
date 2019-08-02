@@ -38,7 +38,7 @@
                     <div class="wrap">
                         <div class="container-fluid">
                             <div class="card">
-                                <div class="card-header">@yield('dash-title')</div>
+                                <div class="card-header">@yield('dash-title') <span class="float-right">@yield('back')</span></div>
                                 <div class="card-body">
                                     @yield('dash-content') 
                                 </div> 

@@ -17,7 +17,7 @@ class CreateEmployeesmedicalsTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('employee_id');
-            $table->bigInteger('quantity');
+            // $table->bigInteger('quantity');
             $table->string('diagnosis');
             $table->text('note');
             $table->string('status');

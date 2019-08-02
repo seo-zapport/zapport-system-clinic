@@ -21,13 +21,21 @@ class EmployeeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
-            $employees = Employee::orderBy('first_name', 'asc')->paginate(10);
-            return view('hr.employee.index', compact('employees'));
+            // $employees = Employee::where('first_name', 'like', '%'.$request->search.'%')
+            //                      ->orWhere('last_name', 'like', '%'.$request->search.'%')
+            //                      ->orWhere('middle_name', 'like', '%'.$request->search.'%')
+            //                      ->orWhere('emp_id', 'like', '%'.$request->search.'%')
+            //                      ->orderBy('first_name', 'asc')->paginate(10);
+            $employees = Employee::orWhere(\DB::raw("concat(emp_id, ' ', first_name, ' ', last_name, ' ', middle_name)"), 'like', '%'.$request->search.'%')
+                                 ->orWhere(\DB::raw("concat(emp_id, ' ', last_name, ' ', first_name, ' ', middle_name)"), 'like', '%'.$request->search.'%')->paginate(10);
+            $employees->appends(['search' => $request->search]);
+            $search = $request->search;
+            return view('hr.employee.index', compact('employees', 'search'));
         }else{
-            abort(403, 'You are not Authorized on this page!');
+            return back();
         }
     }
 
@@ -42,7 +50,7 @@ class EmployeeController extends Controller
             $departments = Department::get();
             return view('hr.employee.create', compact('departments'));
         }else{
-            abort(403, 'You are not Authorized on this page!');
+            return back();
         }
 
     }
@@ -123,7 +131,7 @@ class EmployeeController extends Controller
             return back();
 
         }else{
-            abort(403, 'You are not Authorized on this page!');
+            return back();
         }
     }
 
@@ -138,7 +146,7 @@ class EmployeeController extends Controller
         if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
             return view('hr.employee.show', compact('employee'));
         }else{
-            abort(403, 'You are not Authorized on this page!');
+            return back();
         }
     }
 
@@ -159,7 +167,7 @@ class EmployeeController extends Controller
 
             return view('hr.employee.edit', compact('employee', 'departments', 'uniqDep'));
         }else{
-            abort(403, 'You are not Authorized on this page!');
+            return back();
         }
     }
 
@@ -285,7 +293,7 @@ class EmployeeController extends Controller
             return redirect(route('hr.emp.show', ['employee' => $employee->id]));
 
         }else{
-            abort(403, 'You are not Authorized on this page!');
+            return back();
         }
     }
 

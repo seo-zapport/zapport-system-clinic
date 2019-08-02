@@ -23,7 +23,7 @@ class DepartmentController extends Controller
             $deps = Department::orderBy('id', 'desc')->get();
             return view('hr.department.index', compact('deps'));
         }else{
-            abort(403, 'You are not Authorized on this page!');
+            return back();
         }
     }
 
@@ -37,7 +37,7 @@ class DepartmentController extends Controller
         if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
             return view('hr.department.create');
         }else{
-            abort(403, 'You are not Authorized on this page!');
+            return back();
         }
     }
 
@@ -54,7 +54,7 @@ class DepartmentController extends Controller
             Department::create($atts);
             return back();
         }else{
-            abort(403, 'You are not Authorized on this page!');
+            return back();
         }
     }
 
@@ -107,7 +107,7 @@ class DepartmentController extends Controller
             $department->delete();
             return back();
         }else{
-            abort(403, 'You are not Authorized on this page!');
+            return back();
         }
     }
 

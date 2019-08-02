@@ -4,9 +4,11 @@
 @section('dash-title', 'Generic Names')
 @section('dash-content')
 
-<div class="form-group">
-	<a class="btn btn-info text-white" href="#" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus"></i> Add New</a>
-</div>
+@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
+	<div class="form-group">
+		<a class="btn btn-info text-white" href="#" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus"></i> Add New</a>
+	</div>
+@endif
 
 <table class="table table-hover">
 	<thead class="thead-dark">
@@ -16,6 +18,7 @@
 	<tbody>
 		@forelse ($gens as $gen)
 			<tr>
+				@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
 				<td>
 	        	<form method="post" action="{{ route('genericname.delete', ['generic' => $gen->id]) }}">
 	        		@csrf
@@ -30,6 +33,11 @@
 					</div>
 	        	</form>
 				</td>
+				@else
+				<td>
+					{{ ucwords($gen->gname) }}
+				</td>
+				@endif
 				<td>{{ $gen->medicines->where('availability', 0)->count() }} <a href="{{ route('genericname.show', ['generic' => $gen->id]) }}" class="btn btn-info text-white float-right">View</a></td>
 			</tr>
 			@empty

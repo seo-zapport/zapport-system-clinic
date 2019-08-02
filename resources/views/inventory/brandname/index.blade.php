@@ -4,9 +4,11 @@
 @section('dash-title', 'Brand Names')
 @section('dash-content')
 
-<div class="form-group">
-	<a class="btn btn-info text-white" href="#" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus"></i> Add Brand</a>
-</div>
+@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
+	<div class="form-group">
+		<a class="btn btn-info text-white" href="#" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus"></i> Add Brand</a>
+	</div>
+@endif
 
 <table class="table table-hover">
 	<thead class="thead-dark">
@@ -16,6 +18,7 @@
 	<tbody>
 		@forelse ($brands as $brand)
 			<tr>
+				@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
 				<td>
 	        	<form method="post" action="{{ route('brandname.delete', ['medbrand' => $brand->id]) }}">
 	        		@csrf
@@ -30,7 +33,12 @@
 					</div>
 	        	</form>
 				</td>
-				<td>{{ $brand->medicines->count() }} <a href="{{ route('brandname.show', ['medbrand' => $brand->id]) }}" class="btn btn-info text-white float-right">View</a></td>
+				@else
+				<td>
+					{{ ucwords($brand->bname) }}
+				</td>
+				@endif
+				<td>{{ $brand->generic->count() }} <a href="{{ route('brandname.show', ['medbrand' => $brand->id]) }}" class="btn btn-info text-white float-right">View</a></td>
 			</tr>
 			@empty
 				<tr>

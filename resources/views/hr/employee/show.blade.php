@@ -3,7 +3,11 @@
 @section('employees', 'active')
 @section('dash-title', 'Employees Profile')
 @section('dash-content')
-
+@section('back')
+<a href="{{ route('hr.employees') }}">
+	<i class="fas fa-arrow-left"></i>
+</a>
+@endsection
 <img src="{{ asset('storage/uploaded/'.@$employee->profile_img) }}" alt="{{ @$employee->profile_img }}" class="img-fluid">
 <hr>
 <h3>Employees Info</h3>
@@ -42,7 +46,7 @@
 </div>
 
 @php
-	$arr = unserialize(@$employee->children); 
+	$arr = unserialize(@$employee->children);
 	if (!empty(@$arr)) {
 		$count = count(@$arr);
 	}

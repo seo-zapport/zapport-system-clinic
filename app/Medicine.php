@@ -21,6 +21,11 @@ class Medicine extends Model
 
     public function employeesMedical()
     {
-        return $this->belongsToMany(Employeesmedical::class, 'employeesmedical_medicines', 'medicine_id');
+        return $this->belongsToMany(Employeesmedical::class, 'employeesmedical_medicine_users', 'medicine_id')->withPivot('quantity')->withTimestamps();
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'employeesmedical_medicine_users', 'medicine_id')->withPivot('quantity')->withTimestamps();
     }
 }

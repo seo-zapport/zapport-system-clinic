@@ -40,6 +40,11 @@
 	</tbody>
 </table>
 @include('layouts.errors')
+@if (session('pos_message'))
+	<div class="alert alert-danger alert-posts">
+		{{ session('pos_message') }}
+	</div>
+@endif
 
 <!-- Modal Add -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

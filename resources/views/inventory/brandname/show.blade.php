@@ -3,10 +3,16 @@
 @section('brandname', 'active')
 @section('dash-title', ucwords($medbrand->bname))
 @section('dash-content')
-
+@section('back')
+<a href="{{ route('brandname') }}">
+	<i class="fas fa-arrow-left"></i>
+</a>
+@endsection
 <div class="d-flex align-content-center p-2">
 	<h4>Brand Name: {{ ucwords($medbrand->bname) }}</h4>
-	<a href="" data-toggle="modal" data-target="#exampleModalCenter"><i class="far fa-edit text-primary p-1"></i></a>
+	@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
+		<a href="" data-toggle="modal" data-target="#exampleModalCenter"><i class="far fa-edit text-primary p-1"></i></a>
+	@endif
 </div>
 
 <table class="table">
@@ -22,7 +28,7 @@
 				<td class="{{ ($gen->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">{{ ucfirst($gen->generic->gname) }}</td>
 				<td class="{{ ($gen->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">{{ $gen->created_at->format('M d, Y') }}</td>
 				<td class="{{ ($gen->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">{{ $gen->expiration_date->format('M d, Y') }}</td>
-				<td class="{{ ($gen->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">{{ $gen->where('expiration_date', $gen->expiration_date)->where('availability', 0)->count() }}</td>
+				<td class="{{ ($gen->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">{{ $gen->where('brand_id', $medbrand->id)->where('generic_id', $gen->generic->id)->where('expiration_date', $gen->expiration_date)->where('availability', 0)->count() }}</td>
 			</tr>
 			@empty
 				<tr>

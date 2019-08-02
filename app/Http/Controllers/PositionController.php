@@ -27,7 +27,7 @@ class PositionController extends Controller
             $departments = Department::orderBy('department', 'asc')->get();
             return view('hr.position.index', compact('positions', 'departments'));
         }else{
-            abort(403, 'You are not Authorized on this page!');
+            return back();
         }
     }
 
@@ -62,7 +62,7 @@ class PositionController extends Controller
             $dep->positions()->attach($posID);
             return back();
         }else{
-            abort(403, 'You are not Authorized on this page!');
+            return back();
         }
     }
 
@@ -109,10 +109,13 @@ class PositionController extends Controller
     public function destroy(Position $position)
     {
         if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
+            if (count($position->employee) > 0) {
+                return back()->with('pos_message', 'You cannot delete a position with employee!');
+            }
             $position->delete();
             return back();
         }else{
-            abort(403, 'You are not Authorized on this page!');
+            return back();
         }
     }
 

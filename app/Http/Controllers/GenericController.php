@@ -21,12 +21,12 @@ class GenericController extends Controller
      */
     public function index()
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isHr') || Gate::allows('isDoctor')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isHr') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
             $gens = Generic::orderBy('gname', 'asc')->paginate(10);
             $brands = Medbrand::get();
             return view('inventory.genericname.index', compact('gens', 'brands'));
         }else{
-            abort(403, 'You are not Authorized on this page!');
+            return back();
         }
     }
 
@@ -48,7 +48,7 @@ class GenericController extends Controller
      */
     public function store(Request $request)
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
             $atts = $this->genericValidation();
             Generic::create($atts);
             // $atts = $request->except('medbrand_id');
@@ -60,7 +60,7 @@ class GenericController extends Controller
             // $bnd->generic()->attach($genID);
             return back();
         }else{
-            abort(403, 'You are not Authorized on this page!');
+            return back();
         }
 
     }
@@ -73,10 +73,16 @@ class GenericController extends Controller
      */
     public function show(Generic $generic)
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
-            return view('inventory.genericname.show', compact('generic'));
+        if (Gate::allows('isAdmin') || Gate::allows('isHr') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
+            $unique = $generic->medicines->unique(function($item){
+                return $item['generic_id'].$item['brand_id'].$item['created_at']->format('M d, Y H:i');
+            });
+
+            $allBrands = $unique->values()->all();
+
+            return view('inventory.genericname.show', compact('generic', 'allBrands'));
         }else{
-            abort(403, 'You are not Authorized on this page!');
+            return back();
         }
     }
 
@@ -111,14 +117,14 @@ class GenericController extends Controller
      */
     public function destroy(Generic $generic)
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
             if (count($generic->medbrand) > 0) {
                 return back()->with('generic_message', 'You cannot delete a Generic name registered with Brand');
             }
             $generic->delete();
             return back();
         }else{
-            abort(403, 'You are not Authorized on this page!');
+            return back();
         }
     }
 

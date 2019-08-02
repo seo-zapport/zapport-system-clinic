@@ -1,29 +1,44 @@
 @extends('layouts.app')
 @section('title', 'Brand Name')
 @section('medicine', 'active')
-@section('dash-title', 'Brand Names')
+@section('dash-title', 'List of Medicines')
 @section('dash-content')
 
-<div class="form-group">
-	<a class="btn btn-info text-white" href="#" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus"></i> Add New</a>
-</div>
+@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
+	<div class="form-group">
+		<a class="btn btn-info text-white" href="#" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus"></i> Add New</a>
+	</div>
+@endif
+
+<form method="get">
+	<div class="form-row">
+		<div class="form-group col-md-4">
+			<input type="search" name="search" class="form-control" value="{{ (!empty($search)) ? $search : '' }}" placeholder="Search for Generic Name">
+		</div>
+		<div class="form-group col-md-1 d-inline-flex">
+			<button type="submit" class="btn btn-success mr-2">Search</button>
+			<a href="{{ route('medicine') }}" class="btn btn-info text-white">Clear</a>
+		</div>
+	</div>
+</form>
 
 <table class="table table-hover">
 	<thead class="thead-dark">
 		<th>Generic Name</th>
 		<th>Brand Name</th>
-		<th>Quantity</th>
+		<th>Remaining Quantity</th>
 		<th>Stock Logs</th>
 	</thead>
 	<tbody>
+		@if ($meds != null)		
 		@forelse ($meds as $med)
 			<tr>
 				<td>{{ ucfirst($med->generic->gname) }}</td>
 				<td>{{ ucwords($med->medBrand->bname) }}</td>
 				<td>{{ $med->where('generic_id', $med->generic_id)->where('brand_id', $med->brand_id)->where('availability', 0)->count() }}</td>
 				<td>
-					{{ $med->qty_stock }}
-					<a href="{{ route('medicine.log', ['medbrand' => $med->medBrand->id, 'generic' => $med->generic->id]) }}" class="btn btn-info text-white float-right">View</a>
+					{{-- {{ $med->qty_stock }} --}}
+					<a href="{{ route('medicine.log', ['medbrand' => $med->medBrand->id, 'generic' => $med->generic->id]) }}" class="btn btn-info text-white">View</a>
 				</td>
 			</tr>
 			@empty
@@ -31,9 +46,16 @@
 					<td colspan="4" class="text-center">{{ "No registered Medicine yet!" }}</td>
 				</tr>
 		@endforelse
+		@else
+			<tr>
+				<td colspan="4" class="text-center">{{ "No Record Found!" }}</td>
+			</tr>
+		@endif
 	</tbody>
 </table>
-{{ $meds->links() }}
+@if ($meds != null)
+	{{ $meds->links() }}
+@endif
 <br>
 @include('layouts.errors')
 

@@ -41,7 +41,7 @@ class UserRoleController extends Controller
 
             return view('admin.userRoles.index', compact('users', 'roles', 'noRoles', 'noUsers'));
         }else{
-            abort(403, "Hindi ka admin bitch!");
+            return back();
         }
     }
 
@@ -72,7 +72,7 @@ class UserRoleController extends Controller
 
             return back();
         }else{
-            abort(403, "Hindi ka admin bitch!");
+            return back();
         }
     }
 
@@ -113,7 +113,7 @@ class UserRoleController extends Controller
             $user->roles()->updateExistingPivot($role_id, $atts);
             return back();
         }else{
-            abort(403, "Hindi ka admin bitch!");
+            return back();
         }
 
     }
