@@ -56,8 +56,8 @@
 @endphp
 		<div class="row">
 			<div class="col-4"><p>Child's name: {{ $children[0] }}</p></div>
-			<div class="col-4"><p>Birthday: {{ $children[2] }}</p></div>
-			<div class="col-4"><p>Gender: {{ $children[1] }}</p></div>
+			<div class="col-4"><p>Birthday: {{ $children[1] }}</p></div>
+			<div class="col-4"><p>Gender: {{ $children[2] }}</p></div>
 		</div>
 		
 			@php
@@ -87,11 +87,15 @@
 		if (!empty(@$arr)){
 			foreach (@$arr as $exp){
 @endphp
+@if ($exp[0] != null && $exp[1] != null && $exp[2] != null && $exp[3] != null)
 		<div class="row">
 			<div class="col-4"><p>Company name: {{ ucwords($exp[0]) }}</p></div>
 			<div class="col-4"><p>Position: {{ ucwords($exp[1]) }}</p></div>
 			<div class="col-4"><p>Date covered: {{ $exp[2] . " " . " to " . " " . $exp[3] }}</p></div>
 		</div>
+@else
+<p>None</p>
+@endif
 		
 			@php
 		}

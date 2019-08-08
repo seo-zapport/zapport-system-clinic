@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Carbon\Carbon;
+
 class Medicine extends Model
 {
     public function medBrand()
@@ -27,5 +29,10 @@ class Medicine extends Model
     public function users()
     {
         return $this->belongsToMany(User::class, 'employeesmedical_medicine_users', 'medicine_id')->withPivot('quantity')->withTimestamps();
+    }
+
+    public function setCreatedatAttribute($value) 
+    {
+        $this->attributes['created_at'] = (new Carbon($value))->format('Y-m-d H');
     }
 }

@@ -46,9 +46,20 @@ class EmployeesmedicalController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($generic_id[0][0]);
         if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
 
             $this->employeesMedicalValidation();
+
+            // $arr = array_values($request->generic_id);
+            $arr1 = array_map( 'array_values', $request->generic_id);
+            $generic_id = array_values($arr1);
+
+            $arr2 = array_map( 'array_values', $request->brand_id);
+            $brand_id = array_values($arr2);
+
+            $arr3 = array_map( 'array_values', $request->quantity);
+            $quantity = array_values($arr3);
 
             if (!empty($request->generic_id) && !empty($request->brand_id) && !empty($request->quantity)) {
 
@@ -56,12 +67,11 @@ class EmployeesmedicalController extends Controller
 
             $arr = array();
             for ($i = 0; $i < $counter; $i++) {
-                $arr[] = Medicine::where('generic_id', $request->generic_id[$i][$i])
-                                 ->where('brand_id', $request->brand_id[$i][$i])
-
+                $arr[] = Medicine::where('generic_id', $generic_id[$i][0])
+                                 ->where('brand_id', $brand_id[$i][0])
                                  ->where('expiration_date', '>', NOW())
                                  ->where('availability', 0)
-                                 ->take($request->quantity[$i][$i])->orderBy('id', 'asc')->get();
+                                 ->take($quantity[$i][0])->orderBy('id', 'asc')->get();
             }
 
             }else{
@@ -97,7 +107,7 @@ class EmployeesmedicalController extends Controller
                     $newData->employeesmedical_id = $data;
                     $newData->medicine_id = $medQty->id;
                     $newData->user_id = auth()->user()->id;
-                    $newData->quantity = $request->quantity[$c][$c];
+                    $newData->quantity = $quantity[$c][0];
                     $newData->save();
                 }
 
@@ -267,6 +277,17 @@ class EmployeesmedicalController extends Controller
             $atts = $request->validate([
                         'followup_note'  =>  ['required']
                     ]);
+
+            // $arr = array_values($request->generic_id);
+            $arr1 = array_map( 'array_values', $request->generic_id);
+            $generic_id = array_values($arr1);
+
+            $arr2 = array_map( 'array_values', $request->brand_id);
+            $brand_id = array_values($arr2);
+
+            $arr3 = array_map( 'array_values', $request->quantity);
+            $quantity = array_values($arr3);
+
             $data = Mednote::create($atts);
 
             $data->employeesMedical()->attach($employeesmedical);
@@ -276,11 +297,11 @@ class EmployeesmedicalController extends Controller
 
                 $arr = array();
                 for ($i = 0; $i < $counter; $i++) {
-                    $arr[] = Medicine::where('generic_id', $request->generic_id[$i][$i])
-                                     ->where('brand_id', $request->brand_id[$i][$i])
+                    $arr[] = Medicine::where('generic_id', $generic_id[$i][0])
+                                     ->where('brand_id', $brand_id[$i][0])
                                      ->where('expiration_date', '>', NOW())
                                      ->where('availability', 0)
-                                     ->take($request->quantity[$i][$i])->orderBy('id', 'asc')->get();
+                                     ->take($quantity[$i][0])->orderBy('id', 'asc')->get();
                 }
 
                 for ($c = 0; $c < count($arr); $c++) { 
@@ -293,7 +314,7 @@ class EmployeesmedicalController extends Controller
                         $newData->employeesmedical_id = $employeesmedical->id;
                         $newData->medicine_id = $medQty->id;
                         $newData->user_id = auth()->user()->id;
-                        $newData->quantity = $request->quantity[$c][$c];
+                        $newData->quantity = $quantity[$c][0];
                         $newData->save();
                     }
 

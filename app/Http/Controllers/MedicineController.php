@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Employeesmedical;
 use App\Generic;
 use App\Medbrand;
 use App\Medicine;
@@ -26,14 +27,14 @@ class MedicineController extends Controller
             if ($request->has('search')) {
                 $searchGen = Generic::where('gname', $request->search)->first();
                 if ($searchGen != null) {
-                    $meds = Medicine::select('brand_id', 'generic_id', 'qty_stock')->groupBy('brand_id', 'generic_id', 'qty_stock')->where('generic_id', $searchGen->id)->orderBy('id', 'desc')->paginate(10);
+                    $meds = Medicine::select('brand_id', 'generic_id')->groupBy('brand_id', 'generic_id')->where('generic_id', $searchGen->id)->orderBy('id', 'desc')->paginate(10);
                     $meds->appends(['search' => $request->search]);
                 }else{
                     $meds = null;
                 }
                 $search = $request->search;
             }else{
-                $meds = Medicine::select('brand_id', 'generic_id', 'qty_stock')->groupBy('brand_id', 'generic_id', 'qty_stock')->orderBy('id', 'desc')->paginate(10);
+                $meds = Medicine::select('brand_id', 'generic_id')->groupBy('brand_id', 'generic_id')->orderBy('id', 'desc')->paginate(10);
             }
             $gens = Generic::orderBy('gname', 'asc')->get();
             return view('inventory.medicine.index', compact('meds', 'gens', 'search'));
@@ -72,12 +73,11 @@ class MedicineController extends Controller
 
             if (count($meds) > 0) {
 
-                // $logsArr = array();
-                foreach ($meds as $med) {
-                    $med->qty_stock = $med->qty_stock + $request->qty_input;
-                    $med->save();
-                    // $logsArr[] = $med->qty_stock + $request->qty_input;
-                }
+                // foreach ($meds as $med) {
+                //     dd($med->qty_stock + $request->qty_input);
+                //     $med->qty_stock = $med->qty_stock + $request->qty_input;
+                //     $med->save();
+                // }
 
                  $arr = array();
                 for ($i=1; $i <= $multiplier; $i++) { 
@@ -86,7 +86,7 @@ class MedicineController extends Controller
 
                 foreach ($arr as $data) {
                     $newMeds = new Medicine;
-                    $newMeds->qty_stock       = count($meds) + $request->qty_input;
+                    $newMeds->qty_stock       = $request->qty_input;
                     $newMeds->expiration_date = $data->expiration_date;
                     $newMeds->generic_id      = $data->generic_id;
                     $newMeds->brand_id        = $data->brand_id;
@@ -130,9 +130,52 @@ class MedicineController extends Controller
      * @param  \App\Medicine  $medicine
      * @return \Illuminate\Http\Response
      */
-    public function show(Medicine $medicine)
+    public function show(Medbrand $medbrand, Generic $generic, $inputDate, $expDate)
     {
-        //
+        $meds = Medicine::where('brand_id', $medbrand->id)
+                               ->where('generic_id', $generic->id)
+                               ->where('created_at', $inputDate)
+                               ->where('expiration_date', $expDate)
+                               ->where('availability', 1)
+                               ->orderBy('id', 'asc')->get();
+
+        $empsMeds = null;
+        $medsHistory = Medicine::with(['employeesMedical' => function($q) use (&$empsMeds){
+            $empsMeds = $q->get();
+        }])->where('brand_id', $medbrand->id)
+           ->where('generic_id', $generic->id)
+           ->where('created_at', $inputDate)
+           ->where('expiration_date', $expDate)
+           ->where('availability', 1)
+           ->orderBy('id', 'asc')->get();
+
+        if ($empsMeds != null) {
+            $empsMeds = $empsMeds->unique(function($item){
+                return $item['employeesmedical_id'].$item->pivot['created_at'];
+            });
+        }
+
+        $arr = [];
+        foreach ($meds as $logs) {
+            $arr[] = $logs->load('employeesMedical', 'users');
+            // foreach ($logs->load('employeesMedical') as $item) {
+            //     $arr[] = $item;
+            // }
+        }
+        $arr2 = [];
+        $temp_id  = 0;
+        foreach ($arr as $item) {
+            foreach ($item->users as $ids) {
+                
+                if($temp_id != $ids->id){
+                    $arr2[] = $item;
+                }
+                    $temp_id = $ids->id;
+            }
+        }
+
+
+        return view('inventory.medicine.medicine_history', compact('medbrand', 'generic', 'empsMeds', 'arr'));
     }
 
     /**
@@ -185,7 +228,7 @@ class MedicineController extends Controller
     public function logs(Medbrand $medbrand, Generic $generic)
     {
         if (Gate::allows('isAdmin') || Gate::allows('isHr') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
-            $logs = Medicine::where('brand_id', $medbrand->id)->where('generic_id', $generic->id)->orderBy('id', 'desc')->get();
+            $logs = Medicine::where('brand_id', $medbrand->id)->where('generic_id', $generic->id)->orderBy('id', 'asc')->get();
             // dd($logs);
             return view('inventory.medicine.logs', compact('logs', 'medbrand', 'generic'));
         }else{

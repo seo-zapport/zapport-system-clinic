@@ -89,6 +89,7 @@ Route::group(['prefix' => 'inventory'], function(){
 	Route::post('medicine', 'MedicineController@store')->name('medicine.add');
 	Route::get('medicine/gen/{id}', 'MedicineController@getBrand');
 	Route::get('medicine/logs/brand/{medbrand}/generic/{generic}', 'MedicineController@logs')->name('medicine.log');
+	Route::get('medicine/logs/brand/{medbrand}/generic/{generic}/inputDate/{inputDate}/expDate/{expDate}', 'MedicineController@show')->name('medicine.show');
 
 });
 

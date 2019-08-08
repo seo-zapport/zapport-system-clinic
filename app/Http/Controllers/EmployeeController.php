@@ -68,10 +68,10 @@ class EmployeeController extends Controller
             $atts = $this->employeeValidation();
 
             // dd($atts);
-            $arr = array(request('experience'));
+            $arr = request('experience');
             $works  = serialize($arr[0]);
 
-            $arr1 = array(request('children'));
+            $arr1 = request('children');
             $childrens  = serialize($arr1[0]);
 
 
