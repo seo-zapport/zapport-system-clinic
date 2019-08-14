@@ -46,7 +46,8 @@
 	</div>
 </div>
 <br>
-
+<hr>
+<br>
 <div class="row">
 	@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
 		<div class="col-md-5">

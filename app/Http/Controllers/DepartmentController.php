@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Department;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class DepartmentController extends Controller
@@ -22,6 +23,9 @@ class DepartmentController extends Controller
         if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
             $deps = Department::orderBy('id', 'desc')->get();
             return view('hr.department.index', compact('deps'));
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
             return back();
         }
@@ -36,6 +40,9 @@ class DepartmentController extends Controller
     {
         if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
             return view('hr.department.create');
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
             return back();
         }
@@ -53,6 +60,9 @@ class DepartmentController extends Controller
             $atts = $this->departmentValidation();
             Department::create($atts);
             return back();
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
             return back();
         }
@@ -106,6 +116,9 @@ class DepartmentController extends Controller
             }
             $department->delete();
             return back();
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
             return back();
         }

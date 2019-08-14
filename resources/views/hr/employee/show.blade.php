@@ -8,7 +8,9 @@
 	<i class="fas fa-arrow-left"></i>
 </a>
 @endsection
-<img src="{{ asset('storage/uploaded/'.@$employee->profile_img) }}" alt="{{ @$employee->profile_img }}" class="img-fluid">
+@if (@$employee->profile_img != null)
+	<img src="{{ asset('storage/uploaded/'.@$employee->profile_img) }}" alt="{{ @$employee->profile_img }}" class="img-fluid">
+@endif
 <hr>
 <h3>Employees Info</h3>
 <div class="row">

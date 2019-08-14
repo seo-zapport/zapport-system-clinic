@@ -18,17 +18,13 @@
 <table class="table">
 	<thead class="thead-dark">
 		<th>Generic Name</th>
-		<th>Input Date</th>
-		<th>Date Expire</th>
 		<th>Quantity</th>
 	</thead>
 	<tbody>
-		@forelse ($medbrand->medicines->unique('expiration_date') as $gen)
+		@forelse ($medbrand->medicines->unique('brand_id') as $gen)
 			<tr>
 				<td class="{{ ($gen->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">{{ ucfirst($gen->generic->gname) }}</td>
-				<td class="{{ ($gen->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">{{ $gen->created_at->format('M d, Y') }}</td>
-				<td class="{{ ($gen->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">{{ $gen->expiration_date->format('M d, Y') }}</td>
-				<td class="{{ ($gen->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">{{ $gen->where('brand_id', $medbrand->id)->where('generic_id', $gen->generic->id)->where('expiration_date', $gen->expiration_date)->where('availability', 0)->count() }}</td>
+				<td class="{{ ($gen->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">{{ $gen->where('brand_id', $medbrand->id)->where('generic_id', $gen->generic->id)->where('expiration_date', '>=', NOW())->where('availability', 0)->count() }}</td>
 			</tr>
 			@empty
 				<tr>
@@ -54,7 +50,7 @@
 					@method('PUT')
 					<div class="form-group">
 						<label for="bname">Brand Name</label>
-						<input type="text" name="bname" class="form-control" placeholder="Add Brand" value="{{ $medbrand->bname }}" {{-- required --}}>
+						<input type="text" name="bname" class="form-control" placeholder="Add Brand" value="{{ $medbrand->bname }}" required>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

@@ -19,17 +19,15 @@
 <table class="table table-hover">
 	<thead class="thead-dark">
 		<th>Employee Number</th>
-		<th>First Name</th>
-		<th>Last Name</th>
-		<th>Middle Name</th>
+		<th>Name</th>
+		<th>Department - Position</th>
 	</thead>
 	<tbody>
 		@forelse ($employees as $employee)
 			<tr>
 				<td>{{ $employee->emp_id }}</td>
-				<td>{{ ucwords($employee->first_name) }}</td>
-				<td>{{ ucwords($employee->last_name) }}</td>
-				<td>{{ ucwords($employee->middle_name) }} <a href="{{ route('hr.emp.show', ['employee' => $employee->id]) }}" class="btn btn-info text-white float-right">View</a></td>
+				<td>{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
+				<td>{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }} <a href="{{ route('hr.emp.show', ['employee' => $employee->id]) }}" class="btn btn-info text-white float-right">View</a></td>
 			</tr>
 			@empty
 				<tr>

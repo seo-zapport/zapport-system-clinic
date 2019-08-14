@@ -9,6 +9,7 @@ use App\Generic;
 use App\Medicine;
 use App\Mednote;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class EmployeesmedicalController extends Controller
@@ -115,6 +116,9 @@ class EmployeesmedicalController extends Controller
 
             return back();
 
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
 
             return back();
@@ -144,6 +148,9 @@ class EmployeesmedicalController extends Controller
 
             return view('medical.employeesMedical.show', compact('employee', 'employeesmedical', 'empMeds', 'gens', 'meds'));
 
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
 
             return back();
@@ -179,6 +186,9 @@ class EmployeesmedicalController extends Controller
             $employeesmedical->update($atts);
 
             return back();
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
             return back();
         }
@@ -208,6 +218,9 @@ class EmployeesmedicalController extends Controller
             $emps->appends(['search' => $request->search]);
             $search = $request->search;
             return view('medical.employeesMedical.listofemployee', compact('emps', 'search'));
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
             return back();
         }
@@ -231,6 +244,9 @@ class EmployeesmedicalController extends Controller
             $gens = Generic::orderBy('gname', 'asc')->get();
             $meds = Medicine::get();
             return view('medical.employeesMedical.employeeInfo', compact('employee', 'gens', 'meds', 'search', 'result'));
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
             return back();
         }
@@ -246,6 +262,9 @@ class EmployeesmedicalController extends Controller
 
             // $data['id'] = Medicine::where('generic_id', $id)->where('availability', 0)->where('expiration_date', '>', NOW())->count();
             return json_encode($data);
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
             return back();
         }
@@ -256,6 +275,9 @@ class EmployeesmedicalController extends Controller
         if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
             $dataCount = Medicine::where('generic_id', $generic_id)->where('brand_id', $brand_id)->where('availability', 0)->where('expiration_date', '>', NOW())->count();
             return json_encode($dataCount);
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
             return back();
         }
@@ -266,6 +288,9 @@ class EmployeesmedicalController extends Controller
         if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
             $dataCount = Medicine::where('generic_id', $generic_id)->where('brand_id', $brand_id)->where('availability', 0)->where('expiration_date', '>', NOW())->count();
             return json_encode($dataCount);
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
             return back();
         }
@@ -322,6 +347,9 @@ class EmployeesmedicalController extends Controller
             }
 
             return back();
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
             return back();
         }

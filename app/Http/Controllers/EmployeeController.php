@@ -8,6 +8,7 @@ use App\Employee;
 use App\Position;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class EmployeeController extends Controller
@@ -24,16 +25,14 @@ class EmployeeController extends Controller
     public function index(Request $request)
     {
         if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
-            // $employees = Employee::where('first_name', 'like', '%'.$request->search.'%')
-            //                      ->orWhere('last_name', 'like', '%'.$request->search.'%')
-            //                      ->orWhere('middle_name', 'like', '%'.$request->search.'%')
-            //                      ->orWhere('emp_id', 'like', '%'.$request->search.'%')
-            //                      ->orderBy('first_name', 'asc')->paginate(10);
             $employees = Employee::orWhere(\DB::raw("concat(emp_id, ' ', first_name, ' ', last_name, ' ', middle_name)"), 'like', '%'.$request->search.'%')
                                  ->orWhere(\DB::raw("concat(emp_id, ' ', last_name, ' ', first_name, ' ', middle_name)"), 'like', '%'.$request->search.'%')->paginate(10);
             $employees->appends(['search' => $request->search]);
             $search = $request->search;
             return view('hr.employee.index', compact('employees', 'search'));
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
             return back();
         }
@@ -49,6 +48,9 @@ class EmployeeController extends Controller
         if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
             $departments = Department::get();
             return view('hr.employee.create', compact('departments'));
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
             return back();
         }
@@ -63,15 +65,16 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
+        // dd(count($request->children[0]));
         // dd($request->all());
         if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
             $atts = $this->employeeValidation();
 
             // dd($atts);
-            $arr = request('experience');
+            $arr = array(request('experience'));
             $works  = serialize($arr[0]);
 
-            $arr1 = request('children');
+            $arr1 = array(request('children'));
             $childrens  = serialize($arr1[0]);
 
 
@@ -130,6 +133,9 @@ class EmployeeController extends Controller
 
             return back();
 
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
             return back();
         }
@@ -145,6 +151,9 @@ class EmployeeController extends Controller
     {
         if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
             return view('hr.employee.show', compact('employee'));
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
             return back();
         }
@@ -166,6 +175,9 @@ class EmployeeController extends Controller
             // Filter Civil Status IDs that are not included
 
             return view('hr.employee.edit', compact('employee', 'departments', 'uniqDep'));
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
             return back();
         }
@@ -292,6 +304,9 @@ class EmployeeController extends Controller
 
             return redirect(route('hr.emp.show', ['employee' => $employee->id]));
 
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
             return back();
         }

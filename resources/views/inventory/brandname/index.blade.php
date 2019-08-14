@@ -79,7 +79,7 @@
 					</div>
 					<div class="form-group">
 						<label for="bname">Brand Name</label>
-						<input type="text" name="bname" class="form-control" placeholder="Add Brand" value="{{ old('bname') }}" {{-- required --}}>
+						<input type="text" name="bname" class="form-control" placeholder="Add Brand" value="{{ old('bname') }}" required>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

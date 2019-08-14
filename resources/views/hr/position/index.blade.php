@@ -8,9 +8,10 @@
 	<a class="btn btn-info text-white" href="#" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus"></i> Add Position</a>
 </div>
 
-<table class="table">
+<table class="table table-hover">
 	<thead class="thead-dark">
 		<th>Position</th>
+		<th>Department</th>
 		<th>No. of Employees</th>
 	</thead>
 	<tbody>
@@ -22,15 +23,22 @@
 	        		@method('DELETE')
 	        		<div class="form-row align-items-center">
 	            		<div class="col-auto my-1 form-inline">
-	        				{{ $position->position }}
+	        				{{ ucwords($position->position) }}
 							<button class="btn btn-link"  onclick="return confirm('Are you sure you want to delete {{ ucfirst($position->position) }} Position?')" data-id="{{ $position->id }}">
 								<i class="fas fa-times-circle"></i>
 							</button>
 						</div>
 					</div>
 	        	</form>
+	        	@foreach ($position->departments as $department)
+	        		<td>
+	        			{{ ucwords($department->department) }}
+	        		</td>
+	        	@endforeach
+				<td>
+					{{ $position->employee->count() }}
+					<span><a href="{{ route('hr.pos.show', ['position' => $position->id]) }}" class="btn btn-info text-white float-right">View</a></span>
 				</td>
-				<td>{{ $position->employee->count() }}</td>
 			</tr>
 			@empty
 				<tr>

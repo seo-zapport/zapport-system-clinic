@@ -6,6 +6,7 @@ use App\Generic;
 use App\Medbrand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 
 class GenericController extends Controller
 {
@@ -25,6 +26,9 @@ class GenericController extends Controller
             $gens = Generic::orderBy('gname', 'asc')->paginate(10);
             $brands = Medbrand::get();
             return view('inventory.genericname.index', compact('gens', 'brands'));
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
             return back();
         }
@@ -59,6 +63,9 @@ class GenericController extends Controller
             // $bnd = Medbrand::find($bndID);
             // $bnd->generic()->attach($genID);
             return back();
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
             return back();
         }
@@ -81,6 +88,9 @@ class GenericController extends Controller
             $allBrands = $unique->values()->all();
 
             return view('inventory.genericname.show', compact('generic', 'allBrands'));
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
             return back();
         }
@@ -123,6 +133,9 @@ class GenericController extends Controller
             }
             $generic->delete();
             return back();
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
             return back();
         }

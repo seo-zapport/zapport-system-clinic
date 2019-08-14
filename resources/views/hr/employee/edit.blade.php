@@ -9,7 +9,9 @@
 @method('PUT')
 @endsection
 @section('img')
-<img src="{{ asset('storage/uploaded/'.@$employee->profile_img) }}" alt="{{ @$employee->profile_img }}" class="img-fluid">
+@if (@$employee->profile_img != null)
+	<img src="{{ asset('storage/uploaded/'.@$employee->profile_img) }}" alt="{{ @$employee->profile_img }}" class="img-fluid">
+@endif
 @endsection
 @section('editFname', ucwords($employee->first_name))
 @section('editLname', ucwords($employee->last_name))

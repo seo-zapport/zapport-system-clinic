@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 
 class RolesController extends Controller
 {
@@ -23,6 +24,9 @@ class RolesController extends Controller
         if (Gate::allows('isAdmin')) {
             $roles = Role::get();
             return view('admin.roles.index', compact('roles'));
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
             return back();
         }
@@ -53,6 +57,9 @@ class RolesController extends Controller
             Role::create($atts);
 
             return back();
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
             return back();
         }
@@ -106,6 +113,9 @@ class RolesController extends Controller
             }
             $role->delete();
             return back();
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
             return back();
         }

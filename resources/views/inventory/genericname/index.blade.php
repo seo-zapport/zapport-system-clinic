@@ -69,7 +69,7 @@
 					@csrf
 					<div class="form-group">
 						<label for="gname">Generic Name</label>
-						<input type="text" name="gname" class="form-control" placeholder="Generic Name" value="{{ old('gname') }}" {{-- required --}}>
+						<input type="text" name="gname" class="form-control" placeholder="Generic Name" value="{{ old('gname') }}" required>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

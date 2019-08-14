@@ -4,7 +4,7 @@
 @section('dash-title', 'Add Employee')
 @section('dash-content')
 
-	<form enctype="multipart/form-data" method="post" action="@yield('action', route('hr.emp.addEmp'))">
+	<form id="empForm" enctype="multipart/form-data" method="post" action="@yield('action', route('hr.emp.addEmp'))">
 		@csrf
 		@yield('editMethod')
 		<h3>Employees Information</h3>

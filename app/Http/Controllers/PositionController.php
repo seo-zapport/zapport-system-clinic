@@ -6,6 +6,7 @@ use App\Department;
 use App\DepartmentPosition;
 use App\Position;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class PositionController extends Controller
@@ -26,6 +27,9 @@ class PositionController extends Controller
             $positions = Position::orderBy('id', 'desc')->get();
             $departments = Department::orderBy('department', 'asc')->get();
             return view('hr.position.index', compact('positions', 'departments'));
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
             return back();
         }
@@ -61,6 +65,9 @@ class PositionController extends Controller
             // dd($dep);
             $dep->positions()->attach($posID);
             return back();
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
             return back();
         }
@@ -74,7 +81,7 @@ class PositionController extends Controller
      */
     public function show(Position $position)
     {
-        //
+        return view('hr.position.show', compact('position'));
     }
 
     /**
@@ -114,6 +121,9 @@ class PositionController extends Controller
             }
             $position->delete();
             return back();
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
             return back();
         }

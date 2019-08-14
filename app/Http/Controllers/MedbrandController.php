@@ -7,6 +7,7 @@ use App\Medbrand;
 use App\MedbrandGeneric;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 
 class MedbrandController extends Controller
 {
@@ -26,6 +27,9 @@ class MedbrandController extends Controller
             $gens = Generic::get();
             $brands = Medbrand::orderBy('bname', 'asc')->paginate(10);
             return view('inventory.brandname.index', compact('brands', 'gens'));
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
             return back();
         }
@@ -71,6 +75,9 @@ class MedbrandController extends Controller
             $gen->medbrand()->attach($brndID);
             return back();
 
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
             return back();
         }
@@ -86,6 +93,9 @@ class MedbrandController extends Controller
     {
         if (Gate::allows('isAdmin') || Gate::allows('isHr') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
             return view('inventory.brandname.show', compact('medbrand'));
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
             return back();
         }
@@ -117,6 +127,9 @@ class MedbrandController extends Controller
                 ]);
             $medbrand->update($atts);
             return back();
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
             return back();
         }
@@ -136,6 +149,9 @@ class MedbrandController extends Controller
             }
             $medbrand->delete();
             return back();
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
             return back();
         }

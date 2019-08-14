@@ -41,6 +41,12 @@ Route::group(['prefix' => 'hr'], function(){
 	Route::post('department', 'DepartmentController@store')->name('hr.dep.addDep');
 	Route::delete('department/{department}', 'DepartmentController@destroy')->name('hr.dep.deleteDep');
 
+	// Position
+	Route::get('position', 'PositionController@index')->name('hr.pos.position');
+	Route::post('position', 'PositionController@store')->name('hr.pos.addPos');
+	Route::get('position/{position}', 'PositionController@show')->name('hr.pos.show');
+	Route::delete('position/{position}', 'PositionController@destroy')->name('hr.pos.deletePos');
+
 	// Employee
 	Route::get('employees', 'EmployeeController@index')->name('hr.employees');
 	Route::get('employees/create', 'EmployeeController@create')->name('hr.emp.emp_form');
@@ -50,11 +56,6 @@ Route::group(['prefix' => 'hr'], function(){
 	Route::get('employees/{employee}/edit', 'EmployeeController@edit')->name('hr.emp.edit');
 	Route::get('employees/edit/deptID/{id}', 'EmployeeController@getEditPosition');
 	Route::put('employees/{employee}', 'EmployeeController@update')->name('hr.emp.store');
-
-	// Position
-	Route::get('position', 'PositionController@index')->name('hr.pos.position');
-	Route::post('position', 'PositionController@store')->name('hr.pos.addPos');
-	Route::delete('position/{position}', 'PositionController@destroy')->name('hr.pos.deletePos');
 
 });
 

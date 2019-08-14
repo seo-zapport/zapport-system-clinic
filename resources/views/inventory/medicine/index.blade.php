@@ -35,7 +35,7 @@
 			<tr>
 				<td>{{ ucfirst($med->generic->gname) }}</td>
 				<td>{{ ucwords($med->medBrand->bname) }}</td>
-				<td>{{ $med->where('generic_id', $med->generic_id)->where('brand_id', $med->brand_id)->where('availability', 0)->count() }}</td>
+				<td>{{ $med->where('generic_id', $med->generic_id)->where('brand_id', $med->brand_id)->where('availability', 0)->where('expiration_date', '>', NOW())->count() }}</td>
 				<td>
 					{{-- {{ $med->qty_stock }} --}}
 					<a href="{{ route('medicine.log', ['medbrand' => $med->medBrand->id, 'generic' => $med->generic->id]) }}" class="btn btn-info text-white">View</a>
@@ -92,11 +92,11 @@
 
 					<div class="form-group">
 						<label for="expiration_date">Expiration Date</label>
-						<input type="date" name="expiration_date" class="form-control" placeholder="Expiration Date" value="{{ old('expiration_date') }}" {{-- required --}}>
+						<input type="date" name="expiration_date" class="form-control" placeholder="Expiration Date" value="{{ old('expiration_date') }}" required>
 					</div>
 					<div class="form-group">
 						<label for="qty_input">Quantity</label>
-						<input type="number" name="qty_input" class="form-control" placeholder="Quantity" value="{{ old('qty_input') }}" {{-- required --}}>
+						<input type="number" name="qty_input" class="form-control" placeholder="Quantity" value="{{ old('qty_input') }}" required>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

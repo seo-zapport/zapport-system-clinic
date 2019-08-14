@@ -150,5 +150,13 @@ jQuery(document).ready(function($){
       $(".collapse-button-icon > i").removeClass("fa-chevron-right");
       // $(".collapse-button-icon > i").AddClass("fa-chevron-left");
     }
+
+    $("#empForm input[name='spouse_name']").blur(function() {
+      if ($(this).val()) {
+        $("#empForm input[name='date_of_merriage']").prop('required', true);
+      }else{
+        $("#empForm input[name='date_of_merriage']").prop('required', false);
+      }
+    });
     
 });

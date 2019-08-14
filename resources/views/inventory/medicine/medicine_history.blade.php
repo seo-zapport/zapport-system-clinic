@@ -1,13 +1,36 @@
 @extends('layouts.app')
 @section('title', 'Brand Name')
 @section('medicine', 'active')
-@section('dash-title', 'test')
+@section('dash-title', ucwords($generic->gname))
 @section('dash-content')
 @section('back')
 <a href="{{ route('medicine.log', ['medbrand' => $medbrand->id, 'generic' => $generic->id]) }}">
 	<i class="fas fa-arrow-left"></i>
 </a>
 @endsection
+<h4>Brand Name: {{ ucwords($medbrand->bname) }}</h4>
+<h5>Generic Name: {{ ucwords($generic->gname) }}</h5>
+<br>
+<form method="get">
+	<div class="form-row">
+		<div class="form-group col-md-2">
+			<input type="search" name="search_name" class="form-control" value="{{ (@$search_name != null) ? $search_name : '' }}" placeholder="Search for Names">
+		</div>
+		<div class="form-group col-md-2">
+			<select name="search_date" id="search_date" class="form-control">
+				<option selected disabled="true">Search for Date</option>
+				@foreach ($meds as $med)
+					<option {{ (@$search_date == $med->Distinct_date) ? 'selected' : '' }} value="{{ $med->Distinct_date }}">{{ $med->Distinct_date->format('M d, Y - h:i a') }}</option>
+				@endforeach
+			</select>
+		</div>
+		<div class="form-group col-md-2">
+			<button class="btn btn-success">Search</button>
+			<a href="{{ route('medicine.show', ['medbrand' => $medbrand->id, 'generic' => $generic->id, 'inputDate' => $inputDate, 'expDate' => 
+					$expDate]) }}" class="btn btn-info text-white">Clear</a>
+		</div>
+	</div>
+</form>
 
 <table class="table table-hover">
 	<thead class="thead-dark">
@@ -18,51 +41,22 @@
 		<th>Given by</th>
 	</thead>
 	<tbody>
-		@if ($empsMeds != null)
-			@php
-				$temp_id = 0;
-				$temp_date = '';
-			@endphp
-			@foreach ($arr  as $item)
-				@foreach ($item->employeesMedical as $ids)
-				@if ($temp_id != $ids->id || $temp_date != $ids->pivot->created_at)
-						{{-- {{ $ids->pivot->created_at}} --}}
-					<tr>
-							<td>{{ $ids->pivot->created_at->format('M d, Y - h:i a') }}</td>
-							<td>{{ ucwords($ids->employee->first_name) }} {{ ucwords($ids->employee->last_name) }}</td>
-							<td>{{ $ids->pivot->quantity }}</td>
-						
+	@forelse ($meds as $med)
+	<tr>
+		<td>{{ $med->Distinct_date->format('M d, Y - h:i a') }}</td>
+		<td>{{ $med->last_name }} {{ $med->first_name }}</td>
+		<td>{{ $med->quantity }}</td>
+		<td>{{ $med->givenLname }} {{ $med->givenFname }}</td>
+	</tr>
+	@empty
+	<tr>
+		<td colspan="4" class="text-center">No Records Yet!</td>
+	</tr>
+	@endforelse
 
-{{-- 						@php
-							$temp_id = 0;
-						@endphp
- --}}
-						{{-- @foreach ($item->users as $ids) --}}
-							{{-- @if ($temp_id != $ids->id) --}}
-								{{-- {{ $ids->id }} --}}
-								@foreach ($item->users as $ems)
-									<td>{{ ucwords($ems->employee->first_name) }} {{ ucwords($ems->employee->last_name) }}</td>
-								@endforeach
-							{{-- @endif --}}
-{{-- 							@php
-								$temp_id = $ids->id;
-							@endphp --}}
-						{{-- @endforeach --}}
-
-					</tr>
-			@endif
-			@php
-				$temp_id = $ids->id;
-				$temp_date = $ids->pivot->created_at;
-			@endphp
-			@endforeach
-			@endforeach
-			@else
-				<tr>
-					<td colspan="4" class="text-center">{{ "No registered Medicine yet!" }}</td> 
-				</tr>
-		@endif
 	</tbody>
 </table>
+
+{{ $meds->links() }}
 
 @endsection

@@ -7,6 +7,7 @@ use App\User;
 use App\User_role;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
 
 class UserRoleController extends Controller
 {
@@ -40,6 +41,9 @@ class UserRoleController extends Controller
             $noRoles = User::whereNotIn('id', $arr)->get();
 
             return view('admin.userRoles.index', compact('users', 'roles', 'noRoles', 'noUsers'));
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
             return back();
         }
@@ -71,6 +75,9 @@ class UserRoleController extends Controller
             $user->roles()->attach($roles_id);
 
             return back();
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
             return back();
         }
@@ -112,10 +119,12 @@ class UserRoleController extends Controller
             $user = User::find($user_id);
             $user->roles()->updateExistingPivot($role_id, $atts);
             return back();
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
             return back();
         }
-
     }
 
     /**
