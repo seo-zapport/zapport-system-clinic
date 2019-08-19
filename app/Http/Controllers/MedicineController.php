@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Employeesmedical;
 use App\Generic;
 use App\Medbrand;
 use App\Medicine;
+use App\Employeesmedical;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Gate;
+use App\Http\Requests\MedicineRequest;
 
 class MedicineController extends Controller
 {
@@ -66,10 +66,10 @@ class MedicineController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(MedicineRequest $request)
     {
         if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
-            $atts = $this->medicineValidation();
+            $atts = $this->validate($request, $request->rules(), $request->messages());
             $atts = $request->except('qty_input');
             $multiplier = $request->input('qty_input');
             $atts['qty_stock'] = $request->input('qty_input');
@@ -279,15 +279,5 @@ class MedicineController extends Controller
            return back();
 
         }
-    }
-
-    public function medicineValidation()
-    {
-        return request()->validate([
-            'brand_id'          =>  ['required'],
-            'generic_id'        =>  ['required'],
-            'expiration_date'   =>  ['required'],
-            'qty_input'         =>  ['required']
-        ]);
     }
 }

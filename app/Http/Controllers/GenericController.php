@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Generic;
 use App\Medbrand;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+use App\Http\Requests\genericRequest;
 
 class GenericController extends Controller
 {
@@ -50,18 +51,11 @@ class GenericController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(genericRequest $request)
     {
         if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
-            $atts = $this->genericValidation();
+            $atts = $this->validate($request, $request->rules(), $request->messages());
             Generic::create($atts);
-            // $atts = $request->except('medbrand_id');
-            // $data = Generic::create($atts);
-            // $lastID = $data->id;
-            // $genID['generic_id'] = $lastID;
-            // $bndID = $request->input('medbrand_id');
-            // $bnd = Medbrand::find($bndID);
-            // $bnd->generic()->attach($genID);
             return back();
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();
@@ -139,12 +133,5 @@ class GenericController extends Controller
         }else{
             return back();
         }
-    }
-
-    public function genericValidation()
-    {
-        return request()->validate([
-            'gname'            =>  ['required', 'unique:generics'],
-        ]);
     }
 }

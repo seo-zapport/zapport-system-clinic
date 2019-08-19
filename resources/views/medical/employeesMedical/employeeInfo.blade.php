@@ -42,7 +42,10 @@
 	</div>
 
 	<div class="col-2">
-		<img src="{{ asset('storage/uploaded/'.@$employee->profile_img) }}" alt="{{ @$employee->profile_img }}" class="img-fluid">
+		@if (@$employee->profile_img != null)
+			<img src="{{ asset('storage/uploaded/'.@$employee->profile_img) }}" alt="{{ @$employee->profile_img }}" class="img-fluid">
+		@endif
+
 	</div>
 </div>
 <br>

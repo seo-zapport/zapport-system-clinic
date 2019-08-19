@@ -6,6 +6,7 @@ use App\Department;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use App\Http\Requests\DepartmentRequest;
 
 class DepartmentController extends Controller
 {
@@ -54,10 +55,10 @@ class DepartmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(DepartmentRequest $request)
     {
         if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
-            $atts = $this->departmentValidation();
+            $atts = $this->validate($request, $request->rules(), $request->messages());
             Department::create($atts);
             return back();
         }elseif (Gate::allows('isBanned')) {
@@ -122,12 +123,5 @@ class DepartmentController extends Controller
         }else{
             return back();
         }
-    }
-
-    public function departmentValidation()
-    {
-        return request()->validate([
-            'department'    =>  ['required', 'unique:departments'],
-        ]);
     }
 }

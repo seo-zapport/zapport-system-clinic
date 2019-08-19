@@ -10,13 +10,13 @@
 		<h3>Employees Information</h3>
 		<hr>
 		<div class="form-row">
-			<div class="form-group col-md-4">
+			<div class="form-group col-md-3">
 				<label for="emp_id">Employee ID</label>
 				<input type="text" name="emp_id" value="@yield('editEmpID', old('emp_id'))" class="form-control" placeholder="Employee ID" required>
 			</div>
 
 			@if (substr(url()->current(), 27) == 'create')
-				<div class="form-group col-md-4">
+				<div class="form-group col-md-3">
 					<label for="department_id">Department</label>
 					<select name="department_id" id="department_id" class="form-control" required>
 						<option selected="true" disabled="disabled"> Select Department </option>
@@ -26,7 +26,7 @@
 					</select>
 				</div>
 		
-				<div class="form-group col-md-4">
+				<div class="form-group col-md-3">
 					<label for="position">Position</label>
 					<select name="position_id" id="position_id" class="form-control" required>
 						<option selected="true" disabled="disabled"> Select Posotion </option>
@@ -35,6 +35,11 @@
 				@else
 					@yield('editDept')
 			@endif
+
+			<div class="form-group col-md-3">
+				<label for="hired_date">Hired Date</label>
+				<input type="date" name="hired_date" value="@yield('editHiredDate', old('hired_date'))" class="form-control" placeholder="Employee's Hired Date" required>
+			</div>
 
 		</div>
 		<hr>

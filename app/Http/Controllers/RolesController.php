@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Role;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
+use App\Http\Requests\RoleRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class RolesController extends Controller
 {
@@ -49,10 +50,10 @@ class RolesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RoleRequest $request)
     {
         if (Gate::allows('isAdmin')) {
-            $atts = $this->roleValidation();
+            $atts = $this->validate($request, $request->rules(), $request->messages());
 
             Role::create($atts);
 
@@ -110,21 +111,17 @@ class RolesController extends Controller
         if (Gate::allows('isAdmin')) {
             if ($role->role == 'admin') {
                 return back()->with('role_msg', 'You cannot delete ADMIN role');
+            }elseif (count($role->users) > 0){
+                return back()->with('role_msg', 'You cannot delete a role with user');
+            }else{
+                $role->delete();
+                return back();
             }
-            $role->delete();
-            return back();
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();
             return back()->with('message', 'You\'re not employee!');
         }else{
             return back();
         }
-    }
-
-    public function roleValidation()
-    {
-        return request()->validate([
-            'role'  =>  ['required']
-        ]);
     }
 }

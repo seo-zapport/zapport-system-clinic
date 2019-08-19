@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Employee;
 use App\User;
+use App\Employee;
 use App\Department;
 use Illuminate\Http\Request;
 
@@ -111,6 +111,9 @@ class EmployeesProfileController extends Controller
     {
         return request()->validate([
             'emp_id' => 'required'
+        ],
+        [
+            'emp_id.required' => 'Employee ID is required!'
         ]);
     }
 }

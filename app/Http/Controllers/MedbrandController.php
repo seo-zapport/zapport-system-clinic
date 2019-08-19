@@ -6,8 +6,9 @@ use App\Generic;
 use App\Medbrand;
 use App\MedbrandGeneric;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+use App\Http\Requests\MedbrandRequest;
 
 class MedbrandController extends Controller
 {
@@ -51,10 +52,10 @@ class MedbrandController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(MedbrandRequest $request)
     {
         if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
-            $this->brandNameValidation();
+            $this->validate($request, $request->rules(), $request->messages());
             $atts = $request->except('generic_id');
 
             $check = Medbrand::where('bname', $request->bname)->first();
@@ -155,13 +156,5 @@ class MedbrandController extends Controller
         }else{
             return back();
         }
-    }
-
-    public function brandNameValidation()
-    {
-        return request()->validate([
-            'bname'         =>  ['required'],
-            'generic_id'    =>  ['required']
-        ]);
     }
 }

@@ -81,7 +81,11 @@
 		@endphp
 			@empty
 				<tr>
-					<td colspan="8" class="text-center">{{ "No registered Medicine yet!" }}</td> 
+					@if (isset($_GET['expired']) && @$search == null)
+						<td colspan="8" class="text-center">{{ "No Expired Medicine!" }}</td>
+						@else
+							<td colspan="8" class="text-center">{{ "No registered Medicine yet!" }}</td>
+					@endif
 				</tr>
 		@endforelse
 	</tbody>

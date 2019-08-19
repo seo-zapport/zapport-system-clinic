@@ -44,7 +44,7 @@ Route::group(['prefix' => 'hr'], function(){
 	// Position
 	Route::get('position', 'PositionController@index')->name('hr.pos.position');
 	Route::post('position', 'PositionController@store')->name('hr.pos.addPos');
-	Route::get('position/{position}', 'PositionController@show')->name('hr.pos.show');
+	Route::get('position/{position}/department/{department}', 'PositionController@show')->name('hr.pos.show');
 	Route::delete('position/{position}', 'PositionController@destroy')->name('hr.pos.deletePos');
 
 	// Employee

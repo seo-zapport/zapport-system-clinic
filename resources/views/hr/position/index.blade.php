@@ -16,41 +16,42 @@
 	</thead>
 	<tbody>
 		@forelse ($positions as $position)
-			<tr>
-				<td>
-	        	<form method="post" action="{{ route('hr.pos.deletePos', ['position' => $position->id]) }}">
-	        		@csrf
-	        		@method('DELETE')
-	        		<div class="form-row align-items-center">
-	            		<div class="col-auto my-1 form-inline">
-	        				{{ ucwords($position->position) }}
-							<button class="btn btn-link"  onclick="return confirm('Are you sure you want to delete {{ ucfirst($position->position) }} Position?')" data-id="{{ $position->id }}">
-								<i class="fas fa-times-circle"></i>
-							</button>
+        	@foreach ($position->departments as $department)
+				<tr>
+					<td>
+		        	<form method="post" action="{{ route('hr.pos.deletePos', ['position' => $position->id]) }}">
+		        		@csrf
+		        		@method('DELETE')
+		        		<div class="form-row align-items-center">
+		            		<div class="col-auto my-1 form-inline">
+		        				{{ ucwords($position->position) }}
+								<button class="btn btn-link"  onclick="return confirm('Are you sure you want to delete {{ ucfirst($position->position) }} Position?')" data-id="{{ $position->id }}">
+									<i class="fas fa-times-circle"></i>
+								</button>
+							</div>
 						</div>
-					</div>
-	        	</form>
-	        	@foreach ($position->departments as $department)
-	        		<td>
-	        			{{ ucwords($department->department) }}
-	        		</td>
-	        	@endforeach
-				<td>
-					{{ $position->employee->count() }}
-					<span><a href="{{ route('hr.pos.show', ['position' => $position->id]) }}" class="btn btn-info text-white float-right">View</a></span>
-				</td>
-			</tr>
+		        	</form>
+		        		<td>
+		        			{{ ucwords($department->department) }}
+		        		</td>
+					<td>
+						{{ $employees->where('department_id', $department->id)->where('position_id', $position->id)->count() }}
+						<span><a href="{{ route('hr.pos.show', ['position' => $position->id, 'department' => $department->id]) }}" class="btn btn-info text-white float-right">View</a></span>
+					</td>
+				</tr>
+        	@endforeach
 			@empty
 				<tr>
-					<td colspan="2" class="text-center">{{ "No position registered yet!" }}</td>
+					<td colspan="3" class="text-center">{{ "No position registered yet!" }}</td>
 				</tr>
 		@endforelse
 	</tbody>
 </table>
 @include('layouts.errors')
-@if (session('pos_message'))
+@if (session('pos_message') || session('pivot_validation'))
 	<div class="alert alert-danger alert-posts">
 		{{ session('pos_message') }}
+		{{ session('pivot_validation') }}
 	</div>
 @endif
 

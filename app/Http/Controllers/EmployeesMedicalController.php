@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Employee;
-use App\Employeesmedical;
-use App\EmployeesmedicalMedicineUser;
 use App\Generic;
-use App\Medicine;
 use App\Mednote;
+use App\Employee;
+use App\Medicine;
+use App\Employeesmedical;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use App\EmployeesmedicalMedicineUser;
+use App\Http\Requests\EmployeesmedicalRequest;
 
 class EmployeesmedicalController extends Controller
 {
@@ -45,12 +46,12 @@ class EmployeesmedicalController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(EmployeesmedicalRequest $request)
     {
         // dd($generic_id[0][0]);
         if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
 
-            $this->employeesMedicalValidation();
+            $this->validate($request, $request->rules(), $request->messages());
 
             // $arr = array_values($request->generic_id);
             $arr1 = array_map( 'array_values', $request->generic_id);
@@ -83,6 +84,7 @@ class EmployeesmedicalController extends Controller
                 $newRecord->note        = $request->note;
                 $newRecord->status      = $request->status;
                 $newRecord->remarks     = $request->remarks;
+                $newRecord->seen        = (Gate::check('isDoctor')) ? 1 : 0;
                 $newRecord->save();
 
                 return back();
@@ -95,6 +97,7 @@ class EmployeesmedicalController extends Controller
             $newRecord->note        = $request->note;
             $newRecord->status      = $request->status;
             $newRecord->remarks     = $request->remarks;
+            $newRecord->seen        = (Gate::check('isDoctor')) ? 1 : 0;
             $newRecord->save();
             $data = $newRecord->id;
 
@@ -136,6 +139,10 @@ class EmployeesmedicalController extends Controller
     public function show(Employee $employee, Employeesmedical $employeesmedical)
     {
         if (Gate::allows('isAdmin') || Gate::allows('isHr') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
+
+            if (Gate::check('isDoctor') && $employeesmedical->seen === 0) {
+                $employeesmedical->update(['seen' => 1]);
+            }
 
             $unique = $employeesmedical->medicines->unique(function ($item) {
                 return $item->pivot['created_at']->format('M d, Y H:i').$item['brand_id'].$item['generic_id'].$item->pivot['quantity'];
@@ -181,6 +188,9 @@ class EmployeesmedicalController extends Controller
         if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
             $atts = $request->validate([
                 'remarks'   =>  'required'
+            ],
+            [
+                'remarks.required'   =>  'Remarks is required!'
             ]);
 
             $employeesmedical->update($atts);
@@ -301,7 +311,11 @@ class EmployeesmedicalController extends Controller
         if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
             $atts = $request->validate([
                         'followup_note'  =>  ['required']
-                    ]);
+                    ],
+                    [
+                        'followup_note.required' => 'Note is required!'
+                    ]
+                );
 
             // $arr = array_values($request->generic_id);
             $arr1 = array_map( 'array_values', $request->generic_id);
@@ -353,18 +367,6 @@ class EmployeesmedicalController extends Controller
         }else{
             return back();
         }
-    }
-
-    public function employeesMedicalValidation()
-    {
-        return request()->validate([
-            // 'user_id'       =>  ['required'],
-            'employee_id'   =>  ['required'],
-            'diagnosis'     =>  ['required'],
-            'note'          =>  ['required'],
-            'status'        =>  ['required'],
-            'remarks'       =>  ['required'],
-        ]);
     }
 
 }

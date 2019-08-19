@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\medbrandsGenericNames;
 use Illuminate\Http\Request;
+use App\medbrandsGenericNames;
 
 class MedbrandsGenericNamesController extends Controller
 {

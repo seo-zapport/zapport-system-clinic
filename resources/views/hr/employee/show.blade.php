@@ -14,9 +14,10 @@
 <hr>
 <h3>Employees Info</h3>
 <div class="row">
-	<div class="col-4"><p>Employee ID: {{ ucwords(@$employee->emp_id) }}</p></div>
-	<div class="col-4"><p>Department: {{ ucwords(@$employee->departments->department) }}</p></div>
-	<div class="col-4"><p>Position: {{ ucwords(@$employee->positions->position) }}</p></div>
+	<div class="col-3"><p>Employee ID: {{ ucwords(@$employee->emp_id) }}</p></div>
+	<div class="col-3"><p>Department: {{ ucwords(@$employee->departments->department) }}</p></div>
+	<div class="col-3"><p>Position: {{ ucwords(@$employee->positions->position) }}</p></div>
+	<div class="col-3"><p>Hired Date: {{ @$employee->hired_date->format('M d, Y') }} ( {{ @$employee->hired_date->diffForHumans() }} )</p></div>
 </div>
 <hr>
 <h3>Personal Info</h3>
@@ -34,7 +35,7 @@
 	<div class="col-4"><p>Contact: {{ "+63" . @$employee->contact }}</p></div>
 	<div class="col-4"><p>Present Address: {{ ucwords(@$employee->present_address) }}</p></div>
 	<div class="col-4"><p>Permanent Address: {{ ucwords(@$employee->permanent_address) }}</p></div>
-	<div class="col-4"><p>Hired date: {{ @$employee->created_at->format('M d, Y') . " " ."( ".@$employee->created_at->diffForHumans()." )" }}</p></div>
+	{{-- <div class="col-4"><p>Hired date: {{ @$employee->created_at->format('M d, Y') . " " ."( ".@$employee->created_at->diffForHumans()." )" }}</p></div> --}}
 </div>
 <hr>
 <h4>Others</h4>
@@ -93,7 +94,7 @@
 		<div class="row">
 			<div class="col-4"><p>Company name: {{ ucwords($exp[0]) }}</p></div>
 			<div class="col-4"><p>Position: {{ ucwords($exp[1]) }}</p></div>
-			<div class="col-4"><p>Date covered: {{ $exp[2] . " " . " to " . " " . $exp[3] }}</p></div>
+			<div class="col-4"><p>Date covered: {{ Carbon\carbon::parse($exp[2])->format('M d, Y') . " " . " to " . " " . Carbon\carbon::parse($exp[3])->format('M d, Y') }}</p></div>
 		</div>
 @else
 <p>None</p>
@@ -105,10 +106,10 @@
 @endphp
 <hr>
 <h3>Other info</h3>
-<p>TIN number: {{ @$employee->tin_no }}</p>
-<p>SSS number: {{ @$employee->sss_no }}</p>
-<p>Philhealth number: {{ @$employee->philhealth_no }}</p>
-<p>HDMF number: {{ @$employee->hdmf_no }}</p>
+<p class="{{ (@$employee->tin_no == NULL) ? 'bg-warning' : ''  }}">TIN number: {{ @$employee->tin_no }}</p>
+<p class="{{ (@$employee->sss_no == NULL) ? 'bg-warning' : ''  }}">SSS number: {{ @$employee->sss_no }}</p>
+<p class="{{ (@$employee->philhealth_no == NULL) ? 'bg-warning' : ''  }}">Philhealth number: {{ @$employee->philhealth_no }}</p>
+<p class="{{ (@$employee->hdmf_no == NULL) ? 'bg-warning' : ''  }}">HDMF number: {{ @$employee->hdmf_no }}</p>
 <hr>
 <a href="{{ route('hr.emp.edit', ['employee' => @$employee->id]) }}" class="btn btn-info text-white">Edit</a>
 

@@ -34,9 +34,8 @@
 							@method('PUT')
 							<input type="hidden" name="user_id" value="{{ $user->id }}">
 							<select name="role_id" id="role_id" class="form-control-sm" onchange="this.form.submit();">
-								@foreach ($roles as $role)
-									<option hidden>Select Role</option>
-									<option value="{{ $role->id }}">{{ $role->role }}</option>
+								@foreach ($roles as $allRole)
+									<option {{ ($role->id == $allRole->id) ? 'selected' : '' }} value="{{ $allRole->id }}">{{ $allRole->role }}</option>
 								@endforeach
 							</select>
 						</form>
@@ -66,6 +65,10 @@
 	</tbody>
 
 </table>
+@include('layouts.errors')
+@if (session('reg_success'))
+	<div class="alert alert-success">{{ session('reg_success') }}</div>
+@endif
 
 	<!-- Modal Add -->
 	<div class="modal fade bd-example-modal-lg" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -93,6 +96,7 @@
 						<div class="form-group">
 							<label for="role">Role</label>
 							<select name="role_id" class="form-control">
+								<option selected="true" disabled>Select Roles for Users</option>
 								@foreach ($roles as $role)
 									<option value="{{ $role->id }}">{{ $role->role }}</option>
 								@endforeach

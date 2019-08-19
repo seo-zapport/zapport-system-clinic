@@ -8,9 +8,10 @@
 <hr>
 <h3>Employees Info</h3>
 <div class="row">
-	<div class="col-4"><p>Employee ID: {{ ucwords(@$employee->emp_id) }}</p></div>
-	<div class="col-4"><p>Department: {{ ucwords(@$employee->departments->department) }}</p></div>
-	<div class="col-4"><p>Position: {{ ucwords(@$employee->positions->position) }}</p></div>
+	<div class="col-3"><p>Employee ID: {{ ucwords(@$employee->emp_id) }}</p></div>
+	<div class="col-3"><p>Department: {{ ucwords(@$employee->departments->department) }}</p></div>
+	<div class="col-3"><p>Position: {{ ucwords(@$employee->positions->position) }}</p></div>
+	<div class="col-3"><p>Hired date: {{ @$employee->hired_date->format('M d, Y') . " " ."( ".@$employee->hired_date->diffForHumans()." )" }}</p></div>
 </div>
 <hr>
 <h3>Personal Info</h3>
@@ -28,7 +29,7 @@
 	<div class="col-4"><p>Contact: {{ "+63" . @$employee->contact }}</p></div>
 	<div class="col-4"><p>Present Address: {{ ucwords(@$employee->present_address) }}</p></div>
 	<div class="col-4"><p>Permanent Address: {{ ucwords(@$employee->permanent_address) }}</p></div>
-	<div class="col-4"><p>Hired date: {{ @$employee->created_at->format('M d, Y') . " " ."( ".@$employee->created_at->diffForHumans()." )" }}</p></div>
+	{{-- <div class="col-4"><p>Hired date: {{ @$employee->created_at->format('M d, Y') . " " ."( ".@$employee->created_at->diffForHumans()." )" }}</p></div> --}}
 </div>
 <hr>
 <h4>Others</h4>

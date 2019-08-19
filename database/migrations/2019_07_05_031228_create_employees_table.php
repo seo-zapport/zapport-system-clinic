@@ -60,6 +60,7 @@ class CreateEmployeesTable extends Migration
             $table->string('sss_no')->nullable();
             $table->string('philhealth_no')->nullable();
             $table->string('hdmf_no')->nullable();
+            $table->date('hired_date');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

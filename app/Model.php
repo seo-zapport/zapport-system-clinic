@@ -32,6 +32,7 @@ class Model extends Eloquent
 		"date_of_merriage",
 		"expiration_date",
 		"Distinct_date",
+		"hired_date",
 	];
 
 	// protected $dateFormat = 'Y-m-d H:i';

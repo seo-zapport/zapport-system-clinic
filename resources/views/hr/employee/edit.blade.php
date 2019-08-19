@@ -36,6 +36,7 @@
 @section('editHeight', $employee->height)
 @section('editWeight', $employee->weight)
 @section('editReligion', ucwords($employee->religion))
+@section('editHiredDate', $employee->hired_date->format('Y-m-d'))
 
 @section('editFatherName', ucwords($employee->father_name))
 @section('editFatherBday', $employee->father_birthday->format('Y-m-d'))
@@ -74,7 +75,7 @@
 @endsection
 
 @section('editDept')
-	<div class="form-group col-md-4">
+	<div class="form-group col-md-3">
 		<label for="department_id">Department</label>
 		<select name="department_id" id="department_id" class="form-control">
 			<option value="{{ $employee->department_id }}">{{ $employee->departments->department }}</option>
@@ -83,7 +84,7 @@
 			@endforeach
 		</select>
 	</div>
-	<div class="form-group col-md-4">
+	<div class="form-group col-md-3">
 		<label for="position">Position</label>
 		<select name="position_id" id="position_id" class="form-control">
 			<option value="{{ $employee->position_id }}">{{ $employee->positions->position }}</option>

@@ -22,6 +22,7 @@ class CreateEmployeesmedicalsTable extends Migration
             $table->text('note');
             $table->string('status');
             $table->string('remarks');
+            $table->boolean('seen');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

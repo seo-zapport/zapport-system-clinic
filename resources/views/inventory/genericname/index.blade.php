@@ -38,7 +38,7 @@
 					{{ ucwords($gen->gname) }}
 				</td>
 				@endif
-				<td>{{ $gen->medicines->where('availability', 0)->count() }} <a href="{{ route('genericname.show', ['generic' => $gen->id]) }}" class="btn btn-info text-white float-right">View</a></td>
+				<td>{{ $gen->medicines->where('availability', 0)->where('expiration_date', '>=', NOW())->count() }} <a href="{{ route('genericname.show', ['generic' => $gen->id]) }}" class="btn btn-info text-white float-right">View</a></td>
 			</tr>
 			@empty
 				<tr>
