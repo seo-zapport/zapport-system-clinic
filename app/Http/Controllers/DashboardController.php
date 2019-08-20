@@ -36,9 +36,9 @@ class DashboardController extends Controller
         if (Gate::allows('isAdmin') || Gate::allows('isHr') ) { 
 
             $emps = Employee::where('tin_no', '=', NULL)->orWhere('sss_no', '=', NULL)
-                                                      ->orWhere('philhealth_no', '=', NULL)
-                                                      ->orWhere('hdmf_no', '=', NULL)
-                                                      ->get();
+                                                        ->orWhere('philhealth_no', '=', NULL)
+                                                        ->orWhere('hdmf_no', '=', NULL)
+                                                        ->get();
 
         }
         if(Gate::allows('isBanned')) {
