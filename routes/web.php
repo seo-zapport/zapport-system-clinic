@@ -36,6 +36,14 @@ Route::group(['prefix'	=>	'dashboard'], function(){
 
 });
 
+Route::group(['prefix'	=>	'posts'], function(){
+
+	Route::get('', 'PostController@index')->name('post.index');
+	Route::get('create', 'PostController@create')->name('post.create');
+	Route::post('create', 'PostController@store')->name('post.store');
+
+});
+
 Route::group(['prefix' => 'hr'], function(){
 
 	// Department
