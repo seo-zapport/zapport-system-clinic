@@ -10,7 +10,7 @@
     "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
   },
   "devDependencies": {
-    "@fortawesome/fontawesome-free": "^5.9.0",
+    "@fortawesome/fontawesome-free": "^5.10.2",
     "axios": "^0.19",
     "bootstrap": "^4.1.0",
     "browser-sync": "^2.26.7",
@@ -24,7 +24,9 @@
     "sass": "^1.22.6",
     "sass-loader": "^7.1.0",
     "vue": "^2.5.17",
-    "vue-template-compiler": "^2.6.10"
+    "vue-template-compiler": "^2.6.10",
+    "webpack": "^4.39.2",
+    "webpack-cli": "^3.3.7"
   },
   "name": "zapport-system",
   "version": "1.0.0",
