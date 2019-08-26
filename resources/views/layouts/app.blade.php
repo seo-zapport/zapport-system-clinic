@@ -16,13 +16,14 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css">
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css"> --}}
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/backend.css') }}" rel="stylesheet">
+    @include('layouts.classes')
 </head>
-<body>
+<body class="@yield('body-class')">
     <div id="zapWrap" class="sticky-menu">
         @guest
             @yield('content')
@@ -37,13 +38,20 @@
                 <main id="app" class="primary-site" role="main">
                     <div class="wrap">
                         <div class="container-fluid">
-                            <div class="card">
-                                <div class="card-header">@yield('dash-title') <span class="float-right">@yield('back')</span></div>
-                                <div class="card-body">
-                                    @yield('dash-content') 
-                                </div> 
-                            </div>
-                        </div>                        
+                            <h2 class="heading-title">@yield('heading-title')</h2>
+                            {{-- @include('layouts.breadcrumbs') --}}
+                            @if ( request()->is('dashboard*') || request()->is('hr*') )
+                                @yield('dash-content')
+                            @else
+                                <div class="card">
+                                    <div class="card-header">@yield('dash-title') <span class="float-right">@yield('back')</span></div>
+                                    <div class="card-body">
+                                        @yield('dash-content') 
+                                    </div> 
+                                </div>                            
+                            @endif
+
+                        </div>
                     </div>
                 </main>
             </div>
