@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Employee;
 use App\Employeesmedical;
+use App\Generic;
+use App\Medicine;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -47,7 +49,20 @@ class DashboardController extends Controller
             return back()->with('message', 'You\'re not employee!');
         }
 
-        return view('admin.dashboard', compact('empMeds', 'emps', 'notSeen'));
+        if (auth()->user()->employee) {
+            $findEmployee = auth()->user();
+            $employee = $findEmployee->employee->id;
+            $empMed = Employeesmedical::where('employee_id', $employee);
+
+                $search = $empMed->where('diagnosis', 'like', '%'.$request->search.'%')->orderBy('id', 'desc')->paginate(10);
+                $search->appends(['search' => $request->search]);
+                $result = $request->search;
+
+            $gens = Generic::orderBy('gname', 'asc')->get();
+            $meds = Medicine::get();
+        }
+
+        return view('admin.dashboard', compact('empMeds', 'emps', 'notSeen', 'employee', 'gens', 'meds', 'search', 'result'));
     }
 
     /**
@@ -77,9 +92,19 @@ class DashboardController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Employee $employee, Employeesmedical $employeesmedical)
     {
-        //
+        $this->authorize('view', $employee);
+        $unique = $employeesmedical->medicines->unique(function ($item) {
+            return $item->pivot['created_at']->format('M d, Y H:i').$item['brand_id'].$item['generic_id'].$item->pivot['quantity'];
+        });
+
+        $empMeds =  $unique->values()->all();
+
+        $gens = Generic::orderBy('gname', 'asc')->get();
+        $meds = Medicine::get();
+
+        return view('admin.show', compact('employee', 'employeesmedical', 'empMeds', 'gens', 'meds'));
     }
 
     /**

@@ -18,7 +18,7 @@
 				@method('PUT')
 				<div class="form-group">
 					<input type="hidden" name="id" value="{{ $info->id }}">
-					<button type="submit" class="btn btn-info">Save</button>
+					<button type="submit" class="btn btn-info" onclick="return confirm('Are you sure this is your Acount?')">Save</button>
 				</div>
 			</form>
 			@endforeach

@@ -13,6 +13,7 @@
 		<tr>
 			<th>ID</th>
 			<th>Employee Name</th>
+			<th>Employee Email</th>
 			<th>Role</th>
 		</tr>
 	</thead>
@@ -22,6 +23,7 @@
 		<tr>
 			<td>{{ $user->id }}</td>
 			<td>{{ $user->name }}</td>
+			<td>{{ $user->email }}</td>
 			<td>
 				@forelse ($user->roles as $role)
 
@@ -58,7 +60,7 @@
 			</td>
 		</tr>
 	@empty
-		<td colspan="3" class="text-center">{{ "No User Roles Yet!" }}</td>
+		<td colspan="4" class="text-center">{{ "No User Roles Yet!" }}</td>
 
 	@endforelse
 

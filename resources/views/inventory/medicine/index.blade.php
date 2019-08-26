@@ -75,8 +75,8 @@
 
 					<div class="form-group">
 						<label for="generic_id">Generic Name</label>
-						<select name="generic_id" id="generic_id" class="form-control">
-							<option selected="true" disabled="disabled"> Select Generic name </option>
+						<select name="generic_id" id="generic_id" class="form-control" required>
+							<option selected="true" disabled="disabled" value=""> Select Generic name </option>
 							@foreach ($gens as $gen)
 								<option value="{{ $gen->id }}">{{ $gen->gname }}</option>
 							@endforeach
@@ -86,7 +86,7 @@
 					<div class="form-group">
 						<label for="brand_id">Brand Name</label>
 						<select name="brand_id" id="brand_id" class="form-control" required>
-							<option selected="true" disabled="disabled"> Select Brand </option>
+							<option selected="true" disabled="disabled" value=""> Select Brand </option>
 						</select>
 					</div>
 

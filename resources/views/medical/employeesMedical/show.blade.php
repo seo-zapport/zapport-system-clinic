@@ -106,7 +106,7 @@
 					@csrf
 					<div class="form-group">
 						<label for="followup_note">Note:</label>
-						<textarea name="followup_note" id="followup_note" cols="10" rows="5" class="form-control" placeholder="Doctor's note"></textarea>
+						<textarea name="followup_note" id="followup_note" cols="10" rows="5" class="form-control" placeholder="Doctor's note" required></textarea>
 					</div>
 
 					<div class="form-group">

@@ -368,5 +368,4 @@ class EmployeesmedicalController extends Controller
             return back();
         }
     }
-
 }

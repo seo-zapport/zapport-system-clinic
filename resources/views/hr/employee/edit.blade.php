@@ -28,7 +28,7 @@
 @section('editPhilhealth', $employee->philhealth_no)
 @section('editHdmf', $employee->hdmf_no)
 @section('editCollege', strtoupper($employee->college))
-@section('editCollegeGrad', $employee->college_grad_date->format('Y-m-d'))
+@section('editCollegeGrad', ($employee->college_grad_date != null) ? $employee->college_grad_date->format('Y-m-d') : $employee->college_grad_date)
 @section('editHighschool', strtoupper($employee->highschool))
 @section('editHighschoolGrad', $employee->highschool_grad_date->format('Y-m-d'))
 @section('editElementary', strtoupper($employee->elementary))

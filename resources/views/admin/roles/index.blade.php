@@ -11,6 +11,7 @@
 		<tr>
 			<th>Role Name</th>
 			<th>Count</th>
+			<th>Action</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -32,9 +33,10 @@
 	        	</form>
 			</td>
 			<td>{{ $role->users->count() }}</td>
+			<td><a href="{{ route('dashboard.showRoles', ['role' => $role->id]) }}" class="btn btn-info text-white">View</a></td>
 		</tr>
 	@empty
-		<td colspan="2" class="text-center">{{ "No Roles Yet!" }}</td>
+		<td colspan="3" class="text-center">{{ "No Roles Yet!" }}</td>
 	@endforelse
 
 	</tbody>

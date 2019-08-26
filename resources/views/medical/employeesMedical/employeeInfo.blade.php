@@ -90,9 +90,12 @@
 		<th>Action</th>
 	</thead>
 	<tbody>
+		@php
+			$i = 1;
+		@endphp
 		@forelse ($search as $medsHistory)
 			<tr>
-				<td>{{ $medsHistory->id }}</td>
+				<td>{{ $i++ }}</td>
 				<td>{{ $medsHistory->created_at->format('M d, Y - h:i a') }}</td>
 				<td>{{ $medsHistory->diagnosis }}</td>
 				<td>{{ $medsHistory->note }}</td>
@@ -124,8 +127,8 @@
 					<input type="hidden" name="employee_id" value="{{ $employee->id }}">
 					<div class="form-group">
 					<label for="status">Status of Patient</label>
-					<select name="status" id="status" class="form-control" {{-- required --}}>
-							<option selected="true" disabled="disabled"> Select Stats </option>
+					<select name="status" id="status" class="form-control" required>
+							<option selected="true" disabled="disabled" value=""> Select Stats </option>
 							{{-- <option value="sick_leave">Sick Leave</option> --}}
 							{{-- <option value="reimbursement">Reimbursement</option> --}}
 							<option value="walkin">Walk-in</option>
@@ -137,7 +140,7 @@
 					</div>
 					<div class="form-group">
 						<label for="note">Note:</label>
-						<textarea name="note" id="note" cols="10" rows="5" class="form-control" placeholder="Doctor's note"></textarea>
+						<textarea name="note" id="note" cols="10" rows="5" class="form-control" placeholder="Doctor's note" required></textarea>
 					</div>
 
 					<div class="form-group">
@@ -170,8 +173,8 @@
 
 					<div class="form-group">
 						<label for="remarks">Remarks</label>
-						<select name="remarks" id="remarks" class="form-control">
-							<option selected="true" disabled="disabled"> Choose Remarks </option>
+						<select name="remarks" id="remarks" class="form-control" required>
+							<option selected="true" disabled="disabled" value> Choose Remarks </option>
 							<option value="followUp">Follow up</option>
 							<option value="done">Done</option>
 						</select>

@@ -155,6 +155,17 @@ class MedicineController extends Controller
                             ->where('expiration_date', $expDate)
                             ->where('availability', 1);
                             // ->orderBy('medicines.id', 'asc')->paginate(10);
+            $countMeds = Employeesmedical::join('employeesmedical_medicine_users', 'employeesmedicals.id', 'employeesmedical_medicine_users.employeesmedical_id')
+                                         ->join('medicines', 'medicines.id', 'employeesmedical_medicine_users.medicine_id')
+                                         ->join('users as users1', 'users1.id', 'employeesmedical_medicine_users.user_id')
+                                         ->join('employees as attendant', 'users1.id', 'attendant.user_id')
+                                         ->select('employeesmedicals.id as empMeds_id', 'employeesmedicals.employee_id as patient', 'employeesmedical_medicine_users.quantity', 'availability', 'employeesmedical_medicine_users.user_id as distinct_user_id', 'users1.name as givenBy', 'attendant.first_name as givenFname', 'attendant.last_name as givenLname', 'employeesmedical_medicine_users.created_at as Distinct_date')
+                                         ->where('brand_id', $medbrand->id)
+                                         ->where('generic_id', $generic->id)
+                                         ->where('medicines.created_at', $inputDate)
+                                         ->where('expiration_date', $expDate)
+                                         ->where('availability', 1)
+                                         ->get();
 
             if ($request->search_name && $request->search_date == null) {
                 $search_name = $request->search_name;
@@ -174,6 +185,7 @@ class MedicineController extends Controller
                              ->orderBy('medicines.id', 'desc')->paginate(10);
             }else{
                 $meds = $meds->orderBy('medicines.id', 'desc')->paginate(10);
+                // return $countMeds;
             }
 
         }elseif (Gate::allows('isBanned')) {
@@ -185,7 +197,7 @@ class MedicineController extends Controller
 
         }
 
-        return view('inventory.medicine.medicine_history', compact('medbrand', 'generic', 'empsMeds', 'arr', 'meds', 'inputDate', 'expDate', 'search_name', 'search_date'));
+        return view('inventory.medicine.medicine_history', compact('medbrand', 'generic', 'empsMeds', 'arr', 'meds', 'inputDate', 'expDate', 'search_name', 'search_date', 'countMeds'));
     }
 
     /**

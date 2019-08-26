@@ -97,4 +97,55 @@
 	</table>
 @endif
 
+@if (empty(auth()->user()->employee))
+	<h2>Welcome!</h2>
+	<a href="{{ route('employees') }}">Click here to activate your account.</a>
+	@else
+	@if (Gate::check('isAdmin') || Gate::check('isHr') || Gate::check('isDoctor') || Gate::check('isNurse'))
+		{{-- Leave this empty --}}
+	@else
+		<form method="get">
+			<div class="form-row">
+				<div class="form-group col-md-4">
+					<input type="search" name="search" class="form-control" value="{{ (!empty($result)) ? $result : '' }}" placeholder="Search for Diagnosis">
+				</div>
+				<div class="form-group col-md-1 d-inline-flex">
+					<button type="submit" class="btn btn-success mr-2">Search</button>
+					<a href="{{ route('dashboard.main') }}" class="btn btn-info text-white">Clear</a>
+				</div>
+			</div>
+		</form>
+
+		<table class="table table-hover">
+			<thead class="thead-dark">
+				<th>No.</th>
+				<th>Date and Time</th>
+				<th>Diagnosis</th>
+				<th>Notes</th>
+				<th>Remarks</th>
+				<th>Action</th>
+			</thead>
+			<tbody>
+				@php
+					$i = 1;
+				@endphp
+				@forelse ($search as $medsHistory)
+					<tr>
+						<td>{{ $i++ }}</td>
+						<td>{{ $medsHistory->created_at->format('M d, Y - h:i a') }}</td>
+						<td>{{ $medsHistory->diagnosis }}</td>
+						<td>{{ $medsHistory->note }}</td>
+						<td>{{ ($medsHistory->remarks == 'followUp') ? 'Follow up' : 'Done' }}</td>
+						<td><a href="{{ route('dashboard.show', ['employee' => $employee, 'employeesmedical' => $medsHistory->id]) }}" class="btn btn-info text-white">View</a></td>
+					</tr>
+					@empty
+						<tr>
+							<td colspan="6" class="text-center">No Records Found!</td>
+						</tr>
+				@endforelse
+			</tbody>
+		</table>
+		{{ $search->links() }}
+	@endif
+@endif
 @endsection

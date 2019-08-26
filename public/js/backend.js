@@ -74,7 +74,6 @@ jQuery(document).ready(function($){
        }
     });
 
-
     // Children
     var i = $('#addChildren').length;
     var e = $(this).find('.editchildren').length;
@@ -152,28 +151,76 @@ jQuery(document).ready(function($){
     }
 
 
-    // Form Validation Add Required IF first input is not EMPTY
-    $("#empForm input[name='spouse_name']").blur(function() {
+    // Form Validation Add Required IF first OR second input is not EMPTY
+
+    // Spouse_________________________________________________________________________________
+    var spouse = $("#empForm input[name='spouse_name']");
+    var date_of_merriage = $("#empForm input[name='date_of_merriage']");
+    spouse.blur(function() {
       if ($(this).val()) {
-        $("#empForm input[name='date_of_merriage']").prop('required', true);
+        date_of_merriage.prop('required', true);
       }else{
-        $("#empForm input[name='date_of_merriage']").prop('required', false);
+        date_of_merriage.prop('required', false);
       }
     });
 
-    $("#empForm input[name='experience[0][]']").blur(function() {
+    date_of_merriage.blur(function() {
       if ($(this).val()) {
-        $("#empForm input[name='experience[0][]']").prop('required', true);
+        spouse.prop('required', true);
       }else{
-        $("#empForm input[name='experience[0][]']").prop('required', false);
+        spouse.prop('required', false);
       }
     });
-    
-    $("#empForm input[name='children[0][]']").blur(function() {
+    // College variables_________________________________________________________________________________
+    var college =  $("#empForm input[name='college']");
+    var grad_date = $("#empForm input[name='college_grad_date']");
+    if (window.location.href == 'http://clinic/hr/employees/7/edit') {
+      // College_________________________________________________________________________________
+      $("#empForm input[name='college'], input[name='college_grad_date']").on('change', function(){
+        var collegeVal = $('input[name="college"]').val();
+        var gradDateVal = $('input[name="college_grad_date"]').val();
+        if (collegeVal == '' && gradDateVal == '') {
+          college.prop('required', false);
+          grad_date.prop('required', false);
+        }else{
+          college.prop('required', true);
+          grad_date.prop('required', true);
+        }
+      });
+
+    }
+    // College if location == create_________________________________________________________________________________
+      college.blur(function() {
+        if ($(this).val()) {
+          grad_date.prop('required', true);
+        }else{
+          grad_date.prop('required', false);
+        }
+      });
+
+      grad_date.blur(function() {
+        if ($(this).val()) {
+          college.prop('required', true);
+        }else{
+          college.prop('required', false);
+        }
+      });
+    // Experience_________________________________________________________________________________
+    var experience = $("#empForm input[name='experience[0][]']");
+    experience.blur(function() {
       if ($(this).val()) {
-        $("#empForm input[name='children[0][]']").prop('required', true);
+        experience.prop('required', true);
       }else{
-        $("#empForm input[name='children[0][]']").prop('required', false);
+        experience.prop('required', false);
+      }
+    });
+    // Children_________________________________________________________________________________
+    var children = $("#empForm input[name='children[0][]']");
+    children.blur(function() {
+      if ($(this).val()) {
+        children.prop('required', true);
+      }else{
+        children.prop('required', false);
       }
     }); 
 });

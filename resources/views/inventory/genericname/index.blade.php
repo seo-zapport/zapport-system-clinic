@@ -13,7 +13,7 @@
 <table class="table table-hover">
 	<thead class="thead-dark">
 		<th>Generic Name</th>
-		<th>No. of Medecines</th>
+		<th>No. of Medecines by Generic</th>
 	</thead>
 	<tbody>
 		@forelse ($gens as $gen)

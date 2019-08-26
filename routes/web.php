@@ -21,6 +21,7 @@ Route::group(['prefix'	=>	'dashboard'], function(){
 
 	// Dashboard
 	Route::get('', 'DashboardController@index')->name('dashboard.main');
+	Route::get('profile/{employee}/employeesmedical/{employeesmedical}', 'DashboardController@show')->name('dashboard.show');
 
 	// User Role
 	Route::get('userRoles', 'UserRoleController@index')->name('dashboard.userRoles');
@@ -30,6 +31,7 @@ Route::group(['prefix'	=>	'dashboard'], function(){
 	// Roles
 	Route::get('roles', 'RolesController@index')->name('dashboard.roles');
 	Route::post('roles', 'RolesController@store')->name('dashboard.addRoles');
+	Route::get('roles/{role}', 'RolesController@show')->name('dashboard.showRoles');
 	Route::delete('roles/{role}', 'RolesController@destroy')->name('dashboard.deleteRole');
 
 });
@@ -51,6 +53,7 @@ Route::group(['prefix' => 'hr'], function(){
 	Route::get('employees', 'EmployeeController@index')->name('hr.employees');
 	Route::get('employees/create', 'EmployeeController@create')->name('hr.emp.emp_form');
 	Route::get('employees/create/deptID/{id}', 'EmployeeController@getPosition');
+	Route::get('employees/create/EmpID/{emp_id}', 'EmployeeController@getEmpID');
 	Route::post('employees', 'EmployeeController@store')->name('hr.emp.addEmp');
 	Route::get('employees/{employee}', 'EmployeeController@show')->name('hr.emp.show');
 	Route::get('employees/{employee}/edit', 'EmployeeController@edit')->name('hr.emp.edit');
@@ -67,6 +70,7 @@ Route::group(['prefix' => 'employees'], function(){
 	Route::get('profile/employee/{employee}', 'EmployeesProfileController@show')->name('employee');
 	Route::get('profile/employee', 'EmployeesProfileController@edit')->name('employee.edit');
 	Route::put('profile/search/{emp_id}', 'EmployeesProfileController@update')->name('employee.update');
+	// Route::get('profile/employee/{employee}', 'EmployeesProfileController@employeeMedicalRecord')->name('employeeRecord');
 
 });
 

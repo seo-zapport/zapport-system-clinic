@@ -45,7 +45,7 @@
 	<tr>
 		<td>{{ $med->Distinct_date->format('M d, Y - h:i a') }}</td>
 		<td>{{ $med->last_name }} {{ $med->first_name }}</td>
-		<td>{{ $med->quantity }}</td>
+		<td>{{ $countMeds->where('empMeds_id', $med->empMeds_id)->where('patient', $med->patient)->where('distinct_user_id', $med->distinct_user_id)->count() }}</td>
 		<td>{{ $med->givenLname }} {{ $med->givenFname }}</td>
 	</tr>
 	@empty

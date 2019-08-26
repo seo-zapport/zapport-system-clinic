@@ -220,8 +220,8 @@ class EmployeeController extends Controller
                     "elementary_grad_date"      => ['required'],
                     "highschool"                => ['required'],
                     "highschool_grad_date"      => ['required'],
-                    "college"                   => ['required'],
-                    "college_grad_date"         => ['required'],
+                    // "college"                   => ['required'],
+                    // "college_grad_date"         => ['required'],
                     "person_to_contact"         => ['required'],
                     "person_to_contact_address" => ['required'],
                     "person_to_contact_number"  => ['required', 'numeric'],
@@ -254,8 +254,8 @@ class EmployeeController extends Controller
                     "elementary_grad_date.required"      => 'Primary graduated date education is required!',
                     "highschool.required"                => 'Secondary education is required!',
                     "highschool_grad_date.required"      => 'Secondary graduated date is required!',
-                    "college.required"                   => 'Tertiary education is required!',
-                    "college_grad_date.required"         => 'Tertiary graduated date is required!',
+                    // "college.required"                   => 'Tertiary education is required!',
+                    // "college_grad_date.required"         => 'Tertiary graduated date is required!',
                     "person_to_contact.required"         => 'Person to contact name is required!',
                     "person_to_contact_address.required" => 'Person to contact address is required!',
                     "person_to_contact_number.required"  => 'Person to contact phone number is required!',
@@ -370,4 +370,11 @@ class EmployeeController extends Controller
 
         return json_encode($position_id);
     }
+
+    public function getEmpID($emp_id)
+    {
+        $employeesID = Employee::where('emp_id', $emp_id)->count();
+        return json_encode($employeesID);
+    }
+
 }

@@ -70,8 +70,8 @@
 					@csrf
 					<div class="form-group">
 						<label for="generic_id">Generic Name</label>
-					<select name="generic_id" id="generic_id" class="form-control" {{-- required --}}>
-							<option selected="true" disabled="disabled"> Select Generic Name </option>
+					<select name="generic_id" id="generic_id" class="form-control" required>
+							<option selected="true" disabled="disabled" value=""> Select Generic Name </option>
 						@foreach ($gens as $gen)
 							<option value="{{ $gen->id }}">{{ $gen->gname }}</option>
 						@endforeach
