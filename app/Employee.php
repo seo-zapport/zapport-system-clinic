@@ -30,4 +30,9 @@ class Employee extends Model
     {
         return $this->hasMany(Employeesmedical::class, 'employee_id');
     }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
 }

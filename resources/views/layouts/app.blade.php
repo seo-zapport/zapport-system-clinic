@@ -12,6 +12,8 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('js/backend.js') }}" defer></script>
+    <script src="{{ asset('/js/tinymce/tinymce.js') }}"></script>
+    <script src="{{ asset('/js/tinymce/tinymce.jquery.js') }}"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">

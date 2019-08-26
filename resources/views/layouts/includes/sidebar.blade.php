@@ -30,6 +30,13 @@
             </div>
         </div>
         <li class="nav-item"><a href="{{ route('dashboard.main') }}" class="nav-link @yield('overview')"><i class="fas fa-tachometer-alt"></i> <span class="collapse-label">Dashboard</span></a></li>
+        {{-- For ADMIN, HR, DOCTOR, NURSE --}}
+        @if (Gate::check('isAdmin') || Gate::check('isHr') || Gate::check('isDoctor') || Gate::allows('isNurse'))
+        @if (!empty(auth()->user()->employee))
+            <li class="nav-item"><a href="{{ route('post.index') }}" class="nav-link @yield('posts')"><i class="fas fa-book"></i> <span class="collapse-label">Posts</span></a></li>
+            <li class="nav-item"><a href="{{ route('post.create') }}" class="nav-link @yield('new_post')"><i class="fas fa-pencil-alt"></i> <span class="collapse-label">New Post</span></a></li>
+        @endif
+        @endif
         {{-- For HR --}}
         @if (Gate::check('isAdmin') || Gate::check('isHr'))
             <li class="nav-item"><a href="{{ route('hr.dep.department') }}" class="nav-link @yield('reg_dep')"><i class="fas fa-building"></i> <span class="collapse-label">Department</span></a></li>
