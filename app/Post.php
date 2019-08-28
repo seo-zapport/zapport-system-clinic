@@ -4,8 +4,8 @@ namespace App;
 
 class Post extends Model
 {
-    public function employee()
+    public function user()
     {
-    	return $this->belongsTo(Employee::class);
+    	return $this->belongsTo(User::class);
     }
 }

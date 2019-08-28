@@ -226,15 +226,15 @@ jQuery(document).ready(function($){
 
 // Post_________________________________________________________________________________
 
-  $("#InsertPhoto").click(function () {
-  $("#Media").modal("hide"); // Close the modal
-  $image_id = $('#edit_id').val();
-  $("#preview_images").attr('src',$('#attach_url_'+$image_id).val());
-  / If variable value is not empty we pass it to tinymce function and it inserts the image to post /
-  if ($image_id != "") { 
-  tinymce.activeEditor.execCommand('mceInsertContent', false, '<img class="img-responsive" style="max-width:100%; height:auto; display:block;" src="' + $('#attach_url_'+$image_id).val() + '">'); 
-  }
-  });
+  // $("#InsertPhoto").click(function () {
+  // $("#Media").modal("hide"); // Close the modal
+  // $image_id = $('#edit_id').val();
+  // $("#preview_images").attr('src',$('#attach_url_'+$image_id).val());
+  // / If variable value is not empty we pass it to tinymce function and it inserts the image to post /
+  // if ($image_id != "") { 
+  // tinymce.activeEditor.execCommand('mceInsertContent', false, '<img class="img-responsive" style="max-width:100%; height:auto; display:block;" src="' + $('#attach_url_'+$image_id).val() + '">'); 
+  // }
+  // });
   
 
    /**
@@ -260,9 +260,7 @@ jQuery(document).ready(function($){
         title: 'Add image to article',
         icon: 'image',
         onclick: function() {
-       
-      $("#newMedia").modal("show");
-
+          $("#newMedia").modal("show");
         } });
         },
        toolbar: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link | code | newmedia'
@@ -276,7 +274,7 @@ jQuery(document).ready(function($){
         $("#newMedia").modal("hide");
           var sr = $('img', this).attr('src');
         //  tinyMCE.execCommand('mceInsertContent', false, '<img alt="Smiley face" height="42" width="42" src="' + sr + '"/>');
-        tinymce.activeEditor.insertContent('<img alt="Smiley face" class="img-fluid" src="' + sr + '"/>');
+        tinymce.activeEditor.insertContent('<img class="img-fluid" src="' + sr + '"/>');
       });
   });
 

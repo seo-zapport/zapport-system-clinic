@@ -19,6 +19,7 @@
 		</div>
 	</form>
 
+@include('layouts.errors')
 
 	<!-- Modal Add -->
 	<div class="modal fade bd-example-modal-lg" id="newMedia" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -41,24 +42,27 @@
 					</ul>
 					<div class="tab-content" id="myTabContent">
 						<div class="tab-pane fade show active" id="upload" role="tabpanel" aria-labelledby="upload-tab">
-							<div class="mt-5 mb-5">
-								<form action="post" enctype="multipart/form-data">
-									@csrf
-									<input type="file" class="form-control-file">
-								</form>
-							</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-								<button id="InsertPhoto" type="submit" class="btn btn-primary">Save changes</button>
-							</div>
+							<form id="addFileForm" enctype="multipart/form-data" method="post">
+								@csrf
+								<div class="mt-5 mb-5">
+									<input type="file" name="file_name" class="form-control-file">
+								</div>
+									<small id="errorlog" class="text-muted"></small>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+									<button id="InsertPhoto" type="submit" class="btn btn-primary">Save changes</button>
+								</div>
+							</form>
 						</div>
 						<div class="tab-pane fade" id="media" role="tabpanel" aria-labelledby="media-tab">
 							<div class="row">
-								@foreach ($employees as $pics)
+								@forelse ($employees as $pics)
 									<div id="img_cont" class="btn btn-link text-info col-3" data-toggle="modal" data-target="#Media">
-										<img id="edit_id" src="{{ asset('storage/uploaded/'.$pics->profile_img) }}" alt="" class="img-fluid d-inline-flex">
+										<img id="edit_id" src="{{ asset('storage/uploaded/media/'.$pics->file_name) }}" alt="" class="img-fluid d-inline-flex">
 									</div>
-								@endforeach
+									@empty
+										<div class="p-5 text-center">No Image Yet!</div>
+								@endforelse
 							</div>
 						</div>
 					</div>
@@ -66,5 +70,55 @@
 			</div>
 		</div>
 	</div>
+
+	<script type="application/javascript">
+		$(document).ready(function(){
+			$('#addFileForm').on('submit', function(e){
+				e.preventDefault();
+				var btn = $('#InsertPhoto');
+				btn.prop('disabled', true);
+           		setTimeout(function(){btn.prop('disabled', false); }, 3000);
+		       $.ajaxSetup({
+		            headers: {
+		                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		            },
+		        });
+				$.ajax({
+					type: "POST",
+					url: "create/media",
+					data: new FormData($("#addFileForm")[0]),
+					dataType: 'json',
+					cache: false,
+					processData: false,
+					contentType: false,
+					mimeType:"multipart/form-data",
+					success: function(response){
+						console.log(response);
+						var path = '{{ asset('storage/uploaded/media/') }}';
+						tinymce.activeEditor.insertContent('<img alt="'+ response.file_name +'" class="img-fluid" src="' + path + "/" + response.file_name + '"/>');
+						$('#addFileForm')[0].reset();
+						$("#newMedia").modal('hide');
+					},
+					error: function(response){
+						console.log(response)
+						$('#addFileForm')[0].reset();
+						document.getElementById("errorlog").innerHTML = '';
+
+						var customError = response.responseJSON.errors2;
+						if (jQuery.isEmptyObject(customError) === false) {
+							// console.log(customError);
+							document.getElementById("errorlog").innerHTML += customError + "<br>";
+						}
+						if (jQuery.isEmptyObject(response.responseJSON.errors) === false) {
+							var errors = response.responseJSON.errors.file_name;
+							errors.forEach(function(i){
+							document.getElementById("errorlog").innerHTML += i + "<br>";
+						});
+						}
+					}
+				});
+			})
+		});
+	</script>
 
 @endsection

@@ -77,4 +77,24 @@ class User extends Authenticatable
         return $this->belongsToMany(Medicine::class, 'employeesmedical_medicine_users', 'user_id')->withPivot('quantity')->withTimestamps();
     }
 
+    public function medias()
+    {
+        return $this->hasMany(Media::class);
+    }
+
+    public function addMedia(Media $media)
+    {
+        $this->medias()->save($media);
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
+    public function published(Post $post)
+    {
+        $this->posts()->save($post);
+    }
+
 }

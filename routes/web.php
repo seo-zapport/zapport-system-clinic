@@ -41,6 +41,9 @@ Route::group(['prefix'	=>	'posts'], function(){
 	Route::get('', 'PostController@index')->name('post.index');
 	Route::get('create', 'PostController@create')->name('post.create');
 	Route::post('create', 'PostController@store')->name('post.store');
+	Route::get('{post}', 'PostController@show')->name('post.show');
+	// Upload Media
+	Route::post('create/media', 'MediaController@store')->name('post.media');
 
 });
 

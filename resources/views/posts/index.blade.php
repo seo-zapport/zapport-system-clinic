@@ -13,10 +13,11 @@
 		@forelse ($posts as $post)
 			<tr>
 				<td>
-					{{ $post->created_at }}
+					{{ $post->created_at->format('M d, Y - h:i a') }}
 				</td>
 				<td>
 					{{ $post->title }}
+					<a href="{{ route('post.show', ['post' => $post->id]) }}" class="btn btn-info float-right">View</a>
 				</td>
 			</tr>
 		@empty
@@ -29,5 +30,5 @@
 		@endforelse
 	</tbody>
 </table>
-
+{{ $posts->links() }}
 @endsection
