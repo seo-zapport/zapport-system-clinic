@@ -1,6 +1,9 @@
 @extends('layouts.app')
-
-@section('content')
+@section('title', 'Dashboard Reset User\'s Password')
+@section('reset_pwd', 'active')
+@section('dash-title', 'Reset User\'s Password')
+@section('dash-content')
+@if (Gate::check('isAdmin'))
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
@@ -44,4 +47,5 @@
         </div>
     </div>
 </div>
+@endif
 @endsection

@@ -70,7 +70,8 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        $employees = Media::where('file_name', '!=', NULL)->where('user_id', auth()->user()->id)->get();
+        return view('posts.edit', compact('post', 'employees'));
     }
 
     /**
@@ -80,9 +81,12 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Post $post)
+    public function update(PostRequest $request, Post $post)
     {
-        //
+        $this->authorize('update', $post);
+        $atts = $request->validated();
+        $post->update($atts);
+        return redirect('posts/'.$post->id);
     }
 
     /**
@@ -93,6 +97,8 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $this->authorize('delete', $post);
+        $post->delete();
+        return redirect('posts');
     }
 }

@@ -42,8 +42,19 @@ Route::group(['prefix'	=>	'posts'], function(){
 	Route::get('create', 'PostController@create')->name('post.create');
 	Route::post('create', 'PostController@store')->name('post.store');
 	Route::get('{post}', 'PostController@show')->name('post.show');
+	Route::get('{post}/edit', 'PostController@edit')->name('post.edit');
+	Route::put('{post}/edit', 'PostController@update')->name('post.update');
+	Route::delete('{post}', 'PostController@destroy')->name('post.destroy');
 	// Upload Media
 	Route::post('create/media', 'MediaController@store')->name('post.media');
+
+});
+
+Route::group(['prefix'	=>	'media'], function(){
+
+	// Media
+	Route::get('', 'MediaController@index')->name('media.index');
+	Route::delete('{media}', 'MediaController@destroy')->name('media.delete');
 
 });
 

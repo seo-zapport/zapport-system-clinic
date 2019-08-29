@@ -4,15 +4,16 @@
 @section('dash-title', 'New Post')
 @section('dash-content')
 
-	<form method="post" action="{{ route('post.store') }}">
+	<form method="post" action="@yield('postAction', route('post.store'))">
 		@csrf
+		@yield('postMethod')
 		<div class="form-group">
 			<label for="title">Title</label>
-			<input type="text" name="title" class="form-control" placeholder="Enter Post Title Here!">
+			<input type="text" name="title" class="form-control" value="@yield('postEdit')" placeholder="Enter Post Title Here!">
 		</div>
 		<div class="form-group">
 			<label for="description">Post description</label>
-			<textarea name="description" id="description" rows="20" class="form-control" placeholder="Enter Your Content Here!"></textarea>
+			<textarea name="description" id="description" rows="20" class="form-control" placeholder="Enter Your Content Here!">@yield('postEditDes')</textarea>
 		</div>
 		<div class="form-group">
 			<button class="btn btn-info" type="submit">Submit</button>
@@ -55,15 +56,22 @@
 							</form>
 						</div>
 						<div class="tab-pane fade" id="media" role="tabpanel" aria-labelledby="media-tab">
-							<div class="row">
-								@forelse ($employees as $pics)
-									<div id="img_cont" class="btn btn-link text-info col-3" data-toggle="modal" data-target="#Media">
-										<img id="edit_id" src="{{ asset('storage/uploaded/media/'.$pics->file_name) }}" alt="" class="img-fluid d-inline-flex">
-									</div>
-									@empty
-										<div class="p-5 text-center">No Image Yet!</div>
-								@endforelse
-							</div>
+							<form id="addFileForm" enctype="multipart/form-data" method="post">
+								@method('DELETE')
+								@csrf
+								<div class="row">
+									@forelse ($employees as $pics)
+										<div id="img_cont" class="btn btn-link text-info col-3" data-id="{{ $pics->id }}" data-toggle="modal" data-target="#Media">
+											<img id="edit_id" src="{{ asset('storage/uploaded/media/'.$pics->file_name) }}" alt="" class="img-fluid d-inline-flex">
+										</div>
+										@empty
+											<div class="p-5 text-center">No Image Yet!</div>
+									@endforelse
+								</div>
+								<div class="modal-footer">
+									<button id="attachFile" type="submit" class="btn btn-primary">Insert</button>
+								</div>
+							</form>
 						</div>
 					</div>
 				</div>
@@ -100,7 +108,7 @@
 						$("#newMedia").modal('hide');
 					},
 					error: function(response){
-						console.log(response)
+						console.log(response) 
 						$('#addFileForm')[0].reset();
 						document.getElementById("errorlog").innerHTML = '';
 
@@ -118,6 +126,7 @@
 					}
 				});
 			})
+
 		});
 	</script>
 

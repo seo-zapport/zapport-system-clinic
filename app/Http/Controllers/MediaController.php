@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\MediaRequest;
 use Illuminate\Support\Facades\File;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Facades\Storage;
 
 class MediaController extends Controller
 {
@@ -17,7 +18,8 @@ class MediaController extends Controller
      */
     public function index()
     {
-        //
+        $medias = Media::where('user_id', auth()->user()->id)->get();
+        return view('posts.medias.index', compact('medias'));
     }
 
     /**
@@ -100,12 +102,9 @@ class MediaController extends Controller
      */
     public function destroy(Media $media)
     {
-        //
+        $this->authorize('delete', $media);
+        Storage::delete('public/uploaded/media/'.$media->file_name);
+        $media->delete();
+        return back();
     }
-
-    // public function mediaValidation(){
-    //     return request()->validate([
-    //         'file_name'   =>  ['mimes:jpg,jpeg,png,gif'],
-    //     ]);
-    // }
 }

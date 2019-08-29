@@ -242,12 +242,12 @@ jQuery(document).ready(function($){
     */
    tinymce.init({
        selector: 'textarea[name=description]',
-       entity_encoding: 'raw',
        max_height: 500,
        min_height: 500,
        menubar: false,
        branding: false,
        resize: false,
+       relative_urls: false, //use this to use Image RAW URL
        plugins: [
            'advlist autolink lists link charmap print preview anchor',
            'searchreplace visualblocks code fullscreen',
@@ -273,10 +273,28 @@ jQuery(document).ready(function($){
       $("#media #img_cont").click(function (event) {
         $("#newMedia").modal("hide");
           var sr = $('img', this).attr('src');
-        //  tinyMCE.execCommand('mceInsertContent', false, '<img alt="Smiley face" height="42" width="42" src="' + sr + '"/>');
         tinymce.activeEditor.insertContent('<img class="img-fluid" src="' + sr + '"/>');
       });
   });
 
+// $("#media #img_cont").on('click', function(){
+//   var hrf = $(this).attr('data-id');
+//   console.log(hrf);
+//  $.ajaxSetup({
+//       headers: {
+//           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//       },
+//   });
+//   $.ajax({
+//     url: 'create/media/'+hrf,
+//     type: 'delete',
+//     data: hrf,
+//     dataType: 'json',
+//     success:function(data){
+//       console.log(data);
+//     }
+//   });
+
+// });
 
 });
