@@ -10,6 +10,11 @@ use App\Http\Requests\PostRequest;
 
 class PostController extends Controller
 {
+    public function __construct()
+    {
+        return $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -45,9 +50,9 @@ class PostController extends Controller
             new Post($atts)
         );
 
-        $lastID = Post::get()->last();
+        $lastID = Post::where('user_id', auth()->user()->id)->get()->last();
 
-        return redirect('posts/'.$lastID->id);
+        return redirect()->route('post.show', ['post' => $lastID->id]);
     }
 
     /**
@@ -86,7 +91,7 @@ class PostController extends Controller
         $this->authorize('update', $post);
         $atts = $request->validated();
         $post->update($atts);
-        return redirect('posts/'.$post->id);
+        return redirect()->route('post.show', ['post' => $post->id]);
     }
 
     /**
@@ -99,6 +104,6 @@ class PostController extends Controller
     {
         $this->authorize('delete', $post);
         $post->delete();
-        return redirect('posts');
+        return redirect()->route('post.index');
     }
 }

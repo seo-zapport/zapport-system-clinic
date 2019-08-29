@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Storage;
 
 class MediaController extends Controller
 {
+    public function __construct()
+    {
+        return $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -45,7 +50,7 @@ class MediaController extends Controller
             if ($request->hasFile('file_name')) {
                 $filepath = 'public/uploaded/media';
                 $fileName = $request->file_name->getClientOriginalName();
-                $mediaSearch = Media::where('file_name', $fileName)->first();
+                $mediaSearch = Media::where('user_id', auth()->user()->id)->where('file_name', $fileName)->first();
                 if ($mediaSearch === NULL) {
                     $request->file('file_name')->storeAs($filepath, $fileName);
                     $atts['file_name'] = $fileName;
