@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Brand Name')
+@section('title', '| Brand Name | '.ucwords($medbrand->bname))
 @section('brandname', 'active')
 @section('dash-title', ucwords($medbrand->bname))
 @section('dash-content')

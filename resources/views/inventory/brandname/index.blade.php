@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Brand Name')
+@section('title', '| Brand Name')
 @section('brandname', 'active')
 @section('dash-title', 'Brand Names')
 @section('dash-content')

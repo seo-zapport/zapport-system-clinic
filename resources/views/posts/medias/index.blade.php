@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Dashboard')
+@section('title', '| Media')
 @section('medias', 'active')
 @section('dash-title', 'Media')
 @section('dash-content')

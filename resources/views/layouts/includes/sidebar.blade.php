@@ -1,10 +1,10 @@
 <div id="zapAdminMenuBg"></div>
 <div id="zapAdminMenuWrap" class="zap-sidebar">
-    @if (session('status'))
+{{--     @if (session('status'))
         <div class="alert alert-success" role="alert">
             {{ session('status') }}
         </div>
-    @endif
+    @endif --}}
 
     <ul class="nav flex-column">
         <div class="zap-user-info">

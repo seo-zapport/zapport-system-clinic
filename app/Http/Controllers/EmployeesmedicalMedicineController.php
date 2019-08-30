@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\EmployeesmedicalMedicine;
 use Illuminate\Http\Request;
+use App\EmployeesmedicalMedicine;
 
 class EmployeesmedicalMedicineController extends Controller
 {

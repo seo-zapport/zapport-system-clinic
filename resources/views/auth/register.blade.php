@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Dashboard Register User')
+@section('title', '| Register User')
 @section('register', 'active')
 @section('dash-title', 'Register New User')
 @section('dash-content')

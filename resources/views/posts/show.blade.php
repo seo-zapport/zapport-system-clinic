@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Dashboard')
+@section('title', '| '. $post->title)
 @section('posts', 'active')
 @section('dash-title', $post->title)
 @section('dash-content')

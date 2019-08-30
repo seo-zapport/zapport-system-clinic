@@ -1,8 +1,20 @@
 @extends('layouts.app')
-@section('title', 'Dashboard')
+@section('title', '| Posts')
 @section('posts', 'active')
 @section('dash-title', 'All Posts')
 @section('dash-content')
+
+<form method="get">
+	<div class="form-row">
+		<div class="form-group col-md-4">
+			<input type="search" name="search" class="form-control" value="{{ (!empty($search)) ? $search : '' }}" placeholder="Search for Post's Title">
+		</div>
+		<div class="form-group col-md-1 d-inline-flex">
+			<button type="submit" class="btn btn-success mr-2">Search</button>
+			<a href="{{ route('post.index') }}" class="btn btn-info text-white">Clear</a>
+		</div>
+	</div>
+</form>
 
 <table class="table table-hover">
 	<thead class="thead-dark">

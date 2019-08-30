@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Position')
+@section('title', '| Generics | '. $generic->gname)
 @section('genericname', 'active')
 @section('dash-title', $generic->gname)
 @section('dash-content')

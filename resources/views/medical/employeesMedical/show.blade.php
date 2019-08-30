@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', ucwords($employee->last_name) . '\'s information')
+@section('title', "| ".ucwords($employee->last_name) . '\'s information')
 @section('employeesMedical', 'active')
 @section('dash-title', ucwords($employee->last_name) . '\'s information')
 @section('dash-content')

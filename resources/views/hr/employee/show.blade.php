@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Employees Profile')
+@section('title', '| Employees Profile')
 @section('employees', 'active')
 @section('dash-title', 'Employees Profile')
 @section('dash-content')

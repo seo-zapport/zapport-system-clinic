@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Position')
+@section('title', '| Position | ' .ucwords($position->position))
 @section('reg_pos', 'active')
 @section('dash-title', ucwords($position->position))
 @section('dash-content')

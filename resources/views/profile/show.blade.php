@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', @$employee->first_name .'\'s Profile')
+@section('title', '| '.@$employee->first_name .'\'s Profile')
 @section('employee', 'active')
 @section('dash-title', 'Your Personal Information')
 @section('dash-content')

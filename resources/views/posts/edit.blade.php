@@ -1,5 +1,5 @@
 @extends('posts.create')
-@section('title', 'Dashboard')
+@section('title', '| Edit Post')
 {{-- @section('posts', 'active') --}}
 @section('dash-title', 'Edit '. $post->title)
 @section('dash-content')

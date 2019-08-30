@@ -7,6 +7,7 @@ use App\Media;
 use App\Employee;
 use Illuminate\Http\Request;
 use App\Http\Requests\PostRequest;
+use Illuminate\Support\Facades\Gate;
 
 class PostController extends Controller
 {
@@ -20,10 +21,19 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $posts = Post::where('user_id', auth()->user()->employee->id)->paginate(10);
-        return view('posts.index', compact('posts'));
+        if (Gate::check('isAdmin') || Gate::check('isHr') || Gate::check('isDoctor') || Gate::allows('isNurse')) {
+            $posts = Post::where('user_id', auth()->user()->employee->id)
+                         ->where('title', 'like', '%'.$request->search.'%')
+                         ->orderBy('id', 'desc')
+                         ->paginate(10);
+            $posts->appends(['search' => $request->search]);
+            $search = $request->search;
+            return view('posts.index', compact('posts', 'search'));
+        }else{
+            return back();
+        }
     }
 
     /**
@@ -33,8 +43,12 @@ class PostController extends Controller
      */
     public function create()
     {
-        $employees = Media::where('file_name', '!=', NULL)->where('user_id', auth()->user()->id)->get();
-        return view('posts.create', compact('employees'));
+        if (Gate::check('isAdmin') || Gate::check('isHr') || Gate::check('isDoctor') || Gate::allows('isNurse')) {
+            $employees = Media::where('file_name', '!=', NULL)->where('user_id', auth()->user()->id)->get();
+            return view('posts.create', compact('employees'));
+        }else{
+            return back();
+        }
     }
 
     /**
@@ -45,14 +59,18 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
-        $atts = $request->validated();
-        auth()->user()->published(
-            new Post($atts)
-        );
+        if (Gate::check('isAdmin') || Gate::check('isHr') || Gate::check('isDoctor') || Gate::allows('isNurse')) {
+            $atts = $request->validated();
+            auth()->user()->published(
+                new Post($atts)
+            );
 
-        $lastID = Post::where('user_id', auth()->user()->id)->get()->last();
+            $lastID = Post::where('user_id', auth()->user()->id)->get()->last();
 
-        return redirect()->route('post.show', ['post' => $lastID->id]);
+            return redirect()->route('post.show', ['post' => $lastID->id]);
+        }else{
+            return back();
+        }
     }
 
     /**
@@ -75,8 +93,12 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        $employees = Media::where('file_name', '!=', NULL)->where('user_id', auth()->user()->id)->get();
-        return view('posts.edit', compact('post', 'employees'));
+        if (Gate::check('isAdmin') || Gate::check('isHr') || Gate::check('isDoctor') || Gate::allows('isNurse')) {
+            $employees = Media::where('file_name', '!=', NULL)->where('user_id', auth()->user()->id)->get();
+            return view('posts.edit', compact('post', 'employees'));
+        }else{
+            return back();
+        }
     }
 
     /**

@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Employee;
-use App\Employeesmedical;
 use App\Generic;
 use App\Medicine;
+use App\Employeesmedical;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;

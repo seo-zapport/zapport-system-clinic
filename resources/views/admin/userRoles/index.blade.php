@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'User Roles')
+@section('title', '| User Roles')
 @section('userRoles', 'active')
 @section('dash-title', 'User Roles')
 @section('dash-content')

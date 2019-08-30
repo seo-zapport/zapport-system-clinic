@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Position')
+@section('title', '| Position')
 @section('reg_pos', 'active')
 {{-- @section('dash-title', 'Position') --}}
 @section('heading-title')

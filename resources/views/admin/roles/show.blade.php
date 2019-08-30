@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'User Roles')
+@section('title', '| Roles')
 @section('roles', 'active')
 @section('dash-title', ucwords($role->role).' role')
 @section('dash-content')
