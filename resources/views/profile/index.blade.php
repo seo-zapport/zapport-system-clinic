@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Add Department')
+@section('title', '| Sync Profile')
 @section('employee', 'active')
 @section('dash-title', 'Enter Your Employee Number')
 @section('dash-content')

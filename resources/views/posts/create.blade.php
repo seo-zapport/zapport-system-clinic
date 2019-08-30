@@ -9,11 +9,11 @@
 		@yield('postMethod')
 		<div class="form-group">
 			<label for="title">Title</label>
-			<input type="text" name="title" class="form-control" value="@yield('postEdit')" placeholder="Enter Post Title Here!">
+			<input type="text" name="title" class="form-control" value="@yield('postEdit')" placeholder="Enter Post Title Here!" required>
 		</div>
 		<div class="form-group">
 			<label for="description">Post description</label>
-			<textarea name="description" id="description" rows="20" class="form-control" placeholder="Enter Your Content Here!">@yield('postEditDes')</textarea>
+			<textarea name="description" id="description" rows="20" class="form-control" placeholder="Enter Your Content Here!" required>@yield('postEditDes')</textarea>
 		</div>
 		<div class="form-group">
 			<button class="btn btn-info" type="submit">Submit</button>
@@ -46,7 +46,7 @@
 							<form id="addFileForm" enctype="multipart/form-data" method="post">
 								@csrf
 								<div class="mt-5 mb-5">
-									<input type="file" name="file_name" class="form-control-file">
+									<input type="file" name="file_name" class="form-control-file" required>
 								</div>
 									<small id="errorlog" class="text-muted"></small>
 								<div class="modal-footer">
@@ -67,9 +67,6 @@
 										@empty
 											<div class="p-5 text-center">No Image Yet!</div>
 									@endforelse
-								</div>
-								<div class="modal-footer">
-									<button id="attachFile" type="submit" class="btn btn-primary">Insert</button>
 								</div>
 							</form>
 						</div>

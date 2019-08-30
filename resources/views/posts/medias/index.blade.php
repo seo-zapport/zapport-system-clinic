@@ -43,7 +43,9 @@
 				</div>
 			</div>
 			@empty
-				EMPTY
+				<div class="col-12 text-center">
+					EMPTY
+				</div>
 		@endforelse
 	</div>
 @endsection
