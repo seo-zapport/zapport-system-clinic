@@ -29,7 +29,7 @@ class EmployeeRequest extends FormRequest
     public function rules()
     {
         return [
-            "profile_img"               => ['mimes:jpg,jpeg,png'],
+            "profile_img"               => ['mimes:jpg,jpeg,png', 'max:2000'],
             "first_name"                => ['required'],
             "last_name"                 => ['required'],
             "middle_name"               => ['required'],

@@ -47,6 +47,7 @@ Route::group(['prefix'	=>	'posts'], function(){
 	Route::delete('{post}', 'PostController@destroy')->name('post.destroy');
 	// Upload Media
 	Route::post('create/media', 'MediaController@store')->name('post.media');
+	Route::post('{post}/edit/media', 'MediaController@addMediaOnPostUpdate');
 
 });
 

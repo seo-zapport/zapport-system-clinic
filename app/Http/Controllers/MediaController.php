@@ -105,7 +105,7 @@ class MediaController extends Controller
      */
     public function update(Request $request, Media $media)
     {
-        //
+        // 
     }
 
     /**
@@ -120,5 +120,31 @@ class MediaController extends Controller
         Storage::delete('public/uploaded/media/'.$media->file_name);
         $media->delete();
         return back();
+    }
+
+    public function addMediaOnPostUpdate(MediaRequest $request)
+    {
+        if (Gate::check('isAdmin') || Gate::check('isHr') || Gate::check('isDoctor') || Gate::allows('isNurse')) {
+            if ($request->ajax()) {
+                $atts = $request->validated();
+                if ($request->hasFile('file_name')) {
+                    $filepath = 'public/uploaded/media';
+                    $fileName = $request->file_name->getClientOriginalName();
+                    $mediaSearch = Media::where('user_id', auth()->user()->id)->where('file_name', $fileName)->first();
+                    if ($mediaSearch === NULL) {
+                        $request->file('file_name')->storeAs($filepath, $fileName);
+                        $atts['file_name'] = $fileName;
+                        auth()->user()->addMedia(
+                            new Media($atts)
+                        );
+                        return response()->json($atts);
+                    }else{
+                        return response()->json(['errors2' => 'Image already exists!', 'code' => 422], 422);
+                    }
+                }
+            }
+        }else{
+            return back();
+        }
     }
 }

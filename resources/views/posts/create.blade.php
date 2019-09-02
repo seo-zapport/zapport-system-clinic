@@ -3,7 +3,7 @@
 @section('new_post', 'active')
 @section('dash-title', 'New Post')
 @section('dash-content')
-
+{{-- {{ phpinfo() }} --}}
 	<form method="post" action="@yield('postAction', route('post.store'))">
 		@csrf
 		@yield('postMethod')
@@ -13,7 +13,7 @@
 		</div>
 		<div class="form-group">
 			<label for="description">Post description</label>
-			<textarea name="description" id="description" rows="20" class="form-control" placeholder="Enter Your Content Here!" required>@yield('postEditDes')</textarea>
+			<textarea name="description" id="description" rows="20" class="form-control" placeholder="Enter Your Content Here!">@yield('postEditDes')</textarea>
 		</div>
 		<div class="form-group">
 			<button class="btn btn-info" type="submit">Submit</button>
@@ -43,7 +43,7 @@
 					</ul>
 					<div class="tab-content" id="myTabContent">
 						<div class="tab-pane fade show active" id="upload" role="tabpanel" aria-labelledby="upload-tab">
-							<form id="addFileForm" enctype="multipart/form-data" method="post">
+							<form id="addFileForm" enctype="multipart/form-data">
 								@csrf
 								<div class="mt-5 mb-5">
 									<input type="file" name="file_name" class="form-control-file" required>
@@ -81,6 +81,12 @@
 			$('#addFileForm').on('submit', function(e){
 				e.preventDefault();
 				var btn = $('#InsertPhoto');
+				var loc = location.href;
+				if (loc === 'http://clinic/posts/create') {
+					var url = 'create/media';
+				}else{
+					var url = 'edit/media';
+				}
 				btn.prop('disabled', true);
            		setTimeout(function(){btn.prop('disabled', false); }, 3000);
 		       $.ajaxSetup({
@@ -89,8 +95,8 @@
 		            },
 		        });
 				$.ajax({
-					type: "POST",
-					url: "create/media",
+					type: 'POST',
+					url: url,
 					data: new FormData($("#addFileForm")[0]),
 					dataType: 'json',
 					cache: false,
@@ -98,7 +104,6 @@
 					contentType: false,
 					mimeType:"multipart/form-data",
 					success: function(response){
-						console.log(response);
 						var path = '{{ asset('storage/uploaded/media/') }}';
 						tinymce.activeEditor.insertContent('<img alt="'+ response.file_name +'" class="img-fluid" src="' + path + "/" + response.file_name + '"/>');
 						$('#addFileForm')[0].reset();

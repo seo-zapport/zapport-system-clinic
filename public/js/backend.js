@@ -247,7 +247,7 @@ jQuery(document).ready(function($){
        menubar: false,
        branding: false,
        resize: false,
-       relative_urls: false, //use this to use Image RAW URL
+       relative_urls: false,
        plugins: [
            'advlist autolink lists link charmap print preview anchor',
            'searchreplace visualblocks code fullscreen',
