@@ -40,8 +40,14 @@
                 <main id="app" class="primary-site" role="main">
                     <div class="wrap">
                         <div class="container-fluid">
-                            <h2 class="heading-title">@yield('heading-title')</h2>
-                            {{-- @include('layouts.breadcrumbs') --}}
+                            <div class="row">
+                                <div class="col-12 col-lg-6">
+                                    <h2 class="heading-title">@yield('heading-title')</h2>
+                                </div>
+                                <div class="col-12 col-lg-6">
+                                    @include('layouts.breadcrumbs')
+                                </div>                                
+                            </div>
                             @if ( request()->is('dashboard*') || request()->is('hr*') )
                                 @yield('dash-content')
                             @else
