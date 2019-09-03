@@ -23,8 +23,8 @@
 	<tbody>
 		@forelse ($medbrand->medicines->unique('brand_id') as $gen)
 			<tr>
-				<td class="{{ ($gen->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">{{ ucfirst($gen->generic->gname) }}</td>
-				<td class="{{ ($gen->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">{{ $gen->where('brand_id', $medbrand->id)->where('generic_id', $gen->generic->id)->where('expiration_date', '>=', NOW())->where('availability', 0)->count() }}</td>
+				<td>{{ ucfirst($gen->generic->gname) }}</td>
+				<td>{{ $gen->where('brand_id', $medbrand->id)->where('generic_id', $gen->generic->id)->where('expiration_date', '>', NOW())->where('availability', 0)->count() }}</td>
 			</tr>
 			@empty
 				<tr>
