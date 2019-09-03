@@ -1,12 +1,9 @@
-<nav>
+<nav aria-label="breadcrumb">
 	<ul class="breadcrumb">
-		@foreach ($segments = request()->segments() as $index => $segment)
+		@foreach (request()->breadcrumbs()->segments() as $segment)
 			<li class="breadcrumb-item">
-				{{ var_dump( array_slice($segments, 0, $index + 1) ) }}
-				<a href="">
-					{{ title_case( $segment ) }}
-				</a>
+				<a href="{{ $segment->url() }}">{{ optional( $segment->model() )->title ?: $segment->name() }}</a>
 			</li>
-		@endforeach		
+		@endforeach
 	</ul>
 </nav>

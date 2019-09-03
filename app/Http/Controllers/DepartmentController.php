@@ -77,7 +77,7 @@ class DepartmentController extends Controller
      */
     public function show(Department $department)
     {
-        //
+
     }
 
     /**
