@@ -34,6 +34,9 @@ Route::group(['prefix'	=>	'dashboard'], function(){
 	Route::get('roles/{role}', 'RolesController@show')->name('dashboard.showRoles');
 	Route::delete('roles/{role}', 'RolesController@destroy')->name('dashboard.deleteRole');
 
+	// User
+	Route::delete('users/{user}', 'UserController@destroy')->name('dashboard.delete.user');
+
 });
 
 Route::group(['prefix'	=>	'posts'], function(){

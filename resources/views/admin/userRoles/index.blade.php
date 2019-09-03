@@ -21,7 +21,21 @@
 
 	@forelse($users as $user)
 		<tr>
-			<td>{{ $user->id }}</td>
+			<td>
+				{{-- {{ $user->id }} --}}
+	        	<form method="post" action="{{ route('dashboard.delete.user', ['user' => $user->id]) }}">
+	        		@csrf
+	        		@method('DELETE')
+	        		<div class="form-row align-items-center">
+	            		<div class="col-auto my-1 form-inline">
+	        				{{ $user->id }}
+							<button class="btn btn-link"  onclick="return confirm('Are you sure you want to remove {{ ucfirst($user->name) }} ?')" data-id="{{ $user->user }}">
+								<i class="fas fa-times-circle"></i>
+							</button>
+						</div>
+					</div>
+	        	</form>
+			</td>
 			<td>{{ $user->name }}</td>
 			<td>{{ $user->email }}</td>
 			<td>
@@ -68,8 +82,11 @@
 
 </table>
 @include('layouts.errors')
-@if (session('reg_success'))
-	<div class="alert alert-success">{{ session('reg_success') }}</div>
+@if (session('reg_success') || session('delete_error'))
+	<div class="{{ (session('reg_success')) ? 'alert alert-success' : 'alert alert-danger' }}">
+		{{ session('reg_success') }}
+		{{ session('delete_error') }}
+	</div>
 @endif
 
 	<!-- Modal Add -->
