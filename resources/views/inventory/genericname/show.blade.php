@@ -18,10 +18,15 @@
 	<tbody>
 		@forelse ($allBrands as $gen)
 			<tr>
-				<td class="{{ ($gen->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">{{ ucwords($gen->medbrand->bname) }}</td>
+				<td class="{{ ($gen->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">
+					{{ ucwords($gen->medbrand->bname) }}
+				</td>
 				{{-- <td class="{{ ($gen->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">{{ $gen->created_at->format('M d, Y') }}</td> --}}
 				{{-- <td class="{{ ($gen->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">{{ $gen->expiration_date->format('M d, Y') }}</td> --}}
-				<td class="{{ ($gen->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">{{ $gen->where('brand_id', $gen->medbrand->id)->where('availability', 0)->count() }}</td>
+				<td class="{{ ($gen->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">
+					{{ $gen->where('brand_id', $gen->medbrand->id)->where('availability', 0)->where('expiration_date', '>', NOW())->count() }}
+					<span class="float-right">{{ ($gen->expiration_date <= NOW()) ? 'Expired Medicines are not countable' : '' }}</span>
+				</td>
 				{{-- <td class="{{ ($gen->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">{{ $gen->where('brand_id', $gen->medbrand->id)->where('expiration_date', $gen->expiration_date)->where('availability', 0)->count() }}</td> --}}
 			</tr>
 			@empty

@@ -15,4 +15,9 @@ class Generic extends Model
     {
     	return $this->hasMany(Medicine::class, 'generic_id');
     }
+
+    public function getRouteKeyName()
+    {
+        return 'gname';
+    }
 }

@@ -111,6 +111,6 @@
 <p class="{{ (@$employee->philhealth_no == NULL) ? 'bg-warning' : ''  }}">Philhealth number: {{ @$employee->philhealth_no }}</p>
 <p class="{{ (@$employee->hdmf_no == NULL) ? 'bg-warning' : ''  }}">HDMF number: {{ @$employee->hdmf_no }}</p>
 <hr>
-<a href="{{ route('hr.emp.edit', ['employee' => @$employee->id]) }}" class="btn btn-info text-white">Edit</a>
+<a href="{{ route('hr.emp.edit', ['employee' => @$employee->emp_id]) }}" class="btn btn-info text-white">Edit</a>
 
 @endsection

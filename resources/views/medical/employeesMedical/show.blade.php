@@ -4,7 +4,7 @@
 @section('dash-title', ucwords($employee->last_name) . '\'s information')
 @section('dash-content')
 @section('back')
-<a href="{{ route('medical.employeeInfo', ['employee' => $employee->id]) }}">
+<a href="{{ route('medical.employeeInfo', ['employee' => $employee->emp_id]) }}">
 	<i class="fas fa-arrow-left"></i>
 </a>
 @endsection
@@ -102,7 +102,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<form onsubmit="return test(this)" id="myform" method="post" action="{{ route('medical.storeFollowup', ['employee' => $employee->id, 'employeesmedical' =>$employeesmedical->id]) }}">
+				<form onsubmit="return test(this)" id="myform" method="post" action="{{ route('medical.storeFollowup', ['employee' => $employee->emp_id, 'employeesmedical' =>$employeesmedical->diagnosis]) }}">
 					@csrf
 					<div class="form-group">
 						<label for="followup_note">Note:</label>
@@ -159,7 +159,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<form method="post" action="{{ route('medical.update', ['employee' => $employee->id, 'employeesmedical' =>$employeesmedical->id]) }}">
+				<form method="post" action="{{ route('medical.update', ['employee' => $employee->emp_id, 'employeesmedical' =>$employeesmedical->diagnosis]) }}">
 					@csrf
 					@method('PUT')
 					<input type="hidden" name="employee_id" value="{{ $employee->id }}">

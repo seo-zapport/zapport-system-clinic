@@ -30,7 +30,7 @@
 				<td>{{ ucwords($emp->last_name . " " . $emp->first_name . " " . $emp->middle_name) }}</td>
 				<td>{{ strtoupper($emp->departments->department) . " - " . ucwords( $emp->positions->position) }}</td>
 				<td>
-					<a href="{{ route('medical.employeeInfo', ['employee' => $emp->id]) }}" class="btn btn-info text-white">View</a>
+					<a href="{{ route('medical.employeeInfo', ['employee' => $emp->emp_id]) }}" class="btn btn-info text-white">View</a>
 				</td>
 			</tr>
 			@empty

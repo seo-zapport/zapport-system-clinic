@@ -4,7 +4,7 @@
 @section('dash-title', ucwords($generic->gname))
 @section('dash-content')
 @section('back')
-<a href="{{ route('medicine.log', ['medbrand' => $medbrand->id, 'generic' => $generic->id]) }}">
+<a href="{{ route('medicine.log', ['medbrand' => $medbrand->bname, 'generic' => $generic->gname]) }}">
 	<i class="fas fa-arrow-left"></i>
 </a>
 @endsection
@@ -26,7 +26,7 @@
 		</div>
 		<div class="form-group col-md-2">
 			<button class="btn btn-success">Search</button>
-			<a href="{{ route('medicine.show', ['medbrand' => $medbrand->id, 'generic' => $generic->id, 'inputDate' => $inputDate, 'expDate' => 
+			<a href="{{ route('medicine.show', ['medbrand' => $medbrand->bname, 'generic' => $generic->gname, 'inputDate' => $inputDate, 'expDate' => 
 					$expDate]) }}" class="btn btn-info text-white">Clear</a>
 		</div>
 	</div>
@@ -45,7 +45,7 @@
 	<tr>
 		<td>{{ $med->Distinct_date->format('M d, Y - h:i a') }}</td>
 		<td>{{ $med->last_name }} {{ $med->first_name }}</td>
-		<td>{{ $countMeds->where('empMeds_id', $med->empMeds_id)->where('patient', $med->patient)->where('distinct_user_id', $med->distinct_user_id)->count() }}</td>
+		<td>{{ $countMeds->where('empMeds_id', $med->empMeds_id)->where('patient', $med->patient)->where('distinct_user_id', $med->distinct_user_id)->where('Distinct_date', $med->Distinct_date)->count() }}</td>
 		<td>{{ $med->givenLname }} {{ $med->givenFname }}</td>
 	</tr>
 	@empty

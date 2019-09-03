@@ -67,7 +67,7 @@ class PostController extends Controller
 
             $lastID = Post::where('user_id', auth()->user()->id)->get()->last();
 
-            return redirect()->route('post.show', ['post' => $lastID->id]);
+            return redirect()->route('post.show', ['post' => $lastID->title]);
         }else{
             return back();
         }
@@ -113,7 +113,7 @@ class PostController extends Controller
         $this->authorize('update', $post);
         $atts = $request->validated();
         $post->update($atts);
-        return redirect()->route('post.show', ['post' => $post->id]);
+        return redirect()->route('post.show', ['post' => $post->title]);
     }
 
     /**

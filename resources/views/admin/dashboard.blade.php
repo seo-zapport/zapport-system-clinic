@@ -49,7 +49,7 @@
 														<td>{{ $seen->diagnosis }}</td>
 														<td>{{ $seen->note }}</td>
 														<td>{{ ($seen->remarks == 'followUp') ? 'Follow up' : 'Done' }}</td>
-														<td><a href="{{ route('medical.show', ['employee' => $seen->employee->id, 'employeesmedical' => $seen->id]) }}" class="btn btn-info text-white">View</a></td>
+														<td><a href="{{ route('medical.show', ['employee' => $seen->employee->emp_id, 'employeesmedical' => $seen->diagnosis]) }}" class="btn btn-info text-white">View</a></td>
 													</tr>
 													@empty
 														<tr>
@@ -88,7 +88,7 @@
 														<td>{{ $empMed->diagnosis }}</td>
 														<td>{{ $empMed->note }}</td>
 														<td>{{ ($empMed->remarks == 'followUp') ? 'Follow up' : 'Done' }}</td>
-														<td><a href="{{ route('medical.show', ['employee' => $empMed->employee->id, 'employeesmedical' => $empMed->id]) }}" class="btn btn-info text-white">View</a></td>
+														<td><a href="{{ route('medical.show', ['employee' => $empMed->employee->emp_id, 'employeesmedical' => $empMed->diagnosis]) }}" class="btn btn-info text-white">View</a></td>
 													</tr>
 													@empty
 														<tr>
@@ -121,7 +121,7 @@
 													<td>{{ $emp->emp_id }}</td>
 													<td>{{ $emp->last_name }} {{ $emp->first_name }} {{ $emp->middle_name }}</td>
 													<td>{{ $emp->departments->department }} - {{ $emp->positions->position }}</td>
-													<td><a href="{{ route('hr.emp.show', ['employee' => $emp->id]) }}" class="btn btn-info text-white">View</a></td>
+													<td><a href="{{ route('hr.emp.show', ['employee' => $emp->emp_id]) }}" class="btn btn-info text-white">View</a></td>
 												</tr>
 												@empty
 													<tr>
@@ -180,7 +180,7 @@
 											<td>{{ $medsHistory->diagnosis }}</td>
 											<td>{{ $medsHistory->note }}</td>
 											<td>{{ ($medsHistory->remarks == 'followUp') ? 'Follow up' : 'Done' }}</td>
-											<td><a href="{{ route('dashboard.show', ['employee' => $employee, 'employeesmedical' => $medsHistory->id]) }}" class="btn btn-info text-white">View</a></td>
+											<td><a href="{{ route('dashboard.show', ['employee' => $medsHistory->employee->emp_id, 'employeesmedical' => $medsHistory->diagnosis]) }}" class="btn btn-info text-white">View</a></td>
 										</tr>
 										@empty
 											<tr>

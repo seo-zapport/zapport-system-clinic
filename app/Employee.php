@@ -35,4 +35,9 @@ class Employee extends Model
     {
         return $this->hasMany(Post::class);
     }
+
+    public function getRouteKeyName()
+    {
+        return 'emp_id';
+    }
 }

@@ -4,7 +4,7 @@
 @section('dash-title', 'Edit '. $post->title)
 @section('dash-content')
 
-@section('postAction', route('post.edit', ['post' => $post->id]))
+@section('postAction', route('post.edit', ['post' => $post->title]))
 @section('postMethod')
 	@method('PUT')
 @endsection

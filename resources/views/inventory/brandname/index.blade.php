@@ -20,13 +20,13 @@
 			<tr>
 				@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
 				<td>
-	        	<form method="post" action="{{ route('brandname.delete', ['medbrand' => $brand->id]) }}">
+	        	<form method="post" action="{{ route('brandname.delete', ['medbrand' => $brand->bname]) }}">
 	        		@csrf
 	        		@method('DELETE')
 	        		<div class="form-row align-items-center">
 	            		<div class="col-auto my-1 form-inline">
 	        				{{ ucwords($brand->bname) }}
-							<button class="btn btn-link"  onclick="return confirm('Are you sure you want to delete {{ ucfirst($brand->bname) }} Brand?')" data-id="{{ $brand->id }}">
+							<button class="btn btn-link"  onclick="return confirm('Are you sure you want to delete {{ ucfirst($brand->bname) }} Brand?')" data-id="{{ $brand->bname }}">
 								<i class="fas fa-times-circle"></i>
 							</button>
 						</div>
@@ -38,7 +38,7 @@
 					{{ ucwords($brand->bname) }}
 				</td>
 				@endif
-				<td>{{ $brand->generic->count() }} <a href="{{ route('brandname.show', ['medbrand' => $brand->id]) }}" class="btn btn-info text-white float-right">View</a></td>
+				<td>{{ $brand->generic->count() }} <a href="{{ route('brandname.show', ['medbrand' => $brand->bname]) }}" class="btn btn-info text-white float-right">View</a></td>
 			</tr>
 			@empty
 				<tr>

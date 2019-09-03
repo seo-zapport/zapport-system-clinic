@@ -127,7 +127,7 @@ class MedbrandController extends Controller
                     'bname' => ['required', 'unique:medbrands,bname,'.$medbrand->id],
                 ]);
             $medbrand->update($atts);
-            return back();
+            return redirect()->route('brandname.update', ['medbrand' => $medbrand->bname]);
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();
             return back()->with('message', 'You\'re not employee!');

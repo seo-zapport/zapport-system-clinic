@@ -24,13 +24,13 @@
 			        	@foreach ($position->departments as $department)
 							<tr>
 								<td>
-					        	<form method="post" action="{{ route('hr.pos.deletePos', ['position' => $position->id]) }}">
+					        	<form method="post" action="{{ route('hr.pos.deletePos', ['position' => $position->position]) }}">
 					        		@csrf
 					        		@method('DELETE')
 					        		<div class="form-row align-items-center">
 					            		<div class="col-auto my-1 form-inline">
 					        				{{ ucwords($position->position) }}
-											<button class="btn btn-link"  onclick="return confirm('Are you sure you want to delete {{ ucfirst($position->position) }} Position?')" data-id="{{ $position->id }}">
+											<button class="btn btn-link"  onclick="return confirm('Are you sure you want to delete {{ ucfirst($position->position) }} Position?')" data-id="{{ $position->postion }}">
 												<i class="fas fa-times-circle"></i>
 											</button>
 										</div>
@@ -41,7 +41,7 @@
 					        		</td>
 								<td>
 									{{ $employees->where('department_id', $department->id)->where('position_id', $position->id)->count() }}
-									<span><a href="{{ route('hr.pos.show', ['position' => $position->id, 'department' => $department->id]) }}" class="btn btn-info text-white float-right">View</a></span>
+									<span><a href="{{ route('hr.pos.show', ['position' => $position->position, 'department' => $department->department]) }}" class="btn btn-info text-white float-right">View</a></span>
 								</td>
 							</tr>
 			        	@endforeach

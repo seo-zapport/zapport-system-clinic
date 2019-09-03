@@ -40,4 +40,9 @@ class Employeesmedical extends Model
     {
         return $this->belongsToMany(Mednote::class, 'employeesmedical_mednotes', 'employeesmedical_id');
     }
+
+    public function getRouteKeyName()
+    {
+        return 'diagnosis';
+    }
 }

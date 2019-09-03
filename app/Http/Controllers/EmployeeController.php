@@ -330,7 +330,7 @@ class EmployeeController extends Controller
             $employee->hired_date                   = $request->hired_date;
             $employee->save();
 
-            return redirect(route('hr.emp.show', ['employee' => $employee->id]));
+            return redirect(route('hr.emp.show', ['employee' => $employee->emp_id]));
 
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();

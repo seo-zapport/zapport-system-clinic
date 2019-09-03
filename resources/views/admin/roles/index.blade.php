@@ -19,13 +19,13 @@
 	@forelse($roles as $role)
 		<tr>
 			<td>
-	        	<form method="post" action="{{ route('dashboard.deleteRole', ['role' => $role->id]) }}">
+	        	<form method="post" action="{{ route('dashboard.deleteRole', ['role' => $role->role]) }}">
 	        		@csrf
 	        		@method('DELETE')
 	        		<div class="form-row align-items-center">
 	            		<div class="col-auto my-1 form-inline">
 	        				{{ $role->role }}
-							<button class="btn btn-link"  onclick="return confirm('Are you sure you want to delete {{ ucfirst($role->role) }} Role?')" data-id="{{ $role->id }}">
+							<button class="btn btn-link"  onclick="return confirm('Are you sure you want to delete {{ ucfirst($role->role) }} Role?')" data-id="{{ $role->role }}">
 								<i class="fas fa-times-circle"></i>
 							</button>
 						</div>
@@ -33,7 +33,7 @@
 	        	</form>
 			</td>
 			<td>{{ $role->users->count() }}</td>
-			<td><a href="{{ route('dashboard.showRoles', ['role' => $role->id]) }}" class="btn btn-info text-white">View</a></td>
+			<td><a href="{{ route('dashboard.showRoles', ['role' => $role->role]) }}" class="btn btn-info text-white">View</a></td>
 		</tr>
 	@empty
 		<td colspan="3" class="text-center">{{ "No Roles Yet!" }}</td>

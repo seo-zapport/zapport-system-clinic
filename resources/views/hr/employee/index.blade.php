@@ -33,7 +33,7 @@
 						<tr>
 							<td>{{ $employee->emp_id }}</td>
 							<td>{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
-							<td>{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }} <a href="{{ route('hr.emp.show', ['employee' => $employee->id]) }}" class="btn btn-info text-white float-right">View</a></td>
+							<td>{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }} <a href="{{ route('hr.emp.show', ['employee' => $employee->emp_id]) }}" class="btn btn-info text-white float-right">View</a></td>
 						</tr>
 						@empty
 							<tr>

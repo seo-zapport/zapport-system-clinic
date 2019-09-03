@@ -19,7 +19,6 @@ class Model extends Eloquent
 		"employeesmedical_id",
 		"employee_id",
 		"mednote_id",
-		"file",
 ];
 	protected $dates = [
 		"birthday", 

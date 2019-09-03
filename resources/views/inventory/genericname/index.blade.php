@@ -20,13 +20,13 @@
 			<tr>
 				@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
 				<td>
-	        	<form method="post" action="{{ route('genericname.delete', ['generic' => $gen->id]) }}">
+	        	<form method="post" action="{{ route('genericname.delete', ['generic' => $gen->gname]) }}">
 	        		@csrf
 	        		@method('DELETE')
 	        		<div class="form-row align-items-center">
 	            		<div class="col-auto my-1 form-inline">
 	        				{{ ucwords($gen->gname) }}
-							<button class="btn btn-link"  onclick="return confirm('Are you sure you want to delete {{ ucfirst($gen->gname) }} Generic Name?')" data-id="{{ $gen->id }}">
+							<button class="btn btn-link"  onclick="return confirm('Are you sure you want to delete {{ ucfirst($gen->gname) }} Generic Name?')" data-id="{{ $gen->gname }}">
 								<i class="fas fa-times-circle"></i>
 							</button>
 						</div>
@@ -38,7 +38,7 @@
 					{{ ucwords($gen->gname) }}
 				</td>
 				@endif
-				<td>{{ $gen->medicines->where('availability', 0)->where('expiration_date', '>=', NOW())->count() }} <a href="{{ route('genericname.show', ['generic' => $gen->id]) }}" class="btn btn-info text-white float-right">View</a></td>
+				<td>{{ $gen->medicines->where('availability', 0)->where('expiration_date', '>=', NOW())->count() }} <a href="{{ route('genericname.show', ['generic' => $gen->gname]) }}" class="btn btn-info text-white float-right">View</a></td>
 			</tr>
 			@empty
 				<tr>

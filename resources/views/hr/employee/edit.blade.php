@@ -4,7 +4,7 @@
 @section('dash-title', 'Edit Employees Profile')
 @section('dash-content')
 
-@section('action', route('hr.emp.store', ['employee' => $employee->id]))
+@section('action', route('hr.emp.store', ['employee' => $employee->emp_id]))
 @section('editMethod')
 @method('PUT')
 @endsection

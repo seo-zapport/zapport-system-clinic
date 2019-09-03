@@ -6,11 +6,11 @@
 {!! $post->description !!}
 
 <div class="d-inline-flex float-right">
-	<form action="{{ route('post.destroy', ['post' => $post->id]) }}" method="post">
+	<form action="{{ route('post.destroy', ['post' => $post->title]) }}" method="post">
 		@method('DELETE')
 		@csrf
 		<button class="btn btn-danger mr-2" onclick="return confirm('Are you sure you want to delete this post?')">Delete</button>
 	</form>
-	<a href="{{ route('post.edit', ['post' => $post->id]) }}" class="btn btn-info">Edit</a>
+	<a href="{{ route('post.edit', ['post' => $post->title]) }}" class="btn btn-info">Edit</a>
 </div>
 @endsection

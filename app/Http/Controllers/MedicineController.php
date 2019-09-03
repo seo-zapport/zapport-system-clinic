@@ -254,34 +254,39 @@ class MedicineController extends Controller
     {
         if (Gate::allows('isAdmin') || Gate::allows('isHr') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
             $log1 = Medicine::where('brand_id', $medbrand->id)->where('generic_id', $generic->id)->orderBy('created_at', 'desc')->get();
+            // dd($log1);
             $logs = Medicine::join('generics', 'generics.id', '=', 'medicines.generic_id')
                             ->join('medbrands', 'medbrands.id', '=', 'medicines.brand_id')
                             ->join('users', 'users.id', '=', 'medicines.user_id')
-                            ->select('bname', 'gname', 'expiration_date', 'user_id', 'medicines.created_at', 'generic_id', 'brand_id', \DB::raw('COUNT(expiration_date) as expCount'))
+                            ->select('bname', 'gname', 'expiration_date', 'user_id', \DB::raw('DATE_FORMAT(medicines.created_at, "%Y-%m-%d") as formatted_at'), 'medicines.created_at as orig', 'generic_id', 'brand_id', \DB::raw('COUNT(expiration_date) as expCount'))
                             ->groupBy('bname', 'gname', 'expiration_date', 'user_id', 'medicines.created_at', 'generic_id', 'brand_id')
-                            ->distinct('expiration_date')
+                            ->distinct('expiration_date', 'medicines.created_at')
                             ->where('brand_id', $medbrand->id)
                             ->where('generic_id', $generic->id);
-            $loglist = $logs->orderBy('medicines.created_at', 'desc')->paginate(10);
+            $loglist = $logs->orderBy('medicines.created_at', 'desc')->get();
             if ($request->has('expired') && $request->has('search')) {
                 $search = $request->search;
                 $logsearch = $logs->where('medicines.expiration_date', '<=', NOW())->orderBy('medicines.created_at', 'desc')->get();
             }
             if ($request->has('search') && $request->has('expired') == null) {
                 $search = $request->search;
-                $logs = $logs->where('medicines.created_at', $request->search)
+                $logs = $logs->where(\DB::raw('DATE_FORMAT(medicines.created_at, "%Y-%m-%d")'), $request->search)
                              ->orderBy('medicines.created_at', 'desc')->paginate(10);
+                             $logs->appends(['search' => $request->search]);
             }
             elseif ($request->has('expired') && $request->has('search') == null) {
                 $logs = $logs->where('medicines.expiration_date', '<=', NOW())
                              ->orderBy('medicines.created_at', 'desc')->paginate(10);
+                             $logs->appends(['expired' => $request->expired]);
             }
             elseif ($request->has('expired') && $request->has('search')) {
-                $logs = $logs->where('medicines.created_at', $request->search)
+                $logs = $logs->where(\DB::raw('DATE_FORMAT(medicines.created_at, "%Y-%m-%d")'), $request->search)
                              ->where('medicines.expiration_date', '<=', NOW())
                              ->orderBy('medicines.created_at', 'desc')->paginate(10);
+                             $logs->appends(['search' => $request->search]);
             }else{
                 $logs = $logs->orderBy('medicines.created_at', 'desc')->paginate(10);
+                $logs->appends(['search' => $request->search]);
                 }
             return view('inventory.medicine.logs', compact('logs', 'medbrand', 'generic', 'log1', 'search', 'loglist', 'logsearch'));
         }elseif (Gate::allows('isBanned')) {

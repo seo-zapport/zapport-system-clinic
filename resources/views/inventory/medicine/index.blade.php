@@ -38,7 +38,7 @@
 				<td>{{ $med->where('generic_id', $med->generic_id)->where('brand_id', $med->brand_id)->where('availability', 0)->where('expiration_date', '>', NOW())->count() }}</td>
 				<td>
 					{{-- {{ $med->qty_stock }} --}}
-					<a href="{{ route('medicine.log', ['medbrand' => $med->medBrand->id, 'generic' => $med->generic->id]) }}" class="btn btn-info text-white">View</a>
+					<a href="{{ route('medicine.log', ['medbrand' => $med->medBrand->bname, 'generic' => $med->generic->gname]) }}" class="btn btn-info text-white">View</a>
 				</td>
 			</tr>
 			@empty

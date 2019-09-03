@@ -19,30 +19,13 @@
 		@php
 			$i = 1;
 		@endphp
-{{-- 		@forelse ($position->employee as $empPos)
-			<tr>
-				<td>{{ $i }}</td>
-				<td>{{ $empPos->emp_id }}</td>
-				<td>
-					{{ ucwords($empPos->last_name) }} {{ ucwords($empPos->first_name) }} {{ ucwords($empPos->middle_name) }}
-					<span class="float-right"><a href="{{ route('hr.emp.show', ['employee' => $empPos->id]) }}" class="btn btn-info text-white">View</a></span>
-				</td>
-			</tr>
-		@php
-			$i++;
-		@endphp
-			@empty
-				<tr>
-					<td colspan="3" class="text-center">No Records Found!</td>
-				</tr>
-		@endforelse --}}
 		@forelse ($employees as $empPos)
 			<tr>
 				<td>{{ $i }}</td>
 				<td>{{ $empPos->emp_id }}</td>
 				<td>
 					{{ ucwords($empPos->last_name) }} {{ ucwords($empPos->first_name) }} {{ ucwords($empPos->middle_name) }}
-					<span class="float-right"><a href="{{ route('hr.emp.show', ['employee' => $empPos->id]) }}" class="btn btn-info text-white">View</a></span>
+					<span class="float-right"><a href="{{ route('hr.emp.show', ['employee' => $empPos->emp_id]) }}" class="btn btn-info text-white">View</a></span>
 				</td>
 			</tr>
 		@php

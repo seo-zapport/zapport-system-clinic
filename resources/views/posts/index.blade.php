@@ -29,7 +29,7 @@
 				</td>
 				<td>
 					{{ $post->title }}
-					<a href="{{ route('post.show', ['post' => $post->id]) }}" class="btn btn-info float-right">View</a>
+					<a href="{{ route('post.show', ['post' => $post->title]) }}" class="btn btn-info float-right">View</a>
 				</td>
 			</tr>
 		@empty

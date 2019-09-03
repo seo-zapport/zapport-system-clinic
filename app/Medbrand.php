@@ -15,4 +15,9 @@ class Medbrand extends Model
     {
     	return $this->belongsToMany(Generic::class, 'medbrand_generics', 'medbrand_id');
     }
+
+    public function getRouteKeyName()
+    {
+        return 'bname';
+    }
 }

@@ -86,9 +86,9 @@ class EmployeesProfileController extends Controller
             $emp = $employee::find($request->input('id'));
             $emp->user_id = $userID;
             $emp->save();
-            return redirect('employees/profile/employee/'.$emp->id);
+            return redirect('employees/profile/employee/'.$emp->emp_id);
         }else{
-            $emp = auth()->user()->employee->id;
+            $emp = auth()->user()->employee->emp_id;
             return redirect('employees/profile/employee/'.$emp);
         }
     }
@@ -116,7 +116,7 @@ class EmployeesProfileController extends Controller
                 return back()->with('noResult', 'No Result Found! Or Employee Number Already Belongs To A User');
             }
         }else{
-            $emp = auth()->user()->employee->id;
+            $emp = auth()->user()->employee->emp_id;
             return redirect('employees/profile/employee/'.$emp);
         }
     }
