@@ -76,10 +76,11 @@ class GenericController extends Controller
     {
         if (Gate::allows('isAdmin') || Gate::allows('isHr') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
             $unique = $generic->medicines->unique(function($item){
-                return $item['generic_id'].$item['brand_id'].$item['created_at']->format('M d, Y H:i');
+                return $item['generic_id'].$item['brand_id'];
             });
 
             $allBrands = $unique->values()->all();
+            // dd($allBrands);
 
             return view('inventory.genericname.show', compact('generic', 'allBrands'));
         }elseif (Gate::allows('isBanned')) {
