@@ -77,11 +77,17 @@
 
             <div class="content">
                 <div class="title m-b-md">
+                    @php
+                        $i = 1;
+                        $outopen = "Clinic is Closed";
+                    @endphp
                     @foreach ($users as $user)
                         @if ($user->isOnline())
-                            The Doctor is Online
+                            @php $outopen = "Clinic is Open"; @endphp
+                            @break
                         @endif
                     @endforeach
+                        {{ $outopen }}
                 </div>
 
                 <div class="links">
