@@ -77,7 +77,11 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Clinic
+                    @foreach ($users as $user)
+                        @if ($user->isOnline())
+                            The Doctor is Online
+                        @endif
+                    @endforeach
                 </div>
 
                 <div class="links">

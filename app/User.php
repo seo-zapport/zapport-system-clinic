@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Cache;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -95,6 +96,11 @@ class User extends Authenticatable
     public function published(Post $post)
     {
         $this->posts()->save($post);
+    }
+
+    public function isOnline()
+    {
+        return Cache::has('user-is-online' . $this->id);
     }
 
 }

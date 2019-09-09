@@ -7,6 +7,7 @@
 @endsection
 
 @section('dash-content')
+
 	<div class="row">
 		@if ( Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse') || Gate::check('isHr') )
 			<div class="col-12 col-md-2 col-lg-2">
