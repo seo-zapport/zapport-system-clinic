@@ -2,12 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Generic;
 use App\Medbrand;
+use App\MedbrandGeneric;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use App\Http\Requests\MedbrandRequest;
 
 class MedbrandController extends Controller
 {
+    public function __construct()
+    {
+        return $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -15,11 +24,15 @@ class MedbrandController extends Controller
      */
     public function index()
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isHr') || Gate::allows('isDoctor')) {
-            $brands = Medbrand::orderBy('bname', 'asc')->get();
-            return view('inventory.brandname.index', compact('brands'));
+        if (Gate::allows('isAdmin') || Gate::allows('isHr') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
+            $gens = Generic::get();
+            $brands = Medbrand::orderBy('bname', 'asc')->paginate(10);
+            return view('inventory.brandname.index', compact('brands', 'gens'));
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
-            abort(403, 'You are not Authorized on this page!');
+            return back();
         }
     }
 
@@ -39,14 +52,35 @@ class MedbrandController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(MedbrandRequest $request)
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isHr') || Gate::allows('isDoctor')) {
-            $atts = $this->brandNameValidation();
-            Medbrand::create($atts);
+        if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
+            $this->validate($request, $request->rules(), $request->messages());
+            $atts = $request->except('generic_id');
+
+            $check = Medbrand::where('bname', $request->bname)->first();
+            if (!empty($check)) {
+                $data = $check;
+            }else{
+                $data = Medbrand::create($atts);
+            }
+
+            $check2 = MedbrandGeneric::where('medbrand_id', $data->id)->where('generic_id', $request->generic_id)->first();
+            if (!empty($check2)) {
+                return back()->with('pivot_validation', 'Brand Name and Generic Name already exists!');
+            }
+            $lastID = $data->id;
+            $brndID['medbrand_id'] = $lastID;
+            $genID = $request->input('generic_id');
+            $gen = Generic::find($genID);
+            $gen->medbrand()->attach($brndID);
             return back();
+
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
-            abort(403, 'You are not Authorized on this page!');
+            return back();
         }
     }
 
@@ -58,7 +92,14 @@ class MedbrandController extends Controller
      */
     public function show(Medbrand $medbrand)
     {
-        //
+        if (Gate::allows('isAdmin') || Gate::allows('isHr') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
+            return view('inventory.brandname.show', compact('medbrand'));
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
+        }else{
+            return back();
+        }
     }
 
     /**
@@ -81,7 +122,18 @@ class MedbrandController extends Controller
      */
     public function update(Request $request, Medbrand $medbrand)
     {
-        //
+        if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
+            $atts = $request->validate([
+                    'bname' => ['required', 'unique:medbrands,bname,'.$medbrand->id],
+                ]);
+            $medbrand->update($atts);
+            return redirect()->route('brandname.update', ['medbrand' => $medbrand->bname]);
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
+        }else{
+            return back();
+        }
     }
 
     /**
@@ -92,18 +144,17 @@ class MedbrandController extends Controller
      */
     public function destroy(Medbrand $medbrand)
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isHr') || Gate::allows('isDoctor')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
+            if (count($medbrand->medicines) > 0) {
+                return back()->with('brand_message', 'You cannot delete a brand with record in inventory');
+            }
             $medbrand->delete();
             return back();
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
-            abort(403, 'You are not Authorized on this page!');
+            return back();
         }
-    }
-
-    public function brandNameValidation()
-    {
-        return request()->validate([
-            'bname' =>  ['required', 'unique:medbrands']
-        ]);
     }
 }

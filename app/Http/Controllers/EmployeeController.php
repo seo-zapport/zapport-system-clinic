@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Department;
-use App\DepartmentPosition;
 use App\Employee;
 use App\Position;
+use App\Department;
+use App\DepartmentPosition;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use App\Http\Requests\EmployeeRequest;
 use Illuminate\Support\Facades\Storage;
 
 class EmployeeController extends Controller
@@ -21,13 +23,19 @@ class EmployeeController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
-            $employees = Employee::orderBy('first_name', 'asc')->get();
-            return view('hr.employee.index', compact('employees'));
+            $employees = Employee::orWhere(\DB::raw("concat(emp_id, ' ', first_name, ' ', last_name, ' ', middle_name)"), 'like', '%'.$request->search.'%')
+                                 ->orWhere(\DB::raw("concat(emp_id, ' ', last_name, ' ', first_name, ' ', middle_name)"), 'like', '%'.$request->search.'%')->orderBy('last_name', 'desc')->paginate(10);
+            $employees->appends(['search' => $request->search]);
+            $search = $request->search;
+            return view('hr.employee.index', compact('employees', 'search'));
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
-            abort(403, 'You are not Authorized on this page!');
+            return back();
         }
     }
 
@@ -41,8 +49,11 @@ class EmployeeController extends Controller
         if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
             $departments = Department::get();
             return view('hr.employee.create', compact('departments'));
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
-            abort(403, 'You are not Authorized on this page!');
+            return back();
         }
 
     }
@@ -53,11 +64,10 @@ class EmployeeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(EmployeeRequest $request)
     {
-        // dd($request->all());
         if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
-            $atts = $this->employeeValidation();
+            $atts = $this->validate($request, $request->rules(), $request->messages());
 
             // dd($atts);
             $arr = array(request('experience'));
@@ -117,13 +127,17 @@ class EmployeeController extends Controller
             $newEmp->philhealth_no              = $request->philhealth_no;
             $newEmp->hdmf_no                    = $request->hdmf_no;
             $newEmp->experience                 = $works;
+            $newEmp->hired_date                 = $request->hired_date;
             // dd($newEmp);
             $newEmp->save();
 
             return back();
 
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
-            abort(403, 'You are not Authorized on this page!');
+            return back();
         }
     }
 
@@ -137,8 +151,11 @@ class EmployeeController extends Controller
     {
         if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
             return view('hr.employee.show', compact('employee'));
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
-            abort(403, 'You are not Authorized on this page!');
+            return back();
         }
     }
 
@@ -158,8 +175,11 @@ class EmployeeController extends Controller
             // Filter Civil Status IDs that are not included
 
             return view('hr.employee.edit', compact('employee', 'departments', 'uniqDep'));
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
-            abort(403, 'You are not Authorized on this page!');
+            return back();
         }
     }
 
@@ -196,23 +216,50 @@ class EmployeeController extends Controller
                     "father_name"               => ['required'],
                     "father_birthday"           => ['required'],
                     "mother_name"               => ['required'],
-                    // "mother_birthday"           => ['required'],
-                    // "spouse_name"               => ['required'],
-                    // "date_of_marriage"          => ['required'],
-                    // "children"                  => ['required'],
                     "elementary"                => ['required'],
                     "elementary_grad_date"      => ['required'],
                     "highschool"                => ['required'],
                     "highschool_grad_date"      => ['required'],
-                    "college"                   => ['required'],
-                    "college_grad_date"         => ['required'],
+                    // "college"                   => ['required'],
+                    // "college_grad_date"         => ['required'],
                     "person_to_contact"         => ['required'],
                     "person_to_contact_address" => ['required'],
                     "person_to_contact_number"  => ['required', 'numeric'],
-                    // "tin_no"                    => ['numeric'],
-                    // "sss_no"                    => ['numneric'],
-                    // "philhealth_no"             => ['numneric'],
-                    // "hdmf_no"                   => ['numneric'],
+                    "hired_date"                => ['required'],
+            ],
+            [
+                    "first_name.required"                => 'First name is required!',
+                    "last_name.required"                 => 'Last name is required!',
+                    "middle_name.required"               => 'Middle name is required!',
+                    "birthday.required"                  => 'Birthdate is required!',
+                    "birth_place.required"               => 'Birthplace is required!',
+                    "citizenship.required"               => 'Citizenship is required!',
+                    "religion.required"                  => 'Religion is required!',
+                    "present_address.required"           => 'Present address is required!',
+                    "permanent_address.required"         => 'Permanent address is required!',
+                    "civil_status.required"              => 'Civil status is required!',
+                    "contact.required"                   => 'Contact number is required!',
+                    "gender.required"                    => 'Gender is required!',
+                    "emp_id.required"                    => 'Employee ID is required!',
+                    "department_id.required"             => 'Department is required!',
+                    "position_id.required"               => 'Position is required!',
+                    "height.required"                    => 'Height is required!',
+                    "weight.required"                    => 'Weight is required!',
+                    "religion.required"                  => 'Religion is required!',
+                    "father_name.required"               => 'Father\'s name is required!',
+                    "father_birthday.required"           => 'Father\'s birthday is required!',
+                    "mother_name.required"               => 'Mother\'s name is required!',
+                    "mother_birthday.required"           => 'Mother\'s birthday is required!',
+                    "elementary.required"                => 'Primary education is required!',
+                    "elementary_grad_date.required"      => 'Primary graduated date education is required!',
+                    "highschool.required"                => 'Secondary education is required!',
+                    "highschool_grad_date.required"      => 'Secondary graduated date is required!',
+                    // "college.required"                   => 'Tertiary education is required!',
+                    // "college_grad_date.required"         => 'Tertiary graduated date is required!',
+                    "person_to_contact.required"         => 'Person to contact name is required!',
+                    "person_to_contact_address.required" => 'Person to contact address is required!',
+                    "person_to_contact_number.required"  => 'Person to contact phone number is required!',
+                    "hired_date.required"                => 'Hired Date is required!',
             ]);
 
             $arr = array(request('experience'));
@@ -280,12 +327,16 @@ class EmployeeController extends Controller
             $employee->philhealth_no                = $request->philhealth_no;
             $employee->hdmf_no                      = $request->hdmf_no;
             $employee->experience                   = $works;
+            $employee->hired_date                   = $request->hired_date;
             $employee->save();
 
-            return redirect(route('hr.emp.show', ['employee' => $employee->id]));
+            return redirect(route('hr.emp.show', ['employee' => $employee->emp_id]));
 
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
-            abort(403, 'You are not Authorized on this page!');
+            return back();
         }
     }
 
@@ -320,49 +371,10 @@ class EmployeeController extends Controller
         return json_encode($position_id);
     }
 
-
-    public function employeeValidation()
+    public function getEmpID($emp_id)
     {
-        return request()->validate([
-            "profile_img"               => ['mimes:jpg,jpeg,png'],
-            "first_name"                => ['required'],
-            "last_name"                 => ['required'],
-            "middle_name"               => ['required'],
-            "birthday"                  => ['required'],
-            "birth_place"               => ['required'],
-            "citizenship"               => ['required'],
-            "religion"                  => ['required'],
-            "present_address"           => ['required'],
-            "permanent_address"         => ['required'],
-            "civil_status"              => ['required'],
-            "contact"                   => ['required', 'numeric'],
-            "gender"                    => ['required'],
-            "emp_id"                    => ['required', 'unique:employees'],
-            "department_id"             => ['required'],
-            "position_id"               => ['required'],
-            "height"                    => ['required'],
-            "weight"                    => ['required'],
-            "religion"                  => ['required'],
-            "father_name"               => ['required'],
-            "father_birthday"           => ['required'],
-            "mother_name"               => ['required'],
-            "mother_birthday"           => ['required'],
-            // "spouse_name"               => ['required'],
-            // "date_of_marriage"          => ['required'],
-            // "children"                  => ['required'],
-            "elementary"                => ['required'],
-            "elementary_grad_date"      => ['required'],
-            "highschool"                => ['required'],
-            "highschool_grad_date"      => ['required'],
-            "college"                   => ['required'],
-            "college_grad_date"         => ['required'],
-            "person_to_contact"         => ['required'],
-            "person_to_contact_address" => ['required'],
-            "person_to_contact_number"  => ['required', 'numeric'],
-            // "tin_no"                    => ['numeric'],
-            // "sss_no"                    => ['numeric'],
-            // "philhealth_no"             => ['numeric'],
-            // "hdmf_no"                   => ['numeric'],
-        ]);
+        $employeesID = Employee::where('emp_id', $emp_id)->count();
+        return json_encode($employeesID);
     }
+
 }

@@ -1,36 +1,61 @@
 @extends('layouts.app')
-@section('title', 'Brand Name')
+@section('title', '| Medicines')
 @section('medicine', 'active')
-@section('dash-title', 'Brand Names')
+@section('dash-title', 'List of Medicines')
 @section('dash-content')
 
-<div class="form-group">
-	<a class="btn btn-info text-white" href="#" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus"></i> Add New</a>
-</div>
+@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
+	<div class="form-group">
+		<a class="btn btn-info text-white" href="#" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus"></i> Add New</a>
+	</div>
+@endif
 
-<table class="table">
+<form method="get">
+	<div class="form-row">
+		<div class="form-group col-md-4">
+			<input type="search" name="search" class="form-control" value="{{ (!empty($search)) ? $search : '' }}" placeholder="Search for Generic Name">
+		</div>
+		<div class="form-group col-md-1 d-inline-flex">
+			<button type="submit" class="btn btn-success mr-2">Search</button>
+			<a href="{{ route('medicine') }}" class="btn btn-info text-white">Clear</a>
+		</div>
+	</div>
+</form>
+
+<table class="table table-hover">
 	<thead class="thead-dark">
 		<th>Generic Name</th>
 		<th>Brand Name</th>
-		<th>Quantity</th>
+		<th>Remaining Quantity</th>
 		<th>Stock Logs</th>
 	</thead>
 	<tbody>
-		@forelse ($meds->unique('generic_name') as $med)
+		@if ($meds != null)		
+		@forelse ($meds as $med)
 			<tr>
-				<td>{{ $med->generic_name }}</td>
-				<td>{{ $med->medBrand->bname }}</td>
-				{{-- <td>{{ $meds->count() }}</td> --}}
-				<td>{{ $meds->where('generic_name', $med->generic_name)->count() }}</td>
-				<td>{{ $med->qty_stock }}</td>
+				<td>{{ ucfirst($med->generic->gname) }}</td>
+				<td>{{ ucwords($med->medBrand->bname) }}</td>
+				<td>{{ $med->where('generic_id', $med->generic_id)->where('brand_id', $med->brand_id)->where('availability', 0)->where('expiration_date', '>', NOW())->count() }}</td>
+				<td>
+					{{-- {{ $med->qty_stock }} --}}
+					<a href="{{ route('medicine.log', ['medbrand' => $med->medBrand->bname, 'generic' => $med->generic->gname]) }}" class="btn btn-info text-white">View</a>
+				</td>
 			</tr>
 			@empty
 				<tr>
 					<td colspan="4" class="text-center">{{ "No registered Medicine yet!" }}</td>
 				</tr>
 		@endforelse
+		@else
+			<tr>
+				<td colspan="4" class="text-center">{{ "No Record Found!" }}</td>
+			</tr>
+		@endif
 	</tbody>
 </table>
+@if ($meds != null)
+	{{ $meds->links() }}
+@endif
 <br>
 @include('layouts.errors')
 
@@ -47,26 +72,31 @@
 			<div class="modal-body">
 				<form method="post" action="{{ route('medicine.add') }}">
 					@csrf
+
 					<div class="form-group">
-						<label for="generic_name">Brand Name</label>
-						<select name="brand_id" id="brand_id" class="form-control">
-							<option selected="true" disabled="disabled"> Select Brand name </option>
-							@foreach ($brands as $brand)
-								<option value="{{ $brand->id }}">{{ $brand->bname }}</option>
+						<label for="generic_id">Generic Name</label>
+						<select name="generic_id" id="generic_id" class="form-control" required>
+							<option selected="true" disabled="disabled" value=""> Select Generic name </option>
+							@foreach ($gens as $gen)
+								<option value="{{ $gen->id }}">{{ $gen->gname }}</option>
 							@endforeach
 						</select>
 					</div>
+
 					<div class="form-group">
-						<label for="generic_name">Generic Name</label>
-						<input type="text" name="generic_name" class="form-control" placeholder="Generic Name" value="{{ old('generic_name') }}" {{-- required --}}>
+						<label for="brand_id">Brand Name</label>
+						<select name="brand_id" id="brand_id" class="form-control" required>
+							<option selected="true" disabled="disabled" value=""> Select Brand </option>
+						</select>
 					</div>
+
 					<div class="form-group">
 						<label for="expiration_date">Expiration Date</label>
-						<input type="date" name="expiration_date" class="form-control" placeholder="Expiration Date" value="{{ old('expiration_date') }}" {{-- required --}}>
+						<input type="date" name="expiration_date" class="form-control" placeholder="Expiration Date" value="{{ old('expiration_date') }}" required>
 					</div>
 					<div class="form-group">
 						<label for="qty_input">Quantity</label>
-						<input type="number" name="qty_input" class="form-control" placeholder="Quantity" value="{{ old('qty_input') }}" {{-- required --}}>
+						<input type="number" name="qty_input" class="form-control" placeholder="Quantity" value="{{ old('qty_input') }}" required>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

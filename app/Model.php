@@ -12,6 +12,13 @@ class Model extends Eloquent
 		"role_id", 
 		"department_id", 
 		"position_id",
+		"brand_id",
+		"generic_id",
+		"medbrand_id",
+		"medicine_id",
+		"employeesmedical_id",
+		"employee_id",
+		"mednote_id",
 ];
 	protected $dates = [
 		"birthday", 
@@ -23,5 +30,10 @@ class Model extends Eloquent
 		"father_birthday", 
 		"mother_birthday", 
 		"date_of_merriage",
+		"expiration_date",
+		"Distinct_date",
+		"hired_date",
 	];
+
+	// protected $dateFormat = 'Y-m-d H:i';
 }

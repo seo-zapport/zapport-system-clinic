@@ -1,50 +1,60 @@
 @extends('layouts.app')
-@section('title', 'Department')
+@section('title', '| Department')
 @section('reg_dep', 'active')
-@section('dash-title', 'Department')
+{{-- @section('dash-title', 'Department') --}}
+@section('heading-title')
+	<i class="fas fa-building"></i> Department
+@endsection
 @section('dash-content')
+<div class="card">
+	<div class="card-body">
+		<div class="form-group">
+			<a class="btn btn-info text-white" href="#" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus"></i> Add Department</a>
+		</div>
+		<div class="table-responsive">
+			<table class="table">
+				<thead class="thead-dark">
+					<th>Department</th>
+					<th>No. of Employees</th>
+				</thead>
+				<tbody>
+					@forelse ($deps as $dep)
+						<tr>
+							<td>
+				        	<form method="post" action="{{ route('hr.dep.deleteDep', ['department' => $dep->department]) }}">
+				        		@csrf
+				        		@method('DELETE')
+				        		<div class="form-row align-items-center">
+				            		<div class="col-auto my-1 form-inline">
+				        				{{ $dep->department }}
+										<button class="btn btn-link"  onclick="return confirm('Are you sure you want to delete {{ ucfirst($dep->department) }} Department?')" data-id="{{ $dep->department }}">
+											<i class="fas fa-times-circle"></i>
+										</button>
+									</div>
+								</div>
+				        	</form>
+							</td>
+							<td>{{ $dep->employee->count() }}</td>
+						</tr>
+						@empty
+							<tr>
+								<td colspan="2" class="text-center">{{ "No registered Department yet!" }}</td>
+							</tr>
+					@endforelse
+				</tbody>
+			</table>			
+		</div>
 
-<div class="form-group">
-	<a class="btn btn-info text-white" href="#" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus"></i> Add Department</a>
+		@include('layouts.errors')
+		@if (session('dep_message'))
+			<div class="alert alert-danger alert-posts">
+				{{ session('dep_message') }}
+			</div>
+		@endif		
+	</div>
 </div>
 
-<table class="table">
-	<thead class="thead-dark">
-		<th>Department</th>
-		<th>No. of Employees</th>
-	</thead>
-	<tbody>
-		@forelse ($deps as $dep)
-			<tr>
-				<td>
-	        	<form method="post" action="{{ route('hr.dep.deleteDep', ['department' => $dep->id]) }}">
-	        		@csrf
-	        		@method('DELETE')
-	        		<div class="form-row align-items-center">
-	            		<div class="col-auto my-1 form-inline">
-	        				{{ $dep->department }}
-							<button class="btn btn-link"  onclick="return confirm('Are you sure you want to delete {{ ucfirst($dep->department) }} Department?')" data-id="{{ $dep->id }}">
-								<i class="fas fa-times-circle"></i>
-							</button>
-						</div>
-					</div>
-	        	</form>
-				</td>
-				<td>{{ $dep->employee->count() }}</td>
-			</tr>
-			@empty
-				<tr>
-					<td>{{ "No registered Department yet!" }}</td>
-				</tr>
-		@endforelse
-	</tbody>
-</table>
-@include('layouts.errors')
-@if (session('dep_message'))
-	<div class="alert alert-danger alert-posts">
-		{{ session('dep_message') }}
-	</div>
-@endif
+
 
 <!-- Modal Add -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

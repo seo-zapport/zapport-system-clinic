@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'User Roles')
+@section('title', '| User Roles')
 @section('userRoles', 'active')
 @section('dash-title', 'User Roles')
 @section('dash-content')
@@ -13,6 +13,7 @@
 		<tr>
 			<th>ID</th>
 			<th>Employee Name</th>
+			<th>Employee Email</th>
 			<th>Role</th>
 		</tr>
 	</thead>
@@ -20,8 +21,23 @@
 
 	@forelse($users as $user)
 		<tr>
-			<td>{{ $user->id }}</td>
+			<td>
+				{{-- {{ $user->id }} --}}
+	        	<form method="post" action="{{ route('dashboard.delete.user', ['user' => $user->id]) }}">
+	        		@csrf
+	        		@method('DELETE')
+	        		<div class="form-row align-items-center">
+	            		<div class="col-auto my-1 form-inline">
+	        				{{ $user->id }}
+							<button class="btn btn-link"  onclick="return confirm('Are you sure you want to remove {{ ucfirst($user->name) }} ?')" data-id="{{ $user->user }}">
+								<i class="fas fa-times-circle"></i>
+							</button>
+						</div>
+					</div>
+	        	</form>
+			</td>
 			<td>{{ $user->name }}</td>
+			<td>{{ $user->email }}</td>
 			<td>
 				@forelse ($user->roles as $role)
 
@@ -34,9 +50,8 @@
 							@method('PUT')
 							<input type="hidden" name="user_id" value="{{ $user->id }}">
 							<select name="role_id" id="role_id" class="form-control-sm" onchange="this.form.submit();">
-								@foreach ($roles as $role)
-									<option hidden>Select Role</option>
-									<option value="{{ $role->id }}">{{ $role->role }}</option>
+								@foreach ($roles as $allRole)
+									<option {{ ($role->id == $allRole->id) ? 'selected' : '' }} value="{{ $allRole->id }}">{{ $allRole->role }}</option>
 								@endforeach
 							</select>
 						</form>
@@ -59,13 +74,20 @@
 			</td>
 		</tr>
 	@empty
-		<td colspan="3" class="text-center">{{ "No User Roles Yet!" }}</td>
+		<td colspan="4" class="text-center">{{ "No User Roles Yet!" }}</td>
 
 	@endforelse
 
 	</tbody>
 
 </table>
+@include('layouts.errors')
+@if (session('reg_success') || session('delete_error'))
+	<div class="{{ (session('reg_success')) ? 'alert alert-success' : 'alert alert-danger' }}">
+		{{ session('reg_success') }}
+		{{ session('delete_error') }}
+	</div>
+@endif
 
 	<!-- Modal Add -->
 	<div class="modal fade bd-example-modal-lg" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -93,6 +115,7 @@
 						<div class="form-group">
 							<label for="role">Role</label>
 							<select name="role_id" class="form-control">
+								<option selected="true" disabled>Select Roles for Users</option>
 								@foreach ($roles as $role)
 									<option value="{{ $role->id }}">{{ $role->role }}</option>
 								@endforeach

@@ -38,19 +38,55 @@ jQuery(document).ready(function($){
        }
     });
 
+
+
+  // AJAX
+    jQuery('select[name="generic_id"]').on('change',function(){
+       var generic_id = jQuery(this).val();
+       // var myUrl = 'medicine/gen/';
+       var url   = window.location.href;
+
+       if (url === "http://clinic/inventory/medicine") {
+         var myUrl = 'medicine/gen/';
+       }else {
+          var myUrl = 'http://clinic/medical/employees/gen/';
+       }
+
+       if(generic_id)
+       {
+          console.log(myUrl + generic_id);
+          jQuery.ajax({
+             url : myUrl + generic_id,
+             type : "GET",
+             dataType : "json",
+             success:function(data)
+             {
+                jQuery('select[name="brand_id"]').empty();
+                jQuery.each(data, function(key,value){
+                   $('select[name="brand_id"]').append('<option value="'+ key +'">'+ value +'</option>');
+                });
+             }
+          });
+       }
+       else
+       {
+          $('select[name="brand_id"]').empty();
+       }
+    });
+
     // Children
     var i = $('#addChildren').length;
     var e = $(this).find('.editchildren').length;
     var o = $('#editChildren').length;
     // Children
     $("#addChildren").click(function(event) {
-      $('<div id="childrenField" class="col-12 my-1 form-inline"><label for="children" class="mr-2">Child\'s Name</label><input type="text" class="form-control mr-2" name="children['+i+'][]" placeholder="Child\'s Name" value=""><label for="children" class="mr-2">Birthday</label><input type="date" class="form-control mr-2" name="children['+i+'][]" " value=""><label for="children" class="mr-2">Gender</label><input type="text" class="form-control mr-2" name="children['+i+'][]" placeholder="Gender" value=""><a id="removeChildren" class="btn btn-danger text-white"><i class="fa fa-times"></i></a></div>').appendTo('#children');
+      $('<div id="childrenField" class="col-12 my-1 form-inline"><label for="children" class="mr-2">Child\'s Name</label><input type="text" class="form-control mr-2" name="children['+i+'][]" placeholder="Child\'s Name" value="" required><label for="children" class="mr-2">Birthday</label><input type="date" class="form-control mr-2" name="children['+i+'][]" " value="" required><label for="children" class="mr-2">Gender</label><input type="text" class="form-control mr-2" name="children['+i+'][]" placeholder="Gender" value="" required><a id="removeChildren" class="btn btn-danger text-white"><i class="fa fa-times"></i></a></div>').appendTo('#children');
     i++;
 
     });
     // Children
     $("#editChildren").click(function(event) {
-      $('<div id="childrenField" class="col-auto my-1 form-inline editchildren"><label for="children" class="mr-2">Child\'s Name</label><input type="text" class="form-control mr-2" name="children['+e+'][]" placeholder="Child\'s Name" value=""><label for="children" class="mr-2">Birthday</label><input type="date" class="form-control mr-2" name="children['+e+'][]" " value=""><label for="children" class="mr-2">Gender</label><input type="text" class="form-control mr-2" name="children['+e+'][]" placeholder="Gender" value=""><a id="removeChildren" class="btn btn-danger text-white"><i class="fa fa-times"></i></a></div>').appendTo('#children');
+      $('<div id="childrenField" class="col-auto my-1 form-inline editchildren"><label for="children" class="mr-2">Child\'s Name</label><input type="text" class="form-control mr-2" name="children['+e+'][]" placeholder="Child\'s Name" value="" required><label for="children" class="mr-2">Birthday</label><input type="date" class="form-control mr-2" name="children['+e+'][]" " value="" required><label for="children" class="mr-2">Gender</label><input type="text" class="form-control mr-2" name="children['+e+'][]" placeholder="Gender" value="" required><a id="removeChildren" class="btn btn-danger text-white"><i class="fa fa-times"></i></a></div>').appendTo('#children');
     e++;
 
     });
@@ -70,13 +106,13 @@ jQuery(document).ready(function($){
     var o = $('#editWork').length;
     // Work
     $("#addWork").click(function(event) {
-      $('<div id="workField" class="col-12 my-1 form-inline"><label for="work" class="mr-2">Name of Company</label><input type="text" class="form-control mr-2" name="experience['+a+'][]" placeholder="Name of Company" value=""><label for="work" class="mr-2">Position</label><input type="text" class="form-control mr-2" name="experience['+a+'][]" " value="" placeholder="Position"><label for="work" class="mr-2">Period Covered</label><input type="date" class="form-control" name="experience['+a+'][]" value=""><label for="work" class="ml-2 mr-2">To</label><input type="date" class="form-control mr-2" name="experience['+a+'][]" value=""><a id="removeWork" class="btn btn-danger text-white"><i class="fa fa-times"></i></a></div>').appendTo('#work');
+      $('<div id="workField" class="col-12 my-1 form-inline"><label for="work" class="mr-2">Name of Company</label><input type="text" class="form-control mr-2" name="experience['+a+'][]" placeholder="Name of Company" value="" required><label for="work" class="mr-2">Position</label><input type="text" class="form-control mr-2" name="experience['+a+'][]" " value="" placeholder="Position" required><label for="work" class="mr-2">Period Covered</label><input type="date" class="form-control" name="experience['+a+'][]" value=""><label for="work" class="ml-2 mr-2">To</label><input type="date" class="form-control mr-2" name="experience['+a+'][]" value="" required><a id="removeWork" class="btn btn-danger text-white"><i class="fa fa-times"></i></a></div>').appendTo('#work');
     a++;
 
     });
     // Work
     $("#editWork").click(function(event) {
-      $('<div id="workField" class="col-auto my-1 form-inline editwork"><label for="work" class="mr-2">Name of Company</label><input type="text" class="form-control mr-2" name="experience['+b+'][]" placeholder="Name of Company" value=""><label for="work" class="mr-2">Position</label><input type="text" class="form-control mr-2" name="experience['+b+'][]" " value="" placeholder="Position"><label for="work" class="mr-2">Period Covered</label><input type="date" class="form-control mr-2" name="experience['+b+'][]" value=""><label for="work" class="ml-2 mr-2">To</label><input type="date" class="form-control ml-2 mr-2" name="experience['+b+'][]" value=""><a id="removeWork" class="btn btn-danger text-white"><i class="fa fa-times"></i></a></div>').appendTo('#work');
+      $('<div id="workField" class="col-auto my-1 form-inline editwork"><label for="work" class="mr-2">Name of Company</label><input type="text" class="form-control mr-2" name="experience['+b+'][]" placeholder="Name of Company" value="" required><label for="work" class="mr-2">Position</label><input type="text" class="form-control mr-2" name="experience['+b+'][]" " value="" placeholder="Position" required><label for="work" class="mr-2">Period Covered</label><input type="date" class="form-control mr-2" name="experience['+b+'][]" value=""><label for="work" class="ml-2 mr-2">To</label><input type="date" class="form-control ml-2 mr-2" name="experience['+b+'][]" value="" required><a id="removeWork" class="btn btn-danger text-white"><i class="fa fa-times"></i></a></div>').appendTo('#work');
     b++;
 
     });
@@ -113,5 +149,152 @@ jQuery(document).ready(function($){
       $(".collapse-button-icon > i").removeClass("fa-chevron-right");
       // $(".collapse-button-icon > i").AddClass("fa-chevron-left");
     }
-    
+
+
+    // Form Validation Add Required IF first OR second input is not EMPTY
+
+    // Spouse_________________________________________________________________________________
+    var spouse = $("#empForm input[name='spouse_name']");
+    var date_of_merriage = $("#empForm input[name='date_of_merriage']");
+    spouse.blur(function() {
+      if ($(this).val()) {
+        date_of_merriage.prop('required', true);
+      }else{
+        date_of_merriage.prop('required', false);
+      }
+    });
+
+    date_of_merriage.blur(function() {
+      if ($(this).val()) {
+        spouse.prop('required', true);
+      }else{
+        spouse.prop('required', false);
+      }
+    });
+    // College variables_________________________________________________________________________________
+    var college =  $("#empForm input[name='college']");
+    var grad_date = $("#empForm input[name='college_grad_date']");
+    if (window.location.href == 'http://clinic/hr/employees/7/edit') {
+      // College_________________________________________________________________________________
+      $("#empForm input[name='college'], input[name='college_grad_date']").on('change', function(){
+        var collegeVal = $('input[name="college"]').val();
+        var gradDateVal = $('input[name="college_grad_date"]').val();
+        if (collegeVal == '' && gradDateVal == '') {
+          college.prop('required', false);
+          grad_date.prop('required', false);
+        }else{
+          college.prop('required', true);
+          grad_date.prop('required', true);
+        }
+      });
+
+    }
+    // College if location == create_________________________________________________________________________________
+      college.blur(function() {
+        if ($(this).val()) {
+          grad_date.prop('required', true);
+        }else{
+          grad_date.prop('required', false);
+        }
+      });
+
+      grad_date.blur(function() {
+        if ($(this).val()) {
+          college.prop('required', true);
+        }else{
+          college.prop('required', false);
+        }
+      });
+    // Experience_________________________________________________________________________________
+    var experience = $("#empForm input[name='experience[0][]']");
+    experience.blur(function() {
+      if ($(this).val()) {
+        experience.prop('required', true);
+      }else{
+        experience.prop('required', false);
+      }
+    });
+    // Children_________________________________________________________________________________
+    var children = $("#empForm input[name='children[0][]']");
+    children.blur(function() {
+      if ($(this).val()) {
+        children.prop('required', true);
+      }else{
+        children.prop('required', false);
+      }
+    });
+
+// Post_________________________________________________________________________________
+
+  // $("#InsertPhoto").click(function () {
+  // $("#Media").modal("hide"); // Close the modal
+  // $image_id = $('#edit_id').val();
+  // $("#preview_images").attr('src',$('#attach_url_'+$image_id).val());
+  // / If variable value is not empty we pass it to tinymce function and it inserts the image to post /
+  // if ($image_id != "") { 
+  // tinymce.activeEditor.execCommand('mceInsertContent', false, '<img class="img-responsive" style="max-width:100%; height:auto; display:block;" src="' + $('#attach_url_'+$image_id).val() + '">'); 
+  // }
+  // });
+  
+
+   /**
+    * TinyMCE Text Editor
+    */
+   tinymce.init({
+       selector: 'textarea[name=description]',
+       max_height: 500,
+       min_height: 500,
+       menubar: false,
+       branding: false,
+       resize: false,
+       relative_urls: false,
+       plugins: [
+           'advlist autolink lists link charmap print preview anchor',
+           'searchreplace visualblocks code fullscreen',
+           'insertdatetime table contextmenu paste code',
+           'link image'
+       ],
+       setup: function (editor) {
+       editor.addButton('newmedia', {
+        text: 'Add media',
+        title: 'Add image to article',
+        icon: 'image',
+        onclick: function() {
+          $("#newMedia").modal("show");
+        } });
+        },
+       toolbar: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link | code | newmedia'
+
+       //content_css: ‘https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css’,
+
+   });
+
+  $(function () {
+      $("#media #img_cont").click(function (event) {
+        $("#newMedia").modal("hide");
+          var sr = $('img', this).attr('src');
+        tinymce.activeEditor.insertContent('<img class="img-fluid" src="' + sr + '"/>');
+      });
+  });
+
+// $("#media #img_cont").on('click', function(){
+//   var hrf = $(this).attr('data-id');
+//   console.log(hrf);
+//  $.ajaxSetup({
+//       headers: {
+//           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//       },
+//   });
+//   $.ajax({
+//     url: 'create/media/'+hrf,
+//     type: 'delete',
+//     data: hrf,
+//     dataType: 'json',
+//     success:function(data){
+//       console.log(data);
+//     }
+//   });
+
+// });
+
 });

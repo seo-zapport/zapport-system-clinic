@@ -1,15 +1,17 @@
 @extends('hr.employee.create')
-@section('title', 'Edit Employees Profile')
+@section('title', '| Edit Employees Profile')
 {{-- @section('employees', 'active') --}}
 @section('dash-title', 'Edit Employees Profile')
 @section('dash-content')
 
-@section('action', route('hr.emp.store', ['employee' => $employee->id]))
+@section('action', route('hr.emp.store', ['employee' => $employee->emp_id]))
 @section('editMethod')
 @method('PUT')
 @endsection
 @section('img')
-<img src="{{ asset('storage/uploaded/'.@$employee->profile_img) }}" alt="{{ @$employee->profile_img }}" class="img-fluid">
+@if (@$employee->profile_img != null)
+	<img src="{{ asset('storage/uploaded/'.@$employee->profile_img) }}" alt="{{ @$employee->profile_img }}" class="img-fluid">
+@endif
 @endsection
 @section('editFname', ucwords($employee->first_name))
 @section('editLname', ucwords($employee->last_name))
@@ -26,7 +28,7 @@
 @section('editPhilhealth', $employee->philhealth_no)
 @section('editHdmf', $employee->hdmf_no)
 @section('editCollege', strtoupper($employee->college))
-@section('editCollegeGrad', $employee->college_grad_date->format('Y-m-d'))
+@section('editCollegeGrad', ($employee->college_grad_date != null) ? $employee->college_grad_date->format('Y-m-d') : $employee->college_grad_date)
 @section('editHighschool', strtoupper($employee->highschool))
 @section('editHighschoolGrad', $employee->highschool_grad_date->format('Y-m-d'))
 @section('editElementary', strtoupper($employee->elementary))
@@ -34,6 +36,7 @@
 @section('editHeight', $employee->height)
 @section('editWeight', $employee->weight)
 @section('editReligion', ucwords($employee->religion))
+@section('editHiredDate', $employee->hired_date->format('Y-m-d'))
 
 @section('editFatherName', ucwords($employee->father_name))
 @section('editFatherBday', $employee->father_birthday->format('Y-m-d'))
@@ -72,7 +75,7 @@
 @endsection
 
 @section('editDept')
-	<div class="form-group col-md-4">
+	<div class="form-group col-md-3">
 		<label for="department_id">Department</label>
 		<select name="department_id" id="department_id" class="form-control">
 			<option value="{{ $employee->department_id }}">{{ $employee->departments->department }}</option>
@@ -81,7 +84,7 @@
 			@endforeach
 		</select>
 	</div>
-	<div class="form-group col-md-4">
+	<div class="form-group col-md-3">
 		<label for="position">Position</label>
 		<select name="position_id" id="position_id" class="form-control">
 			<option value="{{ $employee->position_id }}">{{ $employee->positions->position }}</option>

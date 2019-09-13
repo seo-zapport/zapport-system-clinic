@@ -25,4 +25,19 @@ class Employee extends Model
     {
         return Carbon::parse($this->attributes['birthday'])->age;
     }
+
+    public function employeesMedical()
+    {
+        return $this->hasMany(Employeesmedical::class, 'employee_id');
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
+    public function getRouteKeyName()
+    {
+        return 'emp_id';
+    }
 }
