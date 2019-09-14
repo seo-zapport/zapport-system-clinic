@@ -22,7 +22,7 @@ class LastUserActivity
             $user = auth()->user();
             if ($user != null) {
                 foreach ($user->roles as $uRole) {
-                    if ($uRole->role === 'doctor' || $uRole->role ==='nurse') {
+                    if ($uRole->role === 'doctor' || $uRole->role === 'nurse') {
                         Cache::add('user-is-online-'. $uRole->pivot->user_id, true);
                     }
                 }
