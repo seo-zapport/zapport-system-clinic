@@ -40,17 +40,17 @@
                 <main id="app" class="primary-site" role="main">
                     <div class="wrap">
                         <div class="container-fluid">
-                            <div class="row">
+                            <div class="row mb-3">
                                 <div class="col-12 col-lg-6">
                                     <h2 class="heading-title">@yield('heading-title')</h2>
                                 </div>
                                 <div class="col-12 col-lg-6">
-                                  @if ( !Request::is('dashboard') && !Request::is('employees/profile/employee/*') && !Request::is('password/reset') )
+                                  {{-- @if ( !Request::is('dashboard') && !Request::is('employees/profile/employee/*') && !Request::is('password/reset') && Request::is('employees/profile/employee') ) --}}
                                     @include('layouts.breadcrumbs')
-                                  @endif  
+                                  {{-- @endif   --}}
                                 </div>                                
                             </div>
-                            @if ( request()->is('dashboard*') || request()->is('hr*') )
+                            @if ( request()->is('dashboard*') || request()->is('hr*')  || request()->is('employees*') || request()->is('register') || request()->is('password/reset') || request()->is('media')  || request()->is('posts*')  || request()->is('inventory*')  || request()->is('medical*') )
                                 @yield('dash-content')
                             @else
                                 <div class="card">

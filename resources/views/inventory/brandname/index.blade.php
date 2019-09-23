@@ -1,7 +1,10 @@
 @extends('layouts.app')
 @section('title', '| Brand Name')
 @section('brandname', 'active')
-@section('dash-title', 'Brand Names')
+{{-- @section('dash-title', 'Brand Names') --}}
+@section('heading-title')
+	<i class="fas fa-file-prescription"></i> Brand Names
+@endsection
 @section('dash-content')
 
 @if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
@@ -10,43 +13,50 @@
 	</div>
 @endif
 
-<table class="table table-hover">
-	<thead class="thead-dark">
-		<th>Brand Name</th>
-		<th>No. of Generics</th>
-	</thead>
-	<tbody>
-		@forelse ($brands as $brand)
-			<tr>
-				@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
-				<td>
-	        	<form method="post" action="{{ route('brandname.delete', ['medbrand' => $brand->bname]) }}">
-	        		@csrf
-	        		@method('DELETE')
-	        		<div class="form-row align-items-center">
-	            		<div class="col-auto my-1 form-inline">
-	        				{{ ucwords($brand->bname) }}
-							<button class="btn btn-link"  onclick="return confirm('Are you sure you want to delete {{ ucfirst($brand->bname) }} Brand?')" data-id="{{ $brand->bname }}">
-								<i class="fas fa-times-circle"></i>
-							</button>
-						</div>
-					</div>
-	        	</form>
-				</td>
-				@else
-				<td>
-					{{ ucwords($brand->bname) }}
-				</td>
-				@endif
-				<td>{{ $brand->generic->count() }} <a href="{{ route('brandname.show', ['medbrand' => $brand->bname]) }}" class="btn btn-info text-white float-right">View</a></td>
-			</tr>
-			@empty
-				<tr>
-					<td colspan="2" class="text-center">{{ "No registered Brand Name yet!" }}</td>
-				</tr>
-		@endforelse
-	</tbody>
-</table>
+<div class="card">
+	<div class="card-body">
+		<div class="table-responsive">
+			<table class="table table-hover">
+				<thead class="thead-dark">
+					<th>Brand Name</th>
+					<th>No. of Generics</th>
+				</thead>
+				<tbody>
+					@forelse ($brands as $brand)
+						<tr>
+							@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
+							<td>
+				        	<form method="post" action="{{ route('brandname.delete', ['medbrand' => $brand->bname]) }}">
+				        		@csrf
+				        		@method('DELETE')
+				        		<div class="form-row align-items-center">
+				            		<div class="col-auto my-1 form-inline">
+				        				{{ ucwords($brand->bname) }}
+										<button class="btn btn-link"  onclick="return confirm('Are you sure you want to delete {{ ucfirst($brand->bname) }} Brand?')" data-id="{{ $brand->bname }}">
+											<i class="fas fa-times-circle"></i>
+										</button>
+									</div>
+								</div>
+				        	</form>
+							</td>
+							@else
+							<td>
+								{{ ucwords($brand->bname) }}
+							</td>
+							@endif
+							<td>{{ $brand->generic->count() }} <a href="{{ route('brandname.show', ['medbrand' => $brand->bname]) }}" class="btn btn-info text-white float-right">View</a></td>
+						</tr>
+						@empty
+							<tr>
+								<td colspan="2" class="text-center">{{ "No registered Brand Name yet!" }}</td>
+							</tr>
+					@endforelse
+				</tbody>
+			</table>			
+		</div>
+	</div>
+</div>
+
 {{ $brands->links() }}
 @include('layouts.errors')
 @if (session('brand_message') || session('pivot_validation'))

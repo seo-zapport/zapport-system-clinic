@@ -1,58 +1,74 @@
 @extends('layouts.app')
 @section('title', '| Medicines')
 @section('medicine', 'active')
-@section('dash-title', 'List of Medicines')
+{{-- @section('dash-title', 'List of Medicines') --}}
+@section('heading-title')
+	<i class="fas fa-pills"></i> List of Medicines
+@endsection
 @section('dash-content')
 
-@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
-	<div class="form-group">
-		<a class="btn btn-info text-white" href="#" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus"></i> Add New</a>
+<div class="row">
+	<div class="col-12 col-md-6">
+		<form method="get">
+			<div class="form-row">
+				<div class="form-group col-md-4">
+					<input type="search" name="search" class="form-control" value="{{ (!empty($search)) ? $search : '' }}" placeholder="Search for Generic Name">
+				</div>
+				<div class="form-group col-md-1 d-inline-flex">
+					<button type="submit" class="btn btn-success mr-2">Search</button>
+					<a href="{{ route('medicine') }}" class="btn btn-info text-white">Clear</a>
+				</div>
+			</div>
+		</form>	
 	</div>
-@endif
-
-<form method="get">
-	<div class="form-row">
-		<div class="form-group col-md-4">
-			<input type="search" name="search" class="form-control" value="{{ (!empty($search)) ? $search : '' }}" placeholder="Search for Generic Name">
+	@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
+		<div class="col-12 col-md-6">
+			<div class="form-group text-right">
+				<a class="btn btn-info text-white" href="#" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus"></i> Add New</a>
+			</div>		
 		</div>
-		<div class="form-group col-md-1 d-inline-flex">
-			<button type="submit" class="btn btn-success mr-2">Search</button>
-			<a href="{{ route('medicine') }}" class="btn btn-info text-white">Clear</a>
+	@endif
+</div>
+
+<div class="card">
+	<div class="card-body">
+		<div class="table-responsive">
+			<table class="table table-hover">
+				<thead class="thead-dark">
+					<th>Generic Name</th>
+					<th>Brand Name</th>
+					<th>Remaining Quantity</th>
+					<th>Stock Logs</th>
+				</thead>
+				<tbody>
+					@if ($meds != null)		
+					@forelse ($meds as $med)
+						<tr>
+							<td>{{ ucfirst($med->generic->gname) }}</td>
+							<td>{{ ucwords($med->medBrand->bname) }}</td>
+							<td>{{ $med->where('generic_id', $med->generic_id)->where('brand_id', $med->brand_id)->where('availability', 0)->where('expiration_date', '>', NOW())->count() }}</td>
+							<td>
+								{{-- {{ $med->qty_stock }} --}}
+								<a href="{{ route('medicine.log', ['medbrand' => $med->medBrand->bname, 'generic' => $med->generic->gname]) }}" class="btn btn-info text-white">View</a>
+							</td>
+						</tr>
+						@empty
+							<tr>
+								<td colspan="4" class="text-center">{{ "No registered Medicine yet!" }}</td>
+							</tr>
+					@endforelse
+					@else
+						<tr>
+							<td colspan="4" class="text-center">{{ "No Record Found!" }}</td>
+						</tr>
+					@endif
+				</tbody>
+			</table>			
 		</div>
 	</div>
-</form>
+</div>
 
-<table class="table table-hover">
-	<thead class="thead-dark">
-		<th>Generic Name</th>
-		<th>Brand Name</th>
-		<th>Remaining Quantity</th>
-		<th>Stock Logs</th>
-	</thead>
-	<tbody>
-		@if ($meds != null)		
-		@forelse ($meds as $med)
-			<tr>
-				<td>{{ ucfirst($med->generic->gname) }}</td>
-				<td>{{ ucwords($med->medBrand->bname) }}</td>
-				<td>{{ $med->where('generic_id', $med->generic_id)->where('brand_id', $med->brand_id)->where('availability', 0)->where('expiration_date', '>', NOW())->count() }}</td>
-				<td>
-					{{-- {{ $med->qty_stock }} --}}
-					<a href="{{ route('medicine.log', ['medbrand' => $med->medBrand->bname, 'generic' => $med->generic->gname]) }}" class="btn btn-info text-white">View</a>
-				</td>
-			</tr>
-			@empty
-				<tr>
-					<td colspan="4" class="text-center">{{ "No registered Medicine yet!" }}</td>
-				</tr>
-		@endforelse
-		@else
-			<tr>
-				<td colspan="4" class="text-center">{{ "No Record Found!" }}</td>
-			</tr>
-		@endif
-	</tbody>
-</table>
+
 @if ($meds != null)
 	{{ $meds->links() }}
 @endif
