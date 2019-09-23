@@ -1,49 +1,79 @@
 @extends('layouts.app')
 @section('title', '| New Post')
 @section('new_post', 'active')
-@section('dash-title', 'New Post')
+{{-- @section('dash-title', 'New Post') --}}
+@section('heading-title')
+	<i class="fas fa-book"></i> New Posts
+@endsection
 @section('dash-content')
 {{-- {{ phpinfo() }} --}}
 	<form method="post" action="@yield('postAction', route('post.store'))">
 		@csrf
 		@yield('postMethod')
-		<div class="form-group">
-			<label for="title">Title</label>
-			<input type="text" name="title" class="form-control" value="@yield('postEdit')" placeholder="Enter Post Title Here!" required>
-		</div>
-		<div class="form-group">
-			<label for="description">Post description</label>
-			<textarea name="description" id="description" rows="20" class="form-control" placeholder="Enter Your Content Here!">@yield('postEditDes')</textarea>
-		</div>
-		<div class="form-group">
-			<button class="btn btn-info" type="submit">Submit</button>
+		<div class="row post-wrap">
+			<div class="col-12 col-md-9">
+				<div class="form-group posts-title">
+					<label for="title"><strong>Title</strong></label>
+					<input type="text" name="title" class="form-control" value="@yield('postEdit')" placeholder="Enter Post Title Here!" required>
+				</div>
+				<div class="form-group posts-description">
+					<label for="description"><strong>Post description</strong></label>
+					<textarea name="description" id="description" rows="20" class="form-control" placeholder="Enter Your Content Here!">@yield('postEditDes')</textarea>
+				</div>
+			</div>
+			<div class="col-12 offset-md-1 col-md-2">
+				<div class="card">
+					<div class="card-body">
+						<div class="header-title">
+							<p><strong>Publish</strong></p>
+							<hr>
+						</div>
+						<div class="form-group text-center">
+							<button class="btn btn-info text-white btn-block" type="submit">Submit</button>
+						</div>							
+					</div>
+				</div>
+
+			</div>
 		</div>
 	</form>
 
 @include('layouts.errors')
 
 	<!-- Modal Add -->
-	<div class="modal fade bd-example-modal-lg" id="newMedia" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-		<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLongTitle">Media</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body">
-					<ul class="nav nav-tabs ml-0" id="myTab" role="tablist">
-						<li class="nav-item">
-							<a class="nav-link active" id="upload-tab" data-toggle="tab" href="#upload" role="tab" aria-controls="upload" aria-selected="true">Upload</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" id="media-tab" data-toggle="tab" href="#media" role="tab" aria-controls="media" aria-selected="false">Media</a>
-						</li>
-					</ul>
-					<div class="tab-content" id="myTabContent">
+	<div class="modal fade media-model zp-core-ui" id="newMedia" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+		<div class="modal-dialog media-dialog" role="document">
+			<div class="media-modal-content modal-content" role="document">
+				<button type="button" class="close media-modal-close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true" class="media-modal-icon">×</span>
+				</button>
+				<div class="media-frame zp-core-ui hide-menu">
+					<div class="media-frame-title">
+						<h1>Attachment Details</h1>
+					</div>
+					<div class="media-frame-router">
+						<ul class="nav nav-tabs media-router" id="myTab" role="tablist">
+							<li class="nav-item">
+								<a class="nav-link active" id="upload-tab" data-toggle="tab" href="#upload" role="tab" aria-controls="upload" aria-selected="true">Upload</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" id="media-tab" data-toggle="tab" href="#media" role="tab" aria-controls="media" aria-selected="false">Media</a>
+							</li>
+						</ul>						
+					</div>
+					<div class="media-frame-content tab-content" data-columns="10">
 						<div class="tab-pane fade show active" id="upload" role="tabpanel" aria-labelledby="upload-tab">
-							<form id="addFileForm" enctype="multipart/form-data">
+							<div class="uploader-inline">
+								<div class="uploader-inline-content">
+									<div class="upload-ui">
+										<h2 class="upload-instructions drop-instructions">Drop Files to upload</h2>
+										<p class="upload-instructions drop-instructions">or</p>
+										{{-- <button type="button" class="btn btn-light btn-custom">Select Files</button> --}}
+										<input type="file" name="file_name" class="form-control-file" required>
+									</div>
+								</div>
+							</div>
+							{{-- <form id="addFileForm" enctype="multipart/form-data">
 								@csrf
 								<div class="mt-5 mb-5">
 									<input type="file" name="file_name" class="form-control-file" required>
@@ -53,22 +83,41 @@
 									<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 									<button id="InsertPhoto" type="submit" class="btn btn-primary">Save changes</button>
 								</div>
-							</form>
+							</form> --}}
 						</div>
-						<div class="tab-pane fade" id="media" role="tabpanel" aria-labelledby="media-tab">
-							<form id="addFileForm" enctype="multipart/form-data" method="post">
-								@method('DELETE')
-								@csrf
-								<div class="row">
+						<div class="attachment-browser tab-pane fade" id="media" role="tabpanel" aria-labelledby="media-tab">
+							<h2 class="media-views-heading sr-only">Attachment List</h2>
+							<ul tabindex="-1" class="attachment ui-media">
+								<form id="addFileForm" enctype="multipart/form-data" method="post">
+									@method('DELETE')
+									@csrf
 									@forelse ($employees as $pics)
-										<div id="img_cont" class="btn btn-link text-info col-3" data-id="{{ $pics->id }}" data-toggle="modal" data-target="#Media">
-											<img id="edit_id" src="{{ asset('storage/uploaded/media/'.$pics->file_name) }}" alt="" class="img-fluid d-inline-flex">
-										</div>
-										@empty
-											<div class="p-5 text-center">No Image Yet!</div>
+										<li class="attachment-list">
+											<div class="attachment-preview type-image landscape">
+												<div class="thumbnail">
+													<div id="edit_id" class="centered" data-id="{{ $pics->id }}" data-toggle="modal" data-target="#Media">
+														<img id="edit_id" src="{{ asset('storage/uploaded/media/'.$pics->file_name) }}" class="img-fluid d-inline-flex">
+													</div>
+												</div>
+											</div>
+										</li>
+									@empty
+										<p class="no-media">No media files found.</p>
 									@endforelse
+								</form>
+							</ul>
+							<div class="media-sidebar">
+								<div class="media-uploader-status">
+									details here.....
 								</div>
-							</form>
+							</div>
+						</div>
+					</div>
+					<div class="media-frame-toolbar">
+						<div class="media-toolbar">
+							<div class="media-toolbar-primary search-form">
+								<button class="btn btn-primary">Select</button>
+							</div>
 						</div>
 					</div>
 				</div>
@@ -127,7 +176,8 @@
 						}
 					}
 				});
-			})
+
+			});
 
 		});
 	</script>

@@ -1,7 +1,10 @@
 @extends('posts.create')
 @section('title', '| Edit Post')
 {{-- @section('posts', 'active') --}}
-@section('dash-title', 'Edit '. $post->title)
+{{-- @section('dash-title', 'Edit '. $post->title) --}}
+@section('heading-title')
+	<i class="fas fa-book"></i> Edit Posts
+@endsection
 @section('dash-content')
 
 @section('postAction', route('post.edit', ['post' => $post->title]))

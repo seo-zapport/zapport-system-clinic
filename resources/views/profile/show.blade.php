@@ -1,68 +1,77 @@
 @extends('layouts.app')
 @section('title', '| '.@$employee->first_name .'\'s Profile')
 @section('employee', 'active')
-@section('dash-title', 'Your Personal Information')
+{{-- @section('dash-title', 'Your Personal Information') --}}
+@section('heading-title')
+	<i class="far fa-address-card"></i> Your Personal Information
+@endsection
 @section('dash-content')
 
-<img src="{{ asset('storage/uploaded/'.@$employee->profile_img) }}" alt="{{ @$employee->profile_img }}" class="img-fluid">
-<hr>
-<h3>Employees Info</h3>
 <div class="row">
-	<div class="col-3"><p>Employee ID: {{ ucwords(@$employee->emp_id) }}</p></div>
-	<div class="col-3"><p>Department: {{ ucwords(@$employee->departments->department) }}</p></div>
-	<div class="col-3"><p>Position: {{ ucwords(@$employee->positions->position) }}</p></div>
-	<div class="col-3"><p>Hired date: {{ @$employee->hired_date->format('M d, Y') . " " ."( ".@$employee->hired_date->diffForHumans()." )" }}</p></div>
-</div>
-<hr>
-<h3>Personal Info</h3>
-<p>Name: {{ ucwords(@$employee->last_name) . " " . ucwords(@$employee->first_name) . " " .ucwords(@$employee->middle_name) }}</p>
-<div class="row">
-	<div class="col-4"><p>Birthday: {{ @$employee->birthday->format('M d, Y') }}</p></div>
-	<div class="col-4"><p>Birth Place: {{ ucwords(@$employee->birth_place) }}</p></div>
-	<div class="col-4"><p>Age: {{ @$employee->age }}</p></div>
-	<div class="col-4"><p>Citizenship: {{ ucwords(@$employee->citizenship) }}</p></div>
-	<div class="col-4"><p>Religion: {{ ucwords(@$employee->religion) }}</p></div>
-	<div class="col-4"><p>Civil Status: {{ ucwords(@$employee->civil_status) }}</p></div>
-	<div class="col-4"><p>Gender: {{ (@$employee->gender == 0) ? "Male" : "Female" }}</p></div>
-	<div class="col-4"><p>Height: {{ @$employee->height }}</p></div>
-	<div class="col-4"><p>Weight: {{ @$employee->weight }} kg.</p></div>
-	<div class="col-4"><p>Contact: {{ "+63" . @$employee->contact }}</p></div>
-	<div class="col-4"><p>Present Address: {{ ucwords(@$employee->present_address) }}</p></div>
-	<div class="col-4"><p>Permanent Address: {{ ucwords(@$employee->permanent_address) }}</p></div>
-	{{-- <div class="col-4"><p>Hired date: {{ @$employee->created_at->format('M d, Y') . " " ."( ".@$employee->created_at->diffForHumans()." )" }}</p></div> --}}
-</div>
-<hr>
-<h4>Others</h4>
-<div class="row">
-	<div class="col-6"><p>Father's Name: {{ ucwords(@$employee->father_name) }}</p></div>
-	<div class="col-6"><p>Birthday: {{ ucwords(@$employee->father_birthday->format('M d, Y')) }}</p></div>
-	<div class="col-6"><p>Mother's Name: {{ ucwords(@$employee->mother_name) }}</p></div>
-	<div class="col-6"><p>Birthday: {{ ucwords(@$employee->mother_birthday->format('M d, Y')) }}</p></div>
-	<div class="col-6"><p>Spouse Name: {{ ( !empty(@$employee->spouse_name) ) ? ucwords(@$employee->spouse_name) : "None" }}</p></div>
-	<div class="col-6"><p>Date of marriage: {{ ( !empty(@$employee->spouse_name) ) ? @$employee->date_of_merriage->format('M d, Y') : "None" }}</p></div>
-</div>
-
-@php
-	$arr = unserialize(@$employee->children);
-	if (!empty(@$arr)) {
-		$count = count(@$arr);
-	}
-		if (!empty(@$arr)){
-			foreach (@$arr as $children){
-				if (!empty($children[0])) {
-@endphp
-		<div class="row">
-			<div class="col-4"><p>Child's name: {{ $children[0] }}</p></div>
-			<div class="col-4"><p>Birthday: {{ $children[2] }}</p></div>
-			<div class="col-4"><p>Gender: {{ $children[1] }}</p></div>
+	<div class="col-12 col-md-2">
+		<div class="employee_wrap">
+			<div class="panel employee-photo d-flex justify-content-center align-items-center">
+				@if (@$employee->profile_img != null)
+					<img src="{{ asset('storage/uploaded/'.@$employee->profile_img) }}" alt="{{ @$employee->profile_img }}" class="img-fluid">
+				@endif
+				<div class="upload-hover d-flex justify-content-center align-items-center upload-button">
+				</div>
+			</div>
 		</div>
-		
-			@php
-			}
-		}
-	}
-@endphp
+		<div class="form-row">
+			<div class="form-group col-md-12">
+				<label for="emp_id" class="text-muted">Employee ID</label>
+				<p class="h5">{{ ucwords(@$employee->emp_id) }}</p>
+			</div>
+			<div class="form-group col-md-12">
+				<label for="department_id" class="text-muted">Department</label>
+				<p class="h5">{{ ucwords(@$employee->departments->department) }}</p>
+			</div>
+			<div class="form-group col-md-12">
+				<label for="position" class="text-muted">Position</label>
+				<p class="h5">{{ ucwords(@$employee->positions->position) }}</p>
+			</div>
+			<div class="form-group col-md-12">
+				<label for="hired_date" class="text-muted">Hired Date</label>
+				<p class="h5">{{ @$employee->hired_date->format('M d, Y') . " " ."( ".@$employee->hired_date->diffForHumans()." )" }}</p>
+			</div>
+		</div>
+	</div>
+	<div class="col-12 col-md-8">
+		<div class="card mb-5 employee_wraps">
+			<div class="card-body">
+				<h5 class="text-muted"><i class="fas fa-user"></i> Personal Information</h5>
+				<hr>
+				<div class="form-row">
+					<div class="form-group col-md-4">
+						<label for="first_name" class="text-muted">First Name</label>
+						<p class="h5">{{ ucwords(@$employee->first_name) }}</p>
+					</div>
+					<div class="form-group col-md-4">
+						<label for="last_name" class="text-muted">Last Name</label>
+						<p class="h5">{{ ucwords(@$employee->last_name) }}</p>
+					</div>
+					<div class="form-group col-md-4">
+						<label for="middle_name" class="text-muted">Middle Name</label>
+						<p class="h5">{{ ucwords(@$employee->middle_name) }}</p>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-5">
+						<label for="present_address" class="text-muted">Present Address</label>
+						<p class="h5">{{ ucwords(@$employee->present_address) }}</p>
+					</div>
+					<div class="form-group col-md-5">
+						<label for="permanent_address" class="text-muted">Permanent Address</label>
+						<p class="h5">{{ ucwords(@$employee->permanent_address) }}</p>
+					</div>
+					<div class="form-group col-md-2">
+						<label for="contact" class="text-muted">Contact</label>
+						<p class="h5">{{ "+63" . @$employee->contact }}</p>
+					</div>
+				</div>
 
+<<<<<<< HEAD
 <hr>
 <h3>Education</h3>
 <div class="row">
@@ -73,32 +82,227 @@
 	<div class="col-6"><p>Primary / Elementary: {{ strtoupper(@$employee->elementary) }}</p></div>
 	<div class="col-6"><p>Year Graduated: {{ @$employee->elementary_grad_date->format("M d, Y") }}</p></div>
 </div>
+=======
+				<hr>
+				<h5 class="text-muted"><i class="fas fa-user-graduate"></i> Education</h5>
+				<hr>
 
-<hr>
-<h3>Work Experience</h3>
-@php
-	$arr = unserialize(@$employee->experience);
-	if (!empty(@$arr)) {
-		$count = count(@$arr);
-	}
-		if (!empty(@$arr)){
-			foreach (@$arr as $exp){
-@endphp
-		<div class="row">
-			<div class="col-4"><p>Company name: {{ ucwords($exp[0]) }}</p></div>
-			<div class="col-4"><p>Position: {{ ucwords($exp[1]) }}</p></div>
-			<div class="col-4"><p>Date covered: {{ $exp[2] . " " . " to " . " " . $exp[3] }}</p></div>
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="college">Tertiary / College</label>
+						<p class="h5">{{ strtoupper(@$employee->college) }}</p>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="college_grad_date">Year Graduated</label>
+						<p class="h5">{{ ($employee->college_grad_date != null) ? Carbon\carbon::parse($employee->college_grad_date)->format("M d, Y") : @$employee->college_grad_date }}</p>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="college">Tertiary / College</label>
+						<p class="h5">{{ strtoupper(@$employee->highschool) }}</p>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="highschool_grad_date">Year Graduated</label>
+						<p class="h5">{{ @$employee->highschool_grad_date->format("M d, Y") }}</p>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="elementary">Primary / Elementary</label>
+						<p class="h5">{{ strtoupper(@$employee->elementary) }}</p>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="elementary_grad_date">Year Graduated</label>
+						<p class="h5">{{ @$employee->elementary_grad_date->format("M d, Y") }}</p>
+					</div>
+				</div>
+
+				<hr>
+				<h5 class="text-muted"><i class="fas fa-briefcase"></i> Work Experience(s)</h5>
+				<hr>
+>>>>>>> 7bab9fec211add582cec2fee508998ffe91d0653
+
+				@php
+					$arr = unserialize(@$employee->experience);
+					if (!empty(@$arr)) {
+						$count = count(@$arr);
+					}
+						if (!empty(@$arr)){
+							foreach (@$arr as $exp){
+				@endphp
+					@if ($exp[0] != null && $exp[1] != null && $exp[2] != null && $exp[3] != null)
+						<div class="form-row">
+							<div class="col-12">
+								<div class="form-row">
+									<div class="form-group col-md-4">
+										<label for="experience" class="mr-2">Name of Company</label>
+										<p class="h5">{{ ucwords($exp[0]) }}</p>
+									</div>
+									<div class="form-group col-md-4">
+										<label for="experience" class="mr-2">Position</label>
+										<p class="h5">{{ ucwords($exp[1]) }}</p>
+									</div>
+									<div class="form-group col-md-4">
+										<label for="experience" class="mr-2">Period Covered</label>
+										<p class="h5"> {{ Carbon\carbon::parse($exp[2])->format('M d, Y') . " " . " to " . " " . Carbon\carbon::parse($exp[3])->format('M d, Y') }}</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					@else
+					<p>None</p>
+					@endif
+						
+						@php
+						}
+					}
+				@endphp
+
+				<hr>
+				<h5 class="text-muted"><i class="fas fa-user"></i> Personal Data</h5>
+				<hr>
+				<div class="form-row">
+					<div class="form-group col-md-4">
+						<label for="birthday">Birthday</label>
+						<p class="h5">{{ @$employee->birthday->format('M d, Y') }}</p>
+					</div>
+					<div class="form-group col-md-4">
+						<label for="birthday">Age</label>
+						<p class="h5">{{ @$employee->age }}</p>
+					</div>
+					<div class="form-group col-md-4">
+						<label for="birth_place">Birth Place</label>
+						<p class="h5">{{ ucwords(@$employee->birth_place) }}</p>
+					</div>
+					<div class="form-group col-md-4">
+						<label for="birth_place">Gender</label>
+						<p class="h5">{{ (@$employee->gender == 0) ? "Male" : "Female" }}</p>
+					</div>
+					<div class="form-group col-md-4">
+						<label for="height">Height</label>
+						<p class="h5">{{ @$employee->height }}</p>
+					</div>
+					<div class="form-group col-md-4">
+						<label for="weight">Weight</label>
+						<p class="h5">{{ @$employee->weight }} kg.</p>
+					</div>
+				</div>
+
+				<div class="form-row">
+					<div class="form-group col-md-4">
+						<label for="civil_status">Civil Status</label>
+						<p class="h5">{{ ucwords(@$employee->civil_status) }}</p>
+					</div>
+					<div class="form-group col-md-4">
+						<label for="citizenship">Citizenship</label>
+						<p class="h5">{{ ucwords(@$employee->citizenship) }}</p>
+					</div>
+					<div class="form-group col-md-4">
+						<label for="religion">Religion</label>
+						<p class="h5">{{ ucwords(@$employee->religion) }}</p>
+					</div>
+				</div>
+
+				<hr>
+				<div class="form-row">
+					<div class="form-group col-md-8">
+						<label for="mother_name">Father's Name</label>
+						<p class="h5">{{ ucwords(@$employee->father_name) }}</p>
+					</div>
+					<div class="form-group col-md-4">
+						<label for="mother_birthday">Father's Birthday</label>
+						<p class="h5">{{ ucwords(@$employee->father_birthday->format('M d, Y')) }}</p>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-8">
+						<label for="mother_name">Mother's Name</label>
+						<p class="h5">{{ ucwords(@$employee->mother_name) }}</p>
+					</div>
+					<div class="form-group col-md-4">
+						<label for="mother_birthday">Mother's Birthday</label>
+						<p class="h5">{{ ucwords(@$employee->mother_birthday->format('M d, Y')) }}</p>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-8">
+						<label for="mother_name">Spouse Name</label>
+						<p class="h5">{{ ( !empty(@$employee->spouse_name) ) ? ucwords(@$employee->spouse_name) : "None" }}</p>
+					</div>
+					<div class="form-group col-md-4">
+						<label for="mother_birthday">Date of marriage</label>
+						<p class="h5">{{ ( !empty(@$employee->spouse_name) ) ? @$employee->date_of_merriage->format('M d, Y') : "None" }}</p>
+					</div>
+				</div>
+
+				@php
+					$arr = unserialize(@$employee->children);
+					if (!empty(@$arr)) {
+						$count = count(@$arr);
+					}
+						if (!empty(@$arr)){
+						@endphp
+
+					<hr>
+					<h5 class="text-muted"><i class="fas fa-users"></i> Add Children if any</h5>
+					<hr>
+					@php
+							foreach (@$arr as $children){
+								if (!empty($children[0])) {
+				@endphp
+						<div class="row">
+							<div class="col-12 form-row">
+								<div class="form-group col-md-4">
+									<label for="children" class="mr-2">Child's Name</label>
+									<p class="h5">{{ $children[0] }}</p>
+								</div>
+								<div class="form-group col-md-4">
+									<label for="children" class="mr-2">Birthday</label>
+									<p class="h5">{{ $children[1] }}</p>
+								</div>
+								<div class="form-group col-md-4">
+									<label for="children" class="mr-2">Gender</label>
+									<p class="h5">{{ $children[2] }}</p>
+								</div>
+							</div>
+						</div>
+						
+							@php
+							}
+						}
+					}
+				@endphp
+
+				<hr>
+				<h5 class="text-muted"><i class="fas fa-bars"></i> Others</h5>
+				<hr>
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="tin_no">TIN Number</label>
+						<p class="h5 {{ (@$employee->tin_no == NULL) ? 'bg-warning' : ''  }}">{{ @$employee->tin_no }}</p>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="sss_no">SSS Number</label>
+						<p class="h5 {{ (@$employee->sss_no == NULL) ? 'bg-warning' : ''  }}">{{ @$employee->sss_no }}</p>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="philhealth_no">Philhealth Number</label>
+						<p class="h5 {{ (@$employee->philhealth_no == NULL) ? 'bg-warning' : ''  }}">{{ @$employee->philhealth_no }}</p>
+					</div>
+					<div class="form-group col-md-6">
+						<label for="hdmf_no">HDMF Number</label>
+						<p class="h5 {{ (@$employee->hdmf_no == NULL) ? 'bg-warning' : ''  }}">{{ @$employee->hdmf_no }}</p>
+					</div>
+				</div>
+
+
+			</div>
 		</div>
-		
-			@php
-		}
-	}
-@endphp
-<hr>
-<h3>Other info</h3>
-<p>TIN number: {{ @$employee->tin_no }}</p>
-<p>SSS number: {{ @$employee->sss_no }}</p>
-<p>Philhealth number: {{ @$employee->philhealth_no }}</p>
-<p>HDMF number: {{ @$employee->hdmf_no }}</p>
+	</div>
+</div>
+
 
 @endsection
