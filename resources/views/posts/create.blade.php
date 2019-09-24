@@ -32,7 +32,7 @@
 						</div>
 						<div>
 							<select name="tag_id" id="tag_id" class="form-control">
-								<option selected="true" disabled="disabled" value=""> Select Generic Name </option>
+								<option selected="true" disabled="disabled" value=""> Select Tag </option>
 								@forelse ($tags as $tag)
 									<option value="{{ $tag->id }}">{{ $tag->tag_name }}</option>
 								@empty
