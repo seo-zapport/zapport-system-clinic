@@ -20,11 +20,16 @@
             <div class="zap-info-wrap">
                 @auth()
                 @if (!empty(auth()->user()->employee))
-                <div class="name">{{ auth()->user()->employee->first_name }}</div>
-                <div class="position">{{ auth()->user()->employee->positions->position }}</div>
+                    <div class="name">{{ auth()->user()->employee->first_name }} {{ auth()->user()->employee->last_name }}</div>
+                    {{-- <div class="position">{{ auth()->user()->employee->positions->position }}</div> --}}
+                    @if (!empty(auth()->user()->employee))
+                        <a href="{{ route('employee', ['employee' => auth()->user()->employee->emp_id]) }}" class="position text-white">View Profile</a>
+                    @else
+                        <a href="{{ route('employees') }}" > Profile</a>
+                    @endif
                 @else
-                <div class="name">Employee Name</div>
-                <div class="position">Employee Position</div>
+                    <div class="name">Employee Name</div>
+                    <div class="position">Employee Position</div>
                 @endif
                 @endauth
             </div>
@@ -32,28 +37,46 @@
         <li class="nav-item"><a href="{{ route('dashboard.main') }}" class="nav-link @yield('overview')"><i class="fas fa-tachometer-alt"></i> <span class="collapse-label">Dashboard</span></a></li>
         {{-- For ADMIN, HR, DOCTOR, NURSE --}}
         @if (Gate::check('isAdmin') || Gate::check('isHr') || Gate::check('isDoctor') || Gate::allows('isNurse'))
-        @if (!empty(auth()->user()->employee))
-            <li class="nav-item"><a href="{{ route('media.index') }}" class="nav-link @yield('medias')"><i class="fas fa-photo-video"></i> <span class="collapse-label">Media</span></a></li>
-            <li class="nav-item"><a href="{{ route('post.index') }}" class="nav-link @yield('posts')"><i class="fas fa-book"></i> <span class="collapse-label">Posts</span></a></li>
-            <li class="nav-item"><a href="{{ route('post.create') }}" class="nav-link @yield('new_post')"><i class="fas fa-pencil-alt"></i> <span class="collapse-label">New Post</span></a></li>
-        @endif
+            @if (!empty(auth()->user()->employee))
+                <li class="nav-item">
+                    <a href="#posts" data-toggle="collapse" aria-expanded="false" class="nav-link dropdown-toggle collapsed"><i class="fas fa-book"></i> <span class="collapse-label">Post</span></a>
+                    <ul class="zp-dropdown nav collapse" id="posts">
+                        <li class="nav-item"><a href="{{ route('post.index') }}" class="nav-link @yield('posts')"><i class="fas fa-book"></i> <span class="collapse-label">All Posts</span></a></li>
+                        <li class="nav-item"><a href="{{ route('post.create') }}" class="nav-link @yield('new_post')"><i class="fas fa-pencil-alt"></i> <span class="collapse-label">New Post</span></a></li>                
+                        <li class="nav-item"><a href="{{ route('media.index') }}" class="nav-link @yield('medias')"><i class="fas fa-photo-video"></i> <span class="collapse-label">Media</span></a></li>
+                    </ul>
+                </li>
+            @endif
         @endif
         {{-- For HR --}}
         @if (Gate::check('isAdmin') || Gate::check('isHr'))
-            <li class="nav-item"><a href="{{ route('hr.dep.department') }}" class="nav-link @yield('reg_dep')"><i class="fas fa-building"></i> <span class="collapse-label">Department</span></a></li>
-            <li class="nav-item"><a href="{{ route('hr.pos.position') }}" class="nav-link @yield('reg_pos')"><i class="fas fa-tasks"></i> <span class="collapse-label">Position</span></a></li>
-            <li class="nav-item"><a href="{{ route('hr.employees') }}" class="nav-link @yield('employees')"><i class="fas fa-users"></i> <span class="collapse-label">Employees</span></a></li>
-            <li class="nav-item"><a href="{{ route('hr.emp.emp_form') }}" class="nav-link @yield('reg_emp')"><i class="fas fa-user-plus"></i> <span class="collapse-label">Add Employee</span></a></li>
+            <li class="nav-item">
+                <a href="#employees" data-toggle="collapse" aria-expanded="false" class="nav-link dropdown-toggle collapsed"><i class="fas fa-users"></i> <span class="collapse-label">Employees</span></a>
+                <ul class="zp-dropdown nav collapse" id="employees">
+                    <li class="nav-item"><a href="{{ route('hr.dep.department') }}" class="nav-link @yield('reg_dep')"><i class="fas fa-building"></i> <span class="collapse-label">Departments</span></a></li>
+                    <li class="nav-item"><a href="{{ route('hr.pos.position') }}" class="nav-link @yield('reg_pos')"><i class="fas fa-tasks"></i> <span class="collapse-label">Positions</span></a></li>
+                    <li class="nav-item"><a href="{{ route('hr.employees') }}" class="nav-link @yield('employees')"><i class="fas fa-users"></i> <span class="collapse-label">All Employees</span></a></li>
+                    <li class="nav-item"><a href="{{ route('hr.emp.emp_form') }}" class="nav-link @yield('reg_emp')"><i class="fas fa-user-plus"></i> <span class="collapse-label">Add Employee</span></a></li>                    
+                </ul>
+
+            </li>
         @endif
         {{-- For ADMIN, HR, DOCTOR, NURSE --}}
         @if (Gate::check('isAdmin') || Gate::check('isHr') || Gate::check('isDoctor') || Gate::allows('isNurse'))
         @if (!empty(auth()->user()->employee))
-        
-            <li class="nav-item"><a href="{{ route('genericname') }}" class="nav-link @yield('genericname')"><i class="fas fa-tablets"></i><span class="collapse-label"> Generic Name</span></a></li>
-            <li class="nav-item"><a href="{{ route('brandname') }}" class="nav-link @yield('brandname')"><i class="fas fa-file-prescription"></i><span class="collapse-label"> Brand Name</span></a></li>
-            <li class="nav-item"><a href="{{ route('medicine') }}" class="nav-link @yield('medicine')"><i class="fas fa-pills"></i> <span class="collapse-label">Medicines</span></a></li>
+        <li class="nav-item">
+            <a href="#clinic" data-toggle="collapse" aria-expanded="false" class="nav-link dropdown-toggle collapsed"><i class="fas fa-clinic-medical"></i> <span class="collapse-label">Clinic</span></a>
+            <ul class="zp-dropdown nav collapse" id="clinic">
+                <a href="#inventory" data-toggle="collapse" aria-expanded="false" class="nav-link dropdown-toggle collapsed zp-sublink-dropdown"><i class="fas fa-warehouse"></i> <span class="collapse-label">Inventory</span></a>
+                <ul class="zp-sub-dropdown nav collapse" id="inventory">
+                    <li class="nav-item"><a href="{{ route('genericname') }}" class="nav-link @yield('genericname')"><i class="fas fa-tablets"></i><span class="collapse-label"> Generic Name</span></a></li>
+                    <li class="nav-item"><a href="{{ route('brandname') }}" class="nav-link @yield('brandname')"><i class="fas fa-file-prescription"></i><span class="collapse-label"> Brand Name</span></a></li>
+                    <li class="nav-item"><a href="{{ route('medicine') }}" class="nav-link @yield('medicine')"><i class="fas fa-pills"></i> <span class="collapse-label">Medicines</span></a></li>                    
+                </ul>
 
-            <li class="nav-item"><a href="{{ route('medical.listsofemployees') }}" class="nav-link @yield('employeesMedical')"><span class="fa-stack"><i class="fas fa-list"></i><i class="fas fa-user fa-stack-1x fa-inverse"></i></span><span class="collapse-label">List of Employees</span></a></li>
+                <li class="nav-item"><a href="{{ route('medical.listsofemployees') }}" class="nav-link @yield('employeesMedical')"><span class="fa-stack"><i class="fas fa-list"></i><i class="fas fa-user fa-stack-1x fa-inverse"></i></span><span class="collapse-label">List of Employees</span></a></li>
+            </ul>
+        </li>
         @endif
         @endif
         {{-- For Admin --}}
@@ -64,13 +87,13 @@
             <li class="nav-item"><a href="{{ route('dashboard.roles') }}" class="nav-link @yield('roles')"><i class="fas fa-cogs"></i> <span class="collapse-label">Roles</span></a></li>
         @endif
         {{-- For All Users --}}
-        @auth()
+        {{-- @auth()
         @if (!empty(auth()->user()->employee))
             <li class="nav-item"><a href="{{ route('employee', ['employee' => auth()->user()->employee->emp_id]) }}"  class="nav-link @yield('employee')"><span class="collapse-label"><i class="far fa-address-card"></i><span class="collapse-label">Profile</span></span></a></li>
         @else
             <li class="nav-item"><a href="{{ route('employees') }}"  class="nav-link @yield('employee')"><i class="fas fa-user"></i> <span class="collapse-label"><i class="far fa-address-card"></i><span class="collapse-label">Profile</span></span></a></li>
         @endif
-        @endauth
+        @endauth --}}
         <li class="nav-item" id="collapse-menu">
             <button type="button" id="collapse-button">
                 <span class="collapse-button-icon"><i class="fas fa-chevron-left"></i></span>
