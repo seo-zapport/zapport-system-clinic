@@ -21,6 +21,30 @@
 				</div>
 			</div>
 			<div class="col-12 offset-md-1 col-md-2">
+				@if (strstr(url()->current(), 'create'))
+				<a href="#" class="btn btn-info text-white btn-block mb-2" href="#" data-toggle="modal" data-target="#tagModal">Add Tag</a>
+				<div class="card">
+					<div class="card-body">
+						<div class="header-title">
+							<p><strong>Tags</strong></p>
+							<hr>
+						</div>
+						<div>
+							<select name="tag_id" id="tag_id" class="form-control">
+								<option selected="true" disabled="disabled" value=""> Select Tag </option>
+								@forelse ($tags as $tag)
+									<option value="{{ $tag->id }}">{{ $tag->tag_name }}</option>
+								@empty
+									<option disabled="disabled" value=""> Empty </option>
+								@endforelse
+							</select>
+						</div>						
+					</div>
+				</div>
+				@else
+					@yield('tagsEdit')
+				@endif
+				<br>
 				<div class="card">
 					<div class="card-body">
 						<div class="header-title">
@@ -36,6 +60,29 @@
 			</div>
 		</div>
 	</form>
+{{-- 	@if (strstr(url()->current(), 'create'))
+	<div class="col-12 offset-md-1 col-md-2">
+		<div class="card">
+			<div class="card-body">
+				<div class="header-title">
+					<p><strong>Tags</strong></p>
+					<hr>
+				</div>
+				<div>
+					<form id="tagForm" method="post" action="{{ route('add.tag') }}">
+						@csrf
+						<input type="text" name="tag" class="form-control" placeholder="Add New Tags">
+						<small id="errorlogTag" class="text-muted mt-2"></small>
+					<hr>
+					<div class="form-group text-center">
+						<button class="btn btn-info text-white btn-block" type="submit">Add Tag</button>
+					</div>	
+					</form>
+				</div>						
+			</div>
+		</div>
+	</div>
+	@endif --}}
 
 @include('layouts.errors')
 
@@ -72,7 +119,7 @@
 									</div>
 								</div>
 							</div>
-							{{-- <form id="addFileForm" enctype="multipart/form-data">
+{{-- 							<form id="addFileForm" enctype="multipart/form-data">
 								@csrf
 								<div class="mt-5 mb-5">
 									<input type="file" name="file_name" class="form-control-file" required>
@@ -123,6 +170,41 @@
 			</div>
 		</div>
 	</div>
+
+<!-- Modal Tag -->
+<div class="modal fade" id="tagModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle">Add New Tag</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="card">
+					<div class="card-body">
+						<div class="header-title">
+							<p><strong>Tags</strong></p>
+							<hr>
+						</div>
+						<div>
+							<form id="tagForm" method="post" action="{{ route('add.tag') }}">
+								@csrf
+								<input type="text" name="tag" class="form-control" placeholder="Add New Tags">
+								<small id="errorlogTag" class="text-muted mt-2"></small>
+							<hr>
+							<div class="form-group text-center">
+								<button class="btn btn-info text-white btn-block" type="submit">Add Tag</button>
+							</div>	
+							</form>
+						</div>						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
 
 	<script type="application/javascript">
 		$(document).ready(function(){
@@ -176,6 +258,37 @@
 					}
 				});
 
+			});
+
+			$('#tagForm').on('submit', function(e){
+				e.preventDefault();
+				loc2 = location.href;
+				var tag = $('input[name="tag"]').val();
+		       $.ajaxSetup({
+		            headers: {
+		                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		            },
+		        });
+		        $.ajax({
+		        	type: 'POST',
+		        	url: 'create/tag',
+		        	data: {tag_name:tag},
+		        	dataType: 'json',
+		        	success: function(response){
+		        		$('#tagForm')[0].reset();
+		        		$("#tagModal").modal('hide');
+		        		$('select[name="tag_id"]').append('<option value="'+ response.id +'">'+ response.tag_name +'</option>');
+		        	},
+		        	error: function(response){
+		        		document.getElementById("errorlogTag").innerHTML = '';
+						if (jQuery.isEmptyObject(response.responseJSON) == false) {
+							var errors = response.responseJSON.errors.tag_name;
+							errors.forEach(function(i){
+							document.getElementById("errorlogTag").innerHTML += i + "<br>";
+						});
+						}
+		        	}
+		        });
 			});
 
 		});

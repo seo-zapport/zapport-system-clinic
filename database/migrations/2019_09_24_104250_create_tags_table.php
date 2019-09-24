@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMediaTable extends Migration
+class CreateTagsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,10 @@ class CreateMediaTable extends Migration
      */
     public function up()
     {
-        Schema::create('media', function (Blueprint $table) {
+        Schema::create('tags', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('user_id');
-            $table->text('file_name');
-            $table->text('alt');
+            $table->text('tag_name');
             $table->timestamps();
-
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -31,6 +27,6 @@ class CreateMediaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('media');
+        Schema::dropIfExists('tags');
     }
 }

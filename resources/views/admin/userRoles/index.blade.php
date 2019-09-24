@@ -7,6 +7,18 @@
 @endsection
 @section('dash-content')
 
+<form method="get">
+	<div class="form-row">
+		<div class="form-group col-md-4">
+			<input type="search" name="search" class="form-control" value="{{ (!empty($search)) ? $search : '' }}" placeholder="Search for User Name">
+		</div>
+		<div class="form-group col-md-1 d-inline-flex">
+			<button type="submit" class="btn btn-success mr-2">Search</button>
+			<a href="{{ route('dashboard.userRoles') }}" class="btn btn-info text-white">Clear</a>
+		</div>
+	</div>
+</form>
+
 <div class="card">
 	<div class="card-body">
 
@@ -19,7 +31,7 @@
 				<thead class="thead-dark">
 					<tr>
 						<th>ID</th>
-						<th>Employee Name</th>
+						<th>User name</th>
 						<th>Employee Email</th>
 						<th>Role</th>
 						<th>Action</th>

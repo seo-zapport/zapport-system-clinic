@@ -56,6 +56,7 @@ class MediaController extends Controller
                 if ($request->hasFile('file_name')) {
                     $filepath = 'public/uploaded/media';
                     $fileName = $request->file_name->getClientOriginalName();
+                    $atts['alt'] = $fileName;
                     $mediaSearch = Media::where('user_id', auth()->user()->id)->where('file_name', $fileName)->first();
                     if ($mediaSearch === NULL) {
                         $request->file('file_name')->storeAs($filepath, $fileName);
@@ -105,7 +106,15 @@ class MediaController extends Controller
      */
     public function update(Request $request, Media $media)
     {
-        // 
+        if (Gate::check('isAdmin') || Gate::check('isHr') || Gate::check('isDoctor') || Gate::allows('isNurse')) {
+            $atts = $request->validate(['alt' => 'required']);
+            if ($request->alt != null) {
+                $media->update($atts);
+            }
+            return back();
+        }else{
+            return back();
+        }
     }
 
     /**

@@ -28,8 +28,10 @@
                         <a href="{{ route('employees') }}" > Profile</a>
                     @endif
                 @else
-                    <div class="name">Employee Name</div>
-                    <div class="position">Employee Position</div>
+                    <a href="{{ route('employees') }}" >
+                        <div class="name text-white">Employee Name</div>
+                        <div class="position text-white">Employee Position</div>
+                    </a>
                 @endif
                 @endauth
             </div>
@@ -127,7 +129,7 @@
             <li class="nav-item"><a href="{{ route('dashboard.roles') }}" class="nav-link @yield('roles')"><i class="fas fa-cogs"></i> <span class="collapse-label">Roles</span></a></li>
         @endif
         {{-- For All Users --}}
-        {{-- @auth()
+{{--         @auth()
         @if (!empty(auth()->user()->employee))
             <li class="nav-item"><a href="{{ route('employee', ['employee' => auth()->user()->employee->emp_id]) }}"  class="nav-link @yield('employee')"><span class="collapse-label"><i class="far fa-address-card"></i><span class="collapse-label">Profile</span></span></a></li>
         @else
