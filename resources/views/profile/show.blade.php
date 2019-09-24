@@ -70,19 +70,6 @@
 						<p class="h5">{{ "+63" . @$employee->contact }}</p>
 					</div>
 				</div>
-
-<<<<<<< HEAD
-<hr>
-<h3>Education</h3>
-<div class="row">
-	<div class="col-6"><p>Tertiary / College: {{ strtoupper(@$employee->college) }}</p></div>
-	<div class="col-6"><p>Year Graduated: {{ ($employee->college_grad_date != null) ? Carbon\carbon::parse($employee->college_grad_date)->format("M d, Y") : @$employee->college_grad_date }}</p></div>
-	<div class="col-6"><p>Secondary / Highschool: {{ strtoupper(@$employee->highschool) }}</p></div>
-	<div class="col-6"><p>Year Graduated: {{ @$employee->highschool_grad_date->format("M d, Y") }}</p></div>
-	<div class="col-6"><p>Primary / Elementary: {{ strtoupper(@$employee->elementary) }}</p></div>
-	<div class="col-6"><p>Year Graduated: {{ @$employee->elementary_grad_date->format("M d, Y") }}</p></div>
-</div>
-=======
 				<hr>
 				<h5 class="text-muted"><i class="fas fa-user-graduate"></i> Education</h5>
 				<hr>
@@ -99,7 +86,7 @@
 				</div>
 				<div class="form-row">
 					<div class="form-group col-md-6">
-						<label for="college">Tertiary / College</label>
+						<label for="college">Secondary / Highschool</label>
 						<p class="h5">{{ strtoupper(@$employee->highschool) }}</p>
 					</div>
 					<div class="form-group col-md-6">
@@ -121,7 +108,6 @@
 				<hr>
 				<h5 class="text-muted"><i class="fas fa-briefcase"></i> Work Experience(s)</h5>
 				<hr>
->>>>>>> 7bab9fec211add582cec2fee508998ffe91d0653
 
 				@php
 					$arr = unserialize(@$employee->experience);
@@ -207,11 +193,11 @@
 				<hr>
 				<div class="form-row">
 					<div class="form-group col-md-8">
-						<label for="mother_name">Father's Name</label>
+						<label for="father_name">Father's Name</label>
 						<p class="h5">{{ ucwords(@$employee->father_name) }}</p>
 					</div>
 					<div class="form-group col-md-4">
-						<label for="mother_birthday">Father's Birthday</label>
+						<label for="father_birthday">Father's Birthday</label>
 						<p class="h5">{{ ucwords(@$employee->father_birthday->format('M d, Y')) }}</p>
 					</div>
 				</div>
