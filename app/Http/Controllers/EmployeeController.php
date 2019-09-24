@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\EmployeeRequest;
 use Illuminate\Support\Facades\Storage;
 
+
 class EmployeeController extends Controller
 {
     public function __construct()
@@ -83,7 +84,7 @@ class EmployeeController extends Controller
                 $newFileName = rand(11111, 99999).'.'.$fileExtension;
                 $request->file('profile_img')->storeAs($filePath, $newFileName);
             }else{
-                $newFileName = null;
+                $newFileName = 'default.png';
             }
 
             $newEmp                             = new Employee;

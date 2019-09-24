@@ -8,107 +8,108 @@
 	<i class="fas fa-arrow-left"></i>
 </a>
 @endsection
-<div class="row">
-	<div class="col-10">
+<div class="card">
+	<div class="card-body">
 		<div class="row">
-			<div class="col-3">
-				<p>Name: {{ ucwords($employee->last_name . " " . $employee->first_name . " " . $employee->middle_name) }}</p>
-			</div>
-			<div class="col-3">
-				<p>Department: {{ strtoupper($employee->departments->department) }}</p>
-			</div>
-			<div class="col-3">
-				<p>Position: {{ ucwords($employee->positions->position) }}</p>
-			</div>
-		</div>
+			<div class="col-10">
+				<div class="row">
+					<div class="col-3">
+						<p>Name: {{ ucwords($employee->last_name . " " . $employee->first_name . " " . $employee->middle_name) }}</p>
+					</div>
+					<div class="col-3">
+						<p>Department: {{ strtoupper($employee->departments->department) }}</p>
+					</div>
+					<div class="col-3">
+						<p>Position: {{ ucwords($employee->positions->position) }}</p>
+					</div>
+				</div>
 
-		<div class="row">
+				<div class="row">
+					<div class="col-2">
+						<p>Gender: {{ (@$employee->gender == 0) ? "Male" : "Female" }}</p>
+					</div>
+					<div class="col-1">
+						<p>Age: {{ @$employee->age }}</p>
+					</div>
+					<div class="col-3">
+						<p>Birthday: {{ @$employee->birthday->format('M d, Y') }}</p>
+					</div>
+					<div class="col-3">
+						<p>Birth Place: {{ ucwords(@$employee->birth_place) }}</p>
+					</div>
+					<div class="col-3">
+						<p>Contact number: {{ "+63" . @$employee->contact }}</p>
+					</div>
+				</div>
+			</div>
+
 			<div class="col-2">
-				<p>Gender: {{ (@$employee->gender == 0) ? "Male" : "Female" }}</p>
-			</div>
-			<div class="col-1">
-				<p>Age: {{ @$employee->age }}</p>
-			</div>
-			<div class="col-3">
-				<p>Birthday: {{ @$employee->birthday->format('M d, Y') }}</p>
-			</div>
-			<div class="col-3">
-				<p>Birth Place: {{ ucwords(@$employee->birth_place) }}</p>
-			</div>
-			<div class="col-3">
-				<p>Contact number: {{ "+63" . @$employee->contact }}</p>
+				@if (@$employee->profile_img != null)
+					<img src="{{ asset('storage/uploaded/'.@$employee->profile_img) }}" alt="{{ @$employee->profile_img }}" class="img-fluid">
+				@endif
+
 			</div>
 		</div>
-	</div>
-
-	<div class="col-2">
-		@if (@$employee->profile_img != null)
-			<img src="{{ asset('storage/uploaded/'.@$employee->profile_img) }}" alt="{{ @$employee->profile_img }}" class="img-fluid">
-		@endif
-
-	</div>
-</div>
-<br>
-<hr>
-<br>
-<div class="row">
-	@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
-		<div class="col-md-5">
-
-			<div class="form-group">
-				<button class="btn btn-info text-white" data-toggle="modal" data-target="#exampleModalCenter">New</button>
+		<br>
+		<hr>
+		<br>
+		<div class="row">
+			<div class="col-md-7">
+				<form method="get">
+					<div class="form-row">
+						<div class="form-group col-md-4">
+							<input type="search" name="search" class="form-control" value="{{ (!empty($result)) ? $result : '' }}" placeholder="Search for Diagnosis">
+						</div>
+						<div class="form-group col-md-1 d-inline-flex">
+							<button type="submit" class="btn btn-success mr-2">Search</button>
+							<a href="{{ route('medical.employeeInfo', ['employee' => $employee->emp_id]) }}" class="btn btn-info text-white">Clear</a>
+						</div>
+					</div>
+				</form>
 			</div>
-
+			@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
+				<div class="col-md-5 text-right">
+					<div class="form-group">
+						<button class="btn btn-info text-white" data-toggle="modal" data-target="#exampleModalCenter">New</button>
+					</div>
+				</div>
+			@endif
 		</div>
-	@endif
 
-	<div class="col-md-7">
-
-		<form method="get">
-			<div class="form-row">
-				<div class="form-group col-md-4">
-					<input type="search" name="search" class="form-control" value="{{ (!empty($result)) ? $result : '' }}" placeholder="Search for Diagnosis">
-				</div>
-				<div class="form-group col-md-1 d-inline-flex">
-					<button type="submit" class="btn btn-success mr-2">Search</button>
-					<a href="{{ route('medical.employeeInfo', ['employee' => $employee->emp_id]) }}" class="btn btn-info text-white">Clear</a>
-				</div>
-			</div>
-		</form>
-
+		<table class="table table-hover">
+			<thead class="thead-dark">
+				<th>No.</th>
+				<th>Date and Time</th>
+				<th>Diagnosis</th>
+				<th>Notes</th>
+				<th>Remarks</th>
+				<th>Action</th>
+			</thead>
+			<tbody>
+				@php
+					$i = 1;
+				@endphp
+				@forelse ($search as $medsHistory)
+					<tr>
+						<td>{{ $i++ }}</td>
+						<td>{{ $medsHistory->created_at->format('M d, Y - h:i a') }}</td>
+						<td>{{ $medsHistory->diagnosis }}</td>
+						<td>{{ $medsHistory->note }}</td>
+						<td>{{ ($medsHistory->remarks == 'followUp') ? 'Follow up' : 'Done' }}</td>
+						<td><a href="{{ route('medical.show', ['employee' => $employee->emp_id, 'employeesmedical' => $medsHistory->diagnosis]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i>View</a></td>
+					</tr>
+					@empty
+						<tr>
+							<td colspan="6" class="text-center">No Records Found!</td>
+						</tr>
+				@endforelse
+			</tbody>
+		</table>		
 	</div>
-
 </div>
 
-<table class="table table-hover">
-	<thead class="thead-dark">
-		<th>No.</th>
-		<th>Date and Time</th>
-		<th>Diagnosis</th>
-		<th>Notes</th>
-		<th>Remarks</th>
-		<th>Action</th>
-	</thead>
-	<tbody>
-		@php
-			$i = 1;
-		@endphp
-		@forelse ($search as $medsHistory)
-			<tr>
-				<td>{{ $i++ }}</td>
-				<td>{{ $medsHistory->created_at->format('M d, Y - h:i a') }}</td>
-				<td>{{ $medsHistory->diagnosis }}</td>
-				<td>{{ $medsHistory->note }}</td>
-				<td>{{ ($medsHistory->remarks == 'followUp') ? 'Follow up' : 'Done' }}</td>
-				<td><a href="{{ route('medical.show', ['employee' => $employee->emp_id, 'employeesmedical' => $medsHistory->diagnosis]) }}" class="btn btn-info text-white">View</a></td>
-			</tr>
-			@empty
-				<tr>
-					<td colspan="6" class="text-center">No Records Found!</td>
-				</tr>
-		@endforelse
-	</tbody>
-</table>
+
+
 {{ $search->links() }}
 @include('layouts.errors')
 <!-- Modal Add -->

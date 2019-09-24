@@ -1,7 +1,10 @@
 @extends('layouts.app')
 @section('title', '| Brand Name | '.ucwords($medbrand->bname))
 @section('brandname', 'active')
-@section('dash-title', ucwords($medbrand->bname))
+{{-- @section('dash-title', ucwords($medbrand->bname)) --}}
+@section('heading-title')
+	<i class="fas fa-file-prescription"></i> {{ ucwords($medbrand->bname) }}
+@endsection
 @section('dash-content')
 @section('back')
 <a href="{{ route('brandname') }}">
@@ -9,30 +12,37 @@
 </a>
 @endsection
 <div class="d-flex align-content-center p-2">
-	<h4>Brand Name: {{ ucwords($medbrand->bname) }}</h4>
+	<p><span class="text-muted">Brand Name</span>: <strong>{{ ucwords($medbrand->bname) }}</strong></p>
 	@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
 		<a href="" data-toggle="modal" data-target="#exampleModalCenter"><i class="far fa-edit text-primary p-1"></i></a>
 	@endif
 </div>
 
-<table class="table">
-	<thead class="thead-dark">
-		<th>Generic Name</th>
-		<th>Quantity</th>
-	</thead>
-	<tbody>
-		@forelse ($medbrand->medicines->unique('brand_id') as $gen)
-			<tr>
-				<td>{{ ucfirst($gen->generic->gname) }}</td>
-				<td>{{ $gen->where('brand_id', $medbrand->id)->where('generic_id', $gen->generic->id)->where('expiration_date', '>', NOW())->where('availability', 0)->count() }}</td>
-			</tr>
-			@empty
-				<tr>
-					<td colspan="4" class="text-center">{{ "No Records yet!" }}</td>
-				</tr>
-		@endforelse
-	</tbody>
-</table>
+<div class="card">
+	<div class="card-body">
+		<div class="table-responsive">
+			<table class="table">
+				<thead class="thead-dark">
+					<th>Generic Name</th>
+					<th>Quantity</th>
+				</thead>
+				<tbody>
+					@forelse ($medbrand->medicines->unique('brand_id') as $gen)
+						<tr>
+							<td>{{ ucfirst($gen->generic->gname) }}</td>
+							<td>{{ $gen->where('brand_id', $medbrand->id)->where('generic_id', $gen->generic->id)->where('expiration_date', '>', NOW())->where('availability', 0)->count() }}</td>
+						</tr>
+						@empty
+							<tr>
+								<td colspan="4" class="text-center">{{ "No Records yet!" }}</td>
+							</tr>
+					@endforelse
+				</tbody>
+			</table>			
+		</div>
+	</div>
+</div>
+
 @include('layouts.errors')
 <!-- Modal Add -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

@@ -1,7 +1,15 @@
 @extends('posts.create')
 @section('title', '| Edit Post')
+{{-- @section('posts', 'active') --}}
+<<<<<<< HEAD
+@section('dash-title', 'Edit '. $post->title)
+@section('heading-title')
+	<i class="fas fa-edit"></i> Edit Posts
+=======
+{{-- @section('dash-title', 'Edit '. $post->title) --}}
 @section('heading-title')
 	<i class="fas fa-book"></i> Edit Posts
+>>>>>>> ac7a8b9c8f30777ff4909da05f0502849c70a336
 @endsection
 @section('dash-content')
 

@@ -18,30 +18,31 @@
 					<th>Position</th>
 					<th>Department</th>
 					<th>No. of Employees</th>
+					<th>Action</th>
 				</thead>
 				<tbody>
 					@forelse ($positions as $position)
 			        	@foreach ($position->departments as $department)
 							<tr>
 								<td>
-					        	<form method="post" action="{{ route('hr.pos.deletePos', ['position' => $position->position]) }}">
-					        		@csrf
-					        		@method('DELETE')
-					        		<div class="form-row align-items-center">
-					            		<div class="col-auto my-1 form-inline">
-					        				{{ ucwords($position->position) }}
-											<button class="btn btn-link"  onclick="return confirm('Are you sure you want to delete {{ ucfirst($position->position) }} Position?')" data-id="{{ $position->postion }}">
-												<i class="fas fa-times-circle"></i>
-											</button>
-										</div>
-									</div>
-					        	</form>
-					        		<td>
-					        			{{ ucwords($department->department) }}
-					        		</td>
+									{{ ucwords($position->position) }}
+								</td>
+				        		<td>
+				        			{{ ucwords($department->department) }}
+				        		</td>
 								<td>
 									{{ $employees->where('department_id', $department->id)->where('position_id', $position->id)->count() }}
-									<span><a href="{{ route('hr.pos.show', ['position' => $position->position, 'department' => $department->department]) }}" class="btn btn-info text-white float-right">View</a></span>
+								</td>
+								<td class="w-15 px-0">
+									<a href="{{ route('hr.pos.show', ['position' => $position->position, 'department' => $department->department]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i>View</a>
+									<small class="text-muted">|</small>
+						        	<form method="post" action="{{ route('hr.pos.deletePos', ['position' => $position->position]) }}">
+						        		@csrf
+						        		@method('DELETE')
+											<button class="btn btn-link text-danger" onclick="return confirm('Are you sure you want to delete {{ ucfirst($position->position) }} Position?')" data-id="{{ $position->postion }}">
+												<i class="fas fa-trash-alt"></i> Delete
+											</button>
+						        	</form>	
 								</td>
 							</tr>
 			        	@endforeach

@@ -9,9 +9,16 @@
 @method('PUT')
 @endsection
 @section('img')
-@if (@$employee->profile_img != null)
-	<img src="{{ asset('storage/uploaded/'.@$employee->profile_img) }}" alt="{{ @$employee->profile_img }}" class="img-fluid">
-@endif
+	@if (@$employee->profile_img != null)
+		<img src="{{ asset('storage/uploaded/'.@$employee->profile_img) }}" alt="{{ @$employee->profile_img }}" class="img-fluid profile-pic">
+	@else
+		<img src="{{ url( '/images/default.png' ) }}" alt="" class="img-fluid profile-pic">
+	@endif
+@endsection
+@section('img-text')
+	@if (@$employee->profile_img != null)
+		<span>Update picture</span>
+	@endif
 @endsection
 @section('editFname', ucwords($employee->first_name))
 @section('editLname', ucwords($employee->last_name))
@@ -50,7 +57,7 @@
 @section('editPersonContactNumber', ucwords($employee->person_to_contact_number))
 
 @section('editCivilStats')
-	<div class="form-group col-md-2">
+	<div class="form-group col-md-4">
 		<label for="civil_status">Civil Status</label>
 		<select name="civil_status" id="civil_status" class="form-control">
 			<option value="{{ $employee->civil_status }}">{{ ucwords($employee->civil_status) }}</option>
@@ -64,7 +71,7 @@
 @endsection
 
 @section('editGender')
-	<div class="form-group col-md-2">
+	<div class="form-group col-md-3">
 		<label for="birth_place">Gender</label>
 		<select name="gender" id="gender" class="form-control">
 			<option value="{{ $employee->gender }}">{{ ($employee->gender == 0) ? "Male" : "Female" }}</option>
@@ -75,7 +82,7 @@
 @endsection
 
 @section('editDept')
-	<div class="form-group col-md-3">
+	<div class="form-group col-md-12">
 		<label for="department_id">Department</label>
 		<select name="department_id" id="department_id" class="form-control">
 			<option value="{{ $employee->department_id }}">{{ $employee->departments->department }}</option>
@@ -84,7 +91,7 @@
 			@endforeach
 		</select>
 	</div>
-	<div class="form-group col-md-3">
+	<div class="form-group col-md-12">
 		<label for="position">Position</label>
 		<select name="position_id" id="position_id" class="form-control">
 			<option value="{{ $employee->position_id }}">{{ $employee->positions->position }}</option>
@@ -99,27 +106,40 @@
 	@endphp
 	<a id="editWork" class="btn btn-success text-white mb-2"><i class="fa fa-plus"></i> Add more Work Experience</a>
 	<div class="form-row">
-	<div id="work" class="form-row align-items-center">
-		@php
-		$i = 0;
-		foreach ($arr as $exp) {
-		@endphp
-			<div id="workField" class="col-auto my-1 form-inline editwork">
-				<label for="experience" class="mr-2">Name of Company</label>
-				<input type="text" class="form-control mr-2" name="experience[@php echo $i; @endphp][]" placeholder="Name of Company" value="{{ $exp[0] }}">
-				<label for="experience" class="mr-2">Position</label>
-				<input type="text" class="form-control mr-2" name="experience[@php echo $i; @endphp][]" placeholder="Position" value="{{ $exp[1] }}">
-				<label for="experience" class="mr-2">Period Covered</label>
-				<input type="date" class="form-control mr-2" name="experience[@php echo $i; @endphp][]" value="{{ $exp[2] }}">
-				<label for="experience" class="ml-2 mr-2">To</label>
-				<input type="date" class="form-control ml-2 mr-2" name="experience[@php echo $i; @endphp][]" value="{{ $exp[3] }}">
-				<a id="removeWork" class="btn btn-danger text-white"><i class="fa fa-times"></i></a>
-			</div>
-		@php
-		$i++;
-		}
-		@endphp
-	</div>
+		<div id="work" class="col-12">
+			@php
+			$i = 0;
+			foreach ($arr as $exp) {
+			@endphp
+				<div id="workField" class="form-row">
+					<div class="form-group col-md-3">
+						<label for="experience" class="mr-2">Name of Company</label>
+						<input type="text" class="form-control mr-2" name="experience[@php echo $i; @endphp][]" placeholder="Name of Company" value="{{ $exp[0] }}">
+					</div>
+					<div class="form-group col-md-3">
+						<label for="experience" class="mr-2">Position</label>
+						<input type="text" class="form-control mr-2" name="experience[@php echo $i; @endphp][]" placeholder="Position" value="{{ $exp[1] }}">
+					</div>
+					<div class="form-group col-md-5">
+						<label for="experience" class="mr-2">Period Covered</label>
+						<div class="form-inline">
+							<div class="form-group">
+								<input type="date" class="form-control mr-2" name="experience[@php echo $i; @endphp][]" value="{{ $exp[2] }}">
+								<label for="experience" class="mx-1">To</label>
+								<input type="date" class="form-control ml-2 mr-2" name="experience[@php echo $i; @endphp][]" value="{{ $exp[3] }}">
+							</div>
+						</div>
+					</div>
+					<div class="form-group col-md-1">
+						<label for="experience" class="mr-2">Action</label>
+						<a id="removeWork" class="btn btn-danger text-white"><i class="fa fa-times mr-1"></i><i class="fas fa-briefcase"></i></a>
+					</div>
+				</div>
+			@php
+			$i++;
+			}
+			@endphp
+		</div>
 	</div>
 @endsection
 
@@ -129,25 +149,33 @@
 		$arr = unserialize($employee->children);
 	@endphp
 	<a id="editChildren" class="btn btn-success text-white mb-2"><i class="fa fa-plus"></i> Add more children</a>
-	<div class="form-row">
-	<div id="children" class="form-row align-items-center">
+	
+	<div id="children" class="form-row">
 		@php
 		$e = 0;
 		foreach ($arr as $child) {
 		@endphp
-			<div id="childrenField" class="col-auto my-1 form-inline editchildren">
-				<label for="children" class="mr-2">Child's Name</label>
-				<input type="text" class="form-control mr-2" name="children[@php echo $e; @endphp][]" placeholder="Child's Name" value="{{ $child[0] }}">
-				<label for="children" class="mr-2">Birthday</label>
-				<input type="date" class="form-control mr-2" name="children[@php echo $e; @endphp][]" value="{{ $child[1] }}">
-				<label for="children" class="mr-2">Gender</label>
-				<input type="text" class="form-control mr-2" name="children[@php echo $e; @endphp][]" placeholder="Gender" value="{{ $child[2] }}">
-				<a id="removeChildren" class="btn btn-danger text-white"><i class="fa fa-times"></i></a>
+			<div id="childrenField" class="col-12 form-row editchildren">
+				<div class="form-group col-md-4">
+					<label for="children" class="mr-2">Child's Name</label>
+					<input type="text" class="form-control mr-2" name="children[@php echo $e; @endphp][]" placeholder="Child's Name" value="{{ $child[0] }}">
+				</div>
+				<div class="form-group col-md-3">
+					<label for="children" class="mr-2">Birthday</label>
+					<input type="date" class="form-control mr-2" name="children[@php echo $e; @endphp][]" value="{{ $child[1] }}">
+				</div>
+				<div class="form-group col-md-3">
+					<label for="children" class="mr-2">Gender</label>
+					<input type="text" class="form-control mr-2" name="children[@php echo $e; @endphp][]" placeholder="Gender" value="{{ $child[2] }}">
+				</div>
+				<div class="form-group col-md-2">
+					<label class="mr-2 d-block">Action</label>
+					<a id="removeChildren" class="btn btn-danger text-white btn-block"><i class="fa fa-times"></i> Remove Child</a>
+				</div>
 			</div>
 		@php
 		$e++;
 		}
 		@endphp
-	</div>
 	</div>
 @endsection

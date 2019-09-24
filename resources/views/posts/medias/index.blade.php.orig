@@ -1,7 +1,11 @@
 @extends('layouts.app')
 @section('title', '| Media')
 @section('medias', 'active')
-
+<<<<<<< HEAD
+@section('dash-title', 'Media')
+=======
+{{-- @section('dash-title', 'Media') --}}
+>>>>>>> ac7a8b9c8f30777ff4909da05f0502849c70a336
 @section('heading-title')
 	<i class="fas fa-photo-video"></i> Media
 @endsection

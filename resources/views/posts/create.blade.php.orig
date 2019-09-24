@@ -1,8 +1,15 @@
 @extends('layouts.app')
 @section('title', '| New Post')
-
+@section('new_post', 'active')
+<<<<<<< HEAD
+@section('dash-title', 'New Post')
+@section('heading-title')
+	<i class="fas fa-file"></i> New Posts
+=======
+{{-- @section('dash-title', 'New Post') --}}
 @section('heading-title')
 	<i class="fas fa-book"></i> New Posts
+>>>>>>> ac7a8b9c8f30777ff4909da05f0502849c70a336
 @endsection
 @section('dash-content')
 {{-- {{ phpinfo() }} --}}

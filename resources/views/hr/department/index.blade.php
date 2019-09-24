@@ -16,25 +16,24 @@
 				<thead class="thead-dark">
 					<th>Department</th>
 					<th>No. of Employees</th>
+					<th>Action</th>
 				</thead>
 				<tbody>
 					@forelse ($deps as $dep)
 						<tr>
-							<td>
-				        	<form method="post" action="{{ route('hr.dep.deleteDep', ['department' => $dep->department]) }}">
+							<td>{{ $dep->department }}</td>
+							<td>{{ $dep->employee->count() }}</td>
+							<td><form method="post" action="{{ route('hr.dep.deleteDep', ['department' => $dep->department]) }}">
 				        		@csrf
 				        		@method('DELETE')
 				        		<div class="form-row align-items-center">
-				            		<div class="col-auto my-1 form-inline">
-				        				{{ $dep->department }}
-										<button class="btn btn-link"  onclick="return confirm('Are you sure you want to delete {{ ucfirst($dep->department) }} Department?')" data-id="{{ $dep->department }}">
-											<i class="fas fa-times-circle"></i>
+				            		<div class="col-auto my-1 form-inline">						
+										<button class="btn btn-link text-danger"  onclick="return confirm('Are you sure you want to delete {{ ucfirst($dep->department) }} Department?')" data-id="{{ $dep->department }}">
+											<i class="fas fa-trash-alt"></i> Delete
 										</button>
 									</div>
 								</div>
-				        	</form>
-							</td>
-							<td>{{ $dep->employee->count() }}</td>
+				        	</form></td>
 						</tr>
 						@empty
 							<tr>

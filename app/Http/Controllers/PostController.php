@@ -24,7 +24,7 @@ class PostController extends Controller
     public function index(Request $request)
     {
         if (Gate::check('isAdmin') || Gate::check('isHr') || Gate::check('isDoctor') || Gate::allows('isNurse')) {
-            $posts = Post::where('user_id', auth()->user()->employee->id)
+            $posts = Post::where('user_id', auth()->user()->id)
                          ->where('title', 'like', '%'.$request->search.'%')
                          ->orderBy('id', 'desc')
                          ->paginate(10);

@@ -1,6 +1,11 @@
 @extends('layouts.app')
 @section('title', '| '. $post->title)
 @section('posts', 'active')
+<<<<<<< HEAD
+@section('dash-title', $post->title)
+=======
+{{-- @section('dash-title', $post->title) --}}
+>>>>>>> ac7a8b9c8f30777ff4909da05f0502849c70a336
 @section('heading-title')
 	<i class="fas fa-book"></i> Posts
 @endsection
