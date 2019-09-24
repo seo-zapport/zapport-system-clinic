@@ -45,7 +45,9 @@
                                     <h2 class="heading-title">@yield('heading-title')</h2>
                                 </div>
                                 <div class="col-12 col-lg-6">
+                                  @if ( !Request::is('dashboard') && !Request::is('employees/profile/employee/*') && !Request::is('password/reset') )
                                     @include('layouts.breadcrumbs')
+                                  @endif  
                                 </div>                                
                             </div>
                             @if ( request()->is('dashboard*') || request()->is('hr*') )

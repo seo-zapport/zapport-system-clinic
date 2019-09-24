@@ -2,6 +2,9 @@
 @section('title', '| '. $post->title)
 @section('posts', 'active')
 @section('dash-title', $post->title)
+@section('heading-title')
+	<i class="fas fa-book"></i> Posts
+@endsection
 @section('dash-content')
 {!! $post->description !!}
 

@@ -2,6 +2,9 @@
 @section('title', '| New Post')
 @section('new_post', 'active')
 @section('dash-title', 'New Post')
+@section('heading-title')
+	<i class="fas fa-file"></i> New Posts
+@endsection
 @section('dash-content')
 {{-- {{ phpinfo() }} --}}
 	<form method="post" action="@yield('postAction', route('post.store'))">

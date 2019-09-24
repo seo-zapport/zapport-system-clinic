@@ -2,6 +2,9 @@
 @section('title', '| Media')
 @section('medias', 'active')
 @section('dash-title', 'Media')
+@section('heading-title')
+	<i class="fas fa-photo-video"></i> Media
+@endsection
 @section('dash-content')
 	<div class="row">
 		@foreach ($medias as $media)

@@ -2,6 +2,9 @@
 @section('title', '| Posts')
 @section('posts', 'active')
 @section('dash-title', 'All Posts')
+@section('heading-title')
+	<i class="fas fa-book"></i> Posts
+@endsection
 @section('dash-content')
 
 <form method="get">
