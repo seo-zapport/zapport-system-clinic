@@ -17,13 +17,13 @@ class FrontpageController extends Controller
     public function index()
     {
         $users = User::get();
-        return view('welcome', compact('users'));
+        return view('front-page', compact('users'));
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response4
      */
     public function create()
     {
