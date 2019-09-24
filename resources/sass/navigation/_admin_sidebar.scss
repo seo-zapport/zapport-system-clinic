@@ -1,5 +1,5 @@
 #zapAdminMenuBg,#zapAdminMenuWrap{
-	width: 210px;
+	width: 240px;
 	background-color: $admin-persian-green;
 }
 #zapAdminMenuBg{
@@ -168,6 +168,20 @@
     }
 }
 
+/**dropdown*/
+.zp-dropdown{
+	&.nav{
+		background-color: #004742;
+		.nav-item{
+			width: 100%;
+		}
+		.zp-sublink-dropdown{
+			&.nav-link{
+				width: 100%;
+			}
+		}
+	}
+}
 /**Collapsed*/
 .folded{
 	#zapAdminMenuBg,#zapAdminMenuWrap{

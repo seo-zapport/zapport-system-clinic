@@ -64,15 +64,15 @@
 								Set New Role
 							@endforelse
 						</td>
-						<td class="w-15">
+						<td class="w-15 px-0">
 							@forelse ($user->roles as $role)
-								<span id="{{ $user->id }}" class="show-edit"><i class="far fa-edit text-primary"></i> Quick Edit</span>
+								<span id="{{ $user->id }}" class="show-edit btn btn-link text-secondary"><i class="far fa-edit"></i> Quick Edit</span>
 							@empty
 
 							@endforelse
-							|
+							<small class="text-muted">|</small>
 							<button class="btn btn-link text-danger"  onclick="return confirm('Are you sure you want to remove {{ ucfirst($user->name) }} ?')" data-id="{{ $user->user }}">
-								<i class="fas fa-times-circle"></i> Delete
+								<i class="fas fa-trash-alt"></i> Delete
 							</button>
 						</td>
 					</tr>

@@ -5951,7 +5951,7 @@ figure {
 
 #zapAdminMenuBg,
 #zapAdminMenuWrap {
-  width: 210px;
+  width: 240px;
   background-color: #00988D;
 }
 
@@ -6126,6 +6126,20 @@ figure {
   margin-top: -8px;
 }
 
+/**dropdown*/
+
+.zp-dropdown.nav {
+  background-color: #004742;
+}
+
+.zp-dropdown.nav .nav-item {
+  width: 100%;
+}
+
+.zp-dropdown.nav .zp-sublink-dropdown.nav-link {
+  width: 100%;
+}
+
 /**Collapsed*/
 
 .folded #zapAdminMenuBg,
@@ -6248,7 +6262,7 @@ figure {
 
 #zapContent,
 #zapFooter {
-  margin-left: 210px;
+  margin-left: 240px;
 }
 
 #zapContent {
