@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Post;
 use App\Media;
 use App\Employee;
+use App\Tag;
 use Illuminate\Http\Request;
 use App\Http\Requests\PostRequest;
 use Illuminate\Support\Facades\Gate;
@@ -44,8 +45,9 @@ class PostController extends Controller
     public function create()
     {
         if (Gate::check('isAdmin') || Gate::check('isHr') || Gate::check('isDoctor') || Gate::allows('isNurse')) {
+            $tags = Tag::get();
             $employees = Media::where('file_name', '!=', NULL)->where('user_id', auth()->user()->id)->get();
-            return view('posts.create', compact('employees'));
+            return view('posts.create', compact('employees', 'tags'));
         }else{
             return back();
         }
@@ -61,11 +63,15 @@ class PostController extends Controller
     {
         if (Gate::check('isAdmin') || Gate::check('isHr') || Gate::check('isDoctor') || Gate::allows('isNurse')) {
             $atts = $request->validated();
+            $atts = $request->except('tag_id');
             auth()->user()->published(
                 new Post($atts)
             );
 
             $lastID = Post::where('user_id', auth()->user()->id)->get()->last();
+            $tagID = $request->input('tag_id');
+            $tag = Tag::find($tagID);
+            $tag->posts()->attach($lastID);
 
             return redirect()->route('post.show', ['post' => $lastID->title]);
         }else{
@@ -95,7 +101,11 @@ class PostController extends Controller
     {
         if (Gate::check('isAdmin') || Gate::check('isHr') || Gate::check('isDoctor') || Gate::allows('isNurse')) {
             $employees = Media::where('file_name', '!=', NULL)->where('user_id', auth()->user()->id)->get();
-            return view('posts.edit', compact('post', 'employees'));
+            $tags = Tag::get();
+            foreach ($post->tags as $postTags) {
+                $postTags;
+            }
+            return view('posts.edit', compact('post', 'employees', 'tags', 'postTags'));
         }else{
             return back();
         }
@@ -112,7 +122,9 @@ class PostController extends Controller
     {
         $this->authorize('update', $post);
         $atts = $request->validated();
+        $atts = $request->except(['tag_id', 'tag_old']);
         $post->update($atts);
+        $post->tags()->updateExistingPivot($request->tag_old, array('tag_id' => $request->tag_id));
         return redirect()->route('post.show', ['post' => $post->title]);
     }
 

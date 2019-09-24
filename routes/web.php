@@ -51,6 +51,9 @@ Route::group(['prefix'	=>	'posts'], function(){
 	// Upload Media
 	Route::post('create/media', 'MediaController@store')->name('post.media');
 	Route::post('{post}/edit/media', 'MediaController@addMediaOnPostUpdate');
+	// Tags
+	Route::post('create/tag', 'TagController@store')->name('add.tag');
+	// Route::post('{post}/edit/tag', 'TagController@store')->name('add.tag');
 
 });
 
@@ -58,6 +61,7 @@ Route::group(['prefix'	=>	'media'], function(){
 
 	// Media
 	Route::get('', 'MediaController@index')->name('media.index');
+	Route::put('{media}/edit', 'MediaController@update')->name('media.edit');
 	Route::delete('{media}', 'MediaController@destroy')->name('media.delete');
 
 });

@@ -22,25 +22,18 @@ class UserRoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         if (Gate::allows('isAdmin')) {
-            $users = User::orderBy('id', 'asc')->get();
-
+            $users = User::orWhere('name', 'like', '%'.$request->search.'%')->orderBy('id', 'asc')->get();
             $roles = Role::get();
-
             $userRoles = User_role::get();
-
             // Exclude User with Role
-
             $arr = array();
-
             foreach ($userRoles as $userRole) {
                 $arr[] = $userRole->user_id;
             }
-
             $noRoles = User::whereNotIn('id', $arr)->get();
-
             return view('admin.userRoles.index', compact('users', 'roles', 'noRoles', 'noUsers'));
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();

@@ -64,20 +64,25 @@
 									<div class="file-size"><strong>File size:</strong> 88 KB</div>
 									<div class="dimensions"><strong>Dimensions:</strong> 1000 by 551 pixels</div>
 								</div>
-								<div class="settings">
-									<label class="setting" data-setting="alt">
-										<span class="name">Alternative Text</span>
-										<input type="text" value="Wind Farm" aria-describedby="alt-text-description">
-									</label>
-									<div class="setting">
-										<span class="name">Uploaded By</span>
-										<span class="value">admin</span>
+								<form method="post" action="{{ route('media.edit', ['media' => $m->id]) }}">
+									<div class="settings">
+											@csrf
+											@method('PUT')
+											<label class="setting" data-setting="alt">
+												<span class="name">Alternative Text</span>
+												<input type="text" name="alt" value="{{ $m->alt }}" aria-describedby="alt-text-description">
+											</label>
+										<div class="setting">
+											<span class="name">Uploaded By</span>
+											<span class="value">admin</span>
+										</div>
+										<label class="setting" data-setting="url">
+											<span class="name">Copy Link</span>
+											<input type="text" value="{{ asset('storage/uploaded/media/'.$m->file_name) }}" readonly="">
+										</label>
 									</div>
-									<label class="setting" data-setting="url">
-										<span class="name">Copy Link</span>
-										<input type="text" value="{{ asset('storage/uploaded/media/'.$m->file_name) }}" readonly="">
-									</label>
-								</div>
+									<button type="submit" class="btn btn-link text-secondary">edit</button>
+								</form>
 								<div class="actions">
 									<form action="{{ route('media.delete', ['media' => $m->id]) }}" method="post">
 										@method('DELETE')

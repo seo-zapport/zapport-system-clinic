@@ -24,7 +24,7 @@ class MediaRequest extends FormRequest
     public function rules()
     {
         return [
-            'file_name'   =>  ['mimes:jpg,jpeg,png,gif', 'max:2240']
+            'file_name'   =>  ['mimes:jpg,jpeg,png,gif', 'max:2240'],
         ];
     }
 }
