@@ -6,9 +6,19 @@
 	</div>
 </footer>
 <script src="{{ asset('/js/app.js') }}"></script>
+<script src="{{ asset('/js/slick.js') }}"></script>
 <script src="{{ asset('/js/jquery.easing.min.js') }}"></script>
 <script type="application/javascript">
 	jQuery(document).ready(function($) {
+
+
+		/**slick*/
+		$('.slick-posts').slick({
+		  slidesToShow: 3,
+		  slidesToScroll: 1,
+		  autoplay: true,
+		  autoplaySpeed: 2000,
+		});
 		
 		  $('a.js-scroll-trigger[href*="#"]:not([href="#"])').click(function() {
 		    if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
