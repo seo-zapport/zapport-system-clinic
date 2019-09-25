@@ -11,7 +11,7 @@
             <div class="zap-image">
                 @auth()
                 @if (!empty(auth()->user()->employee->profile_img))
-                    <img src="{{ asset('storage/uploaded/'.auth()->user()->employee->profile_img) }}" border="0" width="48" class="img-circle">
+                    <img src="{{ asset('storage/uploaded/'.auth()->user()->employee->profile_img) }}"  onerror="javascript:this.src='{{url( '/images/default.png' )}}'" border="0" width="48" class="img-circle">
                 @else
                     <img src="{{ url( '/images/default.png' ) }}" border="0" width="48" class="img-circle">
                 @endif
