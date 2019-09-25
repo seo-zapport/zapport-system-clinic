@@ -64,10 +64,24 @@
 							<div class="attachment-info">
 								<div class="details">
 									<div class="filename"><strong>File name:</strong> {{ $m->file_name }}</div>
-									<div class="filename"><strong>File type:</strong> image/jpeg</div>
-									<div class="uploaded"><strong>Uploaded on:</strong> September 20, 2019</div>
-									<div class="file-size"><strong>File size:</strong> 88 KB</div>
-									<div class="dimensions"><strong>Dimensions:</strong> 1000 by 551 pixels</div>
+									@php
+										$info = pathinfo('storage/uploaded/media/'.$m->file_name);
+									@endphp
+									<div class="filename"><strong>File type:</strong> {{ $info['extension'] }}</div>
+									<div class="uploaded"><strong>Uploaded on:</strong> {{ $m->created_at->format('M d, Y') }}</div>
+									@php
+										$bytes = filesize('storage/uploaded/media/'.$m->file_name);
+										if ($bytes >= 1024):
+											$bytes = number_format($bytes / 1024, 2). 'KB';
+										elseif($bytes >= 1048576):
+											$bytes = number_format($bytes / 1048576, 2) . ' MB';
+										endif
+									@endphp
+									<div class="file-size"><strong>File size:</strong> {{ $bytes }}</div>
+									@php
+										list($width, $height) = getimagesize('storage/uploaded/media/'.$m->file_name);
+									@endphp
+									<div class="dimensions"><strong>Dimensions:</strong> {{ $width .' x '. $height }}</div>
 								</div>
 								<form method="post" action="{{ route('media.edit', ['media' => $m->id]) }}">
 									<div class="settings">
