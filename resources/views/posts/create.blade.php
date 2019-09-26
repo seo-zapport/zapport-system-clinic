@@ -6,7 +6,7 @@
 @endsection
 @section('dash-content')
 {{-- {{ phpinfo() }} --}}
-	<form method="post" action="@yield('postAction', route('post.store'))">
+	<form method="post" action="@yield('postAction', route('post.store'))" enctype="multipart/form-data">
 		@csrf
 		@yield('postMethod')
 		<div class="row post-wrap">
@@ -22,16 +22,16 @@
 			</div>
 			<div class="col-12 offset-md-1 col-md-2">
 				@if (strstr(url()->current(), 'create'))
-				<a href="#" class="btn btn-info text-white btn-block mb-2" href="#" data-toggle="modal" data-target="#tagModal">Add Tag</a>
 				<div class="card">
 					<div class="card-body">
 						<div class="header-title">
 							<p><strong>Tags</strong></p>
 							<hr>
+							<a href="#" class="btn btn-info text-white btn-block mb-2" href="#" data-toggle="modal" data-target="#tagModal">Add Tag</a>
 						</div>
 						<div>
-							<select name="tag_id" id="tag_id" class="form-control">
-								<option selected="true" disabled="disabled" value=""> Select Tag </option>
+							<select name="tag_id" id="tag_id" class="form-control" required oninvalid="this.setCustomValidity('Please Select Tag')" oninput="setCustomValidity('')">
+								<option value="" selected="true" disabled="disabled"> Select Tag </option>
 								@forelse ($tags as $tag)
 									<option value="{{ $tag->id }}">{{ $tag->tag_name }}</option>
 								@empty
@@ -119,7 +119,7 @@
 									</div>
 								</div>
 							</div>
-{{-- 							<form id="addFileForm" enctype="multipart/form-data">
+							<form id="addFileForm" enctype="multipart/form-data">
 								@csrf
 								<div class="mt-5 mb-5">
 									<input type="file" name="file_name" class="form-control-file" required>
@@ -129,7 +129,7 @@
 									<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 									<button id="InsertPhoto" type="submit" class="btn btn-primary">Save changes</button>
 								</div>
-							</form> --}}
+							</form>
 						</div>
 						<div class="attachment-browser tab-pane fade" id="media" role="tabpanel" aria-labelledby="media-tab">
 							<h2 class="media-views-heading sr-only">Attachment List</h2>
@@ -208,6 +208,7 @@
 
 	<script type="application/javascript">
 		$(document).ready(function(){
+			var count = 0;
 			$('#addFileForm').on('submit', function(e){
 				e.preventDefault();
 				var btn = $('#InsertPhoto');
@@ -224,6 +225,7 @@
 		                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 		            },
 		        });
+				// count = $('#imgs').length;
 				$.ajax({
 					type: 'POST',
 					url: url,
@@ -234,10 +236,18 @@
 					contentType: false,
 					mimeType:"multipart/form-data",
 					success: function(response){
+						console.log(response);
 						var path = '{{ asset('storage/uploaded/media/') }}';
 						tinymce.activeEditor.insertContent('<img alt="'+ response.file_name +'" class="img-fluid" src="' + path + "/" + response.file_name + '"/>');
 						$('#addFileForm')[0].reset();
 						$("#newMedia").modal('hide');
+						// count += 1;
+						// if (count == 1) {
+						// 	$('.posts-title').append('<input id="imgs" type="hidden" name="media_id" value="'+ response.id +'">');
+						// }else{
+						// 	$('.posts-title').append('<input id="imgs" type="hidden" value="'+ response.id +'">');
+						// }
+						// console.log(count);
 					},
 					error: function(response){
 						console.log(response) 

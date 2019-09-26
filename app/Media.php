@@ -6,7 +6,7 @@ class Media extends Model
 {
     public function posts()
     {
-    	return $this->belongsToMany(Post::class, 'media_posts', 'media_id');
+    	return $this->belongsToMany(Post::class);
     }
 
     public function users()

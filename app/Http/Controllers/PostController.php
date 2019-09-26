@@ -61,6 +61,7 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
+        // dd($request->all());
         if (Gate::check('isAdmin') || Gate::check('isHr') || Gate::check('isDoctor') || Gate::allows('isNurse')) {
             $atts = $request->validated();
             $atts = $request->except('tag_id');

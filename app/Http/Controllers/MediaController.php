@@ -64,6 +64,8 @@ class MediaController extends Controller
                         auth()->user()->addMedia(
                             new Media($atts)
                         );
+                        $lastId = Media::where('file_name', $fileName)->first();
+                        $atts['id'] = $lastId->id;
                         return response()->json($atts);
                     }else{
                         return response()->json(['errors2' => 'Image already exists!', 'code' => 422], 422);

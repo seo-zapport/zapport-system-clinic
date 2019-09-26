@@ -14,6 +14,11 @@ class Post extends Model
     	return $this->belongsToMany(Tag::class, 'post_tags', 'post_id');
     }
 
+    public function medias()
+    {
+        return $this->belongsTo(Media::class, 'media_id');
+    }
+
     public function getRouteKeyName()
     {
     	return 'title';
