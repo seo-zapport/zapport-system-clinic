@@ -25,13 +25,13 @@
 				<div class="card">
 					<div class="card-body">
 						<div class="header-title">
-							<p><strong>Tags</strong></p>
+							<p><strong>Categories</strong></p>
 							<hr>
-							<a href="#" class="btn btn-info text-white btn-block mb-2" href="#" data-toggle="modal" data-target="#tagModal">Add Tag</a>
+							<a href="#" class="btn btn-info text-white btn-block mb-2" href="#" data-toggle="modal" data-target="#tagModal">Add Category</a>
 						</div>
 						<div>
-							<select name="tag_id" id="tag_id" class="form-control" required oninvalid="this.setCustomValidity('Please Select Tag')" oninput="setCustomValidity('')">
-								<option value="" selected="true" disabled="disabled"> Select Tag </option>
+							<select name="tag_id" id="tag_id" class="form-control" required oninvalid="this.setCustomValidity('Please Select Category')" oninput="setCustomValidity('')">
+								<option value="" selected="true" disabled="disabled"> Select Category </option>
 								@forelse ($tags as $tag)
 									<option value="{{ $tag->id }}">{{ $tag->tag_name }}</option>
 								@empty
@@ -176,7 +176,7 @@
 	<div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLongTitle">Add New Tag</h5>
+				<h5 class="modal-title" id="exampleModalLongTitle">Add New Category</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -185,17 +185,17 @@
 				<div class="card">
 					<div class="card-body">
 						<div class="header-title">
-							<p><strong>Tags</strong></p>
+							<p><strong>Categories</strong></p>
 							<hr>
 						</div>
 						<div>
 							<form id="tagForm" method="post" action="{{ route('add.tag') }}">
 								@csrf
-								<input type="text" name="tag" class="form-control" placeholder="Add New Tags">
+								<input type="text" name="tag" class="form-control" placeholder="Add New Category">
 								<small id="errorlogTag" class="text-muted mt-2"></small>
 							<hr>
 							<div class="form-group text-center">
-								<button class="btn btn-info text-white btn-block" type="submit">Add Tag</button>
+								<button class="btn btn-info text-white btn-block" type="submit">Add Category</button>
 							</div>	
 							</form>
 						</div>						
