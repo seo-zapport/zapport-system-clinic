@@ -272,7 +272,6 @@ jQuery(document).ready(function($){
    });
 
    $("#addMds").on('click', '#medBtn', function(event) {
-     event.preventDefault();
      var gen = $('select[name="generic_id"]').val();
      var brn = $('select[name="brand_id"]').val();
      var dte = $('input[name="expiration_date"]').val();
