@@ -43,7 +43,7 @@
 						</tr>
 					@empty
 						<tr>
-							<td colspan="2" class="text-center">
+							<td colspan="3" class="text-center">
 								No Post Yet!
 								<a href="{{ route('post.create') }}">Create New Post here!</a>
 							</td>
