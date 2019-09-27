@@ -271,6 +271,18 @@ jQuery(document).ready(function($){
 
    });
 
+   $("#addMds").on('click', '#medBtn', function(event) {
+     event.preventDefault();
+     var gen = $('select[name="generic_id"]').val();
+     var brn = $('select[name="brand_id"]').val();
+     var dte = $('input[name="expiration_date"]').val();
+     var qty = $('input[name="qty_input"]').val();
+     if (gen != null && brn != null && dte != qty) {
+      $("#medBtn").prop('disabled', true);
+      $("#addMds").submit();
+     }
+   });
+
   // $(function () {
   //     $("#media #img_cont").click(function (event) {
   //       $("#newMedia").modal("hide");
