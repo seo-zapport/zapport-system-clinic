@@ -40,7 +40,9 @@
 						<div class="card p-2 mx-1">
 							<img src="{{ ($post->medias != null) ? asset('storage/uploaded/media/'.$post->medias->file_name) : asset('storage/uploaded/media/No_image.png') }}" class="card-img-top">
 							<div class="card-body">
-								<h5 class="card-title">{{ $post->title }}</h5>
+								<a href="{{ route('frnt.show.post', ['post' => $post->slug]) }}">
+									<h5 class="card-title">{{ $post->title }}</h5>
+								</a>
 							</div>
 						</div>
 					</div>

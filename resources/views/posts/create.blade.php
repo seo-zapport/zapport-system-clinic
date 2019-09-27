@@ -17,7 +17,7 @@
 				</div>
 				<div class="form-group posts-description">
 					<label for="description"><strong>Post description</strong></label>
-					<textarea name="description" id="description" rows="20" class="form-control" placeholder="Enter Your Content Here!" required>@yield('postEditDes')</textarea>
+					<textarea name="description" id="description" rows="20" class="form-control" placeholder="Enter Your Content Here!">@yield('postEditDes')</textarea>
 				</div>
 			</div>
 			<div class="col-12 offset-md-1 col-md-2">

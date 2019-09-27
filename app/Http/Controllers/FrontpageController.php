@@ -49,9 +49,9 @@ class FrontpageController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(Post $post)
     {
-        //
+        return view('front-page-post', compact('post'));
     }
 
     /**
