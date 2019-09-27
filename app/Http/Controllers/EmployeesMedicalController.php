@@ -54,7 +54,7 @@ class EmployeesmedicalController extends Controller
             $this->validate($request, $request->rules(), $request->messages());
 
             // $arr = array_values($request->generic_id);
-            if ($request->generic_id != null && $request->brand_id && $request->quantity) {
+            if ($request->generic_id != null && $request->brand_id != null && $request->quantity != null) {
                 $arr1 = array_map( 'array_values', $request->generic_id);
                 $generic_id = array_values($arr1);
 
@@ -319,7 +319,7 @@ class EmployeesmedicalController extends Controller
                     ]
                 );
 
-            if ($request->generic_id != null && $request->brand_id && $request->quantity) {
+            if ($request->generic_id != null && $request->brand_id != null && $request->quantity != null) {
                 // $arr = array_values($request->generic_id);
                 $arr1 = array_map( 'array_values', $request->generic_id);
                 $generic_id = array_values($arr1);
