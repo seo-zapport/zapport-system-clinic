@@ -13,7 +13,7 @@
 
 
 Route::get('/', 'FrontpageController@index');
-Route::get('front-page/{post}', 'FrontpageController@show')->name('frnt.show.post');
+Route::get('show-post/{post}', 'FrontpageController@show')->name('frnt.show.post');
 
 
 Auth::routes();
