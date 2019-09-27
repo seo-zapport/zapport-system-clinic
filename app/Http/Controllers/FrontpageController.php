@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Cache;
-use App\User;
+use App\Post;
 use App\Role;
+use App\User;
+use Cache;
 use Illuminate\Http\Request;
 
 class FrontpageController extends Controller
@@ -17,7 +18,8 @@ class FrontpageController extends Controller
     public function index()
     {
         $users = User::get();
-        return view('front-page', compact('users'));
+        $posts = Post::get();
+        return view('front-page', compact('users', 'posts'));
     }
 
     /**
@@ -47,9 +49,9 @@ class FrontpageController extends Controller
      * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show(Post $post)
     {
-        //
+        return view('front-page-post', compact('post'));
     }
 
     /**

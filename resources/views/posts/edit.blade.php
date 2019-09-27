@@ -30,3 +30,24 @@
 	</div>
 </div>
 @endsection
+@section('ftEdit')
+<div class="card">
+	<div class="card-body">
+		<div class="header-title">
+			<p><strong>Featured Image</strong></p>
+			<hr>
+			<a href="#" class="btn btn-info text-white btn-block mb-2" href="#" data-toggle="modal" data-target="#featImgModal">Add Featured Image</a>
+		</div>
+		<div>
+			<span id="ftID"></span>
+			<figure id="ftimg">
+				<img id="edit_id" src="{{ ($post->medias != null) ? asset('storage/uploaded/media/'.$post->medias->file_name) : asset('storage/uploaded/media/No_image.png') }}" class="img-fluid d-inline-flex">
+			</figure>
+{{-- 			<figure id="stored_ftimg">
+				<img id="edit_id" src="{{ asset('storage/uploaded/media/'.$post->medias->file_name) }}" class="img-fluid d-inline-flex">
+			</figure> --}}
+			<span id="rmvImg" class="btn btn-secondary btn-sm d-none">x</span>
+		</div>						
+	</div>
+</div>
+@endsection

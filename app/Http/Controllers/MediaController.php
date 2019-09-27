@@ -64,6 +64,8 @@ class MediaController extends Controller
                         auth()->user()->addMedia(
                             new Media($atts)
                         );
+                        $lastId = Media::where('file_name', $fileName)->first();
+                        $atts['id'] = $lastId->id;
                         return response()->json($atts);
                     }else{
                         return response()->json(['errors2' => 'Image already exists!', 'code' => 422], 422);
@@ -126,6 +128,9 @@ class MediaController extends Controller
     public function destroy(Media $media)
     {
         $this->authorize('delete', $media);
+        if (count($media->posts) > 0) {
+            return back()->with('delete_error', 'You cannot delete an image associated with post');
+        }
         Storage::delete('public/uploaded/media/'.$media->file_name);
         $media->delete();
         return back();

@@ -86,7 +86,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<form method="post" action="{{ route('medicine.add') }}">
+				<form id="addMds" method="post" action="{{ route('medicine.add') }}">
 					@csrf
 
 					<div class="form-group">
@@ -116,7 +116,7 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-						<button type="submit" class="btn btn-primary">Save changes</button>
+						<button id="medBtn" type="submit" class="btn btn-primary">Save changes</button>
 					</div>
 				</form>
 			</div>

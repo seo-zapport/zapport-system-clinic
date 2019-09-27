@@ -35,38 +35,18 @@
 	<section id="post">
 		<div class="container">
 			<div class="slick-posts">
-				<div>
-					<div class="card p-2 mx-1">
-						<img src="https://wallpapercave.com/wp/FxJJnG7.jpg" class="card-img-top">
-						<div class="card-body">
-							<h5 class="card-title">Sample Title</h5>
+				@foreach ($posts as $post)
+					<div>
+						<div class="card p-2 mx-1">
+							<img src="{{ ($post->medias != null) ? asset('storage/uploaded/media/'.$post->medias->file_name) : asset('storage/uploaded/media/No_image.png') }}" class="card-img-top">
+							<div class="card-body">
+								<a href="{{ route('frnt.show.post', ['post' => $post->slug]) }}">
+									<h5 class="card-title">{{ $post->title }}</h5>
+								</a>
+							</div>
 						</div>
 					</div>
-				</div>
-				<div>
-					<div class="card p-2 mx-1">
-						<img src="https://wallpapercave.com/wp/FxJJnG7.jpg" class="card-img-top">
-						<div class="card-body">
-							<h5 class="card-title">Sample Title</h5>
-						</div>
-					</div>
-				</div>
-				<div>
-					<div class="card p-2 mx-1">
-						<img src="https://wallpapercave.com/wp/FxJJnG7.jpg" class="card-img-top">
-						<div class="card-body">
-							<h5 class="card-title">Sample Title</h5>
-						</div>
-					</div>
-				</div>
-				<div>
-					<div class="card p-2 mx-1">
-						<img src="https://wallpapercave.com/wp/FxJJnG7.jpg" class="card-img-top">
-						<div class="card-body">
-							<h5 class="card-title">Sample Title</h5>
-						</div>
-					</div>
-				</div>
+				@endforeach
 			</div>
 		</div>
 	</section>
