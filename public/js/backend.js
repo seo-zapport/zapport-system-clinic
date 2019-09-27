@@ -271,13 +271,24 @@ jQuery(document).ready(function($){
 
    });
 
-  $(function () {
-      $("#media #img_cont").click(function (event) {
-        $("#newMedia").modal("hide");
-          var sr = $('img', this).attr('src');
-        tinymce.activeEditor.insertContent('<img class="img-fluid" src="' + sr + '"/>');
-      });
-  });
+   $("#addMds").on('click', '#medBtn', function(event) {
+     var gen = $('select[name="generic_id"]').val();
+     var brn = $('select[name="brand_id"]').val();
+     var dte = $('input[name="expiration_date"]').val();
+     var qty = $('input[name="qty_input"]').val();
+     if (gen != null && brn != null && dte != qty) {
+      $("#medBtn").prop('disabled', true);
+      $("#addMds").submit();
+     }
+   });
+
+  // $(function () {
+  //     $("#media #img_cont").click(function (event) {
+  //       $("#newMedia").modal("hide");
+  //         var sr = $('img', this).attr('src');
+  //       tinymce.activeEditor.insertContent('<img class="img-fluid" src="' + sr + '"/>');
+  //     });
+  // });
 
 // $("#media #img_cont").on('click', function(){
 //   var hrf = $(this).attr('data-id');
@@ -298,4 +309,20 @@ jQuery(document).ready(function($){
 //   });
 
 // });
+
+// $("#featImgModal").on('click', '#ftdimg', function(event) {
+//   event.preventDefault();
+//   var i = $(this).attr('data-target');
+//   console.log(i.replace('#modal-', ''));
+//   $.ajax({
+//     type: 'GET',
+//     url: 'create/'+i,
+//     dataType : "json",
+//     success: function(response)
+//     {
+//       console.log(response);
+//     }
+//   });
+// });
+
 });

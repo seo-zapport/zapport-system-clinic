@@ -128,6 +128,9 @@ class MediaController extends Controller
     public function destroy(Media $media)
     {
         $this->authorize('delete', $media);
+        if (count($media->posts) > 0) {
+            return back()->with('delete_error', 'You cannot delete an image associated with post');
+        }
         Storage::delete('public/uploaded/media/'.$media->file_name);
         $media->delete();
         return back();

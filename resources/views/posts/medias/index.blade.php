@@ -34,7 +34,12 @@
 		</div>
 	</div>
 </div>
-
+@include('layouts.errors')
+@if (session('delete_error'))
+	<div class="alert alert-danger">
+		{{ session('delete_error') }}
+	</div>
+@endif
 @forelse ($medias as $m)
 	<!-- Large modal -->
 	<div id="modal{{ str_replace($arr, $arr2, $m->file_name) }}" class="modal fade media-model zp-core-ui" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">

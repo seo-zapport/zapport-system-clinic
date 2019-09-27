@@ -37,8 +37,8 @@
 								{{ $post->created_at->format('M d, Y - h:i a') }}
 							</td>
 							<td class="w-15 px-0">
-								<a href="{{ route('post.show', ['post' => $post->title]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a> <small class="text-muted">|</small>
-								<a href="{{ route('post.edit', ['post' => $post->title]) }}" class="btn btn-link text-secondary"><i class="far fa-edit"></i> Edit</a>
+								<a href="{{ route('post.show', ['post' => $post->slug]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a> <small class="text-muted">|</small>
+								<a href="{{ route('post.edit', ['post' => $post->slug]) }}" class="btn btn-link text-secondary"><i class="far fa-edit"></i> Edit</a>
 							</td>
 						</tr>
 					@empty
