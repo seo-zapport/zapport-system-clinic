@@ -57,8 +57,8 @@
                 <li class="nav-item">
                     <a href="#posts" data-toggle="collapse" aria-expanded="{{ $ariaexpand }}" class="nav-link dropdown-toggle {{$collap}}"><i class="fas fa-book"></i> <span class="collapse-label">Post</span></a>
                     <ul class="zp-dropdown nav collapse {{ $showactive }}" id="posts">
+                        <li class="nav-item"><a href="{{ route('post.create') }}" class="nav-link @yield('new_post')"><i class="fas fa-pencil-alt"></i> <span class="collapse-label">New Post</span></a></li>
                         <li class="nav-item"><a href="{{ route('post.index') }}" class="nav-link @yield('posts')"><i class="fas fa-book"></i> <span class="collapse-label">All Posts</span></a></li>
-                        <li class="nav-item"><a href="{{ route('post.create') }}" class="nav-link @yield('new_post')"><i class="fas fa-pencil-alt"></i> <span class="collapse-label">New Post</span></a></li>                
                         <li class="nav-item"><a href="{{ route('media.index') }}" class="nav-link @yield('medias')"><i class="fas fa-photo-video"></i> <span class="collapse-label">Media</span></a></li>
                     </ul>
                 </li>
@@ -82,9 +82,9 @@
             <li class="nav-item">
                 <a href="#employees" data-toggle="collapse" aria-expanded="{{ $ariaexpand }}" class="nav-link dropdown-toggle {{$collap}}"><i class="fas fa-users"></i> <span class="collapse-label">Employees</span></a>
                 <ul class="zp-dropdown nav collapse {{ $showactive }}" id="employees">
+                    <li class="nav-item"><a href="{{ route('hr.employees') }}" class="nav-link @yield('employees')"><i class="fas fa-users"></i> <span class="collapse-label">All Employees</span></a></li>
                     <li class="nav-item"><a href="{{ route('hr.dep.department') }}" class="nav-link @yield('reg_dep')"><i class="fas fa-building"></i> <span class="collapse-label">Departments</span></a></li>
                     <li class="nav-item"><a href="{{ route('hr.pos.position') }}" class="nav-link @yield('reg_pos')"><i class="fas fa-tasks"></i> <span class="collapse-label">Positions</span></a></li>
-                    <li class="nav-item"><a href="{{ route('hr.employees') }}" class="nav-link @yield('employees')"><i class="fas fa-users"></i> <span class="collapse-label">All Employees</span></a></li>
                     <li class="nav-item"><a href="{{ route('hr.emp.emp_form') }}" class="nav-link @yield('reg_emp')"><i class="fas fa-user-plus"></i> <span class="collapse-label">Add Employee</span></a></li>                    
                 </ul>
 

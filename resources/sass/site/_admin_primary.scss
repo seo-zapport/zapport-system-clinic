@@ -55,9 +55,82 @@
 .zp-text-16{
 	font-size: 16px;
 }
+.zp-text-22{
+	font-size: 22px;
+}
 .zp-color-6b{
 	color:#00736b;
 }
+.zp-bg-clan{
+	background-color: rgba(54, 197, 187, 0.8);
+}
+
+/**notes*/
+.zp-notes {
+    border: 1px solid transparent;
+    border-radius: 3px;
+    background: #f5f5f5;
+    width: 100%;
+    /* padding: 8px; */
+    /* box-shadow: 0px 3px 5px inset #00000030; */
+    &.light-yellow{
+    	background: #ffc;
+    	border-color: #f5f5af;
+		.zp-notes-header {
+		    background-color: #f9f9be;
+		}
+    }
+    &.light-green{
+	    background: #cfc;
+	    border-color: #c0f1c0;
+		.zp-notes-header {
+		    background-color: #c0f1c0;
+		}
+    }
+    &.light-blue{
+	    background: #deeffd;
+	    border-color: #c3ddf3;
+		.zp-notes-header {
+		    background-color: #c3ddf3;
+		}
+    }
+    &.light-violet{
+	    background: #ccf;
+	    border-color: #babaf1;
+		.zp-notes-header {
+		    background-color: #babaf1;
+		}
+    }
+}
+.zp-notes-header {
+	background-color: #ececec;
+	.zp-notes-title {
+	    margin: 0;
+	    line-height: 1;
+	    font-size: 16px;
+	    color: #3d3d3d;
+	    font-weight: 600;
+	}
+}
+.zp-notes-header,.zp-notes-body {
+    padding: 16px;
+}
+.list-notes-followup {
+    margin-bottom: 6px;
+    border-bottom: 1px solid #b4d1e8;
+    padding-bottom: 0.75em;
+    padding-top: 0.5rem;
+	&:last-child {
+		border-bottom: none;
+	}
+	&:first-child {
+		padding-top: 0;
+	}
+	p {
+	    margin-bottom: 4px;
+	}
+}
+
 
 /**dashboard*/
 .admin-dashboard{
@@ -154,6 +227,13 @@
 			color: #777;
 			line-height: 1.4;	
 	    }
+	    .zp-bg-clan{
+	    	position: absolute;
+	    	top:0;
+	    	right: 0;
+	    	left: 0;
+	    	width: 100%;
+	    }
 	}
 }
 .admin-register,
@@ -196,6 +276,17 @@
 		}
 	}
 }
+
+/**medical*/
+.med-name{
+    color: #00988d;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.5;
+    margin: 12px 0;
+    padding: 0;
+}
+
 
 /**media*/
 .media-frame {
@@ -302,46 +393,70 @@
 .media-frame-content[data-columns="10"]  .attachment-list {
     width: 10%;
 }
-.zp-core-ui .attachment-preview {
-    position: relative;
-    box-shadow: inset 0 0 15px rgba(0,0,0,.1), inset 0 0 0 1px rgba(0,0,0,.05);
-    background: #eee;
-    cursor: pointer;
+.zp-core-ui {
+	.attachment-preview {
+	    position: relative;
+	    box-shadow: inset 0 0 15px rgba(0,0,0,.1), inset 0 0 0 1px rgba(0,0,0,.05);
+	    background: #eee;
+	    cursor: pointer;
+	    &:before {content: "";display: block;padding-top: 100%;}
+	}
+	.attachment{
+		.thumbnail {
+		    overflow: hidden;
+		    position: absolute;
+		    top: 0;
+		    right: 0;
+		    bottom: 0;
+		    left: 0;
+		    opacity: 1;
+		    transition: opacity .1s;
+		    &:after {
+		    	content: '';
+		    	display: block;
+		    	position: absolute;
+		    	top: 0;left: 0;
+		    	right: 0;
+		    	bottom: 0;
+		    	box-shadow: inset 0 0 0 1px rgba(0,0,0,.1);
+		    	overflow: hidden;
+		    }
+			.centered {
+			    position: absolute;
+			    top: 0;
+			    left: 0;
+			    width: 100%;
+			    height: 100%;
+			    transform: translate(50%,50%);
+				img {
+				    left: 0;
+				    right: 0;
+				    transform: translate(-50%,-50%);
+				}
+			}
+			img {
+			    position: absolute;
+			}
+		}
+		.landscape {
+			img {
+			    max-height: 100%;
+			    max-width: fit-content;
+			}
+		}
+	} 
 }
-.zp-core-ui .attachment-preview:before {content: "";display: block;padding-top: 100%;}
-.zp-core-ui .attachment .thumbnail {
-    overflow: hidden;
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    opacity: 1;
-    transition: opacity .1s;
+.no-media-wrap{
+	display: -webkit-box !important;
+    display: flex !important;
+	-webkit-box-pack: center;
+	justify-content: center;
+	padding: 20% 0;
+	.no-media{
+	    color: #828282;		
+		font-size: 18px;
+	}
 }
-.zp-core-ui .attachment .landscape img {
-    max-height: 100%;
-    max-width: fit-content;
-}
-.zp-core-ui .attachment .thumbnail .centered {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    transform: translate(50%,50%);
-}
-.zp-core-ui .attachment .thumbnail img {
-    position: absolute;
-}
-.zp-core-ui .attachment .thumbnail .centered img {
-    left: 0;
-    right: 0;
-}
-.zp-core-ui .attachment .thumbnail .centered img {
-    transform: translate(-50%,-50%);
-}
-.zp-core-ui .attachment .thumbnail:after {content: '';display: block;position: absolute;top: 0;left: 0;right: 0;bottom: 0;box-shadow: inset 0 0 0 1px rgba(0,0,0,.1);overflow: hidden;}
 
 /**frame-modal*/
 .modal{

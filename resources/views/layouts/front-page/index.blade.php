@@ -66,7 +66,7 @@
 			}
 			.btn-custom-trans {
 			    background-color: transparent;
-			    border-color: #0acfd4;
+			    border-color: #fff;
 			    color: #fff;
 			    padding: 0.75rem 3.5rem;
 			    font-size: 1.125rem;
@@ -77,7 +77,7 @@
 
 			.btn-custom-trans a {
 			    text-transform: uppercase;
-			    color: #0acfd4;
+			    color: #fff;
 			    line-height: 1.5;
 			}
 

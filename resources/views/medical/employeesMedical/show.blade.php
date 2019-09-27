@@ -2,12 +2,16 @@
 @section('title', "| ".ucwords($employee->last_name) . '\'s information')
 @section('employeesMedical', 'active')
 @section('dash-title', ucwords($employee->last_name) . '\'s information')
+@section('heading-title')
+	<span class="fa-stack text-secondary"><i class="fas fa-list"></i><i class="fas fa-user fa-stack-1x fa-inverse text-secondary"></i></span> {{ ucwords($employee->last_name) . '\'s information' }}
+@endsection
 @section('dash-content')
 @section('back')
 <a href="{{ route('medical.employeeInfo', ['employee' => $employee->emp_id]) }}">
 	<i class="fas fa-arrow-left"></i>
 </a>
 @endsection
+<<<<<<< HEAD
 <div class="card">
 	<div class="card-body">
 		<div class="row">
@@ -92,8 +96,130 @@
 				<p>Remarks: {{ ($employeesmedical->remarks == 'followUp') ? 'Follow up' : 'Done' }}</p>
 			</div>
 		</div>
+=======
+<div class="card mb-5">
+	<div class="card-body">
+		<div class="row">
+			<div class="col-12 col-md-2">
+				@if (@$employee->profile_img != null)
+					<div class="employee_wrap mb-0">
+						<div class="panel employee-photo rounded">
+							<img src="{{ asset('storage/uploaded/'.@$employee->profile_img) }}" alt="{{ @$employee->profile_img }}" class="img-fluid rounded">
+						</div>
+					</div>
+				@endif
+			</div>
+			<div class="col-12 col-md-10">
+				<p class="med-name">{{ ucwords($employee->last_name . " " . $employee->first_name . " " . $employee->middle_name) }}</p>
+				<div class="row">
+					<div class="col-12 col-md-3">
+						<p class="mb-2"><span class="text-dark font-weight-bold">Department</span>: {{ strtoupper($employee->departments->department) }}</p>
+						<p class="mb-2"><span class="text-dark font-weight-bold">Position</span>: {{ ucwords($employee->positions->position) }}</p>
+					</div>
+					<div class="col-12 col-md-3">
+						<p class="mb-2"><span class="text-dark font-weight-bold">Gender</span>: {{ (@$employee->gender == 0) ? "Male" : "Female" }}</p>
+						<p class="mb-2"><span class="text-dark font-weight-bold">Age</span>: {{ @$employee->age }}</p>
+					</div>
+					<div class="col-12 col-md-3">
+						<p class="mb-2"><span class="text-dark font-weight-bold">Birthday</span>: {{ @$employee->birthday->format('M d, Y') }}</p>
+						<p class="mb-2"><span class="text-dark font-weight-bold">Birth Place</span>: {{ ucwords(@$employee->birth_place) }}</p>
+					</div>
+					<div class="col-12 col-md-3">
+						<p class="mb-2"><span class="text-dark font-weight-bold">Contact</span>: {{ "+63" . @$employee->contact }}</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<hr>
+		@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
+		@endif
+		<div id="diagnosis">
+			<div class="row my-3">
+				<div class="col-12 col-md-8">
+					<h2 class="text-secondary zp-text-22">{{ ucwords($employeesmedical->diagnosis) }}</h2>
+					<p class="mb-2"><small class="text-muted">Date: {{ $employeesmedical->created_at->format('M d, Y - h:i a') }}</small></p>
+					<p class="mb-1"><span class="text-dark font-weight-bold">Attendant</span>: {{ ucwords($employeesmedical->user->employee->first_name) }} {{ ucwords($employeesmedical->user->employee->middle_name) }} {{ ucwords($employeesmedical->user->employee->last_name) }}</p>
+					<p class="mb-1"><span class="text-dark font-weight-bold">Remarks</span>: {{ ($employeesmedical->remarks == 'followUp') ? 'Follow up' : 'Done' }}</p>
+				</div>
+				<div class="col-12 col-md-4 text-right">
+					@if ($employeesmedical->remarks == 'followUp')
+						<button class="btn btn-success text-white" data-toggle="modal" data-target="#exampleModalCenter">Add Notes</button>
+					@endif
+
+					<button class="btn btn-info text-white" data-toggle="modal" data-target="#exampleModalCenter2">Edit Remarks</button>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-12 col-md-4">
+					<div class="zp-notes light-yellow">
+						<div class="zp-notes-header">
+							<h4 class="zp-notes-title">Doctor's Note</h4>
+						</div>
+						<div class="zp-notes-body">
+							<p>{{ ucfirst($employeesmedical->note) }}</p>
+						</div>
+					</div>
+				</div>
+				@if (count($employeesmedical->medNote) > 0)
+					<div class="col-12 col-md-3">
+						<div class="zp-notes light-blue">
+							<div class="zp-notes-header">
+								<h5 class="zp-notes-title">Follow up checkup</h5>
+							</div>
+							<div class="zp-notes-body">
+								@foreach ($employeesmedical->medNote as $followups)
+									<div class="list-notes-followup">
+										<p>{{ ucfirst($followups->followup_note) }}</p>
+										<small class="text-muted">{{ $followups->created_at->format('M d, Y - h:i a') }}</small>
+									</div>
+								@endforeach
+							</div>
+						</div>
+					</div>
+				@endif
+				<div class="col-12 col-md-5">
+					<div class="zp-notes light-green">
+						<div class="zp-notes-header">
+							<h5 class="zp-notes-title">Medicines</h5>
+						</div>
+						<div class="zp-notes-body">
+							<div class="table-responsive">
+								<table class="table table-borderless table-sm">
+									<thead>
+										<tr>
+											<th>Generic Name</th>
+											<th>Brand Name</th>
+											<th class="text-center">Quantity</th>
+											<th>Given by</th>
+											<th>Date</th>
+										</tr>
+									</thead>
+									<tbody>
+										@foreach ($empMeds as $meds)
+											<tr>
+												<td><span class="text-dark">{{ ucwords($meds->generic->gname) }}</span></td>
+												<td><span class="text-dark">{{ ucwords($meds->medBrand->bname) }}</span></td>
+												<td class="text-center"><span class="text-dark">{{ $meds->pivot->quantity }}</span></td>
+												<td>
+													@foreach ($meds->users as $att)
+													<span class="text-dark">{{  ucwords($att->employee->first_name) }} {{ ucwords($att->employee->middle_name) }} {{ ucwords($att->employee->last_name) }}</span>
+													@endforeach
+												</td>
+												<td><span class="text-dark">{{ $meds->pivot->created_at->format('M d, Y - h:i a') }}</span></td>
+											</tr>
+										@endforeach
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>	
+>>>>>>> b529af01a154dacf4dcd40b40a12d831dc939808
 	</div>
 </div>
+
 
 @include('layouts.errors')
 <!-- Modal Add -->
