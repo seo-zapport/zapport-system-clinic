@@ -319,15 +319,17 @@ class EmployeesmedicalController extends Controller
                     ]
                 );
 
-            // $arr = array_values($request->generic_id);
-            $arr1 = array_map( 'array_values', $request->generic_id);
-            $generic_id = array_values($arr1);
+            if ($request->generic_id != null && $request->brand_id && $request->quantity) {
+                // $arr = array_values($request->generic_id);
+                $arr1 = array_map( 'array_values', $request->generic_id);
+                $generic_id = array_values($arr1);
 
-            $arr2 = array_map( 'array_values', $request->brand_id);
-            $brand_id = array_values($arr2);
+                $arr2 = array_map( 'array_values', $request->brand_id);
+                $brand_id = array_values($arr2);
 
-            $arr3 = array_map( 'array_values', $request->quantity);
-            $quantity = array_values($arr3);
+                $arr3 = array_map( 'array_values', $request->quantity);
+                $quantity = array_values($arr3);
+            }
 
             $data = Mednote::create($atts);
 
