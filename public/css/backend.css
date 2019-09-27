@@ -5,7 +5,7 @@
  *----------------------*/
 
 /*!
- * Font Awesome Free 5.9.0 by @fontawesome - https://fontawesome.com
+ * Font Awesome Free 5.10.2 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
  */
 
@@ -13,6 +13,7 @@
 .fas,
 .far,
 .fal,
+.fad,
 .fab {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
@@ -1431,6 +1432,10 @@ readers do not read off random characters that represent icons */
 
 .fa-copyright:before {
   content: "\F1F9";
+}
+
+.fa-cotton-bureau:before {
+  content: "\F89E";
 }
 
 .fa-couch:before {
@@ -5791,7 +5796,7 @@ readers do not read off random characters that represent icons */
 }
 
 /*!
- * Font Awesome Free 5.9.0 by @fontawesome - https://fontawesome.com
+ * Font Awesome Free 5.10.2 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
  */
 
@@ -5800,8 +5805,8 @@ readers do not read off random characters that represent icons */
   font-style: normal;
   font-weight: 900;
   font-display: auto;
-  src: url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.eot?ef3df98419d143d9617fe163bf4edc0b);
-  src: url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.eot?ef3df98419d143d9617fe163bf4edc0b) format("embedded-opentype"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.woff2?b5cf8ae26748570d8fb95a47f46b69e1) format("woff2"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.woff?4bced7c4c0d61d4f988629bb8ae80b8b) format("woff"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.ttf?acf50f59802f20d8b45220eaae532a1c) format("truetype"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.svg?b557f56e367e59344ca95f9d1fb44352) format("svg");
+  src: url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.eot?42e1fbd2cf655a0b44a2dfae9ca2f8c1);
+  src: url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.eot?42e1fbd2cf655a0b44a2dfae9ca2f8c1) format("embedded-opentype"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.woff2?d6d8d5da9214dc7d46b297672a602d55) format("woff2"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.woff?3ded831d708bf90b2da86756551b5c1c) format("woff"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.ttf?896e20e26ad07dc63c9526ed814117e9) format("truetype"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.svg?6ed5e3bc9018d2a03e2f1fadbf8a0a4a) format("svg");
 }
 
 .fa,
@@ -5811,7 +5816,7 @@ readers do not read off random characters that represent icons */
 }
 
 /*!
- * Font Awesome Free 5.9.0 by @fontawesome - https://fontawesome.com
+ * Font Awesome Free 5.10.2 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
  */
 
@@ -5820,8 +5825,8 @@ readers do not read off random characters that represent icons */
   font-style: normal;
   font-weight: normal;
   font-display: auto;
-  src: url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-brands-400.eot?03783c5172ee1ad128c576bf88fac168);
-  src: url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-brands-400.eot?03783c5172ee1ad128c576bf88fac168) format("embedded-opentype"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-brands-400.woff2?7559b3774a0625e8ca6c0160f8f6cfd8) format("woff2"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-brands-400.woff?fe9d62e0d16a333a20e63c3e7595f82e) format("woff"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-brands-400.ttf?ed2b8bf117160466ba6220a8f1da54a4) format("truetype"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-brands-400.svg?073c2f3ce60eaf69cc2767ef3d989078) format("svg");
+  src: url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-brands-400.eot?14c590d124662eb50efa4c00f027b79c);
+  src: url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-brands-400.eot?14c590d124662eb50efa4c00f027b79c) format("embedded-opentype"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-brands-400.woff2?3e1b2a654a784ceb385157140b4ccd71) format("woff2"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-brands-400.woff?df02c782834b113d605d8329368737b4) format("woff"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-brands-400.ttf?5e8aa9ea0ebcd2218178f554cdd8e6b0) format("truetype"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-brands-400.svg?bfa9c38bd6081dafe7278dedc4aad1d9) format("svg");
 }
 
 .fab {
@@ -5829,7 +5834,7 @@ readers do not read off random characters that represent icons */
 }
 
 /*!
- * Font Awesome Free 5.9.0 by @fontawesome - https://fontawesome.com
+ * Font Awesome Free 5.10.2 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
  */
 
@@ -5838,8 +5843,8 @@ readers do not read off random characters that represent icons */
   font-style: normal;
   font-weight: 400;
   font-display: auto;
-  src: url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-regular-400.eot?fc9c63c8224fb341fc933641cbdd12ef);
-  src: url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-regular-400.eot?fc9c63c8224fb341fc933641cbdd12ef) format("embedded-opentype"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-regular-400.woff2?e07d9e40b26048d9abe2ef966cd6e263) format("woff2"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-regular-400.woff?e5770f9863963fb576942e25214a226d) format("woff"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-regular-400.ttf?59215032a4397507b80e5625dc323de3) format("truetype"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-regular-400.svg?8fdea4e89ac405d9f8db327adb331d8d) format("svg");
+  src: url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-regular-400.eot?aa66d0e0e38c75666e98db33abae955e);
+  src: url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-regular-400.eot?aa66d0e0e38c75666e98db33abae955e) format("embedded-opentype"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-regular-400.woff2?ac21cac3f22cc9642f5af32e0c750797) format("woff2"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-regular-400.woff?5623624dd1b017c66c29d1ac69cdcfa3) format("woff"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-regular-400.ttf?285a9d2a28886ad64c4e45cbd733cf7c) format("truetype"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-regular-400.svg?95f13e0be408d117bd3d9b366084a3ef) format("svg");
 }
 
 .far {
@@ -6332,8 +6337,99 @@ figure {
   font-size: 16px;
 }
 
+.zp-text-22 {
+  font-size: 22px;
+}
+
 .zp-color-6b {
   color: #00736b;
+}
+
+.zp-bg-clan {
+  background-color: rgba(54, 197, 187, 0.8);
+}
+
+/**notes*/
+
+.zp-notes {
+  border: 1px solid transparent;
+  border-radius: 3px;
+  background: #f5f5f5;
+  width: 100%;
+  /* padding: 8px; */
+  /* box-shadow: 0px 3px 5px inset #00000030; */
+}
+
+.zp-notes.light-yellow {
+  background: #ffc;
+  border-color: #f5f5af;
+}
+
+.zp-notes.light-yellow .zp-notes-header {
+  background-color: #f9f9be;
+}
+
+.zp-notes.light-green {
+  background: #cfc;
+  border-color: #c0f1c0;
+}
+
+.zp-notes.light-green .zp-notes-header {
+  background-color: #c0f1c0;
+}
+
+.zp-notes.light-blue {
+  background: #deeffd;
+  border-color: #c3ddf3;
+}
+
+.zp-notes.light-blue .zp-notes-header {
+  background-color: #c3ddf3;
+}
+
+.zp-notes.light-violet {
+  background: #ccf;
+  border-color: #babaf1;
+}
+
+.zp-notes.light-violet .zp-notes-header {
+  background-color: #babaf1;
+}
+
+.zp-notes-header {
+  background-color: #ececec;
+}
+
+.zp-notes-header .zp-notes-title {
+  margin: 0;
+  line-height: 1;
+  font-size: 16px;
+  color: #3d3d3d;
+  font-weight: 600;
+}
+
+.zp-notes-header,
+.zp-notes-body {
+  padding: 16px;
+}
+
+.list-notes-followup {
+  margin-bottom: 6px;
+  border-bottom: 1px solid #b4d1e8;
+  padding-bottom: 0.75em;
+  padding-top: 0.5rem;
+}
+
+.list-notes-followup:last-child {
+  border-bottom: none;
+}
+
+.list-notes-followup:first-child {
+  padding-top: 0;
+}
+
+.list-notes-followup p {
+  margin-bottom: 4px;
 }
 
 /**dashboard*/
@@ -6436,6 +6532,14 @@ figure {
   line-height: 1.4;
 }
 
+.signin-container .signin-form .zp-bg-clan {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  width: 100%;
+}
+
 .admin-register .sigin-info,
 .admin-reset .sigin-info {
   background: rgba(54, 197, 187, 0.8);
@@ -6483,6 +6587,17 @@ figure {
   display: inline-block;
   padding: 0 20px;
   position: relative;
+}
+
+/**medical*/
+
+.med-name {
+  color: #00988d;
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.5;
+  margin: 12px 0;
+  padding: 0;
 }
 
 /**media*/
@@ -6622,11 +6737,16 @@ figure {
   transition: opacity 0.1s;
 }
 
-.zp-core-ui .attachment .landscape img {
-  max-height: 100%;
-  max-width: -webkit-fit-content;
-  max-width: -moz-fit-content;
-  max-width: fit-content;
+.zp-core-ui .attachment .thumbnail:after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
 
 .zp-core-ui .attachment .thumbnail .centered {
@@ -6638,29 +6758,32 @@ figure {
   transform: translate(50%, 50%);
 }
 
+.zp-core-ui .attachment .thumbnail .centered img {
+  left: 0;
+  right: 0;
+  transform: translate(-50%, -50%);
+}
+
 .zp-core-ui .attachment .thumbnail img {
   position: absolute;
 }
 
-.zp-core-ui .attachment .thumbnail .centered img {
-  left: 0;
-  right: 0;
+.zp-core-ui .attachment .landscape img {
+  max-height: 100%;
+  max-width: -webkit-fit-content;
+  max-width: -moz-fit-content;
+  max-width: fit-content;
 }
 
-.zp-core-ui .attachment .thumbnail .centered img {
-  transform: translate(-50%, -50%);
+.no-media-wrap {
+  display: flex !important;
+  justify-content: center;
+  padding: 20% 0;
 }
 
-.zp-core-ui .attachment .thumbnail:after {
-  content: "";
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
+.no-media-wrap .no-media {
+  color: #828282;
+  font-size: 18px;
 }
 
 /**frame-modal*/
@@ -7091,7 +7214,7 @@ figure {
 
 @media (min-width: 768px) {
   .signin-container {
-    width: 730px;
+    width: 430px;
     display: table;
     table-layout: fixed;
     margin: 20px 0;

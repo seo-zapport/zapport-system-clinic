@@ -7,7 +7,7 @@
 @endsection
 @section('dash-content')
 
-<div class="card">
+<div class="card mb-5">
 	<div class="card-body">
 		<div class="form-group">
 			<a class="btn btn-info text-white" href="#" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus"></i> Add Position</a>
@@ -34,9 +34,9 @@
 									{{ $employees->where('department_id', $department->id)->where('position_id', $position->id)->count() }}
 								</td>
 								<td class="w-15 px-0">
-									<a href="{{ route('hr.pos.show', ['position' => $position->position, 'department' => $department->department]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i>View</a>
+									<a href="{{ route('hr.pos.show', ['position' => $position->position, 'department' => $department->department]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a>
 									<small class="text-muted">|</small>
-						        	<form method="post" action="{{ route('hr.pos.deletePos', ['position' => $position->position]) }}">
+						        	<form method="post" action="{{ route('hr.pos.deletePos', ['position' => $position->position]) }}" class="d-inline-block">
 						        		@csrf
 						        		@method('DELETE')
 											<button class="btn btn-link text-danger" onclick="return confirm('Are you sure you want to delete {{ ucfirst($position->position) }} Position?')" data-id="{{ $position->postion }}">

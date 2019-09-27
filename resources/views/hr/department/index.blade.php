@@ -6,7 +6,7 @@
 	<i class="fas fa-building"></i> Department
 @endsection
 @section('dash-content')
-<div class="card">
+<div class="card mb-5">
 	<div class="card-body">
 		<div class="form-group">
 			<a class="btn btn-info text-white" href="#" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus"></i> Add Department</a>
@@ -23,17 +23,15 @@
 						<tr>
 							<td>{{ $dep->department }}</td>
 							<td>{{ $dep->employee->count() }}</td>
-							<td><form method="post" action="{{ route('hr.dep.deleteDep', ['department' => $dep->department]) }}">
-				        		@csrf
-				        		@method('DELETE')
-				        		<div class="form-row align-items-center">
-				            		<div class="col-auto my-1 form-inline">						
-										<button class="btn btn-link text-danger"  onclick="return confirm('Are you sure you want to delete {{ ucfirst($dep->department) }} Department?')" data-id="{{ $dep->department }}">
-											<i class="fas fa-trash-alt"></i> Delete
-										</button>
-									</div>
-								</div>
-				        	</form></td>
+							<td class="w-15 px-0">
+								<form method="post" action="{{ route('hr.dep.deleteDep', ['department' => $dep->department]) }}">
+					        		@csrf
+					        		@method('DELETE')
+									<button class="btn btn-link text-danger"  onclick="return confirm('Are you sure you want to delete {{ ucfirst($dep->department) }} Department?')" data-id="{{ $dep->department }}">
+										<i class="fas fa-trash-alt"></i> Delete
+									</button>
+					        	</form>
+					        </td>
 						</tr>
 						@empty
 							<tr>

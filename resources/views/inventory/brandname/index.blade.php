@@ -13,7 +13,7 @@
 	</div>
 @endif
 
-<div class="card">
+<div class="card mb-5">
 	<div class="card-body">
 		<div class="table-responsive">
 			<table class="table table-hover">
@@ -38,7 +38,7 @@
 							<td class="w-15 px-0">
 								<a href="{{ route('brandname.show', ['medbrand' => $brand->bname]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i>View</a>
 								<small class="text-muted">|</small>
-					        	<form method="post" action="{{ route('brandname.delete', ['medbrand' => $brand->bname]) }}">
+					        	<form method="post" action="{{ route('brandname.delete', ['medbrand' => $brand->bname]) }}" class="d-inline">
 					        		@csrf
 					        		@method('DELETE')
 									<button class="btn btn-link text-danger"   onclick="return confirm('Are you sure you want to delete {{ ucfirst($brand->bname) }} Brand?')" data-id="{{ $brand->bname }}">

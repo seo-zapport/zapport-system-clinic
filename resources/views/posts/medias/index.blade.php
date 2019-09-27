@@ -29,7 +29,7 @@
 					@endforeach
 				</ul>
 			@else
-				<p class="no-media">No media files found.</p>
+				<div class="no-media-wrap"><p class="no-media">No media files found.</p></div>
 			@endif
 		</div>
 	</div>
@@ -113,7 +113,7 @@
 	</div>
 	@empty
 		<div class="col-12 text-center">
-			EMPTY
+			<div class="no-media-wrap"><p class="no-media">No media files found.</p></div>
 		</div>
 @endforelse
 @endsection

@@ -30,7 +30,7 @@
 	@endif
 </div>
 
-<div class="card">
+<div class="card mb-5">
 	<div class="card-body">
 		<div class="table-responsive">
 			<table class="table table-hover">
@@ -47,9 +47,9 @@
 							<td>{{ ucfirst($med->generic->gname) }}</td>
 							<td>{{ ucwords($med->medBrand->bname) }}</td>
 							<td>{{ $med->where('generic_id', $med->generic_id)->where('brand_id', $med->brand_id)->where('availability', 0)->where('expiration_date', '>', NOW())->count() }}</td>
-							<td>
+							<td class="w-15 px-0">
 								{{-- {{ $med->qty_stock }} --}}
-								<a href="{{ route('medicine.log', ['medbrand' => $med->medBrand->bname, 'generic' => $med->generic->gname]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i>View</a>
+								<a href="{{ route('medicine.log', ['medbrand' => $med->medBrand->bname, 'generic' => $med->generic->gname]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i> View</a>
 							</td>
 						</tr>
 						@empty
