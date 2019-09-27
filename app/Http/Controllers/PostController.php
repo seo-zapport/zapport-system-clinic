@@ -61,10 +61,16 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
-        // dd($request->all());
         if (Gate::check('isAdmin') || Gate::check('isHr') || Gate::check('isDoctor') || Gate::allows('isNurse')) {
             $atts = $request->validated();
             $atts = $request->except('tag_id');
+            $srch = Post::where('title', $request->title)->get();
+            if (count($srch ) > 0) {
+                $count = count($srch)+1;
+                $atts['slug'] = $request->title.'-'.$count;
+            }else{
+                $atts['slug'] = $request->title;
+            }
             auth()->user()->published(
                 new Post($atts)
             );
@@ -74,7 +80,7 @@ class PostController extends Controller
             $tag = Tag::find($tagID);
             $tag->posts()->attach($lastID);
 
-            return redirect()->route('post.show', ['post' => $lastID->title]);
+            return redirect()->route('post.show', ['post' => $lastID->slug]);
         }else{
             return back();
         }
@@ -121,9 +127,11 @@ class PostController extends Controller
      */
     public function update(PostRequest $request, Post $post)
     {
+        // dd($request->all());
         $this->authorize('update', $post);
         $atts = $request->validated();
         $atts = $request->except(['tag_id', 'tag_old']);
+        // dd($atts);
         $post->update($atts);
         $post->tags()->updateExistingPivot($request->tag_old, array('tag_id' => $request->tag_id));
         return redirect()->route('post.show', ['post' => $post->title]);
@@ -140,5 +148,24 @@ class PostController extends Controller
         $this->authorize('delete', $post);
         $post->delete();
         return redirect()->route('post.index');
+    }
+
+    public function searchImg(Request $request, $ft_id)
+    {
+        if ($request->ajax()) {
+            $searchID = Media::find($ft_id);
+            $info = pathinfo($searchID->file_name);
+            $bytes = filesize('storage/uploaded/media/'.$searchID->file_name);
+            list($width, $height) = getimagesize('storage/uploaded/media/'.$searchID->file_name);
+            if ($bytes >= 1024){
+                $bytes = number_format($bytes / 1024, 2). 'KB';
+            }elseif($bytes >= 1048576){
+                $bytes = number_format($bytes / 1048576, 2) . ' MB';
+            }
+            $searchID['fileType'] = $info['extension'];
+            $searchID['filesize'] = $bytes;
+            $searchID['dimension'] = $width . ' x ' . $height;
+            return response()->json($searchID);
+        }
     }
 }

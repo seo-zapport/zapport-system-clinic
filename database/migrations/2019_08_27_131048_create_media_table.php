@@ -29,6 +29,7 @@ class CreateMediaTable extends Migration
             $table->unsignedBigInteger('media_id')->nullable();
             $table->string('title');
             $table->text('description');
+            $table->string('slug');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

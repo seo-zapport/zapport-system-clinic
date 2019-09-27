@@ -38,8 +38,7 @@
 				@foreach ($posts as $post)
 					<div>
 						<div class="card p-2 mx-1">
-							{!! $post->description !!}
-							{{-- <img src="{{ asset('storage/uploaded/media/'.$post->medias->file_name) }}" class="card-img-top"> --}}
+							<img src="{{ ($post->medias != null) ? asset('storage/uploaded/media/'.$post->medias->file_name) : asset('storage/uploaded/media/No_image.png') }}" class="card-img-top">
 							<div class="card-body">
 								<h5 class="card-title">{{ $post->title }}</h5>
 							</div>

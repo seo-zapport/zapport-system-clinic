@@ -28,12 +28,12 @@
 					</div>
 					<div class="form-group text-center">
 						<div class="d-inline-flex float-right">
-							<form action="{{ route('post.destroy', ['post' => $post->title]) }}" method="post">
+							<form action="{{ route('post.destroy', ['post' => $post->slug]) }}" method="post">
 								@method('DELETE')
 								@csrf
 								<button class="btn btn-danger mr-2" onclick="return confirm('Are you sure you want to delete this post?')">Delete</button>
 							</form>
-							<a href="{{ route('post.edit', ['post' => $post->title]) }}" class="btn btn-info text-white">Edit</a>
+							<a href="{{ route('post.edit', ['post' => $post->slug]) }}" class="btn btn-info text-white">Edit</a>
 						</div>
 					</div>
 				</div>

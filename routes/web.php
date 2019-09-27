@@ -43,6 +43,8 @@ Route::group(['prefix'	=>	'posts'], function(){
 
 	Route::get('', 'PostController@index')->name('post.index');
 	Route::get('create', 'PostController@create')->name('post.create');
+	Route::get('create/featured/{ft_id}', 'PostController@searchImg')->name('getFtdImg');
+	Route::get('edit/featured/{ft_id}', 'PostController@searchImg')->name('getFtdImgEdit');
 	Route::post('create', 'PostController@store')->name('post.store');
 	Route::get('{post}', 'PostController@show')->name('post.show');
 	Route::get('{post}/edit', 'PostController@edit')->name('post.edit');

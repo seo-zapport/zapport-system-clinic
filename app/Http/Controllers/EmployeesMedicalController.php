@@ -48,21 +48,23 @@ class EmployeesmedicalController extends Controller
      */
     public function store(EmployeesmedicalRequest $request)
     {
-        // dd($generic_id[0][0]);
+        // dd($request->all());
         if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
 
             $this->validate($request, $request->rules(), $request->messages());
 
             // $arr = array_values($request->generic_id);
-            $arr1 = array_map( 'array_values', $request->generic_id);
-            $generic_id = array_values($arr1);
+            if ($request->generic_id != null && $request->brand_id && $request->quantity) {
+                $arr1 = array_map( 'array_values', $request->generic_id);
+                $generic_id = array_values($arr1);
 
-            $arr2 = array_map( 'array_values', $request->brand_id);
-            $brand_id = array_values($arr2);
+                $arr2 = array_map( 'array_values', $request->brand_id);
+                $brand_id = array_values($arr2);
 
-            $arr3 = array_map( 'array_values', $request->quantity);
-            $quantity = array_values($arr3);
-
+                $arr3 = array_map( 'array_values', $request->quantity);
+                $quantity = array_values($arr3);
+            }
+            
             if (!empty($request->generic_id) && !empty($request->brand_id) && !empty($request->quantity)) {
 
             $counter = count($request->generic_id);
