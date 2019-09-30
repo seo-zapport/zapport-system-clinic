@@ -98,4 +98,24 @@ class TagController extends Controller
     {
         //
     }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store2(TagRequest $request)
+    {
+        if (Gate::check('isAdmin') || Gate::check('isHr') || Gate::check('isDoctor') || Gate::allows('isNurse')) {
+            if ($request->ajax()) {
+                $atts = $request->validated();
+                $lastid = Tag::create($atts);
+                $atts['id'] = $lastid->id;
+                return response()->json($atts);
+            }
+        }else{
+            return back();
+        }
+    }
 }
