@@ -84,6 +84,7 @@
 			</div>
 		</div>
 	</form>
+
 {{-- 	@if (strstr(url()->current(), 'create'))
 	<div class="col-12 offset-md-1 col-md-2">
 		<div class="card">
@@ -391,7 +392,7 @@
 		        	success: function(response){
 		        		$('#tagForm')[0].reset();
 		        		$("#tagModal").modal('hide');
-		        		$('select[name="tag_id"]').append('<option value="'+ response.id +'">'+ response.tag_name +'</option>');
+		        		$('select[name="tag_id[]"]').append('<option value="'+ response.id +'">'+ response.tag_name +'</option>');
 		        	},
 		        	error: function(response){
 		        		document.getElementById("errorlogTag").innerHTML = '';
@@ -410,43 +411,6 @@
 			  var ft_id = $(this).attr('data-target');
 			  var strs = '';
 			  selectMedia(ft_id, strs);
-			  // var loc3 = location.href;
-			  // var ft_id = $(this).attr('data-target');
-			  // if (loc3 === 'http://clinic/posts/create') {
-				 //  var url = 'create/featured/';
-			  // }else{
-				 //  var url = '/posts/edit/featured/';
-			  // }
-			  // console.log(ft_id.replace('#modal-', ''));
-			  // document.getElementById("filename").innerHTML = '';
-			  // document.getElementById("filetype").innerHTML = '';
-			  // document.getElementById("uploaded_date").innerHTML = '';
-			  // document.getElementById("filesize").innerHTML = '';
-			  // document.getElementById("dimensions").innerHTML = '';
-			  // document.getElementById("ftimg").innerHTML = '';
-			  // document.getElementById("ftID").innerHTML = '';
-			  // $.ajax({
-			  //   type: 'GET',
-			  //   url: url+ft_id.replace('#modal-', ''),
-			  //   dataType : "json",
-			  //   success: function(response)
-			  //   {
-			  //     console.log(response);
-			  //     $('#filename').append(' '+response["file_name"]);
-			  //     $('#filetype').append(' '+response["fileType"]);
-			  //     $('#uploaded_date').append(' '+response["created_at"]);
-			  //     $('#filesize').append(' '+response["filesize"]);
-			  //     $('#dimensions').append(' '+response["dimension"]);
-				 //  var path = ' asset('storage/uploaded/media/') ';
-				 //  $('#ftimg').append('<img alt="'+ response["file_name"] +'" class="img-fluid" src="' + path + "/" + response["file_name"] + '"/>');
-				 //  $('#ftID').append('<input name="media_id" type="hidden" value="'+ response["id"] +'">');
-				 //  $("#rmvImg").removeClass('d-none');
-			  //   },
-			  //   error:function(response)
-			  //   {
-			  //   	console.log(response);
-			  //   }
-			  // });
 			});
 
 			$("#rmvImg").click(function(event) {
@@ -547,6 +511,31 @@
 			    }
 			  });
 			}
+
+			$("#rmvTags").on('click', '#delTag', function(event) {
+				var rmvID = $(this).attr('data-target');
+				var pID = $(this).find('#postID').val();
+				// console.log(pID);
+		       $.ajaxSetup({
+		            headers: {
+		                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		            },
+		        });
+		       $.ajax({
+		       	type: 'POST',
+		       	url: '/posts/'+pID+'/tags/'+rmvID,
+		       	dataType: 'json',
+		       	data: {
+		       		'id': rmvID,
+		       		"_method": 'DELETE'
+		       	},
+		       	success:function(response){
+		       		// console.log(response)
+		       		$('#cont-'+response.id).remove();
+		       		$('select[name="tag_id[]"]').append('<option value="'+ response.id +'">'+ response.tag_name +'</option>');
+		       	}
+		       });
+			});
 
 		});
 	</script>

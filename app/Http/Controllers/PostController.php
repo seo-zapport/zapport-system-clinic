@@ -117,10 +117,15 @@ class PostController extends Controller
         if (Gate::check('isAdmin') || Gate::check('isHr') || Gate::check('isDoctor') || Gate::allows('isNurse')) {
             $employees = Media::where('file_name', '!=', NULL)->where('user_id', auth()->user()->id)->get();
             $tags = Tag::get();
+            $arr = array();
+            foreach ($post->tags as $tag) {
+                $arr[] = $tag->id;
+            }
             foreach ($post->tags as $postTags) {
                 $postTags;
             }
-            return view('posts.edit', compact('post', 'employees', 'tags', 'postTags'));
+            $uniqueTag =  Tag::whereNotIn('id', $arr)->get();
+            return view('posts.edit', compact('post', 'employees', 'tags', 'postTags', 'uniqueTag'));
         }else{
             return back();
         }
@@ -141,8 +146,21 @@ class PostController extends Controller
         $atts = $request->except(['tag_id', 'tag_old']);
         // dd($atts);
         $post->update($atts);
-        $post->tags()->updateExistingPivot($request->tag_old, array('tag_id' => $request->tag_id));
-        return redirect()->route('post.show', ['post' => $post->title]);
+
+        $tagID = $request->input('tag_id');
+        $tag = Tag::find($tagID);
+        if (!empty($tag)) {
+        $array_atts = array();
+            foreach ($tagID as $tagsID) {
+                $attsPivot['tag_id']  = $tagsID;
+                $array_atts[]         = $attsPivot;
+            }
+            foreach ($array_atts as $finalAtts) {
+                $post->tags()->attach($finalAtts);
+            }
+        }
+        // $post->tags()->updateExistingPivot($request->tag_old, array('tag_id' => $request->tag_id));
+        return redirect()->route('post.show', ['post' => $post->slug]);
     }
 
     /**

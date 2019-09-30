@@ -28,16 +28,6 @@
 											</div>
 										</div>
 									</div>
-<<<<<<< HEAD
-								</li>
-							@endforeach
-						</ul>
-					@else
-						<p class="no-media">No media files found.</p>
-					@endif
-				</div>
-			</div>
-=======
 								</div>
 							</div>
 						</li>
@@ -46,7 +36,6 @@
 			@else
 				<div class="no-media-wrap"><p class="no-media">No media files found.</p></div>
 			@endif
->>>>>>> b529af01a154dacf4dcd40b40a12d831dc939808
 		</div>
 	</div>
 </div>
