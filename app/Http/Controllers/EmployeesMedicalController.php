@@ -52,19 +52,7 @@ class EmployeesmedicalController extends Controller
         if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
 
             $this->validate($request, $request->rules(), $request->messages());
-            if ($request->generic_id && $request->brand_id && $request->quantity) {
-                // $arr = array_values($request->generic_id);
-                $arr1 = array_map( 'array_values', $request->generic_id);
-                $generic_id = array_values($arr1);
 
-<<<<<<< HEAD
-                $arr2 = array_map( 'array_values', $request->brand_id);
-                $brand_id = array_values($arr2);
-
-                $arr3 = array_map( 'array_values', $request->quantity);
-                $quantity = array_values($arr3);
-            }
-=======
             // $arr = array_values($request->generic_id);
             if ($request->generic_id != null && $request->brand_id != null && $request->quantity != null) {
                 $arr1 = array_map( 'array_values', $request->generic_id);
@@ -72,7 +60,6 @@ class EmployeesmedicalController extends Controller
 
                 $arr2 = array_map( 'array_values', $request->brand_id);
                 $brand_id = array_values($arr2);
->>>>>>> 14176ad216a14b666d8a5113587b1afcf3cf7c03
 
                 $arr3 = array_map( 'array_values', $request->quantity);
                 $quantity = array_values($arr3);
@@ -321,6 +308,7 @@ class EmployeesmedicalController extends Controller
         }
     }
 
+
     public function storeFollowup(Request $request, Employee $employee, Employeesmedical $employeesmedical)
     {
         if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
@@ -332,11 +320,7 @@ class EmployeesmedicalController extends Controller
                     ]
                 );
 
-<<<<<<< HEAD
-            if ( $request->generic_id && $request->brand_id && $request->quantity ) {
-=======
             if ($request->generic_id != null && $request->brand_id != null && $request->quantity != null) {
->>>>>>> 14176ad216a14b666d8a5113587b1afcf3cf7c03
                 // $arr = array_values($request->generic_id);
                 $arr1 = array_map( 'array_values', $request->generic_id);
                 $generic_id = array_values($arr1);

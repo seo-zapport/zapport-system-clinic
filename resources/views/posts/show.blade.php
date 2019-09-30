@@ -8,21 +8,18 @@
 
 	<div class="row post-wrap">
 		<div class="col-12 col-md-9">
-			<div class="card">
-				<div class="card-body">
-					<div class="form-group posts-title">
-						{{-- <span class="title mb-1 d-block"><strong>Title</strong></span> --}}
-						{{-- <p class="post-title">{{ $post->title }}</p> --}}
-						<h2 class="text-center">{{ $post->title }}</h2>
-					</div>
-					<div class="form-group posts-description">
-						{{-- <span class="description mb-1 d-block"><strong>Post description</strong></span> --}}
-						<div class="p-3">
-							{!! $post->description !!}
-						</div>
-					</div>	
-				</div>
+			<div class="form-group posts-title">
+				<span class="title mb-1 d-block"><strong>Title</strong></span>
+				<p class="post-title">{{ $post->title }}</p>
+				{{-- <h2 class="text-center">{{ $post->title }}</h2> --}}
 			</div>
+			
+			<span class="description mb-1 d-block"><strong>Post description</strong></span>
+			<div class="form-group posts-description card">
+				<div class="p-3 posts-description card-body">
+					{!! $post->description !!}
+				</div>
+			</div>	
 		</div>
 
 		<div class="col-12 offset-md-1 col-md-2">

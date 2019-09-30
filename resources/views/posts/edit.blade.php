@@ -15,7 +15,7 @@
 <div class="card">
 	<div class="card-body">
 		<div class="header-title">
-			<p><strong>Tags</strong></p>
+			<p><strong>Categories</strong></p>
 			<hr>
 		</div>
 		<div>
