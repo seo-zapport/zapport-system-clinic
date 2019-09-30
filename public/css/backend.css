@@ -5956,8 +5956,9 @@ figure {
 
 #zapAdminMenuBg,
 #zapAdminMenuWrap {
-  width: 240px;
   background-color: #00988D;
+  overflow: hidden;
+  width: 240px;
 }
 
 #zapAdminMenuBg {
@@ -6119,13 +6120,11 @@ figure {
   content: "";
   display: block;
   position: absolute;
-  width: 0;
-  height: 0;
-  border: 8px solid transparent;
-  border-right-color: #f1f1f1;
+  width: 100%;
+  height: 100%;
+  border-left: 4px solid #f1f1f1;
   right: 0;
-  top: 50%;
-  margin-top: -8px;
+  top: 0;
 }
 
 /**dropdown*/
@@ -6146,11 +6145,11 @@ figure {
 
 .folded #zapAdminMenuBg,
 .folded #zapAdminMenuWrap {
-  width: 50px;
+  width: 78px;
 }
 
 .folded #zapAdminMenuWrap .nav {
-  width: 50px;
+  width: 78px;
 }
 
 .folded #zapAdminMenuWrap .zap-user-info {
@@ -6159,6 +6158,7 @@ figure {
 
 .folded #zapAdminMenuWrap .zap-image {
   margin-right: 0;
+  margin-left: 12px;
   width: 38px;
 }
 
@@ -6172,7 +6172,7 @@ figure {
 
 .folded #zapContent,
 .folded #zapFooter {
-  margin-left: 50px;
+  margin-left: 78px;
 }
 
 /**

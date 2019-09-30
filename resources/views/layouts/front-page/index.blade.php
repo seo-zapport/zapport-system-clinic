@@ -147,6 +147,16 @@
 				font-weight: 500;
 				line-height: 1.4;
 			}
+			.zp-article-footer{
+				color: #6c757d;
+			}
+			.zp-categories a{
+				color: #6c757d;
+				transition: all ease-in-out 0.7s;
+			}
+			.zp-categories a:hover{
+				color: #404448;
+			}
 		</style>
 	</head>
 	<body id="page-top" class="zp-front-page" data-spy="scroll" data-target="#mainNav">

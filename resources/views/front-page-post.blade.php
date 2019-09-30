@@ -10,7 +10,7 @@
 				<div class="card-body">
 					{{-- thumbnail --}}
 					<figure class="zp-wrap-img">
-							<img src="{{ !empty(@$post->medias->file_name) ? asset('storage/uploaded/media/'.$post->medias->file_name) : asset('storage/uploaded/media/No_image.png') }}" class="mx-auto mb-5">
+							<img src="{{ !empty(@$post->medias->file_name) ? asset('storage/uploaded/media/'.$post->medias->file_name) : asset('storage/uploaded/media/No_image.png') }}">
 					</figure>
 
 					<div class="zp-article-title-wrap m-b-md text-secondary">
@@ -21,7 +21,19 @@
 					</span>
 					<div class="text-secondary zp-article-content">
 						{!! $post->description !!}
-					</div>					
+					</div>
+					<div class="zp-article-footer">
+						<span><i class="fas fa-tags"></i></span>
+						<span class="zp-categories">
+							<a href="@#test">test 1</a>,
+							<a href="@#test">test 1</a>,
+							<a href="@#test">test 1</a>,
+							<a href="@#test">test 1</a>,
+							<a href="@#test">test 1</a>,
+							<a href="@#test">test 1</a>,
+							<a href="@#test">test 1</a>
+						</span>
+					</div>				
 				</div>
 			</div>
 
