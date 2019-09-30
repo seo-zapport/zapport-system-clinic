@@ -30,7 +30,7 @@
 							<a href="#" class="btn btn-info text-white btn-block mb-2" href="#" data-toggle="modal" data-target="#tagModal">Add Category</a>
 						</div>
 						<div>
-							<select name="tag_id" id="tag_id" class="form-control" required oninvalid="this.setCustomValidity('Please Select Category')" oninput="setCustomValidity('')">
+							<select multiple name="tag_id[]" id="tag_id" class="form-control" required oninvalid="this.setCustomValidity('Please Select Category')" oninput="setCustomValidity('')">
 								<option value="" selected="true" disabled="disabled"> Select Category </option>
 								@forelse ($tags as $tag)
 									<option value="{{ $tag->id }}">{{ $tag->tag_name }}</option>

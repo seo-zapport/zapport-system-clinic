@@ -78,7 +78,15 @@ class PostController extends Controller
             $lastID = Post::where('user_id', auth()->user()->id)->get()->last();
             $tagID = $request->input('tag_id');
             $tag = Tag::find($tagID);
-            $tag->posts()->attach($lastID);
+            $array_atts = array();
+            foreach ($tagID as $tagsID) {
+                $attsPivot['tag_id']  = $tagsID;
+                $array_atts[]         = $attsPivot;
+            }
+            foreach ($array_atts as $finalAtts) {
+                $lastID->tags()->attach($finalAtts);
+            }
+            // $tag->posts()->attach($lastID);
 
             return redirect()->route('post.show', ['post' => $lastID->slug]);
         }else{
