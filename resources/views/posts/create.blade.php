@@ -13,11 +13,11 @@
 			<div class="col-12 col-md-9">
 				<div class="form-group posts-title">
 					<label for="title"><strong>Title</strong></label>
-					<input type="text" name="title" class="form-control" value="@yield('postEdit')" placeholder="Enter Post Title Here!" required>
+					<input type="text" name="title" class="form-control" value="@yield('postEdit', old('title'))" placeholder="Enter Post Title Here!" required>
 				</div>
 				<div class="form-group posts-description">
 					<label for="description"><strong>Post description</strong></label>
-					<textarea name="description" id="description" rows="20" class="form-control" placeholder="Enter Your Content Here!">@yield('postEditDes')</textarea>
+					<textarea name="description" id="description" rows="20" class="form-control" placeholder="Enter Your Content Here!">@yield('postEditDes', old('description'))</textarea>
 				</div>		
 			</div>
 			<div class="col-12 offset-md-1 col-md-2">
@@ -526,9 +526,13 @@
 		       		"_method": 'DELETE'
 		       	},
 		       	success:function(response){
-		       		// console.log(response)
-		       		$('#cont-'+response.id).remove();
-		       		$('select[name="tag_id[]"]').append('<option value="'+ response.id +'">'+ response.tag_name +'</option>');
+		       		console.log(response)
+		       		if (response.ajaxres == 'success') {
+			       		$('#cont-'+response.id).remove();
+			       		$('select[name="tag_id[]"]').append('<option value="'+ response.id +'">'+ response.tag_name +'</option>');
+		       		}else{
+		       			$('#errorTag').append('<div class="alert alert-danger">'+response.lt+'</div>')
+		       		}
 		       	}
 		       });
 			});

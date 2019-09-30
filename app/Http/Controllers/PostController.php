@@ -61,6 +61,7 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
+        // dd($request->all());
         if (Gate::check('isAdmin') || Gate::check('isHr') || Gate::check('isDoctor') || Gate::allows('isNurse')) {
             $atts = $request->validated();
             $atts = $request->except('tag_id');
@@ -138,11 +139,14 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(PostRequest $request, Post $post)
+    public function update(Request $request, Post $post)
     {
         // dd($request->all());
         $this->authorize('update', $post);
-        $atts = $request->validated();
+        $atts = $request->validate([
+            'title'        =>  'required',
+            'description'  =>  'required',
+        ]);
         $atts = $request->except(['tag_id', 'tag_old']);
         // dd($atts);
         $post->update($atts);

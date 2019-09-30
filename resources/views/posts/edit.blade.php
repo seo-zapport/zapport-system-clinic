@@ -45,6 +45,7 @@
 
 			@endforeach
 		</div>
+		<span id="errorTag"></span>
 	</div>
 </div>
 @endsection

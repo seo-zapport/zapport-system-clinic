@@ -83,10 +83,12 @@ class PostTagController extends Controller
     public function destroy(Request $request, Post $post, $tag_id)
     {
         if ($request->ajax()) {
+            if (count($post->tags) <= 1) {
+                return response()->json(['lt'=>'Post should have atleast One Category!', 'ajaxres'=>'error']);
+            }
             $post->tags()->newPivotStatement()->where('post_id', $post->id)->where('tag_id', $tag_id)->delete();
             $tagID = Tag::find($tag_id);
-
-            return response()->json(['id'=>$tagID->id, 'tag_name'=>$tagID->tag_name]);
+            return response()->json(['id'=>$tagID->id, 'tag_name'=>$tagID->tag_name, 'ajaxres'=>'success']);
         }
     }
 }
