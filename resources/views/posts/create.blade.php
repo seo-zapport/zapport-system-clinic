@@ -233,7 +233,7 @@
 							<hr>
 						</div>
 						<div>
-							<form id="tagForm" method="post" action="{{ route('add.tag') }}">
+							<form id="tagForm" method="post">
 								@csrf
 								<input type="text" name="tag" class="form-control" placeholder="Add New Category">
 								<small id="errorlogTag" class="text-muted mt-2"></small>
@@ -374,6 +374,11 @@
 			$('#tagForm').on('submit', function(e){
 				e.preventDefault();
 				loc2 = location.href;
+				if (loc2 === 'http://clinic/posts/create') {
+					var url = 'create/tag';
+				}else{
+					var url = '/posts/edit/tag';
+				}
 				var tag = $('input[name="tag"]').val();
 		       $.ajaxSetup({
 		            headers: {
@@ -382,7 +387,7 @@
 		        });
 		        $.ajax({
 		        	type: 'POST',
-		        	url: 'create/tag',
+		        	url: url,
 		        	data: {tag_name:tag},
 		        	dataType: 'json',
 		        	success: function(response){

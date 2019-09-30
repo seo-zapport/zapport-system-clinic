@@ -17,6 +17,7 @@
 		<div class="header-title">
 			<p><strong>Categories</strong></p>
 			<hr>
+			<a href="#" class="btn btn-info text-white btn-block mb-2" href="#" data-toggle="modal" data-target="#tagModal">Add Category</a>
 		</div>
 		<div>
 			<input type="hidden" name="tag_old" value="{{ $postTags->id }}">
