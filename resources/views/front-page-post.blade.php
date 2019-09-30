@@ -25,15 +25,12 @@
 					<div class="zp-article-footer">
 						<span><i class="fas fa-tags"></i></span>
 						<span class="zp-categories">
-							<a href="@#test">test 1</a>,
-							<a href="@#test">test 1</a>,
-							<a href="@#test">test 1</a>,
-							<a href="@#test">test 1</a>,
-							<a href="@#test">test 1</a>,
-							<a href="@#test">test 1</a>,
-							<a href="@#test">test 1</a>
+							@foreach ($post->tags as $tag)
+								<a href="@#test">{{ $tag->tag_name }} </a>,
+							@endforeach	
+
 						</span>
-					</div>				
+					</div>
 				</div>
 			</div>
 
