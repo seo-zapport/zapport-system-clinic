@@ -57,6 +57,7 @@ Route::group(['prefix'	=>	'posts'], function(){
 	// Tags
 	Route::post('create/tag', 'TagController@store')->name('add.tag');
 	// Route::post('{post}/edit/tag', 'TagController@store')->name('add.tag');
+	Route::delete('{post}/tags/{tag_id}', 'PostTagController@destroy')->name('removeTags');
 
 });
 

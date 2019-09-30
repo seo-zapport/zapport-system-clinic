@@ -61,6 +61,7 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
+        // dd($request->all());
         if (Gate::check('isAdmin') || Gate::check('isHr') || Gate::check('isDoctor') || Gate::allows('isNurse')) {
             $atts = $request->validated();
             $atts = $request->except('tag_id');
@@ -78,7 +79,15 @@ class PostController extends Controller
             $lastID = Post::where('user_id', auth()->user()->id)->get()->last();
             $tagID = $request->input('tag_id');
             $tag = Tag::find($tagID);
-            $tag->posts()->attach($lastID);
+            $array_atts = array();
+            foreach ($tagID as $tagsID) {
+                $attsPivot['tag_id']  = $tagsID;
+                $array_atts[]         = $attsPivot;
+            }
+            foreach ($array_atts as $finalAtts) {
+                $lastID->tags()->attach($finalAtts);
+            }
+            // $tag->posts()->attach($lastID);
 
             return redirect()->route('post.show', ['post' => $lastID->slug]);
         }else{
@@ -109,10 +118,15 @@ class PostController extends Controller
         if (Gate::check('isAdmin') || Gate::check('isHr') || Gate::check('isDoctor') || Gate::allows('isNurse')) {
             $employees = Media::where('file_name', '!=', NULL)->where('user_id', auth()->user()->id)->get();
             $tags = Tag::get();
+            $arr = array();
+            foreach ($post->tags as $tag) {
+                $arr[] = $tag->id;
+            }
             foreach ($post->tags as $postTags) {
                 $postTags;
             }
-            return view('posts.edit', compact('post', 'employees', 'tags', 'postTags'));
+            $uniqueTag =  Tag::whereNotIn('id', $arr)->get();
+            return view('posts.edit', compact('post', 'employees', 'tags', 'postTags', 'uniqueTag'));
         }else{
             return back();
         }
@@ -125,16 +139,32 @@ class PostController extends Controller
      * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(PostRequest $request, Post $post)
+    public function update(Request $request, Post $post)
     {
         // dd($request->all());
         $this->authorize('update', $post);
-        $atts = $request->validated();
+        $atts = $request->validate([
+            'title'        =>  'required',
+            'description'  =>  'required',
+        ]);
         $atts = $request->except(['tag_id', 'tag_old']);
         // dd($atts);
         $post->update($atts);
-        $post->tags()->updateExistingPivot($request->tag_old, array('tag_id' => $request->tag_id));
-        return redirect()->route('post.show', ['post' => $post->title]);
+
+        $tagID = $request->input('tag_id');
+        $tag = Tag::find($tagID);
+        if (!empty($tag)) {
+        $array_atts = array();
+            foreach ($tagID as $tagsID) {
+                $attsPivot['tag_id']  = $tagsID;
+                $array_atts[]         = $attsPivot;
+            }
+            foreach ($array_atts as $finalAtts) {
+                $post->tags()->attach($finalAtts);
+            }
+        }
+        // $post->tags()->updateExistingPivot($request->tag_old, array('tag_id' => $request->tag_id));
+        return redirect()->route('post.show', ['post' => $post->slug]);
     }
 
     /**
