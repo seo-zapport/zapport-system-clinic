@@ -5999,6 +5999,7 @@ figure {
 
 #zapAdminMenuWrap .nav-item .nav-link {
   color: #fff;
+  position: relative;
 }
 
 #zapAdminMenuWrap .nav-item .nav-link:hover,
@@ -6012,13 +6013,11 @@ figure {
   content: "";
   display: block;
   position: absolute;
-  width: 0;
-  height: 0;
-  border: 8px solid transparent;
-  border-right-color: #f1f1f1;
+  width: 100%;
+  height: 100%;
+  border-left: 4px solid #f1f1f1;
   right: 0;
-  top: 50%;
-  margin-top: -8px;
+  top: 0px;
 }
 
 #zapAdminMenuWrap .nav-item .nav-link.active {
@@ -6030,13 +6029,11 @@ figure {
   content: "";
   display: block;
   position: absolute;
-  width: 0;
-  height: 0;
-  border: 8px solid transparent;
-  border-right-color: #f1f1f1;
+  width: 100%;
+  height: 100%;
+  border-left: 4px solid #f1f1f1;
   right: 0;
-  top: 50%;
-  margin-top: -8px;
+  top: 0px;
 }
 
 #zapAdminMenuWrap .zap-user-info {

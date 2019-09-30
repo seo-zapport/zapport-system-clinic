@@ -40,6 +40,7 @@
 		position: relative;
 		.nav-link{
 			color: #fff;
+			position: relative;
 	    	&:hover, &:focus{
 	    		background-color: $admin-pine-green;
 	    		color: $admin-powder-blue;
@@ -47,13 +48,12 @@
 					content: '';
 					display: block;
 					position: absolute;
-					width: 0;
-					height: 0;
-					border: 8px solid transparent;
-					border-right-color: #f1f1f1;
+					width: 100%;
+					height: 100%;
+					border-left: 4px solid #f1f1f1;
+					// border-left-color: #f1f1f1;
 					right: 0;
-					top: 50%;
-					margin-top: -8px;
+					top: 0px;
 				}
 	    	}
 	    	&.active{
@@ -63,13 +63,12 @@
 					content: '';
 					display: block;
 					position: absolute;
-					width: 0;
-					height: 0;
-					border: 8px solid transparent;
-					border-right-color: #f1f1f1;
+					width: 100%;
+					height: 100%;
+					border-left: 4px solid #f1f1f1;
+					// border-left-color: #f1f1f1;
 					right: 0;
-					top: 50%;
-					margin-top: -8px;
+					top: 0px;
 				}
 	    	}
 		}

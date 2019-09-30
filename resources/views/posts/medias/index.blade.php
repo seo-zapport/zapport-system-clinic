@@ -7,26 +7,22 @@
 @endsection
 @section('dash-content')
 
-<div class="card">
-	<div class="card-body">
-		<div class="media-frame zp-core-ui mode-grid hide-menu">
-			<div class="media-frame-content" data-columns="11">
-				<div class="attachment-browser hide-sidebar">
-					<h2 class="media-views-heading sr-only">Attachment List</h2>
-					@if ( $medias )
-						<ul tabindex="-1" class="attachment ui-media">
-							@foreach ($medias as $media)
-								@php
-									$arr = array(" ", ".", "(", ")", "_", '-');
-									$arr2 = array("");
-								@endphp
-								<li class="attachment-list">
-									<div class="attachment-preview type-image landscape">
-										<div class="thumbnail" data-toggle="modal" data-target="{{ str_replace($arr, $arr2, '#modal'.$media->file_name) }}">
-											<div class="centered">
-												<img src="{{ asset('storage/uploaded/media/'.$media->file_name) }}">
-											</div>
-										</div>
+<div class="media-frame zp-core-ui mode-grid hide-menu">
+	<div class="media-frame-content" data-columns="11">
+		<div class="attachment-browser hide-sidebar">
+			<h2 class="media-views-heading sr-only">Attachment List</h2>
+			@if ( $medias )
+				<ul tabindex="-1" class="attachment ui-media">
+					@foreach ($medias as $media)
+						@php
+							$arr = array(" ", ".", "(", ")", "_", '-');
+							$arr2 = array("");
+						@endphp
+						<li class="attachment-list">
+							<div class="attachment-preview type-image landscape">
+								<div class="thumbnail" data-toggle="modal" data-target="{{ str_replace($arr, $arr2, '#modal'.$media->file_name) }}">
+									<div class="centered">
+										<img src="{{ asset('storage/uploaded/media/'.$media->file_name) }}">
 									</div>
 								</div>
 							</div>

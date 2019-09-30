@@ -44,11 +44,7 @@
 					@empty
 						<tr>
 							<td colspan="3" class="text-center">
-<<<<<<< HEAD
-								No Post Yet!
-=======
 								<span class="mb-1 text-secondary">No Post Yet !</span>
->>>>>>> b529af01a154dacf4dcd40b40a12d831dc939808
 								<a href="{{ route('post.create') }}">Create New Post here!</a>
 							</td>
 						</tr>

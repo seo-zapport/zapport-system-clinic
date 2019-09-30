@@ -97,6 +97,56 @@
 			#zp-footer{
 				background-color: #01393a !important;
 			}
+
+			/**article*/
+			.zp-article-wrapper{
+				position: relative;
+			}
+			.zp-article-wrapper .card{
+				border-color: transparent;
+				margin: auto;
+			}
+			.zp-wrap-img{
+				height: 0;
+				margin-bottom: 25px;
+				overflow: hidden;
+				padding-bottom: 58%;
+				position: relative;
+			}
+			.zp-wrap-img img{
+				height: 100%;
+				margin:0 auto 3rem;
+				position: absolute;
+				left:0;
+				right: 0;
+				width: 100%;
+				z-index: 999
+			}
+			.zp-article-title-wrap{
+				border-top: 1px solid #9eaab5;
+				border-bottom: 1px solid #9eaab5;
+				padding: 0.25rem 0;
+				margin-bottom: 8px;			
+			}
+			.zp-article-title{
+				margin: 0;
+				padding: 0;
+				line-height: 1.2;
+			}
+			.zp-article-meta {
+			    padding: 0;
+			    display: block;
+			    margin-bottom: 25px;
+			}
+			.zp-article-meta span{
+				font-size: 12px
+			}
+			.zp-article-content{
+				font-size: 16px;
+				color: #6c757d;
+				font-weight: 500;
+				line-height: 1.4;
+			}
 		</style>
 	</head>
 	<body id="page-top" class="zp-front-page" data-spy="scroll" data-target="#mainNav">

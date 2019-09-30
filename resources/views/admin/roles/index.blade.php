@@ -30,9 +30,9 @@
 						</td>
 						<td>{{ $role->users->count() }}</td>
 						<td class="w-15 px-0">
-							<a href="{{ route('dashboard.showRoles', ['role' => $role->role]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i>View</a>
+							<a href="{{ route('dashboard.showRoles', ['role' => $role->role]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i> View</a>
 							<small class="text-muted">|</small>
-				        	<form method="post" action="{{ route('dashboard.deleteRole', ['role' => $role->role]) }}">
+				        	<form method="post" action="{{ route('dashboard.deleteRole', ['role' => $role->role]) }}" class="d-inline">
 				        		@csrf
 				        		@method('DELETE')
 				        		
