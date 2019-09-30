@@ -17,7 +17,7 @@
 		<div class="employee_wrap">
 			<div class="panel employee-photo d-flex justify-content-center align-items-center">
 				@if (@$employee->profile_img != null)
-					<img src="{{ asset('storage/uploaded/'.@$employee->profile_img) }}" alt="{{ @$employee->profile_img }}" class="img-fluid">
+					<img src="{{ asset('storage/uploaded/'.@$employee->profile_img) }}" alt="{{ @$employee->profile_img }}" class="img-fluid" onerror="javascript:this.src='{{url( '/images/default.png' )}}'">
 				@endif
 				<div class="upload-hover d-flex justify-content-center align-items-center">
 					<a href="{{ route('hr.emp.edit', ['employee' => @$employee->emp_id]) }}" class="d-block d-flex justify-content-center flex-column text-white">

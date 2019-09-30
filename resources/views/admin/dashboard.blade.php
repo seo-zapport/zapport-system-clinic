@@ -50,7 +50,7 @@
 														<td>{{ $seen->diagnosis }}</td>
 														<td>{{ $seen->note }}</td>
 														<td>{{ ($seen->remarks == 'followUp') ? 'Follow up' : 'Done' }}</td>
-														<td><a href="{{ route('medical.show', ['employee' => $seen->employee->emp_id, 'employeesmedical' => $seen->diagnosis]) }}" class="btn btn-info text-white">View</a></td>
+														<td><a href="{{ route('medical.show', ['employee' => $seen->employee->emp_id, 'employeesmedical' => $seen->diagnosis]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a></td>
 													</tr>
 													@empty
 														<tr>
@@ -89,7 +89,7 @@
 														<td>{{ $empMed->diagnosis }}</td>
 														<td>{{ $empMed->note }}</td>
 														<td>{{ ($empMed->remarks == 'followUp') ? 'Follow up' : 'Done' }}</td>
-														<td><a href="{{ route('medical.show', ['employee' => $empMed->employee->emp_id, 'employeesmedical' => $empMed->diagnosis]) }}" class="btn btn-info text-white">View</a></td>
+														<td><a href="{{ route('medical.show', ['employee' => $empMed->employee->emp_id, 'employeesmedical' => $empMed->diagnosis]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a></td>
 													</tr>
 													@empty
 														<tr>
@@ -122,7 +122,7 @@
 													<td>{{ $emp->emp_id }}</td>
 													<td>{{ $emp->last_name }} {{ $emp->first_name }} {{ $emp->middle_name }}</td>
 													<td>{{ $emp->departments->department }} - {{ $emp->positions->position }}</td>
-													<td><a href="{{ route('hr.emp.show', ['employee' => $emp->emp_id]) }}" class="btn btn-info text-white">View</a></td>
+													<td><a href="{{ route('hr.emp.show', ['employee' => $emp->emp_id]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a></td>
 												</tr>
 												@empty
 													<tr>

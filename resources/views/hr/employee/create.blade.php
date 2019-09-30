@@ -16,7 +16,7 @@
 			<div class="employee_wrap">
 				<div class="panel employee-photo d-flex justify-content-center align-items-center">
 					@if ( ucfirst(strstr(url()->current(), 'create')) == 'Create' || ucfirst(substr(url()->current(),27)) == 'create')
-						<img src="{{ url( '/images/default.png' ) }}" alt="" class="img-fluid profile-pic">
+						<img src="{{ url( '/images/default.png' ) }}" alt="" class="img-fluid profile-pic" onerror="javascript:this.src='{{url( '/images/default.png' )}}'">
 					@else
 						@yield('img')
 					@endif

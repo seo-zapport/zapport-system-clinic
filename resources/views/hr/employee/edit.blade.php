@@ -10,7 +10,7 @@
 @endsection
 @section('img')
 	@if (@$employee->profile_img != null)
-		<img src="{{ asset('storage/uploaded/'.@$employee->profile_img) }}" alt="{{ @$employee->profile_img }}" class="img-fluid profile-pic">
+		<img src="{{ asset('storage/uploaded/'.@$employee->profile_img) }}" alt="{{ @$employee->profile_img }}" class="img-fluid profile-pic" onerror="javascript:this.src='{{url( '/images/default.png' )}}'">
 	@else
 		<img src="{{ url( '/images/default.png' ) }}" alt="" class="img-fluid profile-pic">
 	@endif

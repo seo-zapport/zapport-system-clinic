@@ -6,31 +6,47 @@
 	<i class="fas fa-photo-video"></i> Media
 @endsection
 @section('dash-content')
-<div class="media-frame zp-core-ui mode-grid hide-menu">
-	<div class="media-frame-content" data-columns="11">
-		<div class="attachment-browser hide-sidebar">
-			<h2 class="media-views-heading sr-only">Attachment List</h2>
-			@if ( $medias )
-				<ul tabindex="-1" class="attachment ui-media">
-					@foreach ($medias as $media)
-						@php
-							$arr = array(" ", ".", "(", ")", "_", '-');
-							$arr2 = array("");
-						@endphp
-						<li class="attachment-list">
-							<div class="attachment-preview type-image landscape">
-								<div class="thumbnail" data-toggle="modal" data-target="{{ str_replace($arr, $arr2, '#modal'.$media->file_name) }}">
-									<div class="centered">
-										<img src="{{ asset('storage/uploaded/media/'.$media->file_name) }}">
+
+<div class="card">
+	<div class="card-body">
+		<div class="media-frame zp-core-ui mode-grid hide-menu">
+			<div class="media-frame-content" data-columns="11">
+				<div class="attachment-browser hide-sidebar">
+					<h2 class="media-views-heading sr-only">Attachment List</h2>
+					@if ( $medias )
+						<ul tabindex="-1" class="attachment ui-media">
+							@foreach ($medias as $media)
+								@php
+									$arr = array(" ", ".", "(", ")", "_", '-');
+									$arr2 = array("");
+								@endphp
+								<li class="attachment-list">
+									<div class="attachment-preview type-image landscape">
+										<div class="thumbnail" data-toggle="modal" data-target="{{ str_replace($arr, $arr2, '#modal'.$media->file_name) }}">
+											<div class="centered">
+												<img src="{{ asset('storage/uploaded/media/'.$media->file_name) }}">
+											</div>
+										</div>
 									</div>
+<<<<<<< HEAD
+								</li>
+							@endforeach
+						</ul>
+					@else
+						<p class="no-media">No media files found.</p>
+					@endif
+				</div>
+			</div>
+=======
 								</div>
 							</div>
 						</li>
 					@endforeach
 				</ul>
 			@else
-				<p class="no-media">No media files found.</p>
+				<div class="no-media-wrap"><p class="no-media">No media files found.</p></div>
 			@endif
+>>>>>>> b529af01a154dacf4dcd40b40a12d831dc939808
 		</div>
 	</div>
 </div>
@@ -118,7 +134,7 @@
 	</div>
 	@empty
 		<div class="col-12 text-center">
-			EMPTY
+			<div class="no-media-wrap"><p class="no-media">No media files found.</p></div>
 		</div>
 @endforelse
 @endsection

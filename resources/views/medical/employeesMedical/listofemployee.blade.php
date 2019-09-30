@@ -3,7 +3,7 @@
 @section('employeesMedical', 'active')
 {{-- @section('dash-title', 'Lists of Employee') --}}
 @section('heading-title')
-	<span class="fa-stack"><i class="fas fa-list"></i><i class="fas fa-user fa-stack-1x fa-inverse"></i></span> Lists of Employee
+	<span class="fa-stack text-secondary"><i class="fas fa-list"></i><i class="fas fa-user fa-stack-1x fa-inverse text-secondary"></i></span> Lists of Employee
 @endsection
 @section('dash-content')
 
@@ -34,8 +34,8 @@
 							<td>{{ $emp->emp_id }}</td>
 							<td>{{ ucwords($emp->last_name . " " . $emp->first_name . " " . $emp->middle_name) }}</td>
 							<td>{{ strtoupper($emp->departments->department) . " - " . ucwords( $emp->positions->position) }}</td>
-							<td>
-								<a href="{{ route('medical.employeeInfo', ['employee' => $emp->emp_id]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i>View</a>
+							<td class="w-15 px-0">
+								<a href="{{ route('medical.employeeInfo', ['employee' => $emp->emp_id]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i> View</a>
 							</td>
 						</tr>
 						@empty

@@ -13,7 +13,7 @@
 	</div>
 @endif
 
-<div class="card">
+<div class="card mb-5">
 	<div class="card-body">
 		<div class="table-responsive">
 			<table class="table table-hover">
@@ -38,7 +38,7 @@
 							<td class="w-15 px-0">
 								<a href="{{ route('genericname.show', ['generic' => $gen->gname]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i>View</a>
 								<small class="text-muted">|</small>
-					        	<form method="post" action="{{ route('genericname.delete', ['generic' => $gen->gname]) }}">
+					        	<form method="post" action="{{ route('genericname.delete', ['generic' => $gen->gname]) }}" class="d-inline">
 					        		@csrf
 					        		@method('DELETE')
 									<button class="btn btn-link text-danger"  onclick="return confirm('Are you sure you want to delete {{ ucfirst($gen->gname) }} Generic Name?')" data-id="{{ $gen->gname }}">

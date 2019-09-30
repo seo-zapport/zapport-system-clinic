@@ -1,56 +1,50 @@
 @extends('layouts.app')
 @section('title', "| " .ucwords($employee->last_name) . '\'s information')
 @section('employeesMedical', 'active')
-@section('dash-title', ucwords($employee->last_name) . '\'s information')
+{{-- @section('dash-title', ucwords($employee->last_name) . '\'s information') --}}
+@section('heading-title')
+	<span class="fa-stack"><i class="fas fa-list"></i><i class="fas fa-user fa-stack-1x fa-inverse"></i></span> {{ ucwords($employee->last_name) . '\'s information' }}
+@endsection
 @section('dash-content')
 @section('back')
 <a href="{{ route('medical.listsofemployees') }}">
 	<i class="fas fa-arrow-left"></i>
 </a>
 @endsection
-<div class="card">
+<div class="card mb-5">
 	<div class="card-body">
 		<div class="row">
-			<div class="col-10">
-				<div class="row">
-					<div class="col-3">
-						<p>Name: {{ ucwords($employee->last_name . " " . $employee->first_name . " " . $employee->middle_name) }}</p>
-					</div>
-					<div class="col-3">
-						<p>Department: {{ strtoupper($employee->departments->department) }}</p>
-					</div>
-					<div class="col-3">
-						<p>Position: {{ ucwords($employee->positions->position) }}</p>
-					</div>
-				</div>
-
-				<div class="row">
-					<div class="col-2">
-						<p>Gender: {{ (@$employee->gender == 0) ? "Male" : "Female" }}</p>
-					</div>
-					<div class="col-1">
-						<p>Age: {{ @$employee->age }}</p>
-					</div>
-					<div class="col-3">
-						<p>Birthday: {{ @$employee->birthday->format('M d, Y') }}</p>
-					</div>
-					<div class="col-3">
-						<p>Birth Place: {{ ucwords(@$employee->birth_place) }}</p>
-					</div>
-					<div class="col-3">
-						<p>Contact number: {{ "+63" . @$employee->contact }}</p>
-					</div>
-				</div>
-			</div>
-
 			<div class="col-2">
 				@if (@$employee->profile_img != null)
-					<img src="{{ asset('storage/uploaded/'.@$employee->profile_img) }}" alt="{{ @$employee->profile_img }}" class="img-fluid">
+					<div class="employee_wrap mb-0">
+						<div class="panel employee-photo rounded">
+							<img src="{{ asset('storage/uploaded/'.@$employee->profile_img) }}" alt="{{ @$employee->profile_img }}" class="img-fluid rounded">
+						</div>
+					</div>
+						
 				@endif
-
+			</div>
+			<div class="col-10">
+				<p class="med-name">{{ ucwords($employee->last_name . " " . $employee->first_name . " " . $employee->middle_name) }}</p>
+				<div class="row">
+					<div class="col-3">
+						<p class="mb-2"><span class="text-dark font-weight-bold">Department</span>: {{ strtoupper($employee->departments->department) }}</p>
+						<p class="mb-2"><span class="text-dark font-weight-bold">Position</span>: {{ ucwords($employee->positions->position) }}</p>
+					</div>
+					<div class="col-3">
+						<p class="mb-2"><span class="text-dark font-weight-bold">Gender</span>: {{ (@$employee->gender == 0) ? "Male" : "Female" }}</p>
+						<p class="mb-2"><span class="text-dark font-weight-bold">Age</span>: {{ @$employee->age }}</p>
+					</div>
+					<div class="col-3">
+						<p class="mb-2"><span class="text-dark font-weight-bold">Birthday</span>: {{ @$employee->birthday->format('M d, Y') }}</p>
+						<p class="mb-2"><span class="text-dark font-weight-bold">Birth Place</span>: {{ ucwords(@$employee->birth_place) }}</p>
+					</div>
+					<div class="col-3">
+						<p class="mb-2"><span class="text-dark font-weight-bold">Contact</span>: {{ "+63" . @$employee->contact }}</p>
+					</div>
+				</div>
 			</div>
 		</div>
-		<br>
 		<hr>
 		<br>
 		<div class="row">
