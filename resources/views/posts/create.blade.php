@@ -528,11 +528,13 @@
 					if (jQuery.isEmptyObject(customError) === false) {
 						// console.log(customError);
 						document.getElementById("errorlog2").innerHTML += customError + "<br>";
+						$("#rmvImg").removeClass('d-none');
 					}
 					if (jQuery.isEmptyObject(response.responseJSON.errors) === false) {
 						var errors = response.responseJSON.errors.file_name;
 						errors.forEach(function(i){
 						document.getElementById("errorlog2").innerHTML += i + "<br>";
+						$("#rmvImg").addClass('d-none');
 					});
 					}
 				}
