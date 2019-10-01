@@ -47,7 +47,14 @@
 				<img id="edit_id" src="{{ asset('storage/uploaded/media/'.$post->medias->file_name) }}" class="img-fluid d-inline-flex">
 			</figure> --}}
 			<span id="rmvImg" class="btn btn-secondary btn-sm d-none">x</span>
+<<<<<<< HEAD
 		</div>						
 	</div>
 </div>
+=======
+		</div>					
+	</div>
+</div>
+
+>>>>>>> 8bd534660ce9bfc6f905dbc0099f686ad122344e
 @endsection

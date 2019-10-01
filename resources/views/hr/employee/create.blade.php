@@ -77,11 +77,11 @@
 						</div>
 						<div class="form-group col-md-4">
 							<label for="last_name">Last Name</label>
-							<input type="text" name="last_name" value="@yield('editLname', old('last_name'))" class="form-control" placeholder="Last Name" required oninvalid="this.setCustomValidity('Please Enter Last Name')" oninput="setCustomValidity('')">
+							<input type="text" name="last_name" value="@yield('editLname', old('last_name'))" class="form-control" placeholder="Last Name">
 						</div>
 						<div class="form-group col-md-4">
 							<label for="middle_name">Middle Name</label>
-							<input type="text" name="middle_name" value="@yield('editMname', old('middle_name'))" class="form-control" placeholder="Middle Name" required oninvalid="this.setCustomValidity('Please Enter Last Name')" oninput="setCustomValidity('')">
+							<input type="text" name="middle_name" value="@yield('editMname', old('middle_name'))" class="form-control" placeholder="Middle Name">
 						</div>
 					</div>
 					<div class="form-row">
