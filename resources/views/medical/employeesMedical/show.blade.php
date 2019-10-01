@@ -11,7 +11,10 @@
 	<i class="fas fa-arrow-left"></i>
 </a>
 @endsection
+<<<<<<< HEAD
+=======
 
+>>>>>>> c09d84caac64de5d15cd21ad291455ccec582055
 <div class="card mb-5">
 	<div class="card-body">
 		<div class="row">
@@ -65,7 +68,7 @@
 				@endif
 			</div>
 			<div class="row">
-				<div class="col-12 col-md-4">
+				<div class="col-12 col-md-12 mb-5">
 					<div class="zp-notes light-yellow">
 						<div class="zp-notes-header">
 							<h4 class="zp-notes-title">Doctor's Note</h4>
@@ -76,7 +79,7 @@
 					</div>
 				</div>
 				@if (count($employeesmedical->medNote) > 0)
-					<div class="col-12 col-md-3">
+					<div class="col-12 col-md-12 mb-5">
 						<div class="zp-notes light-blue">
 							<div class="zp-notes-header">
 								<h5 class="zp-notes-title">Follow up checkup</h5>
@@ -92,7 +95,7 @@
 						</div>
 					</div>
 				@endif
-				<div class="col-12 col-md-5">
+				<div class="col-12 col-md-12 mb-5">
 					<div class="zp-notes light-green">
 						<div class="zp-notes-header">
 							<h5 class="zp-notes-title">Medicines</h5>
@@ -133,7 +136,6 @@
 		</div>	
 	</div>
 </div>
-
 
 @include('layouts.errors')
 <!-- Modal Add -->
