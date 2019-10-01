@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Tag;
+use App\Post;
 use Illuminate\Http\Request;
 use App\Http\Requests\TagRequest;
 use Illuminate\Support\Facades\Gate;
@@ -21,7 +22,8 @@ class TagController extends Controller
      */
     public function index()
     {
-        //
+        $tags = Tag::orderBy('id', 'desc')->get();
+        return view('posts.category.index', compact('tags'));
     }
 
     /**
@@ -85,7 +87,15 @@ class TagController extends Controller
      */
     public function update(Request $request, Tag $tag)
     {
-        //
+        if (Gate::check('isAdmin') || Gate::check('isHr') || Gate::check('isDoctor') || Gate::allows('isNurse')) {
+            $atts = $request->validate([
+                'tag_name' => ['required', 'unique:tags,tag_name,'.$tag->id],
+            ]);
+            $tag->update($atts);
+            return back();
+        }else{
+            return back();
+        }   
     }
 
     /**
@@ -96,7 +106,15 @@ class TagController extends Controller
      */
     public function destroy(Tag $tag)
     {
-        //
+        if (Gate::check('isAdmin') || Gate::check('isHr') || Gate::check('isDoctor') || Gate::allows('isNurse')) {
+            if (count($tag->posts) >= 1) {
+                return back()->with('tag_error', 'You can\'t delete category with post!');
+            }
+            $tag->delete();
+            return back();
+        }else{
+            return back();
+        }   
     }
 
     /**
@@ -114,6 +132,25 @@ class TagController extends Controller
                 $atts['id'] = $lastid->id;
                 return response()->json($atts);
             }
+        }else{
+            return back();
+        }
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function createTag(Request $request)
+    {
+        if (Gate::check('isAdmin') || Gate::check('isHr') || Gate::check('isDoctor') || Gate::allows('isNurse')) {
+            $atts = $request->validate([
+                        'tag_name' => ['required', 'unique:tags'],
+                    ]);
+            Tag::create($atts);
+            return back();
         }else{
             return back();
         }
