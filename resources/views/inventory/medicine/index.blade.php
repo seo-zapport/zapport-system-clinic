@@ -3,7 +3,7 @@
 @section('medicine', 'active')
 {{-- @section('dash-title', 'List of Medicines') --}}
 @section('heading-title')
-	<i class="fas fa-pills"></i> List of Medicines
+	<i class="fas fa-pills text-secondary"></i> List of Medicines
 @endsection
 @section('dash-content')
 

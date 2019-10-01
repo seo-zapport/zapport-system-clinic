@@ -3,7 +3,7 @@
 @section('reg_dep', 'active')
 {{-- @section('dash-title', 'Department') --}}
 @section('heading-title')
-	<i class="fas fa-building"></i> Department
+	<i class="fas fa-building text-secondary"></i> Department
 @endsection
 @section('dash-content')
 <div class="card mb-5">

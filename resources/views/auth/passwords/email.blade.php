@@ -24,7 +24,7 @@
                 </ul>
             </div> --}}
             <div class="signin-form">
-                <div class="zp-bg-clan p-1"></div>
+                {{-- <div class="zp-bg-clan p-1"></div> --}}
                 <form method="POST" action="{{ route('password.email') }}">
                     @csrf
                     <div class="signin-text">

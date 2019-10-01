@@ -24,12 +24,7 @@
 					</div>
 					<div class="zp-article-footer">
 						<span><i class="fas fa-tags"></i></span>
-						<span class="zp-categories">
-							@foreach ($post->tags as $tag)
-								<a href="@#test">{{ $tag->tag_name }} </a>,
-							@endforeach	
-
-						</span>
+						<span class="zp-categories">@foreach ($post->tags as $tag) {{$tag->tag_name}}, @endforeach</span>
 					</div>
 				</div>
 			</div>

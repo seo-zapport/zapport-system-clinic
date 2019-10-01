@@ -3,7 +3,7 @@
 @section('reg_pos', 'active')
 {{-- @section('dash-title', ucwords($position->position)) --}}
 @section('heading-title')
-	<i class="fas fa-tasks"></i> {{ ucwords($position->position) }}
+	<i class="fas fa-tasks text-secondary"></i> {{ ucwords($position->position) }}
 @endsection
 @section('dash-content')
 @section('back')

@@ -3,7 +3,7 @@
 @section('employeesMedical', 'active')
 {{-- @section('dash-title', 'Lists of Employee') --}}
 @section('heading-title')
-	<span class="fa-stack text-secondary"><i class="fas fa-list"></i><i class="fas fa-user fa-stack-1x fa-inverse text-secondary"></i></span> Lists of Employee
+	<i class="fas fa-list text-secondary"></i> Lists of Employee
 @endsection
 @section('dash-content')
 

@@ -3,7 +3,7 @@
 @section('genericname', 'active')
 {{-- @section('dash-title', 'Generic Names') --}}
 @section('heading-title')
-	<i class="fas fa-tablets"></i> Generic Name
+	<i class="fas fa-tablets text-secondary"></i> Generic Name
 @endsection
 @section('dash-content')
 

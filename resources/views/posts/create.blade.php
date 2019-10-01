@@ -2,7 +2,7 @@
 @section('title', '| New Post')
 
 @section('heading-title')
-	<i class="fas fa-book"></i> New Posts
+	<i class="fas fa-book text-secondary"></i> New Posts
 @endsection
 @section('dash-content')
 {{-- {{ phpinfo() }} --}}

@@ -3,7 +3,7 @@
 @section('overview', 'active')
 {{-- @section('dash-title', 'Dashboard Overview') --}}
 @section('heading-title')
-	<i class="fas fa-tachometer-alt"></i> Dashboard
+	<i class="fas fa-tachometer-alt text-secondary"></i> Dashboard
 @endsection
 
 @section('dash-content')

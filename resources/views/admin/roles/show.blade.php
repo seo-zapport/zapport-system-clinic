@@ -3,7 +3,7 @@
 @section('roles', 'active')
 {{-- @section('dash-title', ucwords($role->role).' role') --}}
 @section('heading-title')
-	<i class="fas fa-cogs"></i> {{ ucwords($role->role) }} Roles
+	<i class="fas fa-cogs text-secondary"></i> {{ ucwords($role->role) }} Roles
 @endsection
 @section('dash-content')
 @section('back')

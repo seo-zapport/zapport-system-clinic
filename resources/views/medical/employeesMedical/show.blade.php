@@ -3,7 +3,7 @@
 @section('employeesMedical', 'active')
 @section('dash-title', ucwords($employee->last_name) . '\'s information')
 @section('heading-title')
-	<span class="fa-stack text-secondary"><i class="fas fa-list"></i><i class="fas fa-user fa-stack-1x fa-inverse text-secondary"></i></span> {{ ucwords($employee->last_name) . '\'s information' }}
+	<i class="fas fa-list text-secondary"></i> {{ ucwords($employee->last_name) . '\'s information' }}
 @endsection
 @section('dash-content')
 @section('back')
@@ -11,7 +11,6 @@
 	<i class="fas fa-arrow-left"></i>
 </a>
 @endsection
-<<<<<<< HEAD
 <div class="card">
 	<div class="card-body">
 		<div class="row">
@@ -96,7 +95,6 @@
 				<p>Remarks: {{ ($employeesmedical->remarks == 'followUp') ? 'Follow up' : 'Done' }}</p>
 			</div>
 		</div>
-=======
 <div class="card mb-5">
 	<div class="card-body">
 		<div class="row">
@@ -216,7 +214,6 @@
 				</div>
 			</div>
 		</div>	
->>>>>>> b529af01a154dacf4dcd40b40a12d831dc939808
 	</div>
 </div>
 

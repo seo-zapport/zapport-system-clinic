@@ -143,7 +143,8 @@
 }
 
 /**Employee*/
-.admin-department{
+.admin-department,
+.admin-profile{
 	.panel{
 		border-color: #e2e2e2;
 	}
@@ -210,6 +211,7 @@
     display: block;
     margin: 20px 0px;
     box-shadow: 2px 3px 5px #d8d8d8;
+    border-top: 2px solid #53cac1;
 	.sigin-info {
 	    background: #555;
 	    display: block;
@@ -234,6 +236,16 @@
 	    	left: 0;
 	    	width: 100%;
 	    }
+	}
+	.signin-text{
+	    color: #777;
+	    font-size: 14px;
+	    line-height: 1.4;
+	    margin-bottom: 6px;
+	    span.signin-v{
+			color: #353535;
+			font-size: 16px;
+	    }	
 	}
 }
 .admin-register,

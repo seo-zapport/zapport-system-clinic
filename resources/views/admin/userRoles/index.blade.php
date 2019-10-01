@@ -3,7 +3,7 @@
 @section('userRoles', 'active')
 {{-- @section('dash-title', 'User Roles') --}}
 @section('heading-title')
-	<i class="fas fa-user-cog"></i> User Roles
+	<i class="fas fa-user-cog text-secondary"></i> User Roles
 @endsection
 @section('dash-content')
 
@@ -68,7 +68,7 @@
 							@forelse ($user->roles as $role)
 								<span id="{{ $user->id }}" class="show-edit btn btn-link text-secondary"><i class="far fa-edit"></i> Quick Edit</span>
 							@empty
-
+								<span id="{{ $user->id }}" class="show-edit btn btn-link text-secondary"><i class="far fa-edit"></i> Quick Edit</span>
 							@endforelse
 							<small class="text-muted">|</small>
 							<button class="btn btn-link text-danger"  onclick="return confirm('Are you sure you want to remove {{ ucfirst($user->name) }} ?')" data-id="{{ $user->user }}">
@@ -101,6 +101,8 @@
 								<fieldset class="inline-edit-col w-100">
 									<form method="post" action="{{ route('dashboard.addUserRoles') }}">
 										@csrf
+										<p class="text-muted">QUICK EDIT</p>
+										<span>Role</span>
 										<input type="hidden" name="user_id" value="{{ $user->id }}">
 										<select name="role_id" id="role_id" class="form-control-sm" onchange="this.form.submit();">
 											@foreach ($roles as $role)

@@ -3,7 +3,7 @@
 @section('reg_pos', 'active')
 {{-- @section('dash-title', 'Position') --}}
 @section('heading-title')
-	<i class="fas fa-tasks"></i> Position
+	<i class="fas fa-tasks text-secondary"></i> Position
 @endsection
 @section('dash-content')
 

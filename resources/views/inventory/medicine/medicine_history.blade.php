@@ -3,7 +3,7 @@
 @section('medicine', 'active')
 {{-- @section('dash-title', ucwords($generic->gname)) --}}
 @section('heading-title')
-	<i class="fas fa-pills"></i> {{ ucwords($generic->gname) }}
+	<i class="fas fa-pills text-secondary"></i> {{ ucwords($generic->gname) }}
 @endsection
 @section('dash-content')
 @section('back')
