@@ -42,16 +42,7 @@
 				@forelse($users as $user)
 					<tr>
 						<td>
-							{{-- {{ $user->id }} --}}
-				        	<form method="post" action="{{ route('dashboard.delete.user', ['user' => $user->id]) }}">
-				        		@csrf
-				        		@method('DELETE')
-				        		<div class="form-row align-items-center">
-				            		<div class="col-auto my-1 form-inline">
-				        				{{ $user->id }}
-									</div>
-								</div>
-				        	</form>
+				        	{{ $user->id }}
 						</td>
 						<td>{{ $user->name }}</td>
 						<td>{{ $user->email }}</td>
@@ -71,9 +62,20 @@
 								<span id="{{ $user->id }}" class="show-edit btn btn-link text-secondary"><i class="far fa-edit"></i> Quick Edit</span>
 							@endforelse
 							<small class="text-muted">|</small>
-							<button class="btn btn-link text-danger"  onclick="return confirm('Are you sure you want to remove {{ ucfirst($user->name) }} ?')" data-id="{{ $user->user }}">
-								<i class="fas fa-trash-alt"></i> Delete
-							</button>
+
+
+				        	<form method="post" action="{{ route('dashboard.delete.user', ['user' => $user->id]) }}" class="d-inline-flex">
+				        		@csrf
+				        		@method('DELETE')
+				        		<div class="form-row align-items-center">
+				            		<div class="col-auto my-1 form-inline">
+										<button class="btn btn-link text-danger"  onclick="return confirm('Are you sure you want to remove {{ ucfirst($user->name) }} ?')" data-id="{{ $user->user }}">
+											<i class="fas fa-trash-alt"></i> Delete
+										</button>
+									</div>
+								</div>
+				        	</form>
+
 						</td>
 					</tr>
 					@forelse ($user->roles as $role)

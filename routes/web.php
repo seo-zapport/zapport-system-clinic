@@ -54,11 +54,20 @@ Route::group(['prefix'	=>	'posts'], function(){
 	// Upload Media
 	Route::post('create/media', 'MediaController@store')->name('post.media');
 	Route::post('{post}/edit/media', 'MediaController@addMediaOnPostUpdate');
-	// Tags
+	// Tags / Categories
 	Route::post('create/tag', 'TagController@store')->name('add.tag');
 	Route::post('edit/tag', 'TagController@store2')->name('add.tag2');
 	// Route::post('{post}/edit/tag', 'TagController@store')->name('add.tag');
 	Route::delete('{post}/tags/{tag_id}', 'PostTagController@destroy')->name('removeTags');
+
+});
+
+Route::group(['prefix'	=>	'category'], function(){
+
+	Route::get('', 'TagController@index')->name('tag.index');
+	Route::post('create', 'TagController@createTag')->name('store.tag');
+	Route::put('{tag}/edit', 'TagController@update')->name('update.tag');
+	Route::delete('{tag}', 'TagController@destroy')->name('destroy.tag');
 
 });
 

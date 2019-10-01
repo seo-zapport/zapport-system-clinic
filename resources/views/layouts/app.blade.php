@@ -52,7 +52,7 @@
 
                                 </div>                                
                             </div>
-                            @if ( request()->is('dashboard*') || request()->is('hr*')  || request()->is('employees*') || request()->is('register') || request()->is('password/reset') || request()->is('media')  || request()->is('posts*')  || request()->is('inventory*')  || request()->is('medical*') )
+                            @if ( request()->is('dashboard*') || request()->is('hr*')  || request()->is('employees*') || request()->is('register') || request()->is('password/reset') || request()->is('media')  || request()->is('posts*')  || request()->is('inventory*')  || request()->is('medical*') || request()->is('category*') )
                                 @yield('dash-content')
                             @else
                                 <div class="card">
