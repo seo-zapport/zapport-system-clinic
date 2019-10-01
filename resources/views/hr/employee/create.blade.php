@@ -3,7 +3,7 @@
 @section('reg_emp', 'active')
 {{-- @section('dash-title', 'Add Employee') --}}
 @section('heading-title')
-	<i class="fas fa-user-plus"></i> Add Employee
+	<i class="fas fa-user-plus text-secondary"></i> Add Employee
 @endsection
 @section('dash-content')
 
@@ -328,6 +328,7 @@
 					<hr>
 					<h5 class="text-muted"><i class="fas fa-bars"></i> Others</h5>
 					<hr>
+					<small class="text-muted mb-3 d-block"><em>*For ID's, Please indicate numbers only.</em></small>
 					<div class="form-row">
 						<div class="form-group col-md-6">
 							<label for="tin_no">TIN Number</label>

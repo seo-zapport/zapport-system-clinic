@@ -1,11 +1,11 @@
 @extends('posts.create')
 @section('title', '| Edit Post')
 @section('heading-title')
-	<i class="fas fa-book"></i> Edit Posts
+	<i class="fas fa-book text-secondary"></i> Edit Posts
 @endsection
 @section('dash-content')
 
-@section('postAction', route('post.edit', ['post' => $post->slug]))
+@section('postAction', route('post.edit', ['post' => $post->title]))
 @section('postMethod')
 	@method('PUT')
 @endsection
@@ -17,36 +17,16 @@
 		<div class="header-title">
 			<p><strong>Categories</strong></p>
 			<hr>
-			<a href="#" class="btn btn-info text-white btn-block mb-2" href="#" data-toggle="modal" data-target="#tagModal">Add Category</a>
 		</div>
 		<div>
 			<input type="hidden" name="tag_old" value="{{ $postTags->id }}">
-			<select multiple name="tag_id[]" id="tag_id" class="form-control">
+			<select name="tag_id" id="tag_id" class="form-control">
 				{{-- <option selected="true" disabled="disabled" value=""> Select Generic Name </option> --}}
-				@foreach ($uniqueTag as $tag)
-					<option value="{{ $tag->id }}">{{ $tag->tag_name }}</option>
+				@foreach ($tags as $tag)
+					<option {{ ($postTags->tag_name == $tag->tag_name) ? 'selected="true"' : '' }} value="{{ $tag->id }}">{{ $tag->tag_name }}</option>
 				@endforeach
 			</select>
 		</div>
-		<hr>
-
-		<div id="rmvTags" class="form-row align-items-center">
-			<div class="col-auto my-1 form-inline">
-				<label for="tags"><p>Tags:</p></label>
-			</div>
-			@foreach ($post->tags as $tag)
-				<div id="cont-{{ $tag->id }}" class="col-auto my-1 form-inline">
-					<p>
-						{{ $tag->tag_name }} <a href="#" data-toggle="modal" id="delTag" data-target="{{ $tag->id }}">
-							<input id="postID" type="hidden" value="{{ $post->slug }}">
-							<i class="fas fa-times-circle"></i>
-						</a>
-					</p>
-				</div>
-
-			@endforeach
-		</div>
-		<span id="errorTag"></span>
 	</div>
 </div>
 @endsection
@@ -67,8 +47,14 @@
 				<img id="edit_id" src="{{ asset('storage/uploaded/media/'.$post->medias->file_name) }}" class="img-fluid d-inline-flex">
 			</figure> --}}
 			<span id="rmvImg" class="btn btn-secondary btn-sm d-none">x</span>
+<<<<<<< HEAD
+		</div>						
+	</div>
+</div>
+=======
 		</div>					
 	</div>
 </div>
 
+>>>>>>> 8bd534660ce9bfc6f905dbc0099f686ad122344e
 @endsection

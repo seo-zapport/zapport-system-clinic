@@ -3,7 +3,7 @@
 @section('employee', 'active')
 {{-- @section('dash-title', 'Your Personal Information') --}}
 @section('heading-title')
-	<i class="far fa-address-card"></i> Your Personal Information
+	<i class="far fa-address-card text-secondary"></i> Your Personal Information
 @endsection
 @section('dash-content')
 

@@ -4,7 +4,7 @@
 {{-- @section('dash-title', 'All Employees') --}}
 
 @section('heading-title')
-	<i class="fas fas fa-users"></i> All Employees
+	<i class="fas fas fa-users text-secondary"></i> All Employees
 @endsection
 @section('dash-content')
 

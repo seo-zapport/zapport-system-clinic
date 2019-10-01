@@ -59,7 +59,11 @@
                     <ul class="zp-dropdown nav collapse {{ $showactive }}" id="posts">
                         <li class="nav-item"><a href="{{ route('post.create') }}" class="nav-link @yield('new_post')"><i class="fas fa-pencil-alt"></i> <span class="collapse-label">New Post</span></a></li>
                         <li class="nav-item"><a href="{{ route('post.index') }}" class="nav-link @yield('posts')"><i class="fas fa-book"></i> <span class="collapse-label">All Posts</span></a></li>
+<<<<<<< HEAD
                         <li class="nav-item"><a href="{{ route('tag.index') }}" class="nav-link @yield('category')"><i class="fas fa-book"></i> <span class="collapse-label">Categories</span></a></li>
+=======
+                        <li class="nav-item"><a href="#@" class="nav-link @yield('posts')"><i class="fas fa-folder"></i> <span class="collapse-label">Category</span></a></li>
+>>>>>>> fb5b3f861903d6a0f967f32665c1ececa015c179
                         <li class="nav-item"><a href="{{ route('media.index') }}" class="nav-link @yield('medias')"><i class="fas fa-photo-video"></i> <span class="collapse-label">Media</span></a></li>
                     </ul>
                 </li>
@@ -117,7 +121,7 @@
                     <li class="nav-item"><a href="{{ route('medicine') }}" class="nav-link @yield('medicine')"><i class="fas fa-pills"></i> <span class="collapse-label">Medicines</span></a></li>                    
                 </ul>
 
-                <li class="nav-item"><a href="{{ route('medical.listsofemployees') }}" class="nav-link @yield('employeesMedical')"><span class="fa-stack"><i class="fas fa-list"></i><i class="fas fa-user fa-stack-1x fa-inverse"></i></span><span class="collapse-label">List of Employees</span></a></li>
+                <li class="nav-item"><a href="{{ route('medical.listsofemployees') }}" class="nav-link @yield('employeesMedical')"><i class="fas fa-list"></i><span class="collapse-label">List of Employees</span></a></li>
             </ul>
         </li>
         @endif

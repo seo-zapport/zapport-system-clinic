@@ -3,7 +3,7 @@
 @section('employeesMedical', 'active')
 {{-- @section('dash-title', ucwords($employee->last_name) . '\'s information') --}}
 @section('heading-title')
-	<span class="fa-stack"><i class="fas fa-list"></i><i class="fas fa-user fa-stack-1x fa-inverse"></i></span> {{ ucwords($employee->last_name) . '\'s information' }}
+	<i class="fas fa-list text-secondary"></i> {{ ucwords($employee->last_name) . '\'s information' }}
 @endsection
 @section('dash-content')
 @section('back')

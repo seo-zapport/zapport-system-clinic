@@ -3,7 +3,7 @@
 @section('medias', 'active')
 
 @section('heading-title')
-	<i class="fas fa-photo-video"></i> Media
+	<i class="fas fa-photo-video text-secondary"></i> Media
 @endsection
 @section('dash-content')
 

@@ -3,7 +3,7 @@
 @section('register', 'active')
 {{-- @section('dash-title', 'Register New Usersdfsdf') --}}
 @section('heading-title')
-    <i class="fas fa-user-edit"></i> Register User
+    <i class="fas fa-user-edit text-secondary"></i> Register User
 @endsection
 @section('dash-content')
 <div class="container">
@@ -21,7 +21,7 @@
                 </ul>
             </div> --}}
             <div class="signin-form">
-                <div class="zp-bg-clan p-1"></div>
+                {{-- <div class="zp-bg-clan p-1"></div> --}}
                 <form method="POST" action="{{ route('register') }}">
                     @csrf
                     <div class="signin-text">

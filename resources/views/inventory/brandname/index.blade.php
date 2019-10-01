@@ -3,7 +3,7 @@
 @section('brandname', 'active')
 {{-- @section('dash-title', 'Brand Names') --}}
 @section('heading-title')
-	<i class="fas fa-file-prescription"></i> Brand Names
+	<i class="fas fa-file-prescription text-secondary"></i> Brand Names
 @endsection
 @section('dash-content')
 
