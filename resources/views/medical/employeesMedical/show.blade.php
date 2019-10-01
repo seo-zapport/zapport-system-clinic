@@ -11,7 +11,6 @@
 	<i class="fas fa-arrow-left"></i>
 </a>
 @endsection
-<<<<<<< HEAD
 <div class="card">
 	<div class="card-body">
 		<div class="row">
@@ -96,7 +95,6 @@
 				<p>Remarks: {{ ($employeesmedical->remarks == 'followUp') ? 'Follow up' : 'Done' }}</p>
 			</div>
 		</div>
-=======
 <div class="card mb-5">
 	<div class="card-body">
 		<div class="row">
@@ -216,7 +214,6 @@
 				</div>
 			</div>
 		</div>	
->>>>>>> b529af01a154dacf4dcd40b40a12d831dc939808
 	</div>
 </div>
 
