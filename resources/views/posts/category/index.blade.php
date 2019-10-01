@@ -2,7 +2,7 @@
 @section('title', '| Posts')
 @section('category', 'active')
 @section('heading-title')
-	<i class="fas fa-book"></i> Posts
+	<i class="fas fa-book"></i> Category
 @endsection
 @section('dash-content')
 
