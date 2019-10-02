@@ -8,6 +8,7 @@
 @endsection
 @section('dash-content')
 
+<a href="{{ route('print.emp') }}" class="btn btn-outline-info float-right">Print</a>
 <form method="get">
 	<div class="form-row">
 		<div class="form-group col-md-4">

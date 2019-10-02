@@ -378,4 +378,14 @@ class EmployeeController extends Controller
         return json_encode($employeesID);
     }
 
+    public function printEmployees()
+    {
+        if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
+            $employees = Employee::get();
+            return view('hr.employee.print_emps', compact('employees'));
+        }else{
+            return back();
+        }
+    }
+
 }
