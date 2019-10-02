@@ -19,7 +19,7 @@
 			<table class="table table-hover">
 				<thead class="thead-dark">
 					<th>Generic Name</th>
-					<th>No. of Medecines by Generic</th>
+					<th>Quantity</th>
 					<th>Action</th>
 				</thead>
 				<tbody>

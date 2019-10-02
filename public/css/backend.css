@@ -6612,6 +6612,17 @@ figure {
   padding: 0;
 }
 
+#diagnosis .nav-pills .nav-link.active,
+#diagnosis .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #00988d;
+}
+
+#diagnosis .nav-link {
+  color: #055651;
+  padding: 0.3rem 0.5rem;
+}
+
 /**media*/
 
 .media-frame {
