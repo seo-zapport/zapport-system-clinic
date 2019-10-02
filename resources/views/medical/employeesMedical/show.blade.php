@@ -45,8 +45,6 @@
 			</div>
 		</div>
 		<hr>
-		@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
-		@endif
 		<div id="diagnosis">
 			<div class="row my-3">
 				<div class="col-12 col-md-8">
@@ -55,6 +53,7 @@
 					<p class="mb-1"><span class="text-dark font-weight-bold">Attendant</span>: {{ ucwords($employeesmedical->user->employee->first_name) }} {{ ucwords($employeesmedical->user->employee->middle_name) }} {{ ucwords($employeesmedical->user->employee->last_name) }}</p>
 					<p class="mb-1"><span class="text-dark font-weight-bold">Remarks</span>: {{ ($employeesmedical->remarks == 'followUp') ? 'Follow up' : 'Done' }}</p> --}}
 				</div>
+				@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
 				<div class="col-12 col-md-4 text-right">
 					@if ($employeesmedical->remarks == 'followUp')
 						<button class="btn btn-success text-white" data-toggle="modal" data-target="#exampleModalCenter">Add Notes</button>
@@ -62,6 +61,7 @@
 
 					<button class="btn btn-info text-white" data-toggle="modal" data-target="#exampleModalCenter2">Edit Remarks</button>
 				</div>
+				@endif
 			</div>
 
 			<ul class="nav nav-pills my-4 mx-0" id="pills-tab" role="tablist">

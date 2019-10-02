@@ -46,7 +46,7 @@
 										@method('PUT')
 										<p class="text-muted">QUICK EDIT</p>
 										<span>Category</span>
-										<input type="text" name="tag_name" value="{{ $tag->tag_name }}" class="form-control">
+										<input type="text" name="tag_name" value="{{ $tag->tag_name }}" class="form-control" required>
 									</form>
 								</fieldset>
 							</td>
@@ -86,7 +86,7 @@
 				<form method="post" action="{{ route('store.tag') }}">
 					@csrf
 					<div class="form-group">
-						<input type="text" name="tag_name" class="form-control" placeholder="Category Name">
+						<input type="text" name="tag_name" class="form-control" placeholder="Category Name" required>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

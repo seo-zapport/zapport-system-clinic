@@ -25,18 +25,13 @@
 				<tbody>
 					@forelse ($brands as $brand)
 						<tr>
-							@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
 							<td>
 				        		{{ ucwords($brand->bname) }}
 							</td>
-							@else
-							<td>
-								{{ ucwords($brand->bname) }}
-							</td>
-							@endif
 							<td>{{ $brand->generic->count() }} </td>
 							<td class="w-15 px-0">
 								<a href="{{ route('brandname.show', ['medbrand' => $brand->bname]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i>View</a>
+								@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
 								<small class="text-muted">|</small>
 					        	<form method="post" action="{{ route('brandname.delete', ['medbrand' => $brand->bname]) }}" class="d-inline">
 					        		@csrf
@@ -45,6 +40,7 @@
 										<i class="fas fa-trash-alt"></i> Delete
 									</button>
 					        	</form>	
+								@endif
 							</td>
 						</tr>
 						@empty
