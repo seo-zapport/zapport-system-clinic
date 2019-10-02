@@ -90,8 +90,8 @@ class EmployeeController extends Controller
             $newEmp                             = new Employee;
             $newEmp->profile_img                = $newFileName;
             $newEmp->first_name                 = $request->first_name;
-            $newEmp->last_name                  = $request->last_name;
-            $newEmp->middle_name                = $request->middle_name;
+            $newEmp->last_name                  = ($request->input('last_name') != null) ? $request->last_name : 'N/A';
+            $newEmp->middle_name                = ($request->input('middle_name') != null) ? $request->middle_name : 'N/A';
             $newEmp->birthday                   = $request->birthday;
             $newEmp->birth_place                = $request->birth_place;
             $newEmp->citizenship                = $request->citizenship;
@@ -197,8 +197,8 @@ class EmployeeController extends Controller
             $request->validate([
                     "profile_img"               => ['mimes:jpg,jpeg,png'],
                     "first_name"                => ['required'],
-                    "last_name"                 => ['required'],
-                    "middle_name"               => ['required'],
+                    // "last_name"                 => ['required'],
+                    // "middle_name"               => ['required'],
                     "birthday"                  => ['required'],
                     "birth_place"               => ['required'],
                     "citizenship"               => ['required'],
@@ -230,8 +230,8 @@ class EmployeeController extends Controller
             ],
             [
                     "first_name.required"                => 'First name is required!',
-                    "last_name.required"                 => 'Last name is required!',
-                    "middle_name.required"               => 'Middle name is required!',
+                    // "last_name.required"                 => 'Last name is required!',
+                    // "middle_name.required"               => 'Middle name is required!',
                     "birthday.required"                  => 'Birthdate is required!',
                     "birth_place.required"               => 'Birthplace is required!',
                     "citizenship.required"               => 'Citizenship is required!',
@@ -290,8 +290,8 @@ class EmployeeController extends Controller
 
             $employee->profile_img                  = $newFileName;
             $employee->first_name                   = $request->first_name;
-            $employee->last_name                    = $request->last_name;
-            $employee->middle_name                  = $request->middle_name;
+            $employee->last_name                    = ($request->input('last_name') != null) ? $request->last_name : 'N/A';
+            $employee->middle_name                  = ($request->input('middle_name') != null) ? $request->middle_name : 'N/A';
             $employee->birthday                     = $request->birthday;
             $employee->birth_place                  = $request->birth_place;
             $employee->citizenship                  = $request->citizenship;
