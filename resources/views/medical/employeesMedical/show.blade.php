@@ -11,10 +11,6 @@
 	<i class="fas fa-arrow-left"></i>
 </a>
 @endsection
-<<<<<<< HEAD
-=======
-
->>>>>>> c09d84caac64de5d15cd21ad291455ccec582055
 <div class="card mb-5">
 	<div class="card-body">
 		<div class="row">
