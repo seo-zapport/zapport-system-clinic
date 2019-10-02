@@ -12,8 +12,10 @@
 
 
 <div id="printable">
+<div style="text-align: center;">	
 <img src="{{url( '/images/logo.png' )}}" alt="Zapport">
-<h1 class="text-center">Employees List</h1>
+</div>
+<h1 class="text-center mb-4 mt-4">Employees List</h1>
 
 <div class="container-fluid">
 	<div class="table-responsive">
