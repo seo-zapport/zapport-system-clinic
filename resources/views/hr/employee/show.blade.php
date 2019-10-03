@@ -275,22 +275,22 @@
 					<hr>
 					<div class="form-row">
 						<div class="form-group col-md-6">
-							<label for="tin_no">TIN Number</label>
-							<p class="h5 {{ (@$employee->tin_no == NULL) ? 'bg-warning' : ''  }}">{{ @$employee->tin_no }}</p>
+							<label for="tin_no" class="{{ (@$employee->tin_no == NULL) ? 'text-danger' : ''  }}">{{ (@$employee->tin_no == NULL) ? '*' : ''  }} TIN Number</label>
+							<p class="h5">{{ @$employee->tin_no }}</p>
 						</div>
 						<div class="form-group col-md-6">
-							<label for="sss_no">SSS Number</label>
-							<p class="h5 {{ (@$employee->sss_no == NULL) ? 'bg-warning' : ''  }}">{{ @$employee->sss_no }}</p>
+							<label for="sss_no" class="{{ (@$employee->tin_no == NULL) ? 'text-danger' : ''  }}">{{ (@$employee->tin_no == NULL) ? '*' : ''  }} SSS Number</label>
+							<p class="h5">{{ @$employee->sss_no }}</p>
 						</div>
 					</div>
 					<div class="form-row">
 						<div class="form-group col-md-6">
-							<label for="philhealth_no">Philhealth Number</label>
-							<p class="h5 {{ (@$employee->philhealth_no == NULL) ? 'bg-warning' : ''  }}">{{ @$employee->philhealth_no }}</p>
+							<label for="philhealth_no" class="{{ (@$employee->tin_no == NULL) ? 'text-danger' : ''  }}">{{ (@$employee->tin_no == NULL) ? '*' : ''  }} Philhealth Number</label>
+							<p class="h5">{{ @$employee->philhealth_no }}</p>
 						</div>
 						<div class="form-group col-md-6">
-							<label for="hdmf_no">HDMF Number</label>
-							<p class="h5 {{ (@$employee->hdmf_no == NULL) ? 'bg-warning' : ''  }}">{{ @$employee->hdmf_no }}</p>
+							<label for="hdmf_no" class="{{ (@$employee->tin_no == NULL) ? 'text-danger' : ''  }}">{{ (@$employee->tin_no == NULL) ? '*' : ''  }} HDMF Number</label>
+							<p class="h5">{{ @$employee->hdmf_no }}</p>
 						</div>
 					</div>
 					<hr>

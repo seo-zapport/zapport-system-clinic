@@ -19,7 +19,7 @@
 	</div>
 </form>
 <div class="card mb-5">
-	<div class="card-body">
+	<div class="card-body" id="medical_employee_list">
 		<div class="table-responsive">
 			<table class="table table-hover">
 				<thead class="thead-dark">
