@@ -24,7 +24,7 @@
 		<div class="table-responsive">
 			<table class="table table-hover">
 				<thead class="thead-dark">
-					<th>Employee Number</th>
+					<th>Employee No.</th>
 					<th>Name</th>
 					<th>Department - Position</th>
 					<th>Action</th>

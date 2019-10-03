@@ -31,8 +31,8 @@
 				<thead class="thead-dark">
 					<tr>
 						<th>ID</th>
-						<th>User name</th>
-						<th>Employee Email</th>
+						<th>Username</th>
+						<th>Email</th>
 						<th>Role</th>
 						<th>Action</th>
 					</tr>

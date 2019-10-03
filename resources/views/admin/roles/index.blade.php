@@ -15,7 +15,7 @@
 			<table class="table table-hover">
 				<thead class="thead-dark">
 					<tr>
-						<th>Role Name</th>
+						<th>Role Type</th>
 						<th>Count</th>
 						<th>Action</th>
 					</tr>

@@ -23,7 +23,7 @@
 		<div class="table-responsive">
 			<table class="table table-hover">
 				<thead class="thead-dark">
-					<th>Employee ID</th>
+					<th>ID No.</th>
 					<th>Name</th>
 					<th>Department - Positon</th>
 					<th>Action</th>

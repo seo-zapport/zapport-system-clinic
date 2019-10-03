@@ -2,7 +2,7 @@
 @section('title', '| New Post')
 
 @section('heading-title')
-	<i class="fas fa-book text-secondary"></i> New Posts
+	<i class="fas fa-book text-secondary"></i> Add New Post
 @endsection
 @section('dash-content')
 {{-- {{ phpinfo() }} --}}
@@ -16,7 +16,7 @@
 					<input type="text" name="title" class="form-control" value="@yield('postEdit', old('title'))" placeholder="Enter Post Title Here!" required>
 				</div>
 				<div class="form-group posts-description">
-					<label for="description"><strong>Post description</strong></label>
+					<label for="description"><strong>Post Content</strong></label>
 					<textarea name="description" id="description" rows="20" class="form-control" placeholder="Enter Your Content Here!">@yield('postEditDes', old('description'))</textarea>
 				</div>		
 			</div>
