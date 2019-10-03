@@ -275,21 +275,37 @@
 					<hr>
 					<div class="form-row">
 						<div class="form-group col-md-6">
+<<<<<<< HEAD
 							<label for="tin_no">TIN Number</label>
 							<p class="h5">{{ @$employee->tin_no }}</p>
 						</div>
 						<div class="form-group col-md-6">
 							<label for="sss_no">SSS Number</label>
+=======
+							<label for="tin_no" class="{{ (@$employee->tin_no == NULL) ? 'text-danger' : ''  }}">{{ (@$employee->tin_no == NULL) ? '*' : ''  }} TIN Number</label>
+							<p class="h5">{{ @$employee->tin_no }}</p>
+						</div>
+						<div class="form-group col-md-6">
+							<label for="sss_no" class="{{ (@$employee->tin_no == NULL) ? 'text-danger' : ''  }}">{{ (@$employee->tin_no == NULL) ? '*' : ''  }} SSS Number</label>
+>>>>>>> 4ebb03a15e6613c0ccb4471df589c75620548386
 							<p class="h5">{{ @$employee->sss_no }}</p>
 						</div>
 					</div>
 					<div class="form-row">
 						<div class="form-group col-md-6">
+<<<<<<< HEAD
 							<label for="philhealth_no">Philhealth Number</label>
 							<p class="h5">{{ @$employee->philhealth_no }}</p>
 						</div>
 						<div class="form-group col-md-6">
 							<label for="hdmf_no">HDMF Number</label>
+=======
+							<label for="philhealth_no" class="{{ (@$employee->tin_no == NULL) ? 'text-danger' : ''  }}">{{ (@$employee->tin_no == NULL) ? '*' : ''  }} Philhealth Number</label>
+							<p class="h5">{{ @$employee->philhealth_no }}</p>
+						</div>
+						<div class="form-group col-md-6">
+							<label for="hdmf_no" class="{{ (@$employee->tin_no == NULL) ? 'text-danger' : ''  }}">{{ (@$employee->tin_no == NULL) ? '*' : ''  }} HDMF Number</label>
+>>>>>>> 4ebb03a15e6613c0ccb4471df589c75620548386
 							<p class="h5">{{ @$employee->hdmf_no }}</p>
 						</div>
 					</div>
