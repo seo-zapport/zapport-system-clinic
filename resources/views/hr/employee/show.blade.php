@@ -274,21 +274,21 @@
 					<h5 class="text-muted"><i class="fas fa-bars"></i> Others</h5>
 					<hr>
 					<div class="form-row">
-						<div class="form-group col-md-6 {{ (@$employee->tin_no == NULL) ? 'bg-warning' : ''  }}">
+						<div class="form-group col-md-6">
 							<label for="tin_no">TIN Number</label>
 							<p class="h5">{{ @$employee->tin_no }}</p>
 						</div>
-						<div class="form-group col-md-6  {{ (@$employee->sss_no == NULL) ? 'bg-warning' : ''  }}">
+						<div class="form-group col-md-6">
 							<label for="sss_no">SSS Number</label>
 							<p class="h5">{{ @$employee->sss_no }}</p>
 						</div>
 					</div>
 					<div class="form-row">
-						<div class="form-group col-md-6 {{ (@$employee->philhealth_no == NULL) ? 'bg-warning' : ''  }}">
+						<div class="form-group col-md-6">
 							<label for="philhealth_no">Philhealth Number</label>
 							<p class="h5">{{ @$employee->philhealth_no }}</p>
 						</div>
-						<div class="form-group col-md-6 {{ (@$employee->hdmf_no == NULL) ? 'bg-warning' : ''  }}">
+						<div class="form-group col-md-6">
 							<label for="hdmf_no">HDMF Number</label>
 							<p class="h5">{{ @$employee->hdmf_no }}</p>
 						</div>
