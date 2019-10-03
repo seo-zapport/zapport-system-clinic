@@ -30,7 +30,7 @@
                 @else
                     <a href="{{ route('employees') }}" >
                         <div class="name text-white">Employee Name</div>
-                        <div class="position text-white">Employee Position</div>
+                        <div class="position text-white">Sync Profile</div>
                     </a>
                 @endif
                 @endauth
