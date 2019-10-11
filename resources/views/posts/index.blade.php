@@ -24,7 +24,7 @@
 			<table class="table table-hover">
 				<thead class="thead-dark">
 					<th>Title</th>
-					<th>Date Posted</th>
+					<th>Date Published</th>
 					<th>Action</th>
 				</thead>
 				<tbody>
