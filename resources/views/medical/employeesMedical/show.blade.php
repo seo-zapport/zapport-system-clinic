@@ -48,7 +48,7 @@
 		<div id="diagnosis">
 			<div class="row my-3">
 				<div class="col-12 col-md-8">
-					<h2 class="text-secondary zp-text-22">Diagnosis: <span class="text-dark">{{ ucwords($employeesmedical->diagnosis) }}</span></h2>
+					<h2 class="text-secondary zp-text-22">Diagnosis: <span class="text-dark">{{ ucwords($employeesmedical->diagnoses->diagnosis) }}</span></h2>
 					{{-- <p class="mb-2"><small class="text-muted">Date: {{ $employeesmedical->created_at->format('M d, Y - h:i a') }}</small></p>
 					<p class="mb-1"><span class="text-dark font-weight-bold">Attendant</span>: {{ ucwords($employeesmedical->user->employee->first_name) }} {{ ucwords($employeesmedical->user->employee->middle_name) }} {{ ucwords($employeesmedical->user->employee->last_name) }}</p>
 					<p class="mb-1"><span class="text-dark font-weight-bold">Remarks</span>: {{ ($employeesmedical->remarks == 'followUp') ? 'Follow up' : 'Done' }}</p> --}}
@@ -92,6 +92,7 @@
 							<thead class="thead-dark">
 								<tr>
 									<th>Doctor's Note</th>
+									<th>Attachment</th>
 									<th>Attendant</th>
 									<th>Remarks</th>
 									<th>Date</th>
@@ -100,6 +101,11 @@
 							<tbody>
 								<tr>
 									<td>{{ ucfirst($employeesmedical->note) }}</td>
+									<td>
+										@if ($employeesmedical->attachment != null)
+											<a class="btn-dl" href="{{ route('download', ['file_name' => $employeesmedical->attachment]) }}" download>{{ $employeesmedical->attachment }}</a>
+										@endif
+									</td>
 									<td class="w-15">{{ ucwords($employeesmedical->user->employee->first_name) }} {{ ucwords($employeesmedical->user->employee->middle_name) }} {{ ucwords($employeesmedical->user->employee->last_name) }}</td>
 									<td class="w-15">{{ ($employeesmedical->remarks == 'followUp') ? 'Follow up' : 'Done' }}</td>
 									<td class="text-muted w-15">{{ $employeesmedical->created_at->format('M d, Y - h:i a') }}</td>
@@ -145,6 +151,7 @@
 								<thead class="thead-dark">
 									<tr>
 										<th>Findings</th>
+										<th>Attachment</th>
 										<th>Date</th>
 									</tr>
 								</thead>
@@ -152,6 +159,11 @@
 									@foreach ($employeesmedical->medNote as $followups)
 										<tr>
 											<td>{{ ucfirst($followups->followup_note) }}</td>
+											<td>
+												@if ($followups->attachment != null)
+													<a class="btn-dl" href="{{ route('download', ['file_name' => $followups->attachment]) }}" download>{{ $followups->attachment }}</a>
+												@endif
+											</td>
 											<td  class="text-muted w-15">{{ $followups->created_at->format('M d, Y - h:i a') }}</td>
 										</tr>
 									@endforeach
@@ -177,8 +189,12 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<form onsubmit="return test(this)" id="myform" method="post" action="{{ route('medical.storeFollowup', ['employee' => $employee->emp_id, 'employeesmedical' =>$employeesmedical->diagnosis]) }}">
+				<form onsubmit="return test(this)" id="myform" method="post" action="{{ route('medical.storeFollowup', ['employee' => $employee->emp_id, 'employeesmedical' => $employeesmedical->id]) }}" enctype="multipart/form-data">
 					@csrf
+					<div class="form-group">
+						<label for="diagnosis">Attachment</label>
+						<input type="file" name="attachment" class="form-control-file file-upload">
+					</div>
 					<div class="form-group">
 						<label for="followup_note">Note:</label>
 						<textarea name="followup_note" id="followup_note" cols="10" rows="5" class="form-control" placeholder="Doctor's note" required></textarea>
@@ -234,7 +250,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<form method="post" action="{{ route('medical.update', ['employee' => $employee->emp_id, 'employeesmedical' =>$employeesmedical->diagnosis]) }}">
+				<form method="post" action="{{ route('medical.update', ['employee' => $employee->emp_id, 'employeesmedical' =>$employeesmedical->id]) }}">
 					@csrf
 					@method('PUT')
 					<input type="hidden" name="employee_id" value="{{ $employee->id }}">

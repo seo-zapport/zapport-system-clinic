@@ -868,3 +868,26 @@
 		border-radius: 0.25rem;	
 	}
 }
+
+
+// Autocomplete
+#searchDiagnosis{
+	ul{
+		margin: 0;
+	}
+	.autocomplete-items{
+		position: absolute;
+	    width: 100%;
+	    padding-right: 10px;
+	}
+}
+
+#myform{
+	ul{
+		margin: 0;
+	}
+	.autocomplete-items{
+		position: absolute;
+	    width: 96%;
+	}
+}

@@ -31,18 +31,13 @@ class Employeesmedical extends Model
         $this->attributes['created_at'] = (new Carbon($value))->format('Y-m-d H:i');
     }
 
-    // public function setUpdatedatAttribute($value) 
-    // {
-    //     $this->attributes['updated_at'] = (new Carbon($value))->format('Y-m-d H:i');
-    // }
-
     public function medNote()
     {
         return $this->belongsToMany(Mednote::class, 'employeesmedical_mednotes', 'employeesmedical_id');
     }
 
-    public function getRouteKeyName()
+    public function diagnoses()
     {
-        return 'diagnosis';
+        return $this->belongsTo(Diagnosis::class, 'diagnosis_id');
     }
 }

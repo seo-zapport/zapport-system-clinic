@@ -203,11 +203,11 @@
 					<hr>
 					<div class="form-row">
 						<div class="form-group col-md-8">
-							<label for="mother_name">Father's Name</label>
+							<label for="father_name">Father's Name</label>
 							<p class="h5">{{ ucwords(@$employee->father_name) }}</p>
 						</div>
 						<div class="form-group col-md-4">
-							<label for="mother_birthday">Father's Birthday</label>
+							<label for="father_birthday">Father's Birthday</label>
 							<p class="h5">{{ ucwords(@$employee->father_birthday->format('M d, Y')) }}</p>
 						</div>
 					</div>
@@ -223,12 +223,12 @@
 					</div>
 					<div class="form-row">
 						<div class="form-group col-md-8">
-							<label for="mother_name">Spouse Name</label>
+							<label for="spouse_name">Spouse Name</label>
 							<p class="h5">{{ ( !empty(@$employee->spouse_name) ) ? ucwords(@$employee->spouse_name) : "None" }}</p>
 						</div>
 						<div class="form-group col-md-4">
-							<label for="mother_birthday">Date of marriage</label>
-							<p class="h5">{{ ( !empty(@$employee->spouse_name) ) ? @$employee->date_of_merriage->format('M d, Y') : "None" }}</p>
+							<label for="spouse_birthday">Date of marriage</label>
+							<p class="h5">{{ ( !empty(@$employee->spouse_name) ) ? Carbon\carbon::parse(@$employee->date_of_marriage)->format('M d, Y') : "None" }}</p>
 						</div>
 					</div>
 
@@ -251,15 +251,15 @@
 								<div class="col-12 form-row">
 									<div class="form-group col-md-4">
 										<label for="children" class="mr-2">Child's Name</label>
-										<p class="h5">{{ $children[0] }}</p>
+										<p class="h5">{{ ucfirst($children[0]) }}</p>
 									</div>
 									<div class="form-group col-md-4">
 										<label for="children" class="mr-2">Birthday</label>
-										<p class="h5">{{ $children[1] }}</p>
+										<p class="h5">{{ Carbon\carbon::parse($children[1])->format('M d, Y') }}</p>
 									</div>
 									<div class="form-group col-md-4">
 										<label for="children" class="mr-2">Gender</label>
-										<p class="h5">{{ $children[2] }}</p>
+										<p class="h5">{{ ucfirst($children[2]) }}</p>
 									</div>
 								</div>
 							</div>
@@ -275,37 +275,21 @@
 					<hr>
 					<div class="form-row">
 						<div class="form-group col-md-6">
-<<<<<<< HEAD
-							<label for="tin_no">TIN Number</label>
-							<p class="h5">{{ @$employee->tin_no }}</p>
-						</div>
-						<div class="form-group col-md-6">
-							<label for="sss_no">SSS Number</label>
-=======
 							<label for="tin_no" class="{{ (@$employee->tin_no == NULL) ? 'text-danger' : ''  }}">{{ (@$employee->tin_no == NULL) ? '*' : ''  }} TIN Number</label>
 							<p class="h5">{{ @$employee->tin_no }}</p>
 						</div>
 						<div class="form-group col-md-6">
 							<label for="sss_no" class="{{ (@$employee->tin_no == NULL) ? 'text-danger' : ''  }}">{{ (@$employee->tin_no == NULL) ? '*' : ''  }} SSS Number</label>
->>>>>>> 4ebb03a15e6613c0ccb4471df589c75620548386
 							<p class="h5">{{ @$employee->sss_no }}</p>
 						</div>
 					</div>
 					<div class="form-row">
 						<div class="form-group col-md-6">
-<<<<<<< HEAD
-							<label for="philhealth_no">Philhealth Number</label>
-							<p class="h5">{{ @$employee->philhealth_no }}</p>
-						</div>
-						<div class="form-group col-md-6">
-							<label for="hdmf_no">HDMF Number</label>
-=======
 							<label for="philhealth_no" class="{{ (@$employee->tin_no == NULL) ? 'text-danger' : ''  }}">{{ (@$employee->tin_no == NULL) ? '*' : ''  }} Philhealth Number</label>
 							<p class="h5">{{ @$employee->philhealth_no }}</p>
 						</div>
 						<div class="form-group col-md-6">
 							<label for="hdmf_no" class="{{ (@$employee->tin_no == NULL) ? 'text-danger' : ''  }}">{{ (@$employee->tin_no == NULL) ? '*' : ''  }} HDMF Number</label>
->>>>>>> 4ebb03a15e6613c0ccb4471df589c75620548386
 							<p class="h5">{{ @$employee->hdmf_no }}</p>
 						</div>
 					</div>

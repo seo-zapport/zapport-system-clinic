@@ -45,7 +45,7 @@
 						</tr>
 						@empty
 							<tr>
-								<td colspan="2" class="text-center">{{ "No generic names registered yet!" }}</td>
+								<td colspan="3" class="text-center">{{ "No generic names registered yet!" }}</td>
 							</tr>
 					@endforelse
 				</tbody>

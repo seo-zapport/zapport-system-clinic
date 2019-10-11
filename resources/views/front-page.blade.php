@@ -7,9 +7,11 @@
 	<section id="hero" class="text-center my-5 overlay">
 		<div class="container z-index-1">
 			<img src="{{ asset('images/zapport logo.png') }}" class="mx-auto mb-5">
+			@guest()
 			<div class="pt-5">
 				<a href="{{ route('login') }}" class="btn btn-custom-trans">Login</a>		
 			</div>
+			@endguest
 		</div>
 	</section>
 	<section id="clinic">

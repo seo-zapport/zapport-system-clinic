@@ -218,7 +218,7 @@
 					</div>
 					<div class="form-group col-md-4">
 						<label for="mother_birthday">Date of marriage</label>
-						<p class="h5">{{ ( !empty(@$employee->spouse_name) ) ? @$employee->date_of_merriage->format('M d, Y') : "None" }}</p>
+						<p class="h5">{{ ( !empty(@$employee->spouse_name) ) ? Carbon\carbon::parse(@$employee->date_of_merriage)->format('M d, Y') : "None" }}</p>
 					</div>
 				</div>
 
@@ -245,7 +245,7 @@
 								</div>
 								<div class="form-group col-md-4">
 									<label for="children" class="mr-2">Birthday</label>
-									<p class="h5">{{ $children[1] }}</p>
+									<p class="h5">{{ Carbon\carbon::parse($children[1])->format('M d, Y') }}</p>
 								</div>
 								<div class="form-group col-md-4">
 									<label for="children" class="mr-2">Gender</label>

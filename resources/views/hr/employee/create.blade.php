@@ -269,12 +269,12 @@
 
 					<div class="form-row">
 						<div class="form-group col-md-8">
-							<label for="mother_name">Spouse Name</label>
+							<label for="spouse_name">Spouse Name</label>
 							<input type="text" name="spouse_name" value="@yield('editSpouse', old('spouse_name'))" class="form-control" placeholder="Spouse Name">
 						</div>
 						<div class="form-group col-md-4">
-							<label for="mother_birthday">Date of marriage</label>
-							<input type="date" name="date_of_merriage" value="@yield('editMarriageDate', old('date_of_marriage'))" class="form-control">
+							<label for="spouse_birthday">Date of marriage</label>
+							<input type="date" name="date_of_marriage" value="@yield('editMarriageDate', old('date_of_marriage'))" class="form-control">
 						</div>
 					</div>
 
@@ -294,7 +294,12 @@
 								</div>
 								<div class="form-group col-md-3">
 									<label for="children" class="mr-2">Gender</label>
-									<input type="text" class="form-control " name="children[0][]" placeholder="Gender">
+									{{-- <input type="text" class="form-control " name="children[0][]" placeholder="Gender"> --}}
+									<select name="children[0][]" class="form-control">
+										<option selected="true" disabled="true" value="">Select Gender</option>
+										<option value="male">Male</option>
+										<option value="female">Female</option>
+									</select>
 								</div>
 								<div class="form-group col-md-2">
 									<label class="mr-2 d-block">Action</label>
@@ -352,7 +357,7 @@
 					<hr>
 
 					<div class="form-group text-right">
-						<button type="submit" class="btn btn-primary">Submit</button>
+						<button type="submit" class="btn btn-primary">Save</button>
 					</div>
 				</div>
 			</div>

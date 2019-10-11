@@ -47,10 +47,10 @@
 														<td>{{ $seen->employee->emp_id }}</td>
 														<td>{{ ucwords($seen->employee->last_name) }} {{ ucwords($seen->employee->first_name) }} {{ ucwords($seen->employee->middle_name) }}</td>
 														<td>{{ $seen->created_at->format('M d, Y - h:i a') }}</td>
-														<td>{{ $seen->diagnosis }}</td>
+														<td>{{ $seen->diagnoses->diagnosis }}</td>
 														<td>{{ $seen->note }}</td>
 														<td>{{ ($seen->remarks == 'followUp') ? 'Follow up' : 'Done' }}</td>
-														<td><a href="{{ route('medical.show', ['employee' => $seen->employee->emp_id, 'employeesmedical' => $seen->diagnosis]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a></td>
+														<td><a href="{{ route('medical.show', ['employee' => $seen->employee->emp_id, 'employeesmedical' => $seen->id]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a></td>
 													</tr>
 													@empty
 														<tr>
@@ -86,10 +86,10 @@
 														<td>{{ $empMed->employee->emp_id }}</td>
 														<td>{{ ucwords($empMed->employee->last_name) }} {{ ucwords($empMed->employee->first_name) }} {{ ucwords($empMed->employee->middle_name) }}</td>
 														<td>{{ $empMed->created_at->format('M d, Y - h:i a') }}</td>
-														<td>{{ $empMed->diagnosis }}</td>
+														<td>{{ $empMed->diagnoses->diagnosis }}</td>
 														<td>{{ $empMed->note }}</td>
 														<td>{{ ($empMed->remarks == 'followUp') ? 'Follow up' : 'Done' }}</td>
-														<td><a href="{{ route('medical.show', ['employee' => $empMed->employee->emp_id, 'employeesmedical' => $empMed->diagnosis]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a></td>
+														<td><a href="{{ route('medical.show', ['employee' => $empMed->employee->emp_id, 'employeesmedical' => $empMed->id]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a></td>
 													</tr>
 													@empty
 														<tr>
@@ -149,10 +149,11 @@
 						@if (Gate::check('isAdmin') || Gate::check('isHr') || Gate::check('isDoctor') || Gate::check('isNurse'))
 							{{-- Leave this empty --}}
 						@else
-							<form method="get">
+							<form id="searchDiagnosis" method="get" autocomplete="off">
 								<div class="form-row">
-									<div class="form-group col-md-4">
+									<div class="form-group col-md-4 autocomplete">
 										<input type="search" name="search" class="form-control" value="{{ (!empty($result)) ? $result : '' }}" placeholder="Search for Diagnosis">
+										<div id="searchDiagnosis_list" class="autocomplete-items"></div>
 									</div>
 									<div class="form-group col-md-1 d-inline-flex">
 										<button type="submit" class="btn btn-success mr-2">Search</button>
@@ -178,10 +179,10 @@
 										<tr>
 											<td>{{ $i++ }}</td>
 											<td>{{ $medsHistory->created_at->format('M d, Y - h:i a') }}</td>
-											<td>{{ $medsHistory->diagnosis }}</td>
+											<td>{{ $medsHistory->diagnoses->diagnosis }}</td>
 											<td>{{ $medsHistory->note }}</td>
 											<td>{{ ($medsHistory->remarks == 'followUp') ? 'Follow up' : 'Done' }}</td>
-											<td><a href="{{ route('dashboard.show', ['employee' => $medsHistory->employee->emp_id, 'employeesmedical' => $medsHistory->diagnosis]) }}" class="btn btn-info text-white">View</a></td>
+											<td><a href="{{ route('dashboard.show', ['employee' => $medsHistory->employee->emp_id, 'employeesmedical' => $medsHistory->id]) }}" class="btn btn-info text-white">View</a></td>
 										</tr>
 										@empty
 											<tr>
@@ -198,5 +199,27 @@
 			</div>
 		@endif
 	</div>
+
+<script type="application/javascript">
+	// Search Diagnosis
+
+    $("#searchDiagnosis input[name='search']").on('keyup', function(){
+    	var query = $(this).val();
+    	$.ajax({
+    		url: "/medical/employees/diagnosis/"+query+"",
+    		type: "GET",
+    		data:{'diagnosis':query},
+    		success:function(response){
+    			$('#searchDiagnosis_list').html(response);
+    		}
+    	});
+    });
+
+	$(document).on('click', 'li', function(){
+	    var value = $(this).text();
+	    $("#searchDiagnosis input[name='search']").val(value);
+	    $('#searchDiagnosis_list').html("");
+	});
+</script>
 
 @endsection

@@ -45,7 +45,7 @@
 						</tr>
 						@empty
 							<tr>
-								<td colspan="2" class="text-center">{{ "No registered Brand Name yet!" }}</td>
+								<td colspan="3" class="text-center">{{ "No registered Brand Name yet!" }}</td>
 							</tr>
 					@endforelse
 				</tbody>

@@ -27,6 +27,9 @@ class MediaController extends Controller
         if (Gate::check('isAdmin') || Gate::check('isHr') || Gate::check('isDoctor') || Gate::allows('isNurse')) {
             $medias = Media::where('user_id', auth()->user()->id)->get();
             return view('posts.medias.index', compact('medias'));
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
             return back();
         }
@@ -72,6 +75,9 @@ class MediaController extends Controller
                     }
                 }
             }
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
             return back();
         }
@@ -114,6 +120,9 @@ class MediaController extends Controller
                 $media->update($atts);
             }
             return back();
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
             return back();
         }
@@ -160,6 +169,9 @@ class MediaController extends Controller
                     }
                 }
             }
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
             return back();
         }

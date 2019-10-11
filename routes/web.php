@@ -99,7 +99,7 @@ Route::group(['prefix' => 'hr'], function(){
 	Route::get('employees/create/deptID/{id}', 'EmployeeController@getPosition');
 	Route::get('employees/create/EmpID/{emp_id}', 'EmployeeController@getEmpID');
 	Route::post('employees', 'EmployeeController@store')->name('hr.emp.addEmp');
-	Route::get('employees/print', 'EmployeeController@printEmployees')->name('print.emp');
+	Route::get('employees/print/', 'EmployeeController@printEmployees')->name('print.emp');
 	Route::get('employees/{employee}', 'EmployeeController@show')->name('hr.emp.show');
 	Route::get('employees/{employee}/edit', 'EmployeeController@edit')->name('hr.emp.edit');
 	Route::get('employees/edit/deptID/{id}', 'EmployeeController@getEditPosition');
@@ -145,8 +145,13 @@ Route::group(['prefix' => 'inventory'], function(){
 
 Route::group(['prefix' => 'medical'], function(){
 
+	Route::get('employees/medical_record', 'EmployeesMedicalController@EmployeesWithRecord')->name('medical.empsRecords');
+	Route::get('employees/full_report', 'EmployeesMedicalController@fullReport')->name('medical.fullReport');
 	Route::get('employees', 'EmployeesMedicalController@listofEmployee')->name('medical.listsofemployees');
 	Route::get('employees/{employee}', 'EmployeesMedicalController@employeeinfo')->name('medical.employeeInfo');
+	// diagnosis
+	Route::get('employees/diagnosis/{diagnosis}', 'DiagnosisController@fetchDiagnosis')->name('diagnosis.fetch');
+	// 
 	Route::get('employees/gen/{id}', 'EmployeesMedicalController@getMedBrand')->name('getBrand');
 	Route::post('employees/{employee}', 'EmployeesMedicalController@store')->name('medical.store');
 	Route::get('employees/generic_id/{generic_id}/brand_id/{brand_id}', 'EmployeesMedicalController@getMedGenBrd')->name('getGenBrd');
@@ -154,5 +159,6 @@ Route::group(['prefix' => 'medical'], function(){
 	Route::get('employees/{employee}/employeesmedical/{employeesmedical}/generic_id/{generic_id}/brand_id/{brand_id}', 'EmployeesMedicalController@getMedGenBrdUpdate')->name('getMedGenBrdUpdate');
 	Route::post('employees/{employee}/employeesmedical/{employeesmedical}', 'EmployeesMedicalController@storeFollowup')->name('medical.storeFollowup');
 	Route::put('employees/{employee}/employeesmedical/{employeesmedical}', 'EmployeesMedicalController@update')->name('medical.update');
+	Route::get('download/{file_name}', 'EmployeesMedicalController@download')->name('download');
 
 });

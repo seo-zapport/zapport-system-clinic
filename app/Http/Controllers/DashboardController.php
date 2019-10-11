@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Diagnosis;
 use App\Employee;
+use App\Employeesmedical;
 use App\Generic;
 use App\Medicine;
-use App\Employeesmedical;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -54,9 +55,22 @@ class DashboardController extends Controller
             $employee = $findEmployee->employee->id;
             $empMed = Employeesmedical::where('employee_id', $employee);
 
-                $search = $empMed->where('diagnosis', 'like', '%'.$request->search.'%')->orderBy('id', 'desc')->paginate(10);
+
+            if (!empty($request->search)) {
+                $diagnosis = Diagnosis::where('diagnosis', $request->search)->first();
+
+                if ($diagnosis != null) {
+                    $search = $empMed->where('diagnosis_id', $diagnosis->id)->orderBy('id', 'desc')->paginate(10);
+                }
+
+                $search = $empMed->paginate(10);
+
                 $search->appends(['search' => $request->search]);
                 $result = $request->search;
+
+            }else{
+                $search = $empMed->paginate(10);
+            }
 
             $gens = Generic::orderBy('gname', 'asc')->get();
             $meds = Medicine::get();
