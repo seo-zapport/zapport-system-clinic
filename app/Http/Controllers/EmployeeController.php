@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Employee;
-use App\Position;
 use App\Department;
 use App\DepartmentPosition;
+use App\Employee;
+use App\Http\Requests\EmployeeRequest;
+use App\Position;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-use App\Http\Requests\EmployeeRequest;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -26,12 +27,78 @@ class EmployeeController extends Controller
      */
     public function index(Request $request)
     {
+        // dd($request->filter_gender);
         if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
-            $employees = Employee::orWhere(\DB::raw("concat(emp_id, ' ', first_name, ' ', last_name, ' ', middle_name)"), 'like', '%'.$request->search.'%')
-                                 ->orWhere(\DB::raw("concat(emp_id, ' ', last_name, ' ', first_name, ' ', middle_name)"), 'like', '%'.$request->search.'%')->orderBy('last_name', 'desc')->paginate(10);
-            $employees->appends(['search' => $request->search]);
-            $search = $request->search;
-            return view('hr.employee.index', compact('employees', 'search'));
+            if ($request->search) {
+                $employees = Employee::orWhere(\DB::raw("concat(emp_id, ' ', first_name, ' ', last_name, ' ', middle_name)"), 'like', '%'.$request->search.'%')
+                                     ->orWhere(\DB::raw("concat(emp_id, ' ', last_name, ' ', first_name, ' ', middle_name)"), 'like', '%'.$request->search.'%')->orderBy('last_name', 'desc')->paginate(10);
+                $employees->appends(['search' => $request->search]);
+                $search = $request->search;
+            }elseif ($request->filter_gender != NULL && $request->filter_empType == NULL && $request->filter_age == NULL){
+
+                $employees = Employee::where('gender', $request->filter_gender)->orderBy('last_name', 'desc')->paginate(10);
+                $employees2 = Employee::where('gender', $request->filter_gender)->orderBy('last_name', 'desc')->get();
+                $employees->appends(['filter_gender' => $request->filter_gender]);
+                $filter_gender = $request->filter_gender;
+                $empcount =  Employee::where('gender', $request->filter_gender)->get()->count();
+
+            }elseif ($request->filter_gender == NULL && $request->filter_empType != NULL && $request->filter_age == NULL){
+
+                $employees = Employee::where('employee_type', $request->filter_empType)->orderBy('last_name', 'desc')->paginate(10);
+                $employees2 = Employee::where('employee_type', $request->filter_empType)->orderBy('last_name', 'desc')->get();
+                $employees->appends(['filter_empType' => $request->filter_empType]);
+                $filter_empType = $request->filter_empType;
+                $empcount =  Employee::where('employee_type', $request->filter_empType)->get()->count();
+
+            }elseif ($request->filter_gender == NULL && $request->filter_empType == NULL && $request->filter_age != NULL){
+
+                $employees = Employee::orderBy('last_name', 'desc')->paginate(10);
+                $employees2 = Employee::orderBy('last_name', 'desc')->get();
+                $employees->appends(['filter_age' => $request->filter_age]);
+                $filter_age = $request->filter_age;
+
+            }elseif ($request->filter_gender != NULL && $request->filter_empType != NULL && $request->filter_age == NULL){
+
+                $employees = Employee::where('gender', $request->filter_gender)->where('employee_type', $request->filter_empType)->orderBy('last_name', 'desc')->paginate(10);
+                $employees2 = Employee::where('gender', $request->filter_gender)->where('employee_type', $request->filter_empType)->orderBy('last_name', 'desc')->get();
+                $employees->appends(['filter_gender' => $request->filter_gender, 'filter_empType' => $request->filter_empType]);
+                $filter_both = ['gender' => $request->filter_gender, 'type' => $request->filter_empType];
+                $empcount =  Employee::where('gender', $request->filter_gender)->where('employee_type', $request->filter_empType)->get()->count();
+
+            }elseif ($request->filter_gender != NULL && $request->filter_empType == NULL && $request->filter_age != NULL){
+
+                $employees = Employee::where('gender', $request->filter_gender)->orderBy('last_name', 'desc')->paginate(10);
+                $employees2 = Employee::where('gender', $request->filter_gender)->orderBy('last_name', 'desc')->get();
+                $employees->appends(['filter_gender' => $request->filter_gender, 'filter_age' => $request->filter_age]);
+                $filter_g_a = ['gender' => $request->filter_gender, 'age' => $request->filter_age];
+                $empcount =  Employee::where('gender', $request->filter_gender)->get()->count();
+
+            }elseif ($request->filter_gender == NULL && $request->filter_empType != NULL && $request->filter_age != NULL){
+
+                $employees = Employee::where('employee_type', $request->filter_empType)->orderBy('last_name', 'desc')->paginate(10);
+                $employees2 = Employee::where('employee_type', $request->filter_empType)->orderBy('last_name', 'desc')->get();
+                $employees->appends(['filter_empType' => $request->filter_empType, 'filter_age' => $request->filter_age]);
+                $filter_e_a = ['type' => $request->filter_empType, 'age' => $request->filter_age];
+                $empcount =  Employee::where('employee_type', $request->filter_empType)->get()->count();
+
+            }elseif ($request->filter_gender != NULL && $request->filter_empType != NULL && $request->filter_age != NULL){
+
+                $employees = Employee::where('gender', $request->filter_gender)->where('employee_type', $request->filter_empType)->orderBy('last_name', 'desc')->paginate(10);
+                $employees2 = Employee::where('gender', $request->filter_gender)->where('employee_type', $request->filter_empType)->orderBy('last_name', 'desc')->get();
+                $employees->appends(['filter_gender' => $request->filter_gender, 'filter_empType' => $request->filter_empType, 'filter_age' => $request->filter_age]);
+                $filter_all = ['gender' => $request->filter_gender, 'type' => $request->filter_empType, 'age' => $request->filter_age];
+                $empcount =  Employee::where('gender', $request->filter_gender)->where('employee_type', $request->filter_empType)->get()->count();
+
+            }else{
+                $employees = Employee::orderBy('last_name', 'desc')->paginate(10);
+                $employees2 = Employee::orderBy('last_name', 'desc')->get();
+            }
+
+            $emp_age = Employee::get();
+
+            return view('hr.employee.index', compact('employees', 'search', 'empcount', 'filter_gender', 'filter_empType', 'filter_both', 'filter_age', 'filter_all', 'emp_age', 'filter_g_a', 'filter_e_a'))
+            ->nest('print', 'hr.employee.print_emps', compact('employees2', 'search', 'empcount', 'filter_gender', 'filter_empType', 'filter_both', 'filter_age', 'filter_all', 'emp_age', 'filter_g_a', 'filter_e_a'));
+
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();
             return back()->with('message', 'You\'re not employee!');
@@ -67,16 +134,22 @@ class EmployeeController extends Controller
      */
     public function store(EmployeeRequest $request)
     {
+        // EmployeeRequest
         if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
             $atts = $this->validate($request, $request->rules(), $request->messages());
 
-            // dd($atts);
             $arr = array(request('experience'));
             $works  = serialize($arr[0]);
 
-            $arr1 = array(request('children'));
-            $childrens  = serialize($arr1[0]);
+            if ($request->children[0][0] == null) {
+                $arr1 = $request->children[0];
+                $a = array_push($arr1, null);
+                $childrens = serialize(array($arr1));
 
+            }else{
+                $arr1 = array(request('children'));
+                $childrens  = serialize($arr1[0]);
+            }
 
             if ($request->hasFile('profile_img')) {
                 $filePath = 'public/uploaded';
@@ -90,8 +163,8 @@ class EmployeeController extends Controller
             $newEmp                             = new Employee;
             $newEmp->profile_img                = $newFileName;
             $newEmp->first_name                 = $request->first_name;
-            $newEmp->last_name                  = $request->last_name;
-            $newEmp->middle_name                = $request->middle_name;
+            $newEmp->last_name                  = ($request->input('last_name') != null) ? $request->last_name : 'N/A';
+            $newEmp->middle_name                = ($request->input('middle_name') != null) ? $request->middle_name : 'N/A';
             $newEmp->birthday                   = $request->birthday;
             $newEmp->birth_place                = $request->birth_place;
             $newEmp->citizenship                = $request->citizenship;
@@ -129,6 +202,7 @@ class EmployeeController extends Controller
             $newEmp->hdmf_no                    = $request->hdmf_no;
             $newEmp->experience                 = $works;
             $newEmp->hired_date                 = $request->hired_date;
+            $newEmp->employee_type              = 0;
             // dd($newEmp);
             $newEmp->save();
 
@@ -197,8 +271,8 @@ class EmployeeController extends Controller
             $request->validate([
                     "profile_img"               => ['mimes:jpg,jpeg,png'],
                     "first_name"                => ['required'],
-                    "last_name"                 => ['required'],
-                    "middle_name"               => ['required'],
+                    // "last_name"                 => ['required'],
+                    // "middle_name"               => ['required'],
                     "birthday"                  => ['required'],
                     "birth_place"               => ['required'],
                     "citizenship"               => ['required'],
@@ -230,8 +304,8 @@ class EmployeeController extends Controller
             ],
             [
                     "first_name.required"                => 'First name is required!',
-                    "last_name.required"                 => 'Last name is required!',
-                    "middle_name.required"               => 'Middle name is required!',
+                    // "last_name.required"                 => 'Last name is required!',
+                    // "middle_name.required"               => 'Middle name is required!',
                     "birthday.required"                  => 'Birthdate is required!',
                     "birth_place.required"               => 'Birthplace is required!',
                     "citizenship.required"               => 'Citizenship is required!',
@@ -266,8 +340,15 @@ class EmployeeController extends Controller
             $arr = array(request('experience'));
             $works  = serialize($arr[0]);
 
-            $arr1 = array(request('children'));
-            $childrens  = serialize($arr1[0]);
+            if ($request->children[0][0] == null) {
+                $arr1 = $request->children[0];
+                $a = array_push($arr1, null);
+                $childrens = serialize(array($arr1));
+
+            }else{
+                $arr1 = array(request('children'));
+                $childrens  = serialize($arr1[0]);
+            }
 
             if ($employee->profile_img != null && $request->hasFile('profile_img')) {
 
@@ -290,8 +371,8 @@ class EmployeeController extends Controller
 
             $employee->profile_img                  = $newFileName;
             $employee->first_name                   = $request->first_name;
-            $employee->last_name                    = $request->last_name;
-            $employee->middle_name                  = $request->middle_name;
+            $employee->last_name                    = ($request->input('last_name') != null) ? $request->last_name : 'N/A';
+            $employee->middle_name                  = ($request->input('middle_name') != null) ? $request->middle_name : 'N/A';
             $employee->birthday                     = $request->birthday;
             $employee->birth_place                  = $request->birth_place;
             $employee->citizenship                  = $request->citizenship;
@@ -378,6 +459,7 @@ class EmployeeController extends Controller
         return json_encode($employeesID);
     }
 
+<<<<<<< HEAD
     public function printcsv(Request $request)
     {
         
@@ -389,4 +471,16 @@ class EmployeeController extends Controller
 
   
 
+=======
+    public function printEmployees()
+    {
+        if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
+            $employees = Employee::get();
+            return view('hr.employee.print_emps', compact('employees'));
+        }else{
+            return back();
+        }
+    }
+
+>>>>>>> c26d0de05b4c26a1ac369e7708cc7d0025919092
 }

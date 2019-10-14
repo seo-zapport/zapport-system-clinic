@@ -3,7 +3,7 @@
 @section('reg_emp', 'active')
 {{-- @section('dash-title', 'Add Employee') --}}
 @section('heading-title')
-	<i class="fas fa-user-plus"></i> Add Employee
+	<i class="fas fa-user-plus text-secondary"></i> Add Employee
 @endsection
 @section('dash-content')
 
@@ -77,11 +77,11 @@
 						</div>
 						<div class="form-group col-md-4">
 							<label for="last_name">Last Name</label>
-							<input type="text" name="last_name" value="@yield('editLname', old('last_name'))" class="form-control" placeholder="Last Name" required oninvalid="this.setCustomValidity('Please Enter Last Name')" oninput="setCustomValidity('')">
+							<input type="text" name="last_name" value="@yield('editLname', old('last_name'))" class="form-control" placeholder="Last Name">
 						</div>
 						<div class="form-group col-md-4">
 							<label for="middle_name">Middle Name</label>
-							<input type="text" name="middle_name" value="@yield('editMname', old('middle_name'))" class="form-control" placeholder="Middle Name" required oninvalid="this.setCustomValidity('Please Enter Last Name')" oninput="setCustomValidity('')">
+							<input type="text" name="middle_name" value="@yield('editMname', old('middle_name'))" class="form-control" placeholder="Middle Name">
 						</div>
 					</div>
 					<div class="form-row">
@@ -269,12 +269,12 @@
 
 					<div class="form-row">
 						<div class="form-group col-md-8">
-							<label for="mother_name">Spouse Name</label>
+							<label for="spouse_name">Spouse Name</label>
 							<input type="text" name="spouse_name" value="@yield('editSpouse', old('spouse_name'))" class="form-control" placeholder="Spouse Name">
 						</div>
 						<div class="form-group col-md-4">
-							<label for="mother_birthday">Date of marriage</label>
-							<input type="date" name="date_of_merriage" value="@yield('editMarriageDate', old('date_of_marriage'))" class="form-control">
+							<label for="spouse_birthday">Date of marriage</label>
+							<input type="date" name="date_of_marriage" value="@yield('editMarriageDate', old('date_of_marriage'))" class="form-control">
 						</div>
 					</div>
 
@@ -294,7 +294,12 @@
 								</div>
 								<div class="form-group col-md-3">
 									<label for="children" class="mr-2">Gender</label>
-									<input type="text" class="form-control " name="children[0][]" placeholder="Gender">
+									{{-- <input type="text" class="form-control " name="children[0][]" placeholder="Gender"> --}}
+									<select name="children[0][]" class="form-control">
+										<option selected="true" disabled="true" value="">Select Gender</option>
+										<option value="male">Male</option>
+										<option value="female">Female</option>
+									</select>
 								</div>
 								<div class="form-group col-md-2">
 									<label class="mr-2 d-block">Action</label>
@@ -328,6 +333,7 @@
 					<hr>
 					<h5 class="text-muted"><i class="fas fa-bars"></i> Others</h5>
 					<hr>
+					<small class="text-muted mb-3 d-block"><em>*For ID's, Please indicate numbers only.</em></small>
 					<div class="form-row">
 						<div class="form-group col-md-6">
 							<label for="tin_no">TIN Number</label>
@@ -351,7 +357,7 @@
 					<hr>
 
 					<div class="form-group text-right">
-						<button type="submit" class="btn btn-primary">Submit</button>
+						<button type="submit" class="btn btn-primary">Save</button>
 					</div>
 				</div>
 			</div>

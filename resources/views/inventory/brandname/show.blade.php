@@ -3,7 +3,7 @@
 @section('brandname', 'active')
 {{-- @section('dash-title', ucwords($medbrand->bname)) --}}
 @section('heading-title')
-	<i class="fas fa-file-prescription"></i> {{ ucwords($medbrand->bname) }}
+	<i class="fas fa-file-prescription text-secondary"></i> {{ ucwords($medbrand->bname) }}
 @endsection
 @section('dash-content')
 @section('back')

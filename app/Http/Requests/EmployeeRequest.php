@@ -31,8 +31,8 @@ class EmployeeRequest extends FormRequest
         return [
             "profile_img"               => ['mimes:jpg,jpeg,png', 'max:2000'],
             "first_name"                => ['required'],
-            "last_name"                 => ['required'],
-            "middle_name"               => ['required'],
+            // "last_name"                 => ['required'],
+            // "middle_name"               => ['required'],
             "birthday"                  => ['required'],
             "birth_place"               => ['required'],
             "citizenship"               => ['required'],
@@ -74,8 +74,8 @@ class EmployeeRequest extends FormRequest
     {
         return [
             "first_name.required"                => 'First name is required!',
-            "last_name.required"                 => 'Last name is required!',
-            "middle_name.required"               => 'Middle name is required!',
+            // "last_name.required"                 => 'Last name is required!',
+            // "middle_name.required"               => 'Middle name is required!',
             "birthday.required"                  => 'Birthdate is required!',
             "birth_place.required"               => 'Birthplace is required!',
             "citizenship.required"               => 'Citizenship is required!',

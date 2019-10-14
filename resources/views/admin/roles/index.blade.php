@@ -3,7 +3,7 @@
 @section('roles', 'active')
 {{-- @section('dash-title', 'Roles') --}}
 @section('heading-title')
-	<i class="fas fa-cogs"></i> Roles
+	<i class="fas fa-cogs text-secondary"></i> Roles
 @endsection
 @section('dash-content')
 <div class="card">
@@ -15,7 +15,7 @@
 			<table class="table table-hover">
 				<thead class="thead-dark">
 					<tr>
-						<th>Role Name</th>
+						<th>Role Type</th>
 						<th>Count</th>
 						<th>Action</th>
 					</tr>

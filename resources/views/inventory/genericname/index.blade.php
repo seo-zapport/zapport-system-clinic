@@ -3,7 +3,7 @@
 @section('genericname', 'active')
 {{-- @section('dash-title', 'Generic Names') --}}
 @section('heading-title')
-	<i class="fas fa-tablets"></i> Generic Name
+	<i class="fas fa-tablets text-secondary"></i> Generic Name
 @endsection
 @section('dash-content')
 
@@ -19,24 +19,19 @@
 			<table class="table table-hover">
 				<thead class="thead-dark">
 					<th>Generic Name</th>
-					<th>No. of Medecines by Generic</th>
+					<th>Quantity</th>
 					<th>Action</th>
 				</thead>
 				<tbody>
 					@forelse ($gens as $gen)
 						<tr>
-							@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
 							<td>
 				        		{{ ucwords($gen->gname) }}
 							</td>
-							@else
-							<td>
-								{{ ucwords($gen->gname) }}
-							</td>
-							@endif
 							<td>{{ $gen->medicines->where('availability', 0)->where('expiration_date', '>=', NOW())->count() }}</td>
 							<td class="w-15 px-0">
 								<a href="{{ route('genericname.show', ['generic' => $gen->gname]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i>View</a>
+								@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
 								<small class="text-muted">|</small>
 					        	<form method="post" action="{{ route('genericname.delete', ['generic' => $gen->gname]) }}" class="d-inline">
 					        		@csrf
@@ -45,11 +40,12 @@
 										<i class="fas fa-trash-alt"></i> Delete
 									</button>
 					        	</form>
+								@endif
 							</td>
 						</tr>
 						@empty
 							<tr>
-								<td colspan="2" class="text-center">{{ "No generic names registered yet!" }}</td>
+								<td colspan="3" class="text-center">{{ "No generic names registered yet!" }}</td>
 							</tr>
 					@endforelse
 				</tbody>

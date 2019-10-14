@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Generic;
-use App\Mednote;
+use App\Diagnosis;
 use App\Employee;
-use App\Medicine;
 use App\Employeesmedical;
+use App\EmployeesmedicalMedicineUser;
+use App\Generic;
+use App\Http\Requests\EmployeesmedicalRequest;
+use App\Medicine;
+use App\Mednote;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-use App\EmployeesmedicalMedicineUser;
-use App\Http\Requests\EmployeesmedicalRequest;
 
 class EmployeesmedicalController extends Controller
 {
@@ -53,6 +54,14 @@ class EmployeesmedicalController extends Controller
 
             $this->validate($request, $request->rules(), $request->messages());
 
+            $findDiagnosis = Diagnosis::where('diagnosis', $request->input('diagnosis'))->first();
+            if ($findDiagnosis != null) {
+                $diagnosis = $findDiagnosis->id;
+            }else{
+                $insrtDiagnosis = Diagnosis::create(['diagnosis' => $request->diagnosis]);
+                $diagnosis = $insrtDiagnosis->id;
+            }
+
             // $arr = array_values($request->generic_id);
             if ($request->generic_id != null && $request->brand_id != null && $request->quantity != null) {
                 $arr1 = array_map( 'array_values', $request->generic_id);
@@ -63,6 +72,16 @@ class EmployeesmedicalController extends Controller
 
                 $arr3 = array_map( 'array_values', $request->quantity);
                 $quantity = array_values($arr3);
+            }
+
+            if ($request->hasFile('attachment')) {
+                $filepath = 'public/uploaded/attachments';
+                $orig_filename = pathinfo($request->attachment->getClientOriginalName(), PATHINFO_FILENAME).'-'.date("Y-m-d");
+                $fileExtension = $request->file('attachment')->getClientOriginalExtension();
+                $filename = 'emp_id-'.$request->employee_id.'-'.$orig_filename.'.'.$fileExtension;
+                $request->file('attachment')->storeAs($filepath, $filename);
+            }else{
+                $filename = NULL;
             }
             
             if (!empty($request->generic_id) && !empty($request->brand_id) && !empty($request->quantity)) {
@@ -82,10 +101,11 @@ class EmployeesmedicalController extends Controller
                 $newRecord              = new Employeesmedical;
                 $newRecord->user_id     = auth()->user()->id;
                 $newRecord->employee_id = $request->employee_id;
-                $newRecord->diagnosis   = $request->diagnosis;
+                $newRecord->diagnosis_id   = $diagnosis;
                 $newRecord->note        = $request->note;
                 $newRecord->status      = $request->status;
                 $newRecord->remarks     = $request->remarks;
+                $newRecord->attachment  = $filename;
                 $newRecord->seen        = (Gate::check('isDoctor')) ? 1 : 0;
                 $newRecord->save();
 
@@ -95,10 +115,11 @@ class EmployeesmedicalController extends Controller
             $newRecord              = new Employeesmedical;
             $newRecord->user_id     = auth()->user()->id;
             $newRecord->employee_id = $request->employee_id;
-            $newRecord->diagnosis   = $request->diagnosis;
+            $newRecord->diagnosis_id   = $diagnosis;
             $newRecord->note        = $request->note;
             $newRecord->status      = $request->status;
             $newRecord->remarks     = $request->remarks;
+            $newRecord->attachment  = $filename;
             $newRecord->seen        = (Gate::check('isDoctor')) ? 1 : 0;
             $newRecord->save();
             $data = $newRecord->id;
@@ -244,15 +265,22 @@ class EmployeesmedicalController extends Controller
         if (Gate::allows('isAdmin') || Gate::allows('isHr') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
             $empMed = Employeesmedical::where('employee_id', $employee->id);
 
-            // if (!empty($request->search)) {
-                $search = $empMed->where('diagnosis', 'like', '%'.$request->search.'%')->orderBy('id', 'desc')->paginate(10);
+            if (!empty($request->search)) {
+                $diagnosis = Diagnosis::where('diagnosis', $request->search)->first();
+
+                if ($diagnosis != null) {
+                    $search = $empMed->where('diagnosis_id', $diagnosis->id)->orderBy('id', 'desc')->paginate(10);
+                }
+
+                $search = $empMed->paginate(10);
+
                 $search->appends(['search' => $request->search]);
                 $result = $request->search;
-            // }else{
-            //     $search = $empMed->paginate(10);
-            // }
 
-            // return $search;
+            }else{
+                $search = $empMed->paginate(10);
+            }
+
             $gens = Generic::orderBy('gname', 'asc')->get();
             $meds = Medicine::get();
             return view('medical.employeesMedical.employeeInfo', compact('employee', 'gens', 'meds', 'search', 'result'));
@@ -332,6 +360,18 @@ class EmployeesmedicalController extends Controller
                 $quantity = array_values($arr3);
             }
 
+            if ($request->hasFile('attachment')) {
+                $filepath = 'public/uploaded/attachments';
+                $orig_filename = pathinfo($request->attachment->getClientOriginalName(), PATHINFO_FILENAME).'-'.date("Y-m-d");
+                $fileExtension = $request->file('attachment')->getClientOriginalExtension();
+                $filename = $orig_filename.'.'.$fileExtension;
+                $request->file('attachment')->storeAs($filepath, $filename);
+            }else{
+                $filename = NULL;
+            }
+
+            $atts['attachment'] = $filename;
+
             $data = Mednote::create($atts);
 
             $data->employeesMedical()->attach($employeesmedical);
@@ -372,5 +412,48 @@ class EmployeesmedicalController extends Controller
         }else{
             return back();
         }
+    }
+
+    public function download($file_name)
+    {
+        if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
+            return response()->download(storage_path("app/public/uploaded/attachments/".$file_name));
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
+        }else{
+            return back();
+        }
+    }
+
+    public function EmployeesWithRecord(Request $request)
+    {
+        if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
+            $emps = Employee::join('employeesmedicals', 'employees.id', 'employeesmedicals.employee_id')
+                            ->orWhere(\DB::raw("concat(emp_id, ' ', first_name, ' ', last_name, ' ', middle_name)"), 'like', '%'.$request->search.'%')
+                            ->orWhere(\DB::raw("concat(emp_id, ' ', last_name, ' ', first_name, ' ', middle_name)"), 'like', '%'.$request->search.'%')
+                            ->paginate(10);
+            $emps->appends(['search' => $request->search]);
+            $search = $request->search;
+            return view('medical.employeesMedical.employeesWithRecord', compact('emps', 'search'));
+        }else{
+            return back();
+        }
+    }
+
+    public function fullReport()
+    {
+        // $diagnosis_count = Employeesmedical::select('employeesmedicals.diagnosis as diagnosis', \DB::raw('COUNT(employeesmedicals.diagnosis) as diagnosis_count'))
+        //                       ->groupBy('diagnosis')
+        //                       ->get();
+
+        $diagnosis_count = Employee::join('employeesmedicals', 'employees.id', 'employeesmedicals.employee_id')
+                                   ->select('gender', 'employeesmedicals.diagnosis as diagnosis', \DB::raw('COUNT(employeesmedicals.diagnosis) as diagnosis_count'))
+                                   ->groupBy('gender', 'diagnosis')
+                                   ->distinct('diagnosis')
+                                   ->get();
+
+        // dd($diagnosis_count);
+        return view('medical.employeesMedical.fullReport', compact('diagnosis_count', 'diagnosis_count_gender'));
     }
 }

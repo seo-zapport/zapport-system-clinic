@@ -30,7 +30,7 @@
                 @else
                     <a href="{{ route('employees') }}" >
                         <div class="name text-white">Employee Name</div>
-                        <div class="position text-white">Employee Position</div>
+                        <div class="position text-white">Sync Profile</div>
                     </a>
                 @endif
                 @endauth
@@ -41,7 +41,7 @@
         {{-- For ADMIN, HR, DOCTOR, NURSE --}}
         @if (Gate::check('isAdmin') || Gate::check('isHr') || Gate::check('isDoctor') || Gate::allows('isNurse'))
             @if (!empty(auth()->user()->employee))
-             @if ( Request::is('posts') || Request::is('posts/*') || Request::is('media') )
+             @if ( Request::is('posts') || Request::is('posts/*') || Request::is('media') || Request::is('category') )
                 @php  
                     $ariaexpand = "true";
                     $showactive = "show";
@@ -55,10 +55,11 @@
         @endphp
              @endif
                 <li class="nav-item">
-                    <a href="#posts" data-toggle="collapse" aria-expanded="{{ $ariaexpand }}" class="nav-link dropdown-toggle {{$collap}}"><i class="fas fa-book"></i> <span class="collapse-label">Post</span></a>
+                    <a href="#posts" data-toggle="collapse" aria-expanded="{{ $ariaexpand }}" class="nav-link dropdown-toggle {{$collap}}"><i class="fas fa-book"></i> <span class="collapse-label">Posts</span></a>
                     <ul class="zp-dropdown nav collapse {{ $showactive }}" id="posts">
                         <li class="nav-item"><a href="{{ route('post.create') }}" class="nav-link @yield('new_post')"><i class="fas fa-pencil-alt"></i> <span class="collapse-label">New Post</span></a></li>
                         <li class="nav-item"><a href="{{ route('post.index') }}" class="nav-link @yield('posts')"><i class="fas fa-book"></i> <span class="collapse-label">All Posts</span></a></li>
+                        <li class="nav-item"><a href="{{ route('tag.index') }}" class="nav-link @yield('category')"><i class="fas fa-folder"></i> <span class="collapse-label">Categories</span></a></li>
                         <li class="nav-item"><a href="{{ route('media.index') }}" class="nav-link @yield('medias')"><i class="fas fa-photo-video"></i> <span class="collapse-label">Media</span></a></li>
                     </ul>
                 </li>
@@ -116,7 +117,12 @@
                     <li class="nav-item"><a href="{{ route('medicine') }}" class="nav-link @yield('medicine')"><i class="fas fa-pills"></i> <span class="collapse-label">Medicines</span></a></li>                    
                 </ul>
 
-                <li class="nav-item"><a href="{{ route('medical.listsofemployees') }}" class="nav-link @yield('employeesMedical')"><span class="fa-stack"><i class="fas fa-list"></i><i class="fas fa-user fa-stack-1x fa-inverse"></i></span><span class="collapse-label">List of Employees</span></a></li>
+<<<<<<< HEAD
+                <li class="nav-item"><a href="{{ route('medical.listsofemployees') }}" class="nav-link @yield('employeesMedical')"><i class="fas fa-list"></i><span class="collapse-label">List of Employees</span></a></li>
+                <li class="nav-item"><a href="{{ route('medical.empsRecords') }}" class="nav-link @yield('employeesWithRecord')"><i class="fas fa-list"></i><span class="collapse-label">Employees with Record</span></a></li>
+=======
+                <li class="nav-item"><a href="{{ route('medical.listsofemployees') }}" class="nav-link @yield('employeesMedical')"><i class="fas fa-list"></i><span class="collapse-label">Employee Medical Records</span></a></li>
+>>>>>>> 184f99f8673e69de66c69903a28f5d9ffdef3257
             </ul>
         </li>
         @endif

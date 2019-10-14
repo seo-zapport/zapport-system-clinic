@@ -6435,11 +6435,13 @@ figure {
 
 /**Employee*/
 
-.admin-department .panel {
+.admin-department .panel,
+.admin-profile .panel {
   border-color: #e2e2e2;
 }
 
-.admin-department .employee_wraps {
+.admin-department .employee_wraps,
+.admin-profile .employee_wraps {
   border-top: 2px solid #53cac1;
 }
 
@@ -6501,6 +6503,7 @@ figure {
   display: block;
   margin: 20px 0px;
   box-shadow: 2px 3px 5px #d8d8d8;
+  border-top: 2px solid #53cac1;
 }
 
 .signin-container .sigin-info {
@@ -6530,6 +6533,18 @@ figure {
   right: 0;
   left: 0;
   width: 100%;
+}
+
+.signin-container .signin-text {
+  color: #777;
+  font-size: 14px;
+  line-height: 1.4;
+  margin-bottom: 6px;
+}
+
+.signin-container .signin-text span.signin-v {
+  color: #353535;
+  font-size: 16px;
 }
 
 .admin-register .sigin-info,
@@ -6590,6 +6605,17 @@ figure {
   line-height: 1.5;
   margin: 12px 0;
   padding: 0;
+}
+
+#diagnosis .nav-pills .nav-link.active,
+#diagnosis .nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: #00988d;
+}
+
+#diagnosis .nav-link {
+  color: #055651;
+  padding: 0.3rem 0.5rem;
 }
 
 /**media*/
@@ -7192,6 +7218,25 @@ figure {
   background-clip: padding-box;
   border: 1px solid #ced4da;
   border-radius: 0.25rem;
+}
+
+#searchDiagnosis ul {
+  margin: 0;
+}
+
+#searchDiagnosis .autocomplete-items {
+  position: absolute;
+  width: 100%;
+  padding-right: 10px;
+}
+
+#myform ul {
+  margin: 0;
+}
+
+#myform .autocomplete-items {
+  position: absolute;
+  width: 96%;
 }
 
 /**

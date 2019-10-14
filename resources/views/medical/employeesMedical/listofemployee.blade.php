@@ -3,7 +3,7 @@
 @section('employeesMedical', 'active')
 {{-- @section('dash-title', 'Lists of Employee') --}}
 @section('heading-title')
-	<span class="fa-stack text-secondary"><i class="fas fa-list"></i><i class="fas fa-user fa-stack-1x fa-inverse text-secondary"></i></span> Lists of Employee
+	<i class="fas fa-list text-secondary"></i> Lists of Employee
 @endsection
 @section('dash-content')
 
@@ -19,11 +19,11 @@
 	</div>
 </form>
 <div class="card mb-5">
-	<div class="card-body">
+	<div class="card-body" id="medical_employee_list">
 		<div class="table-responsive">
 			<table class="table table-hover">
 				<thead class="thead-dark">
-					<th>Employee ID</th>
+					<th>ID No.</th>
 					<th>Name</th>
 					<th>Department - Positon</th>
 					<th>Action</th>

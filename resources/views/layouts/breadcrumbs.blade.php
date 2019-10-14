@@ -59,7 +59,7 @@
 				}
 
 			@endphp
-			@if($name != "Dashboard" && $name != "Hr" && $name != "Inventory" && $name != "Medical" && $name != "Logs" && $name != "Employeesmedical" && $name != "Inputdate"  && $name != "Expdate"  && !DateTime::createFromFormat('Y-m-d H:i:s', $name) !== FALSE)
+			@if($name != "Dashboard" && $name != "Hr" && $name != "Inventory" && $name != "Medical" && $name != "Logs" && $name != "Inputdate"  && $name != "Expdate"  && !DateTime::createFromFormat('Y-m-d H:i:s', $name) !== FALSE)
 				 @if($i != $numsegment)	
 				 	<li class="breadcrumb-item">
 				 		<a href="{{$url}}">{{optional($segment->model())->title?: $name}} </a>

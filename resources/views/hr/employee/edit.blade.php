@@ -50,7 +50,7 @@
 @section('editMotherName', ucwords($employee->mother_name))
 @section('editMotherBday', $employee->mother_birthday->format('Y-m-d'))
 @section('editSpouse', ucwords($employee->spouse_name))
-@section('editMarriageDate', ( $employee->date_of_marriage != null ) ? $employee->date_of_marriage->format('Y-m-d') : "")
+@section('editMarriageDate', ($employee->date_of_marriage != null) ? $employee->date_of_marriage : $employee->date_of_marriage)
 
 @section('editPersonContactName', ucwords($employee->person_to_contact))
 @section('editPersonContactAddress', ucwords($employee->person_to_contact_address))
@@ -111,7 +111,7 @@
 			$i = 0;
 			foreach ($arr as $exp) {
 			@endphp
-				<div id="workField" class="form-row">
+				<div id="workField" class="form-row editwork">
 					<div class="form-group col-md-3">
 						<label for="experience" class="mr-2">Name of Company</label>
 						<input type="text" class="form-control mr-2" name="experience[@php echo $i; @endphp][]" placeholder="Name of Company" value="{{ $exp[0] }}">
@@ -166,7 +166,12 @@
 				</div>
 				<div class="form-group col-md-3">
 					<label for="children" class="mr-2">Gender</label>
-					<input type="text" class="form-control mr-2" name="children[@php echo $e; @endphp][]" placeholder="Gender" value="{{ $child[2] }}">
+					{{-- <input type="text" class="form-control mr-2" name="children[@php echo $e; @endphp][]" placeholder="Gender" value="{{ $child[2] }}"> --}}
+					<select name="children[@php echo $e; @endphp][]" class="form-control">
+						<option selected="true" disabled="true" value="">Select Gender</option>
+						<option {{ ($child[2] == 'male') ? 'selected="true"' : '' }} value="male">Male</option>
+						<option {{ ($child[2] == 'female') ? 'selected="true"' : '' }} value="female">Female</option>
+					</select>
 				</div>
 				<div class="form-group col-md-2">
 					<label class="mr-2 d-block">Action</label>

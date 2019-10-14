@@ -3,7 +3,7 @@
 @section('brandname', 'active')
 {{-- @section('dash-title', 'Brand Names') --}}
 @section('heading-title')
-	<i class="fas fa-file-prescription"></i> Brand Names
+	<i class="fas fa-file-prescription text-secondary"></i> Brand Names
 @endsection
 @section('dash-content')
 
@@ -25,18 +25,13 @@
 				<tbody>
 					@forelse ($brands as $brand)
 						<tr>
-							@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
 							<td>
 				        		{{ ucwords($brand->bname) }}
 							</td>
-							@else
-							<td>
-								{{ ucwords($brand->bname) }}
-							</td>
-							@endif
 							<td>{{ $brand->generic->count() }} </td>
 							<td class="w-15 px-0">
 								<a href="{{ route('brandname.show', ['medbrand' => $brand->bname]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i>View</a>
+								@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
 								<small class="text-muted">|</small>
 					        	<form method="post" action="{{ route('brandname.delete', ['medbrand' => $brand->bname]) }}" class="d-inline">
 					        		@csrf
@@ -45,11 +40,12 @@
 										<i class="fas fa-trash-alt"></i> Delete
 									</button>
 					        	</form>	
+								@endif
 							</td>
 						</tr>
 						@empty
 							<tr>
-								<td colspan="2" class="text-center">{{ "No registered Brand Name yet!" }}</td>
+								<td colspan="3" class="text-center">{{ "No registered Brand Name yet!" }}</td>
 							</tr>
 					@endforelse
 				</tbody>

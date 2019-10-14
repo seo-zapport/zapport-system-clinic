@@ -3,7 +3,7 @@
 @section('reg_dep', 'active')
 {{-- @section('dash-title', 'Department') --}}
 @section('heading-title')
-	<i class="fas fa-building"></i> Department
+	<i class="fas fa-building text-secondary"></i> Department
 @endsection
 @section('dash-content')
 <div class="card mb-5">
@@ -68,7 +68,7 @@
 					@csrf
 					<div class="form-group">
 						<label for="department">Department</label>
-						<input type="text" name="department" class="form-control" placeholder="Add Department" value="{{ old('department') }}" required>
+						<input type="text" name="department" class="form-control" placeholder="Department Name" value="{{ old('department') }}" required>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

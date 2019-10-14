@@ -72,39 +72,3 @@
 </div>
 
 @endsection
-
-{{-- @section('rmvTag')
-@foreach ($post->tags as $tag)
-<!-- Modal Tag -->
-<div class="modal fade" id="delTag-{{ $tag->id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-	<div class="modal-dialog modal-dialog-centered" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLongTitle">Delete Category</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<div class="card">
-					<div class="card-body">
-						<div>
-							<form id="tagForm" method="post" action="{{ route('removeTags', ['post' => $post->id, 'tag' => $tag->id]) }}">
-								@csrf
-								@method('DELETE')
-								<p>{{ $tag->tag_name }}</p>
-								<small id="errorlogTag" class="text-muted mt-2"></small>
-							<hr>
-							<div class="form-group text-center">
-								<button class="btn btn-info text-white btn-block" type="submit">Delete Category</button>
-							</div>	
-							</form>
-						</div>						
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-@endforeach
-@endsection --}}

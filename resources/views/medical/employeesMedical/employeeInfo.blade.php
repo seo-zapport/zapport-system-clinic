@@ -3,7 +3,7 @@
 @section('employeesMedical', 'active')
 {{-- @section('dash-title', ucwords($employee->last_name) . '\'s information') --}}
 @section('heading-title')
-	<span class="fa-stack"><i class="fas fa-list"></i><i class="fas fa-user fa-stack-1x fa-inverse"></i></span> {{ ucwords($employee->last_name) . '\'s information' }}
+	<i class="fas fa-list text-secondary"></i> {{ ucwords($employee->last_name) . '\'s information' }}
 @endsection
 @section('dash-content')
 @section('back')
@@ -49,10 +49,11 @@
 		<br>
 		<div class="row">
 			<div class="col-md-7">
-				<form method="get">
+				<form id="searchDiagnosis" method="get" autocomplete="off">
 					<div class="form-row">
-						<div class="form-group col-md-4">
+						<div class="form-group col-md-4 autocomplete">
 							<input type="search" name="search" class="form-control" value="{{ (!empty($result)) ? $result : '' }}" placeholder="Search for Diagnosis">
+							<div id="searchDiagnosis_list" class="autocomplete-items"></div>
 						</div>
 						<div class="form-group col-md-1 d-inline-flex">
 							<button type="submit" class="btn btn-success mr-2">Search</button>
@@ -87,10 +88,10 @@
 					<tr>
 						<td>{{ $i++ }}</td>
 						<td>{{ $medsHistory->created_at->format('M d, Y - h:i a') }}</td>
-						<td>{{ $medsHistory->diagnosis }}</td>
+						<td>{{ $medsHistory->diagnoses->diagnosis }}</td>
 						<td>{{ $medsHistory->note }}</td>
 						<td>{{ ($medsHistory->remarks == 'followUp') ? 'Follow up' : 'Done' }}</td>
-						<td><a href="{{ route('medical.show', ['employee' => $employee->emp_id, 'employeesmedical' => $medsHistory->diagnosis]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i>View</a></td>
+						<td><a href="{{ route('medical.show', ['employee' => $employee->emp_id, 'employeesmedical' => $medsHistory->id]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i>View</a></td>
 					</tr>
 					@empty
 						<tr>
@@ -117,7 +118,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<form onsubmit="return test(this)" id="myform" method="post" action="{{ route('medical.store', ['employee' => $employee->emp_id]) }}">
+				<form onsubmit="return test(this)" id="myform" method="post" action="{{ route('medical.store', ['employee' => $employee->emp_id]) }}" enctype="multipart/form-data" autocomplete="off">
 					@csrf
 					<input type="hidden" name="employee_id" value="{{ $employee->id }}">
 					<div class="form-group">
@@ -132,6 +133,11 @@
 					<div class="form-group">
 						<label for="diagnosis">Diagnosis</label>
 						<input type="text" name="diagnosis" class="form-control" placeholder="Diagnosis" required>
+						<div id="diagnosis_list" class="autocomplete-items"></div>
+					</div>
+					<div class="form-group">
+						<label for="diagnosis">Attachment</label>
+						<input type="file" name="attachment" class="form-control-file file-upload">
 					</div>
 					<div class="form-group">
 						<label for="note">Note:</label>
@@ -490,10 +496,48 @@ jQuery(document).ready(function($) {
 		}
     };
 
+    // Search input diagnosis
+
+    $("input[name='diagnosis']").on('keyup', function(){
+    	var query = $(this).val();
+    	$.ajax({
+    		url: "/medical/employees/diagnosis/"+query+"",
+    		type: "GET",
+    		data:{'diagnosis':query},
+    		success:function(response){
+    			$('#diagnosis_list').html(response);
+    		}
+    	});
+    });
+
+	$(document).on('click', 'li', function(){
+	    var value = $(this).text();
+	    $("input[name='diagnosis']").val(value);
+	    $('#diagnosis_list').html("");
+	});
+
+	// Search Diagnosis
+
+    $("#searchDiagnosis input[name='search']").on('keyup', function(){
+    	var query = $(this).val();
+    	$.ajax({
+    		url: "/medical/employees/diagnosis/"+query+"",
+    		type: "GET",
+    		data:{'diagnosis':query},
+    		success:function(response){
+    			$('#searchDiagnosis_list').html(response);
+    		}
+    	});
+    });
+
+	$(document).on('click', 'li', function(){
+	    var value = $(this).text();
+	    $("#searchDiagnosis input[name='search']").val(value);
+	    $('#searchDiagnosis_list').html("");
+	});
+
 </script>
 
 @endsection
 
-{{-- var btn = $('#sbmt');
-btn.prop('disabled', true);
-setTimeout(function(){btn.prop('disabled', false); }, 3000); --}}
+{{-- searchDiagnosis --}}

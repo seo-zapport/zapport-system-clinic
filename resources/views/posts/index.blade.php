@@ -2,7 +2,7 @@
 @section('title', '| Posts')
 @section('posts', 'active')
 @section('heading-title')
-	<i class="fas fa-book"></i> Posts
+	<i class="fas fa-book text-secondary"></i> Posts
 @endsection
 @section('dash-content')
 
@@ -24,7 +24,7 @@
 			<table class="table table-hover">
 				<thead class="thead-dark">
 					<th>Title</th>
-					<th>Date Posted</th>
+					<th>Date Published</th>
 					<th>Action</th>
 				</thead>
 				<tbody>

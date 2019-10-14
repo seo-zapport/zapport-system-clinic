@@ -16,6 +16,7 @@ class CreateMednotesTable extends Migration
         Schema::create('mednotes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->text('followup_note');
+            $table->string('attachment')->nullable();
             $table->timestamps();
         });
     }
