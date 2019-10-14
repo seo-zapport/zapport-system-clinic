@@ -17,6 +17,10 @@
 			<button type="submit" class="btn btn-success mr-2">Search</button>
 			<a href="{{ route('hr.employees') }}" class="btn btn-info text-white">Clear</a>
 		</div>
+		
+	</div>
+	<div class="form-group col-md-1 d-inline-flex">
+		<button type="button" id="printcsv" class="btn btn-success mr-2">Print</button>
 	</div>
 </form>
 <div class="card mb-5">
@@ -52,48 +56,42 @@
 </div>
 
 
-<script type="text/javascript">
-	
+<script type="application/javascript">
+	jQuery(document).ready( function () {
+		jQuery(document).on('click', '#printcsv', function(event){
 
-
-
-	$(document).ready( function () {
-
-		$(document).on('click', '#printab', function(event){
-		    //var passid = $(this).data('id');
 	    	var type = "GET";
-	    	var token = $("input[name='_token']").val();
-	    	//var gresult = passid;
-	    	var my_url =  "/employees/print";
+	    	var token = jQuery("input[name='_token']").val();
 
-	    	// var formData = {
-	    	// 	'gresult': gresult,
-	    	// 	'token' :  token,
-	    	// }
-		    	$.ajax({
-		    	    type: type,
-		    	    url: my_url,
-		    	    data: formData,
-		    	    dataType: 'json',
-		    	    success: function(data) {
+	    	var my_url =  '/printCsv';
+	    	var eresult = 'All';
+
+	    	var formData = {
+	    	 	'gresult': eresult,
+	    	 	'token' :  token,
+	    	 }
+		  	
+		  	 console.log(formData);
+		  	 console.log(my_url);
+
+	    	$.ajax({
+	    	    type: type,
+	    	    url: my_url,
+	    	    data: formData,
+	    	    dataType: 'json',
+	    	    success: function(data) {
 		    	    if(data.success == true)
 		   			{
 		   				
-		   			}
-		                       	   
-		    	    },
-		    	    error: function (xhr,textStatus,thrownError,data) {
-		    	        console.log(xhr + "\n" + textStatus + "\n" + thrownError);
-		                
-		    	    }
-		    	});
-
-
+		   			}         	   
+	    	    },
+	    	    error: function (xhr,textStatus,thrownError,data) {
+	    	        console.log(xhr + "\n" + textStatus + "\n" + thrownError);
+	                
+	    	    }
+	    	});
 		});
 	});
-
-
 </script>
-
 
 @endsection

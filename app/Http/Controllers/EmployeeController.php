@@ -378,6 +378,15 @@ class EmployeeController extends Controller
         return json_encode($employeesID);
     }
 
+    public function printcsv(Request $request)
+    {
+        
+        
+
+
+    }
+
+
   
 
 }

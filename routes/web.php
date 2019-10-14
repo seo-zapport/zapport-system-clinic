@@ -95,6 +95,8 @@ Route::group(['prefix' => 'hr'], function(){
 	Route::get('employees/edit/deptID/{id}', 'EmployeeController@getEditPosition');
 	Route::put('employees/{employee}', 'EmployeeController@update')->name('hr.emp.store');
 
+	//Route Print .CSV
+	Route::get('employees/printCsv', 'EmployeeController@printcsv')->name('hr.emp.print_csv');
 
 
 
