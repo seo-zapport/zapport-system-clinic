@@ -52,4 +52,48 @@
 </div>
 
 
+<script type="text/javascript">
+	
+
+
+
+	$(document).ready( function () {
+
+		$(document).on('click', '#printab', function(event){
+		    //var passid = $(this).data('id');
+	    	var type = "GET";
+	    	var token = $("input[name='_token']").val();
+	    	//var gresult = passid;
+	    	var my_url =  "/employees/print";
+
+	    	// var formData = {
+	    	// 	'gresult': gresult,
+	    	// 	'token' :  token,
+	    	// }
+		    	$.ajax({
+		    	    type: type,
+		    	    url: my_url,
+		    	    data: formData,
+		    	    dataType: 'json',
+		    	    success: function(data) {
+		    	    if(data.success == true)
+		   			{
+		   				
+		   			}
+		                       	   
+		    	    },
+		    	    error: function (xhr,textStatus,thrownError,data) {
+		    	        console.log(xhr + "\n" + textStatus + "\n" + thrownError);
+		                
+		    	    }
+		    	});
+
+
+		});
+	});
+
+
+</script>
+
+
 @endsection

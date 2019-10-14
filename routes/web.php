@@ -95,6 +95,10 @@ Route::group(['prefix' => 'hr'], function(){
 	Route::get('employees/edit/deptID/{id}', 'EmployeeController@getEditPosition');
 	Route::put('employees/{employee}', 'EmployeeController@update')->name('hr.emp.store');
 
+
+
+
+
 });
 
 Route::group(['prefix' => 'employees'], function(){
