@@ -288,6 +288,7 @@ class MedicineController extends Controller
                 $logs = $logs->orderBy('medicines.created_at', 'desc')->paginate(10);
                 $logs->appends(['search' => $request->search]);
                 }
+                // dd($logs);
             return view('inventory.medicine.logs', compact('logs', 'medbrand', 'generic', 'log1', 'search', 'loglist', 'logsearch'));
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();

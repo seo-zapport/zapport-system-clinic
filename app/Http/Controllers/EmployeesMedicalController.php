@@ -463,16 +463,16 @@ class EmployeesmedicalController extends Controller
         $emps = Employeesmedical::join('diagnoses', 'diagnoses.id', 'employeesmedicals.diagnosis_id')
                                                  ->join('employees', 'employees.id', 'employeesmedicals.employee_id')
                                                  ->select('employeesmedicals.id', 'employees.gender', 'diagnosis', 'employeesmedicals.created_at')
-                                                 ->orderBy('employeesmedicals.created_at', 'asc')
+                                                 ->orderBy('employeesmedicals.created_at', 'desc')
                                                  ->get()
                                                  ->groupBy(function($date) {
-                                                     return Carbon::parse($date->created_at)->format('M, Y');
+                                                     return Carbon::parse($date->created_at)->format('Y');
                                                    });
-
+        $emp_age = Employee::get();
         // dd($emps);
 
         // $arr_count = count($arr);
 
-        return view('medical.employeesMedical.fullReport', compact('diagnoses', 'arr', 'arr_count', 'emps'));
+        return view('medical.employeesMedical.fullReport', compact('diagnoses', 'arr', 'arr_count', 'emps', 'emp_age'));
     }
 }

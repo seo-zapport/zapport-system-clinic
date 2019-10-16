@@ -3,8 +3,15 @@
 <head>
 	<meta charset="UTF-8">
 	<title></title>
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
     <style type="text/css">
     	#printable{
 		    padding: 0.5rem 0.2rem;
@@ -46,88 +53,22 @@
 				</div>			
 			</div>
 			<div class="row">
-				<div class="col-12">
-					<h5>Diagnosis</h5>
-					<ol>
-{{-- 						@foreach ($diagnoses as $diagnosis)
-							<li>{{ $diagnosis->diagnosis }}</li>
-							<ul>
-								<li>Male
-									{{ $diagnosis->join('employeesmedicals', 'diagnoses.id', 'employeesmedicals.diagnosis_id')
-												 ->join('employees', 'employees.id', 'employeesmedicals.employee_id')
-												 ->select('diagnosis', 'employees.gender as gender')
-												 ->groupBy('diagnosis', 'gender')
-												 ->where('diagnosis', $diagnosis->diagnosis)
-												 ->where('gender', 0)
-												 ->count() }}
-								</li>
-								<li>Female
-									{{ $diagnosis->join('employeesmedicals', 'diagnoses.id', 'employeesmedicals.diagnosis_id')
-												 ->join('employees', 'employees.id', 'employeesmedicals.employee_id')
-												 ->select('diagnosis', 'employees.gender as gender')
-												 ->groupBy('diagnosis', 'gender')
-												 ->where('diagnosis', $diagnosis->diagnosis)
-												 ->where('gender', 1)
-												 ->count() }}
-								</li>
-								<li>Total
-									{{ dd($diagnosis->join('employeesmedicals', 'diagnoses.id', 'employeesmedicals.diagnosis_id')
-												 ->join('employees', 'employees.id', 'employeesmedicals.employee_id')
-												 ->select('diagnosis', 'employees.gender', DB::raw('WEEK(employeesmedicals.created_at)'), DB::raw('COUNT(employees.gender) as gender_count'))
-												 ->groupBy('diagnosis', 'employees.gender', DB::raw('WEEK(employeesmedicals.created_at)'))
-												 ->where('diagnosis', $diagnosis->diagnosis)
-												 ->get()) }}
-								</li>
-								<li>Total
-									{{ dd($diagnosis->join('employeesmedicals', 'diagnoses.id', 'employeesmedicals.diagnosis_id')
-												 ->join('employees', 'employees.id', 'employeesmedicals.employee_id')
-												 ->select('diagnosis', 'employees.gender', 'employeesmedicals.created_at as created_at')
-												 ->where('diagnosis', $diagnosis->diagnosis)
-												 ->get()
-											     ->groupBy(function($date) {
-											         return Carbon\carbon::parse($date->created_at)->format('Y-m');
-											       }))
-												  }}
-
-
-									{{	$collections = $diagnosis->join('employeesmedicals', 'diagnoses.id', 'employeesmedicals.diagnosis_id')
-																 ->join('employees', 'employees.id', 'employeesmedicals.employee_id')
-																 ->select('diagnosis', 'employees.gender', DB::raw('WEEK(employeesmedicals.created_at) as per_month'), DB::raw('COUNT(employees.gender) as gender_count'))
-																 ->groupBy('diagnosis', 'employees.gender', DB::raw('WEEK(employeesmedicals.created_at)'))
-																 ->where('diagnosis', $diagnosis->diagnosis)
-																 ->get()
-																 ->groupBy(function($date) {
-															         return Carbon\carbon::parse($date->created_at)->format('Y-m');
-															       })
-									}}
-
-								</li>
-							</ul>
-						@endforeach --}}
-
-{{-- 						@for ($i = 0; $i < $arr_count ; $i++)
-							@foreach ($arr[$i] as $key => $value)
-								{{ $key }} <br>
-								@foreach ($value as $d)
-									@if ($loop->first)
-									<ul>
-										<li>{{ ucfirst($d->diagnosis) }}</li>
-										<ul>
-											<li>Number of Male: {{ $value->where('gender', 0)->count() }}</li>
-											<li>Number of Female: {{ $value->where('gender', 1)->count() }}</li>
-											<li>Total: {{ count($value) }}</li>
-										</ul>
-									</ul>
-									@endif
-								@endforeach
+				<div id="annualReport" class="col-12">
+					<h5>Annual Report</h5>
+					<div id="annualFilter" class="form-group">
+						<select name="select_date" id="select_date" class="form-control">
+							<option selected="true" disabled="true" value="">Select Year</option>
+							@foreach ($emps as $key => $emp)
+								<option value="{{ $key }}"><h3>{{ $key }}</h3></option>
 							@endforeach
-						@endfor --}}
-
+						</select>
+					</div>
 						@foreach ($emps as $key => $emp)
-							{{ $key }} <br>
+						<ol id="year-{{ $key }}" class="d-none">
+							<h3>{{ $key }}</h3>
 							@foreach ($emp->unique('diagnosis') as $filter)
 								<ul>
-									<li>{{ ucfirst($filter->diagnosis) }}</li>
+									<li><h3>Diagnosis: {{ ucfirst($filter->diagnosis) }}</h3></li>
 									<ul>
 										<li>Male: {{ $emp->where('gender', 0)->where('diagnosis', $filter->diagnosis)->count() }}</li>
 										<li>Female: {{ $emp->where('gender', 1)->where('diagnosis', $filter->diagnosis)->count() }}</li>
@@ -135,23 +76,44 @@
 									</ul>
 								</ul>
 							@endforeach
+						</ol>
 						@endforeach
-
-					</ol>
 				</div>
 			</div>
 		</div>
 	</div>
 
-	<script type="text/javascript">
+	<script type="application/javascript">
+
 	function printPage()
 	{
 	    var myDropDown = document.getElementById('printThatText');
+	    var annualFilter = document.getElementById('annualFilter');
 	    myDropDown.style.display = "none";
+	    annualFilter.style.display = "none";
 	    window.print();
 	    myDropDown.style.display = "block";
+	    annualFilter.style.display = "block";
 	    return true;
 	}
+
+	jQuery(document).ready(function($){
+
+		var yearNow = new Date().getFullYear();
+
+		$("#year-"+yearNow+"").removeClass('d-none');
+
+		$('select[name="select_date"]').on('change',function(){
+			var date_selected = $(this).val();
+			$("#annualReport").each(function() {
+				$(this).find('ol').addClass('d-none');
+			});
+			$("#year-"+date_selected+"").removeClass('d-none');
+		});
+
+
+	});
+
 	</script>
 
 </body>
