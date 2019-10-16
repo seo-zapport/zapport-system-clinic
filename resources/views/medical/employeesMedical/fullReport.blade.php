@@ -49,9 +49,94 @@
 				<div class="col-12">
 					<h5>Diagnosis</h5>
 					<ol>
-						@foreach ($diagnosis_count as $d_count)
-							<li>{{ $d_count->diagnosis }} - {{ $d_count->diagnosis_count }}</li>
+{{-- 						@foreach ($diagnoses as $diagnosis)
+							<li>{{ $diagnosis->diagnosis }}</li>
+							<ul>
+								<li>Male
+									{{ $diagnosis->join('employeesmedicals', 'diagnoses.id', 'employeesmedicals.diagnosis_id')
+												 ->join('employees', 'employees.id', 'employeesmedicals.employee_id')
+												 ->select('diagnosis', 'employees.gender as gender')
+												 ->groupBy('diagnosis', 'gender')
+												 ->where('diagnosis', $diagnosis->diagnosis)
+												 ->where('gender', 0)
+												 ->count() }}
+								</li>
+								<li>Female
+									{{ $diagnosis->join('employeesmedicals', 'diagnoses.id', 'employeesmedicals.diagnosis_id')
+												 ->join('employees', 'employees.id', 'employeesmedicals.employee_id')
+												 ->select('diagnosis', 'employees.gender as gender')
+												 ->groupBy('diagnosis', 'gender')
+												 ->where('diagnosis', $diagnosis->diagnosis)
+												 ->where('gender', 1)
+												 ->count() }}
+								</li>
+								<li>Total
+									{{ dd($diagnosis->join('employeesmedicals', 'diagnoses.id', 'employeesmedicals.diagnosis_id')
+												 ->join('employees', 'employees.id', 'employeesmedicals.employee_id')
+												 ->select('diagnosis', 'employees.gender', DB::raw('WEEK(employeesmedicals.created_at)'), DB::raw('COUNT(employees.gender) as gender_count'))
+												 ->groupBy('diagnosis', 'employees.gender', DB::raw('WEEK(employeesmedicals.created_at)'))
+												 ->where('diagnosis', $diagnosis->diagnosis)
+												 ->get()) }}
+								</li>
+								<li>Total
+									{{ dd($diagnosis->join('employeesmedicals', 'diagnoses.id', 'employeesmedicals.diagnosis_id')
+												 ->join('employees', 'employees.id', 'employeesmedicals.employee_id')
+												 ->select('diagnosis', 'employees.gender', 'employeesmedicals.created_at as created_at')
+												 ->where('diagnosis', $diagnosis->diagnosis)
+												 ->get()
+											     ->groupBy(function($date) {
+											         return Carbon\carbon::parse($date->created_at)->format('Y-m');
+											       }))
+												  }}
+
+
+									{{	$collections = $diagnosis->join('employeesmedicals', 'diagnoses.id', 'employeesmedicals.diagnosis_id')
+																 ->join('employees', 'employees.id', 'employeesmedicals.employee_id')
+																 ->select('diagnosis', 'employees.gender', DB::raw('WEEK(employeesmedicals.created_at) as per_month'), DB::raw('COUNT(employees.gender) as gender_count'))
+																 ->groupBy('diagnosis', 'employees.gender', DB::raw('WEEK(employeesmedicals.created_at)'))
+																 ->where('diagnosis', $diagnosis->diagnosis)
+																 ->get()
+																 ->groupBy(function($date) {
+															         return Carbon\carbon::parse($date->created_at)->format('Y-m');
+															       })
+									}}
+
+								</li>
+							</ul>
+						@endforeach --}}
+
+{{-- 						@for ($i = 0; $i < $arr_count ; $i++)
+							@foreach ($arr[$i] as $key => $value)
+								{{ $key }} <br>
+								@foreach ($value as $d)
+									@if ($loop->first)
+									<ul>
+										<li>{{ ucfirst($d->diagnosis) }}</li>
+										<ul>
+											<li>Number of Male: {{ $value->where('gender', 0)->count() }}</li>
+											<li>Number of Female: {{ $value->where('gender', 1)->count() }}</li>
+											<li>Total: {{ count($value) }}</li>
+										</ul>
+									</ul>
+									@endif
+								@endforeach
+							@endforeach
+						@endfor --}}
+
+						@foreach ($emps as $key => $emp)
+							{{ $key }} <br>
+							@foreach ($emp->unique('diagnosis') as $filter)
+								<ul>
+									<li>{{ ucfirst($filter->diagnosis) }}</li>
+									<ul>
+										<li>Male: {{ $emp->where('gender', 0)->where('diagnosis', $filter->diagnosis)->count() }}</li>
+										<li>Female: {{ $emp->where('gender', 1)->where('diagnosis', $filter->diagnosis)->count() }}</li>
+										<li>Total: {{ $emp->where('diagnosis', $filter->diagnosis)->count() }}</li>
+									</ul>
+								</ul>
+							@endforeach
 						@endforeach
+
 					</ol>
 				</div>
 			</div>

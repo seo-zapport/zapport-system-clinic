@@ -510,7 +510,7 @@ jQuery(document).ready(function($) {
     	});
     });
 
-	$(document).on('click', 'li', function(){
+	$(document).on('click', '#myform li', function(){
 	    var value = $(this).text();
 	    $("input[name='diagnosis']").val(value);
 	    $('#diagnosis_list').html("");
@@ -530,7 +530,7 @@ jQuery(document).ready(function($) {
     	});
     });
 
-	$(document).on('click', 'li', function(){
+	$(document).on('click', '#searchDiagnosis li', function(){
 	    var value = $(this).text();
 	    $("#searchDiagnosis input[name='search']").val(value);
 	    $('#searchDiagnosis_list').html("");
