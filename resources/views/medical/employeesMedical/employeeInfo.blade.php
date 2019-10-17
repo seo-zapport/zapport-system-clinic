@@ -25,7 +25,32 @@
 				@endif
 			</div>
 			<div class="col-10">
-				<p class="med-name">{{ ucwords($employee->last_name . " " . $employee->first_name . " " . $employee->middle_name) }}</p>
+				<div class="row mb-3">
+					<div class="col-6">
+						<p class="med-name">{{ ucwords($employee->last_name . " " . $employee->first_name . " " . $employee->middle_name) }}</p>
+					</div>
+					<div class="col-6">
+						<div class="btn-group float-right" role="group">
+							<button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								Pre-employment Medical
+							</button>
+							<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+								@if (@$employee->preemployment == null)
+									<a class="dropdown-item" href="#" data-toggle="modal" data-target="#pre-emp">Add</a>
+								@else
+									<form method="POST" action="{{ route('pre_emp.delete', ['pre_emp.delete' => @$employee->preemployment->id]) }}">
+										@csrf
+										@method('DELETE')
+										<button class="dropdown-item"  onclick="return confirm('Are you sure you want to delete {{ @$employee->preemployment->pre_employment_med }} File?')" data-id="{{ @$employee->preemployment->id }}">
+											Remove
+										</button>
+									</form>
+								@endif
+								<a class="dropdown-item" href="{{ route('pre_emp.download', ['pre_emp' => @$employee->preemployment->pre_employment_med]) }}" download>View</a>
+							</div>
+						</div>
+					</div>
+				</div>
 				<div class="row">
 					<div class="col-3">
 						<p class="mb-2"><span class="text-dark font-weight-bold">Department</span>: {{ strtoupper($employee->departments->department) }}</p>
@@ -191,9 +216,60 @@
 		</div>
 	</div>
 </div>
+
 <div id="test"></div>
+
+<!-- Modal -->
+<div class="modal fade" id="pre-emp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Pre Employement Medical</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<form id="preEmpForm" method="post" enctype="multipart/form-data">
+				<div class="modal-body">
+					<input type="file" name="pre_employment_med" class="form-control-file file-upload" required>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary">Save changes</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
 <script type="application/javascript">
 jQuery(document).ready(function($) {
+
+	$("#preEmpForm").on('submit', function(e) {
+		e.preventDefault();
+       $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+        });
+
+        $.ajax({
+        	type: 'POST',
+        	url: '{{ route('medical.pre_emp', ['employee' => $employee->id]) }}',
+        	data: new FormData($('#preEmpForm')[0]),
+        	dataType: 'json',
+			cache: false,
+			processData: false,
+			contentType: false,
+			mimeType:"multipart/form-data",
+			success:function(response){
+				console.log(response);
+				$("#pre-emp").modal('hide');
+				location.reload();
+			}
+        });
+	});
+
    $('#myform').on('submit', function(e){
 		var btn = $('#sbmt');
 		btn.prop('disabled', true);
