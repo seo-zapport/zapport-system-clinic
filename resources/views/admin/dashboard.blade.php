@@ -149,7 +149,7 @@
 												<th>Department - Positon</th>
 												<th>Action</th>
 											</thead>
-											@forelse (@$emps as $emp)
+											@forelse (@$emps2 as $emp)
 											@if ($emp->hired_date->diffForHumans() == '6 months ago')
 												<tr>
 													<td>{{ $emp->emp_id }}</td>

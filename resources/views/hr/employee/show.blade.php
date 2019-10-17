@@ -44,6 +44,10 @@
 				<label for="hired_date" class="text-muted">Hired Date</label>
 				<p class="h5">{{ @$employee->hired_date->format('M d, Y') }} ( {{ @$employee->hired_date->diffForHumans() }} )</p>
 			</div>
+			<div class="form-group col-md-12">
+				<label for="hired_date" class="text-muted">Employee Type</label>
+				<p class="h5">{{ (@$employee->employee_type == 1) ? 'Regular Employee' : 'Probationary' }} </p>
+			</div>
 		</div>
 	</div>
 	<div class="col-12 col-lg-8">
