@@ -62,6 +62,14 @@
 					<label for="hired_date">Hired Date</label>
 					<input type="date" name="hired_date" value="@yield('editHiredDate', old('hired_date'))" class="form-control" placeholder="Employee's Hired Date" required>
 				</div>
+				
+				@if (strstr(url()->current(), 'create') == 'edit')
+					<div class="form-group col-md-12">
+						<label for="hired_date" class="text-muted">Employee type</label>
+					</div>
+					@else
+						@yield('editEmpType')
+				@endif
 
 			</div>
 		</div>

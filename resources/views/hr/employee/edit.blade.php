@@ -20,6 +20,13 @@
 		<span>Update picture</span>
 	@endif
 @endsection
+@section('editEmpType')
+	<label for="hired_date">Employee Type</label>
+	<select name="employee_type" id="employee_type" class="form-control" required>
+		<option {{ (@$employee->employee_type == 0) ? 'selected' : '' }} value="0"> Probationary </option>
+		<option {{ (@$employee->employee_type == 1) ? 'selected' : '' }} value="1"> Regular </option>
+	</select>
+@endsection
 @section('editFname', ucwords($employee->first_name))
 @section('editLname', ucwords($employee->last_name))
 @section('editMname', ucwords($employee->middle_name))
