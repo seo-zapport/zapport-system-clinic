@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 
+use File;
 
 class EmployeeController extends Controller
 {
@@ -96,8 +97,18 @@ class EmployeeController extends Controller
 
             $emp_age = Employee::get();
 
+            if(count($employees2)>0){
+                $this->printCsv($employees2); 
+
+            }
+
+            
+
             return view('hr.employee.index', compact('employees', 'search', 'empcount', 'filter_gender', 'filter_empType', 'filter_both', 'filter_age', 'filter_all', 'emp_age', 'filter_g_a', 'filter_e_a'))
             ->nest('print', 'hr.employee.print_emps', compact('employees2', 'search', 'empcount', 'filter_gender', 'filter_empType', 'filter_both', 'filter_age', 'filter_all', 'emp_age', 'filter_g_a', 'filter_e_a'));
+            
+            
+
 
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();
@@ -459,19 +470,6 @@ class EmployeeController extends Controller
         return json_encode($employeesID);
     }
 
-<<<<<<< HEAD
-    public function printcsv(Request $request)
-    {
-        
-        
-
-
-    }
-
-
-  
-
-=======
     public function printEmployees()
     {
         if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
@@ -482,5 +480,54 @@ class EmployeeController extends Controller
         }
     }
 
->>>>>>> c26d0de05b4c26a1ac369e7708cc7d0025919092
+    public function printCsv($emplist){
+
+        if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
+    
+            $filter_age = app('request')->input('filter_age');
+            $filter_gender = app('request')->input('filter_gender');
+            $filter_empType = app('request')->input('filter_empType'); 
+
+            $employees = $emplist;    
+            $dataemp = view('hr.employee.csv',compact('employees','filter_age','filter_gender','filter_empType'))->render();
+            //$dataemppdf = view('hr.employee.filepdf',compact('employees','filter_age','filter_gender','filter_empType'))->render();
+
+            if($filter_gender != null){
+                $gender = (app('request')->input('filter_gender') == 0) ? "male": "female";
+            }
+            if($filter_empType != null){
+                $emptype = (app('request')->input('filter_empType') == 0) ? "probationary" : "regular"; 
+            }
+
+            if($filter_age != null && $filter_gender != null && $filter_empType != null){
+                $fileName = 'employee-'.$filter_age.'-'.$gender.'-'.@$emptype; 
+            }elseif($filter_age != null && $filter_gender != null){
+                $fileName = 'employee-'.$filter_age.'-'.$gender; 
+            }elseif ($filter_age != null && $filter_empType != null) {
+                $fileName = 'employee-'.$filter_age.'-'.@$emptype; 
+            }elseif($filter_gender != null && $filter_empType != null){   
+                $fileName = 'employee-'.$gender.'-'.@$emptype;  
+            }elseif($filter_age != null){
+                $fileName = 'employee-'.@$filter_age; 
+            }elseif($filter_gender != null){
+                $fileName = 'employee-'.@$gender; 
+            }elseif($filter_empType != null){
+                $fileName = 'employee-'.@$emptype;         
+            }else{
+                $fileName = 'employee'; 
+            }
+
+            $relPath = 'storage/uploaded/print';
+            if (!file_exists($relPath)) {
+                mkdir($relPath, 777, true);
+            }
+
+            File::put(public_path('/storage/uploaded/print/'.$fileName.'.csv'),$dataemp);     
+           // File::put(public_path('/storage/uploaded/print/'.$fileName.'.pdf'),$dataemppdf);     
+
+        }else{
+            return back();
+        }
+        
+    }
 }

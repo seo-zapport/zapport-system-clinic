@@ -9,11 +9,12 @@ jQuery(document).ready(function($){
        var department_id = jQuery(this).val();
        // var myUrl = 'create/deptID/';
        var url   = window.location.href;
+       var hostname = window.location.hostname;
 
-       if (url === "http://clinic/hr/employees/create") {
+       if (url === "http://"+hostname+"/hr/employees/create") {
          var myUrl = 'create/deptID/';
        }else {
-          var myUrl = 'http://clinic/hr/employees/edit/deptID/';
+          var myUrl = 'http://'+hostname+'/hr/employees/edit/deptID/';
        }
 
        if(department_id)
@@ -45,11 +46,11 @@ jQuery(document).ready(function($){
        var generic_id = jQuery(this).val();
        // var myUrl = 'medicine/gen/';
        var url   = window.location.href;
-
-       if (url === "http://clinic/inventory/medicine") {
+       var hostname = window.location.hostname;
+       if (url ===  "http://"+hostname+"/inventory/medicine") {
          var myUrl = 'medicine/gen/';
        }else {
-          var myUrl = 'http://clinic/medical/employees/gen/';
+          var myUrl = "http://"+hostname+"/medical/employees/gen/";
        }
 
        if(generic_id)
@@ -178,7 +179,8 @@ jQuery(document).ready(function($){
     // College variables_________________________________________________________________________________
     var college =  $("#empForm input[name='college']");
     var grad_date = $("#empForm input[name='college_grad_date']");
-    if (window.location.href == 'http://clinic/hr/employees/7/edit') {
+    var hostname = window.location.hostname;
+    if (window.location.href == "http://"+hostname+"/hr/employees/7/edit") {
       // College_________________________________________________________________________________
       $("#empForm input[name='college'], input[name='college_grad_date']").on('change', function(){
         var collegeVal = $('input[name="college"]').val();

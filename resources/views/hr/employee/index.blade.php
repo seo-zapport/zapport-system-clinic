@@ -9,7 +9,49 @@
 @section('dash-content')
 
 {{-- <a href="{{ route('print.emp') }}" class="btn btn-outline-info float-right" target="_blank">Print</a> --}}
-<button onclick="clicked()" class="btn btn-outline-info float-right">Print</button>
+
+<!--- PRINT --->
+<div class="form-group float-right">
+	<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PRINT <span class="caret"></span>
+	</button>
+	@php 
+	$filter_age = app('request')->input('filter_age');
+	$filter_gender = app('request')->input('filter_gender');
+	$filter_empType = app('request')->input('filter_empType'); 
+	
+	if($filter_gender != null){
+	    $gender = (app('request')->input('filter_gender') == 0) ? "male": "female";
+	}
+	if($filter_empType != null){
+	    $emptype = (app('request')->input('filter_empType') == 0) ? "probationary" : "regular"; 
+	}
+
+	if($filter_age != null && $filter_gender != null && $filter_empType != null){
+	    $fileName = 'employee-'.$filter_age.'-'.$gender.'-'.@$emptype; 
+	}elseif($filter_age != null && $filter_gender != null){
+	    $fileName = 'employee-'.$filter_age.'-'.$gender; 
+	}elseif ($filter_age != null && $filter_empType != null) {
+	    $fileName = 'employee-'.$filter_age.'-'.@$emptype; 
+	}elseif($filter_gender != null && $filter_empType != null){   
+	    $fileName = 'employee-'.$gender.'-'.@$emptype;  
+	}elseif($filter_age != null){
+	    $fileName = 'employee-'.@$filter_age;
+	}elseif($filter_gender != null){
+	    $fileName = 'employee-'.@$gender;
+	}elseif($filter_empType != null){
+	    $fileName = 'employee-'.@$emptype;         
+	}else{
+	    $fileName = 'employee'; 
+	}
+	@endphp
+	
+	<ul class="dropdown-menu">
+		<li><a href="#" onclick="clicked()">PRINT</a></li>
+		<li><div class="divider"></div></li>
+		<li><a href="{{ asset('storage/uploaded/print/'.$fileName.'.csv')}}" download="{{ $fileName.'.csv'}}" target="_blank">CSV</a></li>
+		<li><a href="{{ asset('storage/uploaded/print/'.$fileName.'.pdf')}}" download="{{ $fileName.'.pdf'}}" target="_blank">PDF</a></li>
+	</ul>
+</div>
 
 <form method="get">
 	<div class="form-row">
@@ -21,9 +63,6 @@
 			<a href="{{ route('hr.employees') }}" class="btn btn-info text-white">Clear</a>
 		</div>
 		
-	</div>
-	<div class="form-group col-md-1 d-inline-flex">
-		<button type="button" id="printcsv" class="btn btn-success mr-2">Print</button>
 	</div>
 </form>
 <form id="advncfilter" method="get">
@@ -144,46 +183,9 @@
 	jQuery(document).ready(function($){
 		var countTR = $("#empTable tbody tr").length;
 		$("#empCount").append('<span class="font-weight-bold">Result: '+ countTR +'</span>');
+
 	});
 
-</script>
-
-<script type="application/javascript">
-	jQuery(document).ready( function () {
-		jQuery(document).on('click', '#printcsv', function(event){
-
-	    	var type = "GET";
-	    	var token = jQuery("input[name='_token']").val();
-
-	    	var my_url =  '/printCsv';
-	    	var eresult = 'All';
-
-	    	var formData = {
-	    	 	'gresult': eresult,
-	    	 	'token' :  token,
-	    	 }
-		  	
-		  	 console.log(formData);
-		  	 console.log(my_url);
-
-	    	$.ajax({
-	    	    type: type,
-	    	    url: my_url,
-	    	    data: formData,
-	    	    dataType: 'json',
-	    	    success: function(data) {
-		    	    if(data.success == true)
-		   			{
-		   				
-		   			}         	   
-	    	    },
-	    	    error: function (xhr,textStatus,thrownError,data) {
-	    	        console.log(xhr + "\n" + textStatus + "\n" + thrownError);
-	                
-	    	    }
-	    	});
-		});
-	});
 </script>
 
 @endsection

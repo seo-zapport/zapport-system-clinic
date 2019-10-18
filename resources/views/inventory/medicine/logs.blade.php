@@ -74,28 +74,28 @@
 					@forelse ($logs as $log)
 						<tr>
 							<td class="{{ ($log->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">
-								{{ $i }}
+							{{ $i }}
 							</td>
 							<td class="{{ ($log->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">
-								{{ Carbon\carbon::parse($log->formatted_at)->format('M d, Y') }}
+							{{ Carbon\carbon::parse($log->formatted_at)->format('M d, Y') }}
 							</td>
 							<td class="{{ ($log->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">
-								{{ Carbon\carbon::parse($log->expiration_date)->format('M d, Y') }}</td>
+							{{ Carbon\carbon::parse($log->expiration_date)->format('M d, Y') }}</td>
 							<td class="{{ ($log->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">
-								{{ $log->where('expiration_date', $log->expiration_date)->where('availability', 0)->where('created_at', $log->orig)->count() }}
+							{{ $log->where('brand_id', $log->brand_id)->where('generic_id', $log->generic_id)->where('expiration_date', $log->expiration_date)->where('availability', 0)->where('created_at', $log->orig)->count() }}
 							</td>
 							<td class="{{ ($log->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">
-								{{ $log->where('expiration_date', $log->expiration_date)->where('availability', 1)->count() }}
+							{{ $log->where('brand_id', $log->brand_id)->where('generic_id', $log->generic_id)->where('expiration_date', $log->expiration_date)->where('availability', 1)->count() }}
 							</td>
 							<td class="{{ ($log->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">
-								{{ $log->where('expiration_date', $log->expiration_date)->where('created_at', $log->orig)->count() }}
+							{{ $log->where('brand_id', $log->brand_id)->where('generic_id', $log->generic_id)->where('expiration_date', $log->expiration_date)->where('created_at', $log->orig)->count() }}
 							</td>
 							<td class="{{ ($log->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">
-								{{ ucwords($log->user->employee->last_name) }} {{ ucwords($log->user->employee->first_name) }}
+							{{ ucwords($log->user->employee->last_name) }} {{ ucwords($log->user->employee->first_name) }}
 							</td>
 							<td class="{{ ($log->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">
-								<a href="{{ route('medicine.show', ['medbrand' => $log->bname, 'generic' => $log->gname, 'inputDate' => $log->orig, 'expDate' => 
-								$log->expiration_date]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i>View</a>
+							<a href="{{ route('medicine.show', ['medbrand' => $log->bname, 'generic' => $log->gname, 'inputDate' => $log->orig, 'expDate' => 
+							$log->expiration_date]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i>View</a>
 							</td>
 						</tr>
 					@php

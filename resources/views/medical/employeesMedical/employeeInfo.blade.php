@@ -217,10 +217,11 @@ jQuery(document).ready(function($) {
 	 
 	       var generic_id = jQuery(this).val();
 	       var url   = window.location.href;
-	       if (url === "http://clinic/inventory/medicine") {
+		   var hostname = window.location.hostname;
+	       if (url === "http://"+hostname+"/inventory/medicine") {
 	         var myUrl = 'medicine/gen/';
 	       }else {
-	          var myUrl = 'http://clinic/medical/employees/gen/';
+	          var myUrl = "http://"+hostname+"/medical/employees/gen/";
 	       }
 
 	       if(generic_id)
@@ -350,11 +351,12 @@ jQuery(document).ready(function($) {
        // console.log('generic_id '+generic_id);
        // var myUrl = 'medicine/gen/';
        var url   = window.location.href;
+       var hostname = window.location.hostname;
 
-       if (url === "http://clinic/inventory/medicine") {
+       if (url === "http://"+hostname+"/inventory/medicine") {
          var myUrl = 'medicine/gen/';
        }else {
-          var myUrl = 'http://clinic/medical/employees/gen/';
+          var myUrl = "http://"+hostname+"/medical/employees/gen/";
        }
 
        if(generic_id)

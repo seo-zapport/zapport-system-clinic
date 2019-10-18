@@ -100,16 +100,11 @@ Route::group(['prefix' => 'hr'], function(){
 	Route::get('employees/create/EmpID/{emp_id}', 'EmployeeController@getEmpID');
 	Route::post('employees', 'EmployeeController@store')->name('hr.emp.addEmp');
 	Route::get('employees/print/', 'EmployeeController@printEmployees')->name('print.emp');
+	Route::get('employees/printCsv', 'EmployeeController@printCsv'); //Route Print .CSV
 	Route::get('employees/{employee}', 'EmployeeController@show')->name('hr.emp.show');
 	Route::get('employees/{employee}/edit', 'EmployeeController@edit')->name('hr.emp.edit');
 	Route::get('employees/edit/deptID/{id}', 'EmployeeController@getEditPosition');
 	Route::put('employees/{employee}', 'EmployeeController@update')->name('hr.emp.store');
-
-	//Route Print .CSV
-	Route::get('employees/printCsv', 'EmployeeController@printcsv')->name('hr.emp.print_csv');
-
-
-
 
 });
 

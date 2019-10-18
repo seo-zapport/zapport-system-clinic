@@ -37,7 +37,7 @@
 					<input type="text" name="emp_id" value="@yield('editEmpID', old('emp_id'))" class="form-control" placeholder="Employee ID" required oninvalid="this.setCustomValidity('Please Enter Employee ID')" oninput="setCustomValidity('')">
 				</div>
 
-				@if (substr(url()->current(), 27) == 'create')
+				@if (ucfirst(strstr(url()->current(), 'create')) == 'Create')
 					<div class="form-group col-md-12">
 						<label for="department_id">Department</label>
 						<select name="department_id" id="department_id" class="form-control" required>
@@ -138,7 +138,7 @@
 					<hr>
 					<h5 class="text-muted"><i class="fas fa-briefcase"></i> Work Experience(s)</h5>
 					<hr>
-					@if(substr(url()->current(),27) =="create")
+					@if(ucfirst(strstr(url()->current(), 'create')) == 'Create')
 					
 					<div class="form-row">
 						<div id="work" class="col-12"> {{-- class="form-row align-items-center" --}}
@@ -195,7 +195,7 @@
 							<input type="text" name="birth_place" value="@yield('editBplace', old('birth_place'))" class="form-control" placeholder="Birth Place" required oninvalid="this.setCustomValidity('Please Enter Birth Place')" oninput="setCustomValidity('')">
 						</div>
 
-						@if (substr(url()->current(), 27) == 'create')
+						@if (ucfirst(strstr(url()->current(), 'create')) == 'Create')
 							<div class="form-group col-md-3">
 								<label for="birth_place">Gender</label>
 								<select name="gender" id="gender" class="form-control" required oninvalid="this.setCustomValidity('Please Select Gender')" oninput="setCustomValidity('')">
@@ -218,7 +218,7 @@
 					</div>
 
 					<div class="form-row">
-						@if (substr(url()->current(), 27) == 'create')
+						@if (ucfirst(strstr(url()->current(), 'create')) == 'Create')
 							<div class="form-group col-md-4">
 								<label for="civil_status">Civil Status</label>
 								<select name="civil_status" id="civil_status" class="form-control" required oninvalid="this.setCustomValidity('Please Select Civil Status')" oninput="setCustomValidity('')">
@@ -281,7 +281,7 @@
 					<hr>
 					<h5 class="text-muted"><i class="fas fa-users"></i> Add Children if any</h5>
 					<hr>
-					@if(substr(url()->current(),27) =="create")
+					@if(ucfirst(strstr(url()->current(), 'create')) == 'Create')
 						<div id="children" class="row">  {{-- align-items-center --}}
 							<div class="col-12 form-row">
 								<div class="form-group col-md-4">

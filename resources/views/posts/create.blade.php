@@ -360,7 +360,8 @@
 			e.preventDefault();
 			var btn = $('#InsertPhoto');
 			var loc = location.href;
-			if (loc === 'http://clinic/posts/create') {
+			var hostname = window.location.hostname;
+			if (loc === "http://"+hostname+"/posts/create") {
 				var url = 'create/media';
 			}else{
 				var url = 'edit/media';
@@ -414,7 +415,8 @@
 		$('#tagForm').on('submit', function(e){
 			e.preventDefault();
 			loc2 = location.href;
-			if (loc2 === 'http://clinic/posts/create') {
+			var hostname = window.location.hostname;
+			if (loc2 === "http://"+hostname+"/posts/create") {
 				var url = 'create/tag';
 			}else{
 				var url = '/posts/edit/tag';
@@ -485,7 +487,8 @@
 			e.preventDefault();
 			var btn = $('#InsertPhoto-upload');
 			var loc = location.href;
-			if (loc === 'http://clinic/posts/create') {
+			var hostname = window.location.hostname;
+			if (loc === "http://"+hostname+"/posts/create") {
 				var url = 'create/media';
 			}else{
 				var url = 'edit/media';
@@ -593,7 +596,9 @@
 		  console.log(ft_id);
 		  var loc3 = location.href;
 		  // var ft_id = $('#ftdimg').attr('data-target');
-		  if (loc3 === 'http://clinic/posts/create') {
+		  var hostname = window.location.hostname;
+
+		  if (loc3 === "http://"+hostname+"/posts/create") {
 			  var url = 'create/featured/'+ft_id.replace('#modal-', '');
 		  }else{
 			  var url = '/posts/edit/featured/'+ft_id.replace('#modal-', '');
