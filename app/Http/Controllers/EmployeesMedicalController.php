@@ -11,6 +11,7 @@ use App\Http\Requests\EmployeesmedicalRequest;
 use App\Medicine;
 use App\Mednote;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
@@ -443,17 +444,35 @@ class EmployeesmedicalController extends Controller
 
     public function fullReport()
     {
-        // $diagnosis_count = Employeesmedical::select('employeesmedicals.diagnosis as diagnosis', \DB::raw('COUNT(employeesmedicals.diagnosis) as diagnosis_count'))
-        //                       ->groupBy('diagnosis')
-        //                       ->get();
 
-        $diagnosis_count = Employee::join('employeesmedicals', 'employees.id', 'employeesmedicals.employee_id')
-                                   ->select('gender', 'employeesmedicals.diagnosis as diagnosis', \DB::raw('COUNT(employeesmedicals.diagnosis) as diagnosis_count'))
-                                   ->groupBy('gender', 'diagnosis')
-                                   ->distinct('diagnosis')
-                                   ->get();
+        // $diagnoses = Diagnosis::get();
+        // foreach ($diagnoses as $diagnosis) {
+        //     $arr[] = $diagnosis->join('employeesmedicals', 'diagnoses.id', 'employeesmedicals.diagnosis_id')
+        //                                          ->join('employees', 'employees.id', 'employeesmedicals.employee_id')
+        //                                          ->select('diagnosis', 'employees.gender', 'employeesmedicals.created_at as created_at')
+        //                                          ->where('diagnosis', $diagnosis->diagnosis)
+        //                                          ->orderBy('created_at', 'asc')
+        //                                          ->get()
+        //                                          ->groupBy(function($date) {
+        //                                              return Carbon::parse($date->created_at)->format('M, Y');
+        //                                            });
+        // }
 
-        // dd($diagnosis_count);
-        return view('medical.employeesMedical.fullReport', compact('diagnosis_count', 'diagnosis_count_gender'));
+        // $arr_count = count($arr);
+
+        $emps = Employeesmedical::join('diagnoses', 'diagnoses.id', 'employeesmedicals.diagnosis_id')
+                                                 ->join('employees', 'employees.id', 'employeesmedicals.employee_id')
+                                                 ->select('employeesmedicals.id', 'employees.gender', 'diagnosis', 'employeesmedicals.created_at')
+                                                 ->orderBy('employeesmedicals.created_at', 'desc')
+                                                 ->get()
+                                                 ->groupBy(function($date) {
+                                                     return Carbon::parse($date->created_at)->format('Y');
+                                                   });
+        $emp_age = Employee::get();
+        // dd($emps);
+
+        // $arr_count = count($arr);
+
+        return view('medical.employeesMedical.fullReport', compact('diagnoses', 'arr', 'arr_count', 'emps', 'emp_age'));
     }
 }

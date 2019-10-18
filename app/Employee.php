@@ -40,4 +40,9 @@ class Employee extends Model
     {
         return 'emp_id';
     }
+
+    public function preemployment()
+    {
+        return $this->hasOne(Preemployment::class, 'employee_id');
+    }
 }

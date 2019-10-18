@@ -20,6 +20,7 @@
 				  @endif
 				  @if (Gate::check('isAdmin') || Gate::check('isHr'))
 				  	<a class="nav-link" id="v-inc-requirements-tab" data-toggle="pill" href="#v-inc-requirements" role="tab" aria-controls="v-inc-requirements" aria-selected="false">Employees with incomplete requirements</a>
+				  	<a class="nav-link" id="v-inc-emp-6months-tab" data-toggle="pill" href="#v-emp-6months" role="tab" aria-controls="v-emp-6months" aria-selected="false">Employees 6 months</a>
 				  @endif
 				</div>	
 			</div>
@@ -135,6 +136,40 @@
 								</div>
 							</div>
 						</div>
+
+						<div class="tab-pane fade" id="v-emp-6months" role="tabpanel" aria-labelledby="v-inc-requirements-tab">
+							<div class="card">
+								<div class="card-header"><strong>Employees 6 months</strong></div>
+								<div class="card-body">
+									<div class="table-responsive">
+										<table class="table table-hover">
+											<thead class="thead-dark">
+												<th>Employee Number</th>
+												<th>Employee Name</th>
+												<th>Department - Positon</th>
+												<th>Action</th>
+											</thead>
+											@forelse (@$emps2 as $emp)
+											@if ($emp->hired_date->diffForHumans() == '6 months ago')
+												<tr>
+													<td>{{ $emp->emp_id }}</td>
+													<td>{{ $emp->last_name }} {{ $emp->first_name }} {{ $emp->middle_name }}</td>
+													<td>{{ $emp->departments->department }} - {{ $emp->positions->position }}</td>
+													<td><a href="{{ route('hr.emp.show', ['employee' => $emp->emp_id]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a></td>
+												</tr>
+											@endif
+												@empty
+													<tr>
+														<td colspan="4" class="text-center">Employees with no requirements not found!</td>
+													</tr>
+											@endforelse
+										</table>									
+									</div>
+
+								</div>
+							</div>
+						</div>
+
 					@endif
 				</div>
 			</div>

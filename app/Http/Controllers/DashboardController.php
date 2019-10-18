@@ -43,6 +43,8 @@ class DashboardController extends Controller
                                                         ->orWhere('hdmf_no', '=', NULL)
                                                         ->get();
 
+            $emps2 = Employee::get();
+
         }
         if(Gate::allows('isBanned')) {
             Auth::logout();
@@ -76,7 +78,7 @@ class DashboardController extends Controller
             $meds = Medicine::get();
         }
 
-        return view('admin.dashboard', compact('empMeds', 'emps', 'notSeen', 'employee', 'gens', 'meds', 'search', 'result'));
+        return view('admin.dashboard', compact('empMeds', 'emps', 'notSeen', 'employee', 'gens', 'meds', 'search', 'result', 'emps2'));
     }
 
     /**

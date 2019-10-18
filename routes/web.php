@@ -153,6 +153,11 @@ Route::group(['prefix' => 'medical'], function(){
 	// diagnosis
 	Route::get('employees/diagnosis/{diagnosis}', 'DiagnosisController@fetchDiagnosis')->name('diagnosis.fetch');
 	// 
+	// Pre Employment
+	Route::post('employees/{employee}/pre_employee', 'PreemploymentController@store')->name('medical.pre_emp');
+	Route::get('pre_employment/{pre_emp}', 'PreemploymentController@download')->name('pre_emp.download');
+	Route::delete('pre_employment/{preemployment}', 'PreemploymentController@destroy')->name('pre_emp.delete');
+	// 
 	Route::get('employees/gen/{id}', 'EmployeesMedicalController@getMedBrand')->name('getBrand');
 	Route::post('employees/{employee}', 'EmployeesMedicalController@store')->name('medical.store');
 	Route::get('employees/generic_id/{generic_id}/brand_id/{brand_id}', 'EmployeesMedicalController@getMedGenBrd')->name('getGenBrd');

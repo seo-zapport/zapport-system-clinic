@@ -82,6 +82,7 @@
 							<td class="{{ ($log->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">
 							{{ Carbon\carbon::parse($log->expiration_date)->format('M d, Y') }}</td>
 							<td class="{{ ($log->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">
+<<<<<<< HEAD
 							{{ $log->where('brand_id', $log->brand_id)->where('generic_id', $log->generic_id)->where('expiration_date', $log->expiration_date)->where('availability', 0)->where('created_at', $log->orig)->count() }}
 							</td>
 							<td class="{{ ($log->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">
@@ -89,6 +90,15 @@
 							</td>
 							<td class="{{ ($log->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">
 							{{ $log->where('brand_id', $log->brand_id)->where('generic_id', $log->generic_id)->where('expiration_date', $log->expiration_date)->where('created_at', $log->orig)->count() }}
+=======
+								{{ $log->where('brand_id', $log->brand_id)->where('generic_id', $log->generic_id)->where('expiration_date', $log->expiration_date)->where('availability', 0)->where('created_at', $log->orig)->count() }}
+							</td>
+							<td class="{{ ($log->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">
+								{{ $log->where('brand_id', $log->brand_id)->where('generic_id', $log->generic_id)->where('expiration_date', $log->expiration_date)->where('availability', 1)->count() }}
+							</td>
+							<td class="{{ ($log->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">
+								{{ $log->where('brand_id', $log->brand_id)->where('generic_id', $log->generic_id)->where('expiration_date', $log->expiration_date)->where('created_at', $log->orig)->count() }}
+>>>>>>> 383c59a5c4b8a59fd8de17ec6f9a4a7b2d95bde9
 							</td>
 							<td class="{{ ($log->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">
 							{{ ucwords($log->user->employee->last_name) }} {{ ucwords($log->user->employee->first_name) }}

@@ -118,7 +118,10 @@
                 </ul>
                 <li class="nav-item"><a href="{{ route('medical.listsofemployees') }}" class="nav-link @yield('employeesMedical')"><i class="fas fa-list"></i><span class="collapse-label">List of Employees</span></a></li>
                 <li class="nav-item"><a href="{{ route('medical.empsRecords') }}" class="nav-link @yield('employeesWithRecord')"><i class="fas fa-list"></i><span class="collapse-label">Employees with Record</span></a></li>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 383c59a5c4b8a59fd8de17ec6f9a4a7b2d95bde9
             </ul>
         </li>
         @endif

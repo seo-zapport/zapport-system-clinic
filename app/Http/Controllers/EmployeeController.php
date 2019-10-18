@@ -306,6 +306,7 @@ class EmployeeController extends Controller
                     "elementary_grad_date"      => ['required'],
                     "highschool"                => ['required'],
                     "highschool_grad_date"      => ['required'],
+                    "employee_type"             => ['required'],
                     // "college"                   => ['required'],
                     // "college_grad_date"         => ['required'],
                     "person_to_contact"         => ['required'],
@@ -346,6 +347,7 @@ class EmployeeController extends Controller
                     "person_to_contact_address.required" => 'Person to contact address is required!',
                     "person_to_contact_number.required"  => 'Person to contact phone number is required!',
                     "hired_date.required"                => 'Hired Date is required!',
+                    "employee_type.required"             => 'Employee Type is required!',
             ]);
 
             $arr = array(request('experience'));
@@ -421,6 +423,7 @@ class EmployeeController extends Controller
             $employee->hdmf_no                      = $request->hdmf_no;
             $employee->experience                   = $works;
             $employee->hired_date                   = $request->hired_date;
+            $employee->employee_type                = $request->employee_type;
             $employee->save();
 
             return redirect(route('hr.emp.show', ['employee' => $employee->emp_id]));
