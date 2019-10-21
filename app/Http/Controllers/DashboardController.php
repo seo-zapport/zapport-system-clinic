@@ -43,7 +43,7 @@ class DashboardController extends Controller
                                                         ->orWhere('hdmf_no', '=', NULL)
                                                         ->get();
 
-            $emps2 = Employee::get();
+            $emps2 = Employee::where('employee_type', 0)->get();
 
         }
         if(Gate::allows('isBanned')) {
@@ -156,4 +156,5 @@ class DashboardController extends Controller
     {
         //
     }
+
 }

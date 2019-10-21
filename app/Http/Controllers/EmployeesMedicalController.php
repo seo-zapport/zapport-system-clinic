@@ -264,13 +264,13 @@ class EmployeesmedicalController extends Controller
     public function employeeinfo(Request $request, Employee $employee)
     {
         if (Gate::allows('isAdmin') || Gate::allows('isHr') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
-            $empMed = Employeesmedical::where('employee_id', $employee->id);
+            $empMed = Employeesmedical::where('employee_id', $employee->id)->orderBy('id', 'desc');
 
             if (!empty($request->search)) {
                 $diagnosis = Diagnosis::where('diagnosis', $request->search)->first();
 
                 if ($diagnosis != null) {
-                    $search = $empMed->where('diagnosis_id', $diagnosis->id)->orderBy('id', 'desc')->paginate(10);
+                    $search = $empMed->where('diagnosis_id', $diagnosis->id)->paginate(10);
                 }
 
                 $search = $empMed->paginate(10);

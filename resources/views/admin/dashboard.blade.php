@@ -20,7 +20,7 @@
 				  @endif
 				  @if (Gate::check('isAdmin') || Gate::check('isHr'))
 				  	<a class="nav-link" id="v-inc-requirements-tab" data-toggle="pill" href="#v-inc-requirements" role="tab" aria-controls="v-inc-requirements" aria-selected="false">Employees with incomplete requirements</a>
-				  	<a class="nav-link" id="v-inc-emp-6months-tab" data-toggle="pill" href="#v-emp-6months" role="tab" aria-controls="v-emp-6months" aria-selected="false">Employees 6 months</a>
+				  	<a class="nav-link" id="v-inc-emp-6months-tab" data-toggle="pill" href="#v-emp-6months" role="tab" aria-controls="v-emp-6months" aria-selected="false">Candidates for Regularization</a>
 				  @endif
 				</div>	
 			</div>
@@ -32,7 +32,7 @@
 						  		<div class="card-header"><strong>New Consultations</strong></div>
 						  		<div class="card-body">
 						  			<div class="table-responsive">
-										<table class="table table-hover">
+										<table id="newConsTable" class="table table-hover">
 											<thead class="thead-dark">
 												<th>No.</th>
 												<th>Employee Name</th>
@@ -44,7 +44,7 @@
 											</thead>
 											<tbody>
 												@forelse (@$notSeen as $seen)
-													<tr>
+													<tr id="newCons">
 														<td>{{ $seen->employee->emp_id }}</td>
 														<td>{{ ucwords($seen->employee->last_name) }} {{ ucwords($seen->employee->first_name) }} {{ ucwords($seen->employee->middle_name) }}</td>
 														<td>{{ $seen->created_at->format('M d, Y - h:i a') }}</td>
@@ -71,7 +71,7 @@
 						  		<div class="card-header"><strong>For Follow up</strong></div>
 						  		<div class="card-body">
 						  			<div class="table-responsive">
-										<table class="table table-hover">
+										<table id="forFollowUp" class="table table-hover">
 											<thead class="thead-dark">
 												<th>No.</th>
 												<th>Employee Name</th>
@@ -83,7 +83,7 @@
 											</thead>
 											<tbody>
 												@forelse (@$empMeds as $empMed)
-													<tr>
+													<tr id="FFup">
 														<td>{{ $empMed->employee->emp_id }}</td>
 														<td>{{ ucwords($empMed->employee->last_name) }} {{ ucwords($empMed->employee->first_name) }} {{ ucwords($empMed->employee->middle_name) }}</td>
 														<td>{{ $empMed->created_at->format('M d, Y - h:i a') }}</td>
@@ -111,7 +111,7 @@
 								<div class="card-header"><strong>Employees with incomplete requirements</strong></div>
 								<div class="card-body">
 									<div class="table-responsive">
-										<table class="table table-hover">
+										<table id="IncReq" class="table table-hover">
 											<thead class="thead-dark">
 												<th>Employee Number</th>
 												<th>Employee Name</th>
@@ -119,7 +119,7 @@
 												<th>Action</th>
 											</thead>
 											@forelse (@$emps as $emp)
-												<tr>
+												<tr id="inc">
 													<td>{{ $emp->emp_id }}</td>
 													<td>{{ $emp->last_name }} {{ $emp->first_name }} {{ $emp->middle_name }}</td>
 													<td>{{ $emp->departments->department }} - {{ $emp->positions->position }}</td>
@@ -139,10 +139,10 @@
 
 						<div class="tab-pane fade" id="v-emp-6months" role="tabpanel" aria-labelledby="v-inc-requirements-tab">
 							<div class="card">
-								<div class="card-header"><strong>Employees 6 months</strong></div>
+								<div class="card-header"><strong>Candidates for Regularization</strong></div>
 								<div class="card-body">
 									<div class="table-responsive">
-										<table class="table table-hover">
+										<table id="CandReg" class="table table-hover">
 											<thead class="thead-dark">
 												<th>Employee Number</th>
 												<th>Employee Name</th>
@@ -150,8 +150,8 @@
 												<th>Action</th>
 											</thead>
 											@forelse (@$emps2 as $emp)
-											@if ($emp->hired_date->diffForHumans() == '6 months ago')
-												<tr>
+											@if ($emp->hired_date->diffForHumans() == '6 months ago' || $emp->hired_date->diffForHumans() == '5 months ago')
+												<tr id="forReg">
 													<td>{{ $emp->emp_id }}</td>
 													<td>{{ $emp->last_name }} {{ $emp->first_name }} {{ $emp->middle_name }}</td>
 													<td>{{ $emp->departments->department }} - {{ $emp->positions->position }}</td>
@@ -255,6 +255,7 @@
 	    $("#searchDiagnosis input[name='search']").val(value);
 	    $('#searchDiagnosis_list').html("");
 	});
+
 </script>
 
 @endsection

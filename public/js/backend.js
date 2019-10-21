@@ -327,4 +327,21 @@ jQuery(document).ready(function($){
 //   });
 // });
 
+  var count = $("#newConsTable #newCons").length
+  var FFcount = $("#forFollowUp #FFup").length
+  var incCount = $("#IncReq #inc").length
+  var forRegCount = $("#CandReg #forReg").length
+  if (count > 0) {
+   $("#v-new-consultation-tab").append('<span class="text-center text-white bg-danger float-right">'+count+'</span>');
+  }
+  if(FFcount > 0){
+    $("#v-follow-up-tab").append('<span class="text-center text-white bg-danger float-right">'+FFcount+'</span>');
+  }
+  if (incCount) {
+    $("#v-inc-requirements-tab").append('<span class="text-center text-white bg-danger float-right">'+incCount+'</span>');
+  }  
+  if (forRegCount) {
+    $("#v-inc-emp-6months-tab").append('<span class="text-center text-white bg-danger float-right">'+forRegCount+'</span>');
+  }
+
 });
