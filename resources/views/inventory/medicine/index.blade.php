@@ -25,7 +25,17 @@
 		<div class="col-12 col-md-6">
 			<div class="form-group text-right">
 				<a class="btn btn-info text-white" href="#" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus"></i> Add New</a>
-			</div>		
+				<!--- PRINT --->
+				<button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PRINT <span class="caret"></span>
+				</button>
+				@php 
+					$fileName = 'inventory_medicine';
+				@endphp
+				<ul class="dropdown-menu">
+					<li><a href="#" onclick="clicked()"><i class="fas fa-print text-secondary"></i>PRINT</a></li>
+					<li><a href="{{ asset('storage/uploaded/print/'.@$fileName.'.csv')}}" download="{{ @$fileName.'.csv'}}" target="_blank"><i class="fas fa-file-excel-o text-secondary"></i>CSV</a></li>
+				</ul>
+			</div>
 		</div>
 	@endif
 </div>

@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\MedicineRequest;
+use File;
 
 class MedicineController extends Controller
 {
@@ -39,6 +40,11 @@ class MedicineController extends Controller
                 $meds = Medicine::select('brand_id', 'generic_id')->groupBy('brand_id', 'generic_id')->orderBy('id', 'desc')->paginate(10);
             }
             $gens = Generic::orderBy('gname', 'asc')->get();
+
+             if(count($meds)>0){
+                 $this->PrintMedCSV($meds,'index','',''); 
+             }
+
             return view('inventory.medicine.index', compact('meds', 'gens', 'search'));
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();
@@ -197,6 +203,10 @@ class MedicineController extends Controller
 
         }
 
+        $medlogs = ['meds'=> $meds->getCollection(), 'countMeds' => $countMeds];
+
+        $this->PrintMedCSV($medlogs,'logsinput',$medbrand->bname, $generic->gname); 
+
         return view('inventory.medicine.medicine_history', compact('medbrand', 'generic', 'empsMeds', 'arr', 'meds', 'inputDate', 'expDate', 'search_name', 'search_date', 'countMeds'));
     }
 
@@ -288,7 +298,9 @@ class MedicineController extends Controller
                 $logs = $logs->orderBy('medicines.created_at', 'desc')->paginate(10);
                 $logs->appends(['search' => $request->search]);
                 }
-                // dd($logs);
+                 //dd($logs);
+             $this->PrintMedCSV($logs->getCollection(),'logs',$medbrand->bname, $generic->gname); 
+           
             return view('inventory.medicine.logs', compact('logs', 'medbrand', 'generic', 'log1', 'search', 'loglist', 'logsearch'));
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();
@@ -297,5 +309,22 @@ class MedicineController extends Controller
            return back();
 
         }
+    }
+
+    public function PrintMedCSV($meds,$typecsv,$medbrand,$generic){
+
+        $relPath = 'storage/uploaded/print';
+        if (!file_exists($relPath)) {
+            mkdir($relPath, 777, true);
+        }
+
+        $medicine = $meds;    
+        $dataemp = view('inventory.medicine.csv',compact('medicine','typecsv','medbrand','generic'))->render();
+
+        $fileName = "inventory_medicine";
+
+        File::put(public_path('/storage/uploaded/print/'.$fileName.'.csv'),$dataemp);   
+
+
     }
 }

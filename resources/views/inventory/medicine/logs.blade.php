@@ -49,6 +49,21 @@
 			<input type="checkbox" class="form-check-input" {{ (isset($_GET['expired'])) ? 'checked' : '' }} id="exampleCheck1" name="expired" onclick="this.form.submit()">
 			<label class="form-check-label" for="exampleCheck1">Filter Expired Medicines</label>
 		</div>		
+
+		<div class="form-check col-12 col-md-2 mb-0">
+			<div class="text-right">
+				<!--- PRINT --->
+				<button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PRINT <span class="caret"></span>
+				</button>
+				@php 
+					$fileName = 'inventory_medicine';
+				@endphp
+				<ul class="dropdown-menu">
+					<li><a href="#" onclick="clicked()"><i class="fas fa-print text-secondary"></i>PRINT</a></li>
+					<li><a href="{{ asset('storage/uploaded/print/'.@$fileName.'.csv')}}" download="{{ @$fileName.'.csv'}}" target="_blank"><i class="fas fa-file-excel-o text-secondary"></i>CSV</a></li>
+				</ul>
+			</div>
+		</div>
 	</div>
 
 </form>
@@ -82,23 +97,13 @@
 							<td class="{{ ($log->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">
 							{{ Carbon\carbon::parse($log->expiration_date)->format('M d, Y') }}</td>
 							<td class="{{ ($log->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">
-<<<<<<< HEAD
 							{{ $log->where('brand_id', $log->brand_id)->where('generic_id', $log->generic_id)->where('expiration_date', $log->expiration_date)->where('availability', 0)->where('created_at', $log->orig)->count() }}
-							</td>
-							<td class="{{ ($log->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">
-							{{ $log->where('brand_id', $log->brand_id)->where('generic_id', $log->generic_id)->where('expiration_date', $log->expiration_date)->where('availability', 1)->count() }}
-							</td>
-							<td class="{{ ($log->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">
-							{{ $log->where('brand_id', $log->brand_id)->where('generic_id', $log->generic_id)->where('expiration_date', $log->expiration_date)->where('created_at', $log->orig)->count() }}
-=======
-								{{ $log->where('brand_id', $log->brand_id)->where('generic_id', $log->generic_id)->where('expiration_date', $log->expiration_date)->where('availability', 0)->where('created_at', $log->orig)->count() }}
 							</td>
 							<td class="{{ ($log->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">
 								{{ $log->where('brand_id', $log->brand_id)->where('generic_id', $log->generic_id)->where('expiration_date', $log->expiration_date)->where('availability', 1)->count() }}
 							</td>
 							<td class="{{ ($log->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">
 								{{ $log->where('brand_id', $log->brand_id)->where('generic_id', $log->generic_id)->where('expiration_date', $log->expiration_date)->where('created_at', $log->orig)->count() }}
->>>>>>> 383c59a5c4b8a59fd8de17ec6f9a4a7b2d95bde9
 							</td>
 							<td class="{{ ($log->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">
 							{{ ucwords($log->user->employee->last_name) }} {{ ucwords($log->user->employee->first_name) }}

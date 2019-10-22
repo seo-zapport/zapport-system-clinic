@@ -18,7 +18,7 @@
 				@if (@$employee->profile_img != null)
 					<div class="employee_wrap mb-0">
 						<div class="panel employee-photo rounded">
-							<img src="{{ asset('storage/uploaded/'.@$employee->profile_img) }}" alt="{{ @$employee->profile_img }}" class="img-fluid rounded">
+							<img src="{{ asset('storage/uploaded/'.@$employee->profile_img) }}" alt="{{ @$employee->profile_img }}" class="img-fluid rounded" onerror="javascript:this.src='{{url( '/images/default.png' )}}'" >
 						</div>
 					</div>
 						

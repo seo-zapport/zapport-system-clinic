@@ -33,6 +33,17 @@
 			<a href="{{ route('medicine.show', ['medbrand' => $medbrand->bname, 'generic' => $generic->gname, 'inputDate' => $inputDate, 'expDate' => 
 					$expDate]) }}" class="btn btn-info text-white">Clear</a>
 		</div>
+		<div class="form-group col-md-6 text-right">
+			<button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PRINT <span class="caret"></span>
+			</button>
+			@php 
+				$fileName = 'inventory_medicine';
+			@endphp
+			<ul class="dropdown-menu">
+				<li><a href="#" onclick="clicked()"><i class="fas fa-print text-secondary"></i>PRINT</a></li>
+				<li><a href="{{ asset('storage/uploaded/print/'.@$fileName.'.csv')}}" download="{{ @$fileName.'.csv'}}" target="_blank"><i class="fas fa-file-excel-o text-secondary"></i>CSV</a></li>
+			</ul>
+		</div>
 	</div>
 </form>
 

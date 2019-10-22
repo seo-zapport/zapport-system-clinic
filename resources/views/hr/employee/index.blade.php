@@ -12,7 +12,7 @@
 
 <!--- PRINT --->
 <div class="form-group float-right">
-	<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PRINT <span class="caret"></span>
+	<button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PRINT <span class="caret"></span>
 	</button>
 	@php 
 	$filter_age = app('request')->input('filter_age');
@@ -46,10 +46,8 @@
 	@endphp
 	
 	<ul class="dropdown-menu">
-		<li><a href="#" onclick="clicked()">PRINT</a></li>
-		<li><div class="divider"></div></li>
-		<li><a href="{{ asset('storage/uploaded/print/'.$fileName.'.csv')}}" download="{{ $fileName.'.csv'}}" target="_blank">CSV</a></li>
-		<li><a href="{{ asset('storage/uploaded/print/'.$fileName.'.pdf')}}" download="{{ $fileName.'.pdf'}}" target="_blank">PDF</a></li>
+		<li><a href="#" onclick="clicked()"><i class="fas fa-print text-secondary"></i>PRINT</a></li>
+		<li><a href="{{ asset('storage/uploaded/print/'.$fileName.'.csv')}}" download="{{ $fileName.'.csv'}}" target="_blank"><i class="fas fa-file-excel-o text-secondary"></i>CSV</a></li>
 	</ul>
 </div>
 
@@ -112,35 +110,35 @@
 
 					@forelse ($employees as $employee)
 						@if (@$filter_age != NULL && @$employee->age == @$filter_age)
-							<tr>
+							<tr class="empTR">
 								<td>{{ $employee->emp_id }}</td>
 								<td>{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
 								<td>{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
 								<td> <a href="{{ route('hr.emp.show', ['employee' => $employee->emp_id]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i>View</a></td>
 							</tr>
 						@elseif (@$filter_all != NULL && @$employee->age == @$filter_all['age'])
-							<tr>
+							<tr class="empTR">
 								<td>{{ $employee->emp_id }}</td>
 								<td>{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
 								<td>{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
 								<td> <a href="{{ route('hr.emp.show', ['employee' => $employee->emp_id]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i>View</a></td>
 							</tr>
 						@elseif (@$filter_g_a != NULL && @$employee->age == @$filter_g_a['age'])
-							<tr>
+							<tr class="empTR">
 								<td>{{ $employee->emp_id }}</td>
 								<td>{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
 								<td>{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
 								<td> <a href="{{ route('hr.emp.show', ['employee' => $employee->emp_id]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i>View</a></td>
 							</tr>
 						@elseif (@$filter_e_a != NULL && @$employee->age == @$filter_e_a['age'])
-							<tr>
+							<tr class="empTR">
 								<td>{{ $employee->emp_id }}</td>
 								<td>{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
 								<td>{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
 								<td> <a href="{{ route('hr.emp.show', ['employee' => $employee->emp_id]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i>View</a></td>
 							</tr>
 						@elseif (@$filter_age == NULL && @$filter_all == NULL && @$filter_g_a == NULL && @$filter_e_a == NULL)
-							<tr>
+							<tr class="empTR">
 								<td>{{ $employee->emp_id }}</td>
 								<td>{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
 								<td>{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
@@ -181,7 +179,7 @@
 	}
 
 	jQuery(document).ready(function($){
-		var countTR = $("#empTable tbody tr").length;
+		var countTR = $("#empTable tbody tr.empTR").length;
 		$("#empCount").append('<span class="font-weight-bold">Result: '+ countTR +'</span>');
 
 	});
