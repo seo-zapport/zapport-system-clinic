@@ -69,35 +69,35 @@
 
 					@forelse ($employees as $employee)
 						@if (@$filter_age != NULL && @$employee->age == @$filter_age)
-							<tr>
+							<tr id="empRow">
 								<td>{{ $employee->emp_id }}</td>
 								<td>{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
 								<td>{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
 								<td> <a href="{{ route('hr.emp.show', ['employee' => $employee->emp_id]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i>View</a></td>
 							</tr>
 						@elseif (@$filter_all != NULL && @$employee->age == @$filter_all['age'])
-							<tr>
+							<tr id="empRow">
 								<td>{{ $employee->emp_id }}</td>
 								<td>{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
 								<td>{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
 								<td> <a href="{{ route('hr.emp.show', ['employee' => $employee->emp_id]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i>View</a></td>
 							</tr>
 						@elseif (@$filter_g_a != NULL && @$employee->age == @$filter_g_a['age'])
-							<tr>
+							<tr id="empRow">
 								<td>{{ $employee->emp_id }}</td>
 								<td>{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
 								<td>{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
 								<td> <a href="{{ route('hr.emp.show', ['employee' => $employee->emp_id]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i>View</a></td>
 							</tr>
 						@elseif (@$filter_e_a != NULL && @$employee->age == @$filter_e_a['age'])
-							<tr>
+							<tr id="empRow">
 								<td>{{ $employee->emp_id }}</td>
 								<td>{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
 								<td>{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
 								<td> <a href="{{ route('hr.emp.show', ['employee' => $employee->emp_id]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i>View</a></td>
 							</tr>
 						@elseif (@$filter_age == NULL && @$filter_all == NULL && @$filter_g_a == NULL && @$filter_e_a == NULL)
-							<tr>
+							<tr id="empRow">
 								<td>{{ $employee->emp_id }}</td>
 								<td>{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
 								<td>{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
@@ -138,7 +138,7 @@
 	}
 
 	jQuery(document).ready(function($){
-		var countTR = $("#empTable tbody tr").length;
+		var countTR = $("#prntEmpCount tbody #prntEmpRow").length;
 		$("#empCount").append('<span class="font-weight-bold">Result: '+ countTR +'</span>');
 	});
 

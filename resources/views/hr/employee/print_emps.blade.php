@@ -53,31 +53,31 @@
 				<tbody>
 					@forelse ($employees2 as $employee)
 						@if (@$filter_age != NULL && @$employee->age == @$filter_age)
-							<tr>
+							<tr id="prntEmpRow">
 								<td>{{ $employee->emp_id }}</td>
 								<td>{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
 								<td>{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
 							</tr>
 						@elseif (@$filter_all != NULL && @$employee->age == @$filter_all['age'])
-							<tr>
+							<tr id="prntEmpRow">
 								<td>{{ $employee->emp_id }}</td>
 								<td>{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
 								<td>{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
 							</tr>
 						@elseif (@$filter_g_a != NULL && @$employee->age == @$filter_g_a['age'])
-							<tr>
+							<tr id="prntEmpRow">
 								<td>{{ $employee->emp_id }}</td>
 								<td>{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
 								<td>{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
 							</tr>
 						@elseif (@$filter_e_a != NULL && @$employee->age == @$filter_e_a['age'])
-							<tr>
+							<tr id="prntEmpRow">
 								<td>{{ $employee->emp_id }}</td>
 								<td>{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
 								<td>{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
 							</tr>
 						@elseif (@$filter_age == NULL && @$filter_all == NULL && @$filter_g_a == NULL && @$filter_e_a == NULL)
-							<tr>
+							<tr id="prntEmpRow">
 								<td>{{ $employee->emp_id }}</td>
 								<td>{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
 								<td>{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>

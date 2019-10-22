@@ -344,4 +344,21 @@ jQuery(document).ready(function($){
     $("#v-inc-emp-6months-tab").append('<span class="text-center text-white bg-danger float-right">'+forRegCount+'</span>');
   }
 
+  $.ajax({
+    type: 'GET',
+    url: '/dashboard/notification/',
+    dataType : "json",
+    success:function(response)
+    {
+      var doctor = response.admin_doctor + response.admin_nurse_doctor;
+      var nurse = response.admin_nurse_doctor;
+      var hr = response.admin_hr + response.admin_hr2;
+      var admin = doctor + hr;
+      $("#adminNotif").append('<span id="Notifs" class="text-center text-white bg-danger float-right">'+admin+'</span>');
+      $("#doctorNotif").append('<span id="Notifs" class="text-center text-white bg-danger float-right">'+doctor+'</span>');
+      $("#nurseNotif").append('<span id="Notifs" class="text-center text-white bg-danger float-right">'+nurse+'</span>');
+      $("#hrNotif").append('<span id="Notifs" class="text-center text-white bg-danger float-right">'+hr+'</span>');
+    }
+  });
+
 });

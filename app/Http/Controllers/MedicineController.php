@@ -154,7 +154,6 @@ class MedicineController extends Controller
                             ->where('medicines.created_at', $inputDate)
                             ->where('expiration_date', $expDate)
                             ->where('availability', 1);
-                            // ->orderBy('medicines.id', 'asc')->paginate(10);
             $countMeds = Employeesmedical::join('employeesmedical_medicine_users', 'employeesmedicals.id', 'employeesmedical_medicine_users.employeesmedical_id')
                                          ->join('medicines', 'medicines.id', 'employeesmedical_medicine_users.medicine_id')
                                          ->join('users as users1', 'users1.id', 'employeesmedical_medicine_users.user_id')
