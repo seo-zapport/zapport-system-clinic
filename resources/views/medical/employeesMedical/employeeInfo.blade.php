@@ -45,8 +45,8 @@
 											Remove
 										</button>
 									</form>
+									<a class="dropdown-item" href="{{ route('pre_emp.download', ['pre_emp' => @$employee->preemployment->pre_employment_med]) }}" download>View</a>
 								@endif
-								<a class="dropdown-item" href="{{ route('pre_emp.download', ['pre_emp' => @$employee->preemployment->pre_employment_med]) }}" download>View</a>
 							</div>
 						</div>
 					</div>
