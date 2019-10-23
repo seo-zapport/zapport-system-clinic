@@ -361,4 +361,8 @@ jQuery(document).ready(function($){
     }
   });
 
+  $("#showFilter").on('click', function(e){
+    $("#advncfilter").toggleClass('d-none');
+  });
+
 });
