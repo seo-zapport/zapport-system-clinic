@@ -35,7 +35,7 @@
 						</tr>
 						@empty
 							<tr>
-								<td colspan="2" class="text-center">{{ "No registered Department yet!" }}</td>
+								<td colspan="3" class="text-center">{{ "No registered Department yet!" }}</td>
 							</tr>
 					@endforelse
 				</tbody>

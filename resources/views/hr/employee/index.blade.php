@@ -23,7 +23,7 @@
 	</div>
 </form>
 <span id="showFilter" class="text-info font-weight-bold" style="cursor: pointer;">Advanced filter <i class="fas fa-user-cog"></i></span>
-<form id="advncfilter" method="get" class="{{ (@$filter_gender == null && @$filter_both == null && @$filter_all == null && @$filter_g_a == null && @$filter_g_s == null && @$filter_g_t_s == null && @$filter_g_a_s == null && @$filter_super == null && @$filter_empType == null && @$filter_e_a == null && @$filter_t_s == null && @$filter_t_a_s == null && @$filter_status == null && @$filter_age == null ) ? 'd-none' : '' }}">
+<form id="advncfilter" method="get" class="{{ (@$filter_gender == null && @$filter_both == null && @$filter_all == null && @$filter_g_a == null && @$filter_g_s == null && @$filter_g_t_s == null && @$filter_g_a_s == null && @$filter_super == null && @$filter_empType == null && @$filter_e_a == null && @$filter_t_s == null && @$filter_t_a_s == null && @$filter_status == null && @$filter_age == null && @$filter_s_a == null) ? 'd-none' : '' }}">
 	<div class="form-row">
 		<div class="form-group col-md-2">
 			<select name="filter_gender" id="" class="form-control">
