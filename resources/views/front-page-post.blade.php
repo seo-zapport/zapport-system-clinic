@@ -14,7 +14,7 @@
 					</figure>
 
 					<div class="zp-article-title-wrap m-b-md text-secondary">
-			            <h3 class="zp-article-title">{{ $post->title }}</h3>
+			            <h3 class="zp-article-title">{{ ucwords($post->title) }}</h3>
 					</div>
 					<span class="zp-article-meta">
 						<span class="text-muted meta-date"><i class="fas fa-calendar-alt"></i> {{ $post->created_at->format('M d, Y') }}</span>

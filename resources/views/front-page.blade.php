@@ -24,12 +24,22 @@
 	            @endphp
 	            @foreach ($users as $user)
 	                @if ($user->isOnline())
-	                    @php $outopen = "Open";
-	                	$outopenClass = "success"; @endphp
+	            		@foreach ($user->roles as $role)
+	                    @php 
+	                    $attendant = $role->role;
+	                    $outopen = "Open";
+	                	$outopenClass = "success"; 
+	                	@endphp
 	                    @break
+	            		@endforeach
 	                @endif
 	            @endforeach
-	            <i class='fas fa-clinic-medical'></i> Clinic is <span class="text-{{ $outopenClass }}">{{ $outopen }}</span>
+	            <i class='fas fa-clinic-medical'></i> Clinic is <span class="text-{{ $outopenClass }}">{{ $outopen }}</span> <br>
+	            @if (@$attendant == 'doctor')
+	            	<small class="text-muted"><i class="fas fa-user-md"></i> {{ ucfirst(@$attendant) }} is In!</small>
+	            @elseif (@$attendant == 'nurse')
+	            	<small class="text-muted"><i class="fas fa-user-nurse"></i> {{ ucfirst(@$attendant) }} is In!</small>
+	            @endif
 			</div>
 			
 		</div>

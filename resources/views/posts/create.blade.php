@@ -391,7 +391,7 @@
 					$('#featImgModal #allFT').append('<li class="attachment-list"><div class="attachment-preview type-image landscape"><div class="thumbnail" id="ftdimg" data-target="'+'#modal-'+response.id+'><div class="centered"><img alt="'+ response.file_name +'" class="img-fluid" src="' + path + "/" + response.file_name + '"/></div></div></div></li>');
 				},
 				error: function(response){
-					console.log(response) 
+					console.log(response)
 					$('#addFileForm')[0].reset();
 					document.getElementById("errorlog").innerHTML = '';
 
