@@ -191,7 +191,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<form onsubmit="return test(this)" id="myform" method="post" action="{{ route('medical.storeFollowup', ['employee' => $employee->emp_id, 'employeesmedical' => $employeesmedical->id]) }}" enctype="multipart/form-data">
+				<form onsubmit="return test(this)" id="myform-show" method="post" action="{{ route('medical.storeFollowup', ['employee' => $employee->emp_id, 'employeesmedical' => $employeesmedical->id]) }}" enctype="multipart/form-data">
 					@csrf
 					<div class="form-group">
 						<label for="diagnosis">Attachment</label>
@@ -209,18 +209,19 @@
 					<div id="meds" class="form-row">
 						<div class="form-group col-5">
 						<label for="generic_id">Generic Name</label>
-						<select name="generic_id[0][0]" id="generic_id" class="form-control" required>
-								<option selected="true" disabled="disabled"> Select Generic Name </option>
+						<select name="generic_id[0][0]" id="generic_id" class="form-control">
+								<option selected="true" disabled="disabled" value=""> Select Generic Name </option>
 								@forelse ($gens as $gen)
 									<option value="{{ $gen->id }}">{{ $gen->gname }}</option>
 									@empty
 									empty
 								@endforelse
 						</select>
+						<span id="select_generic_show" class="d-none text-muted font-weight-bold" style="cursor: pointer">Clear</span>
 						</div>
 						<div class="form-group col-4">
 						<label for="brand_id">Brand Name</label>
-						<select name="brand_id[0][0]" id="brand_id" class="form-control" required>
+						<select name="brand_id[0][0]" id="brand_id" class="form-control">
 								<option selected="true" disabled="disabled"> Select Medicine </option>
 						</select>
 						</div>
@@ -437,8 +438,12 @@ jQuery(document).ready(function($) {
     var qty = $('input[name="quantity[0][0]"]');
     $('select[name="generic_id[0][0]"]').on('change',function(){
        var generic_id = jQuery(this).val();
-       // console.log('generic_id '+generic_id);
-       // var myUrl = 'medicine/gen/';
+		if (generic_id) {
+			$("#select_generic_show").removeClass('d-none');
+		}else{
+			$("#select_generic_show").addClass('d-none');
+		}
+
        var url   = window.location.href;
 
        if (url === "http://clinic/inventory/medicine") {

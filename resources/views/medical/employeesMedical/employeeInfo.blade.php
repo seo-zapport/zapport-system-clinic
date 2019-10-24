@@ -176,18 +176,19 @@
 					<div id="meds" class="form-row">
 						<div class="form-group col-5">
 						<label for="generic_id">Generic Name</label>
-						<select name="generic_id[0][0]" id="generic_id" class="form-control" required>
-								<option selected="true" disabled="disabled"> Select Generic Name </option>
+						<select name="generic_id[0][0]" id="generic_id" class="form-control">
+								<option selected="true" disabled="disabled" value=""> Select Generic Name </option>
 								@forelse ($gens as $gen)
 									<option value="{{ $gen->id }}">{{ $gen->gname }}</option>
 									@empty
 									empty
 								@endforelse
 						</select>
+						<span id="select_generic" class="d-none text-muted font-weight-bold" style="cursor: pointer">Clear</span>
 						</div>
 						<div class="form-group col-4">
 						<label for="brand_id">Brand Name</label>
-						<select name="brand_id[0][0]" id="brand_id" class="form-control" required>
+						<select name="brand_id[0][0]" id="brand_id" class="form-control">
 								<option selected="true" disabled="disabled"> Select Medicine </option>
 						</select>
 						</div>
@@ -200,7 +201,7 @@
 					<div class="form-group">
 						<label for="remarks">Remarks</label>
 						<select name="remarks" id="remarks" class="form-control" required>
-							<option selected="true" disabled="disabled" value> Choose Remarks </option>
+							<option selected="true" disabled="disabled" value=""> Choose Remarks </option>
 							<option value="followUp">Follow up</option>
 							<option value="done">Done</option>
 						</select>
@@ -423,8 +424,12 @@ jQuery(document).ready(function($) {
     var qty = $('input[name="quantity[0][0]"]');
     $('select[name="generic_id[0][0]"]').on('change',function(){
        var generic_id = jQuery(this).val();
-       // console.log('generic_id '+generic_id);
-       // var myUrl = 'medicine/gen/';
+		if (generic_id) {
+			$("#select_generic").removeClass('d-none');
+		}else{
+			$("#select_generic").addClass('d-none');
+		}
+
        var url   = window.location.href;
 
        if (url === "http://clinic/inventory/medicine") {

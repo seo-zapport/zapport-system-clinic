@@ -365,4 +365,138 @@ jQuery(document).ready(function($){
     $("#advncfilter").toggleClass('d-none');
   });
 
+
+// Employee Gender_____________________________________________________________________________________________________
+
+  $("#advncfilter select[name='filter_gender']").on('change', function(e){
+    var selected = $(this).children('option:selected').val();
+    console.log(selected);
+    if (selected) {
+      $("#clear_gender").removeClass('d-none');
+    }else{
+      $("#clear_gender").addClass('d-none');
+    }
+  });
+
+  $("#clear_gender").on('click', function(e){
+    $("select[name='filter_gender']").prop('selectedIndex',0);
+    $(this).addClass('d-none');
+  });
+
+  var gender_selected = $("#advncfilter select[name='filter_gender']").children('option:selected').val();
+  if (gender_selected) {
+    $("#clear_gender").removeClass('d-none');
+  }else{
+    $("#clear_gender").addClass('d-none');
+  }
+
+// Employee Type_____________________________________________________________________________________________________
+
+  $("#advncfilter select[name='filter_empType']").on('change', function(e){
+    var selected = $(this).children('option:selected').val();
+    if (selected) {
+      $("#clear_type").removeClass('d-none');
+    }else{
+      $("#clear_type").addClass('d-none');
+    }
+  });
+
+  $("#clear_type").on('click', function(e){
+    $("select[name='filter_empType']").prop('selectedIndex',0);
+    $(this).addClass('d-none');
+  });
+
+  var type_selected = $("#advncfilter select[name='filter_empType']").children('option:selected').val();
+  if (type_selected) {
+    $("#clear_type").removeClass('d-none');
+  }else{
+    $("#clear_type").addClass('d-none');
+  }
+
+// Employee Age_____________________________________________________________________________________________________
+
+  $("#advncfilter select[name='filter_age']").on('change', function(e){
+    var selected = $(this).children('option:selected').val();
+    if (selected) {
+      $("#clear_age").removeClass('d-none');
+    }else{
+      $("#clear_age").addClass('d-none');
+    }
+  });
+
+  $("#clear_age").on('click', function(e){
+    $("select[name='filter_age']").prop('selectedIndex',0);
+    $(this).addClass('d-none');
+  });
+
+  var age_selected = $("#advncfilter select[name='filter_age']").children('option:selected').val();
+  if (age_selected) {
+    $("#clear_age").removeClass('d-none');
+  }else{
+    $("#clear_age").addClass('d-none');
+  }
+
+// Employee Status_____________________________________________________________________________________________________
+
+  $("#advncfilter select[name='filter_status']").on('change', function(e){
+    var selected = $(this).children('option:selected').val();
+    if (selected) {
+      $("#clear_status").removeClass('d-none');
+    }else{
+      $("#clear_status").addClass('d-none');
+    }
+  });
+
+  $("#clear_status").on('click', function(e){
+    $("select[name='filter_status']").prop('selectedIndex',0);
+    $(this).addClass('d-none');
+  });
+
+  var status_selected = $("#advncfilter select[name='filter_status']").children('option:selected').val();
+  if (status_selected) {
+    $("#clear_status").removeClass('d-none');
+  }else{
+    $("#clear_status").addClass('d-none');
+  }
+
+// Employees Medical Medicine_____________________________________________________________________________________________________
+
+  $("#myform #select_generic").on('click', function(e){
+    $('#myform select[name="generic_id[0][0]"]').prop('selectedIndex',0);
+    $('#myform select[name="brand_id[0][0]"] option').remove();
+    $('#myform select[name="brand_id[0][0]"] option').prop('required',false);
+    $('#myform select[name="brand_id[0][0]"]').append('<option selected="true" disabled="disabled"> Select Medicine </option>')
+    $('#myform input[name="quantity[0][0]"]').prop('required',false);
+    $('#myform input[name="quantity[0][0]"]').removeAttr('max');
+    $('#myform input[name="quantity[0][0]"]').prop('placeholder','Quantity');
+    $(this).addClass('d-none');
+  });
+
+  var status_selected = $("#myform select[name='generic_id[0][0]']").children('option:selected').val();
+  if (status_selected) {
+    $("#select_generic").removeClass('d-none');
+  }else{
+    $("#select_generic").addClass('d-none');
+  }
+
+// Employees Medical Medicine In Show Blade_____________________________________________________________________________________________________
+
+  $("#myform-show #select_generic_show").on('click', function(e){
+    $('#myform-show select[name="generic_id[0][0]"]').prop('selectedIndex',0);
+    $('#myform-show select[name="brand_id[0][0]"] option').remove();
+    $('#myform-show select[name="brand_id[0][0]"] option').prop('required',false);
+    $('#myform-show select[name="brand_id[0][0]"]').append('<option selected="true" disabled="disabled"> Select Medicine </option>')
+    $('#myform-show input[name="quantity[0][0]"]').prop('required',false);
+    $('#myform-show input[name="quantity[0][0]"]').removeAttr('max');
+    $('#myform-show input[name="quantity[0][0]"]').prop('placeholder','Quantity');
+    $(this).addClass('d-none');
+  });
+
+  var status_selected = $("#myform-show select[name='generic_id[0][0]']").children('option:selected').val();
+  if (status_selected) {
+    $("#select_generic_show").removeClass('d-none');
+  }else{
+    $("#select_generic_show").addClass('d-none');
+  }
+
 });

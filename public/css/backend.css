@@ -5937,6 +5937,12 @@ figure {
   width: 100%;
 }
 
+#advncfilter .btn {
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+
 /**
  * Top Navigation
  *----------------------*/
