@@ -81,7 +81,7 @@ jQuery(document).ready(function($){
     // Children
     $("#addChildren").click(function(event) {
       // $('<div id="childrenField" class="col-12 form-row"><div class="form-group col-md-4"><input type="text" class="form-control mr-2" name="children['+i+'][]" placeholder="Child\'s Name" value="" required></div><div class="form-group col-md-3"><input type="date" class="form-control mr-2" name="children['+i+'][]" " value="" required></div><div class="form-group col-md-3"><input type="text" class="form-control mr-2" name="children['+i+'][]" placeholder="Gender" value="" required></div><div class="form-group col-md-2"><a id="removeChildren" class="btn btn-danger text-white  btn-block"><i class="fa fa-times"></i> Remove Child</a></div></div>').appendTo('#children');
-      $('<div id="childrenField" class="col-12 form-row"><div class="form-group col-md-4"><input type="text" class="form-control mr-2" name="children['+i+'][]" placeholder="Child\'s Name" value="" required></div><div class="form-group col-md-3"><input type="date" class="form-control mr-2" name="children['+i+'][]" " value="" required></div><div class="form-group col-md-3"> <select class="form-control mr-2" name="children['+i+'][]" required><option selected="true" disabled="true">Select Gender</option><option value="male">Male</option><option value="female">Female</option></select></div><div class="form-group col-md-2"><a id="removeChildren" class="btn btn-danger text-white  btn-block"><i class="fa fa-times"></i> Remove Child</a></div></div>').appendTo('#children');
+      $('<div id="childrenField" class="col-12 form-row"><div class="form-group col-md-4"><input type="text" class="form-control mr-2" name="children['+i+'][]" placeholder="Child\'s Name" value="" required></div><div class="form-group col-md-3"><input type="date" class="form-control mr-2" name="children['+i+'][]" " value="" required></div><div class="form-group col-md-3"> <select class="form-control mr-2" name="children['+i+'][]" required><option selected="true" disabled="true" value="">Select Gender</option><option value="male">Male</option><option value="female">Female</option></select></div><div class="form-group col-md-2"><a id="removeChildren" class="btn btn-danger text-white  btn-block"><i class="fa fa-times"></i> Remove Child</a></div></div>').appendTo('#children');
     i++;
 
     });
@@ -89,7 +89,7 @@ jQuery(document).ready(function($){
     $("#editChildren").click(function(event) {
       /* $('<div id="childrenField" class="col-auto my-1 form-inline editchildren"><label for="children" class="mr-2">Child\'s Name</label><input type="text" class="form-control mr-2" name="children['+e+'][]" placeholder="Child\'s Name" value="" required><label for="children" class="mr-2">Birthday</label><input type="date" class="form-control mr-2" name="children['+e+'][]" " value="" required><label for="children" class="mr-2">Gender</label><input type="text" class="form-control mr-2" name="children['+e+'][]" placeholder="Gender" value="" required><a id="removeChildren" class="btn btn-danger text-white"><i class="fa fa-times"></i></a></div>').appendTo('#children');*/
       // $('<div id="childrenField" class="col-12 form-row editchildren"><div class="form-group col-md-4"><input type="text" class="form-control mr-2" name="children['+e+'][]" placeholder="Child\'s Name" value="" required></div><div class="form-group col-md-3"><input type="date" class="form-control mr-2" name="children['+e+'][]" " value="" required></div><div class="form-group col-md-3"><input type="text" class="form-control mr-2" name="children['+e+'][]" placeholder="Gender" value="" required></div><div class="form-group col-md-2"><a id="removeChildren" class="btn btn-danger text-white  btn-block"><i class="fa fa-times"></i> Remove Child</a></div></div>').appendTo('#children');
-      $('<div id="childrenField" class="col-12 form-row editchildren"><div class="form-group col-md-4"><input type="text" class="form-control mr-2" name="children['+e+'][]" placeholder="Child\'s Name" value="" required></div><div class="form-group col-md-3"><input type="date" class="form-control mr-2" name="children['+e+'][]" " value="" required></div><div class="form-group col-md-3"><select class="form-control mr-2" name="children['+e+'][]" placeholder="Gender" value="" required><option selected="true" disabled="true" value="">Select Gender</option><option value="male">Male</option><option value="female">Female</option></select></div><div class="form-group col-md-2"><a id="removeChildren" class="btn btn-danger text-white  btn-block"><i class="fa fa-times"></i> Remove Child</a></div></div>').appendTo('#children');
+      $('<div id="childrenField" class="col-12 form-row editchildren"><div class="form-group col-md-4"><input type="text" class="form-control mr-2" name="children['+e+'][]" placeholder="Child\'s Name" value="" required></div><div class="form-group col-md-3"><input type="date" class="form-control mr-2" name="children['+e+'][]" " value="" required></div><div class="form-group col-md-3"><select class="form-control mr-2" name="children['+e+'][]" placeholder="Gender" required><option selected="true" disabled="true" value="">Select Gender</option><option value="male">Male</option><option value="female">Female</option></select></div><div class="form-group col-md-2"><a id="removeChildren" class="btn btn-danger text-white  btn-block"><i class="fa fa-times"></i> Remove Child</a></div></div>').appendTo('#children');
     e++;
 
     });
@@ -218,27 +218,44 @@ jQuery(document).ready(function($){
         experience.prop('required', false);
       }
     });
-    // Children_________________________________________________________________________________
-    var children = $("#empForm input[name='children[0][]'], #empForm select[name='children[0][]']");
-    children.blur(function() {
-      if ($(this).val()) {
-        children.prop('required', true);
-      }else{
-        children.prop('required', false);
+
+    // Children (CREATE)_________________________________________________________________________________
+
+    $("#empForm #ChildName, #ChildBday, select[name='children[0][]']").on('change', function(e){
+      var child_name = $("#empForm #ChildName").val();
+      var child_bday = $("#empForm #ChildBday").val();
+      var child_gender = $("#empForm select[name='children[0][]']").val();
+
+      if (child_name != '' || child_bday != '' || child_gender != null) {
+        $("#empForm #ChildName").prop('required', true);
+        $("#empForm #ChildBday").prop('required', true);
+        $("#empForm select[name='children[0][]']").prop('required', true);
+      }else if (child_name == '' && child_bday == '' && child_gender == null){
+        $("#empForm #ChildName").prop('required', false);
+        $("#empForm #ChildBday").prop('required', false);
+        $("#empForm select[name='children[0][]']").prop('required', false);
       }
+
     });
 
-// Post_________________________________________________________________________________
+    // Children (EDIT)_________________________________________________________________________________
 
-  // $("#InsertPhoto").click(function () {
-  // $("#Media").modal("hide"); // Close the modal
-  // $image_id = $('#edit_id').val();
-  // $("#preview_images").attr('src',$('#attach_url_'+$image_id).val());
-  // / If variable value is not empty we pass it to tinymce function and it inserts the image to post /
-  // if ($image_id != "") { 
-  // tinymce.activeEditor.execCommand('mceInsertContent', false, '<img class="img-responsive" style="max-width:100%; height:auto; display:block;" src="' + $('#attach_url_'+$image_id).val() + '">'); 
-  // }
-  // });
+    $("#empForm #ChildNameEdit, #ChildBdayEdit, select[name='children[0][]']").on('change', function(e){
+      var child_name = $("#empForm #ChildNameEdit").val();
+      var child_bday = $("#empForm #ChildBdayEdit").val();
+      var child_gender = $("#empForm select[name='children[0][]']").val();
+
+      if (child_name != '' || child_bday != '' || child_gender != null) {
+        $("#empForm #ChildNameEdit").prop('required', true);
+        $("#empForm #ChildBdayEdit").prop('required', true);
+        $("#empForm select[name='children[0][]']").prop('required', true);
+      }else if (child_name == '' && child_bday == '' && child_gender == null){
+        $("#empForm #ChildNameEdit").prop('required', false);
+        $("#empForm #ChildBdayEdit").prop('required', false);
+        $("#empForm select[name='children[0][]']").prop('required', false);
+      }
+
+    });
   
 
    /**
@@ -269,8 +286,6 @@ jQuery(document).ready(function($){
         },
        toolbar: 'undo redo | insert | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link | code | newmedia'
 
-       //content_css: ‘https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css’,
-
    });
 
    $("#addMds").on('click', '#medBtn', function(event) {
@@ -284,48 +299,6 @@ jQuery(document).ready(function($){
      }
    });
 
-  // $(function () {
-  //     $("#media #img_cont").click(function (event) {
-  //       $("#newMedia").modal("hide");
-  //         var sr = $('img', this).attr('src');
-  //       tinymce.activeEditor.insertContent('<img class="img-fluid" src="' + sr + '"/>');
-  //     });
-  // });
-
-// $("#media #img_cont").on('click', function(){
-//   var hrf = $(this).attr('data-id');
-//   console.log(hrf);
-//  $.ajaxSetup({
-//       headers: {
-//           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-//       },
-//   });
-//   $.ajax({
-//     url: 'create/media/'+hrf,
-//     type: 'delete',
-//     data: hrf,
-//     dataType: 'json',
-//     success:function(data){
-//       console.log(data);
-//     }
-//   });
-
-// });
-
-// $("#featImgModal").on('click', '#ftdimg', function(event) {
-//   event.preventDefault();
-//   var i = $(this).attr('data-target');
-//   console.log(i.replace('#modal-', ''));
-//   $.ajax({
-//     type: 'GET',
-//     url: 'create/'+i,
-//     dataType : "json",
-//     success: function(response)
-//     {
-//       console.log(response);
-//     }
-//   });
-// });
 
   var count = $("#newConsTable #newCons").length
   var FFcount = $("#forFollowUp #FFup").length
@@ -358,6 +331,11 @@ jQuery(document).ready(function($){
       $("#doctorNotif").append('<span id="Notifs" class="text-center text-white bg-danger float-right">'+doctor+'</span>');
       $("#nurseNotif").append('<span id="Notifs" class="text-center text-white bg-danger float-right">'+nurse+'</span>');
       $("#hrNotif").append('<span id="Notifs" class="text-center text-white bg-danger float-right">'+hr+'</span>');
+
+      $("#adminNotifTitle").append('( '+admin+' )');
+      $("#doctorNotifTitle").append('( '+doctor+' )');
+      $("#nurseNotifTitle").append('( '+nurse+' )');
+      $("#hrNotifTitle").append('( '+hr+' )');
     }
   });
 
@@ -498,5 +476,55 @@ jQuery(document).ready(function($){
   }else{
     $("#select_generic_show").addClass('d-none');
   }
+
+// Employees Children if any (CREATE)_____________________________________________________________________________________________________
+
+  $("#children select[name='children[0][]']").on('change', function(e){
+    var selected = $(this).children('option:selected').val();
+    if (selected) {
+      $("#clear_children_create").removeClass('d-none');
+    }else{
+      $("#clear_children_create").addClass('d-none');
+    }
+  });
+
+  $("#empForm #clear_children_create").on('click', function(e){
+    var check_name = $("#empForm #ChildName").val();
+    var check_bday = $("#empForm #ChildBday").val();
+    $("#empForm select[name='children[0][]']").prop('selectedIndex', 0);
+    $(this).addClass('d-none');
+
+    if (check_name == '' && check_bday == '') {
+      $("#empForm #ChildName").prop('required', false);
+      $("#empForm #ChildBday").prop('required', false);
+      $("#empForm select[name='children[0][]']").prop('required', false);
+    }
+
+  });
+
+// Employees Children if any (EDIT)_____________________________________________________________________________________________________
+
+  $("#children select[name='children[0][]']").on('change', function(e){
+    var selected = $(this).children('option:selected').val();
+    if (selected) {
+      $("#clear_children_edit").removeClass('d-none');
+    }else{
+      $("#clear_children_edit").addClass('d-none');
+    }
+  });
+
+  $("#empForm #clear_children_edit").on('click', function(e){
+    var check_name = $("#empForm #ChildNameEdit").val();
+    var check_bday = $("#empForm #ChildBdayEdit").val();
+    $("#empForm select[name='children[0][]']").prop('selectedIndex', 0);
+    $(this).addClass('d-none');
+
+    if (check_name == '' && check_bday == '') {
+      $("#empForm #ChildNameEdit").prop('required', false);
+      $("#empForm #ChildBdayEdit").prop('required', false);
+      $("#empForm select[name='children[0][]']").prop('required', false);
+    }
+
+  });  
 
 });
