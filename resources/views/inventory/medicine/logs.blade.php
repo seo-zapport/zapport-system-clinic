@@ -53,12 +53,14 @@
 		<div class="form-check col-12 col-md-2 mb-0">
 			<div class="text-right">
 				<!--- PRINT --->
+
 				<button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PRINT <span class="caret"></span>
 				</button>
 				@php 
 					$fileName = 'inventory_medicine';
 				@endphp
 				<ul class="dropdown-menu">
+
 					<li><a href="#" onclick="clicked()"><i class="fas fa-print text-secondary"></i>PRINT</a></li>
 					<li><a href="{{ asset('storage/uploaded/print/'.@$fileName.'.csv')}}" download="{{ @$fileName.'.csv'}}" target="_blank"><i class="fas fa-file-excel-o text-secondary"></i>CSV</a></li>
 				</ul>
@@ -132,4 +134,32 @@
 </div>
 
 {{ $logs->links() }}
+
+<div id="printable" class="d-none">
+	{!! @$printtable !!}
+	<br/>
+<div id="medCount"></div>
+</div>
+
+<script type="application/javascript">
+
+	function clicked(){
+				var iframe = document.getElementById('printable');
+				var WinPrint = window.open('', '', 'left=0,top=0,width=1600,height=1800,toolbar=0,scrollbars=0,status=0');
+				WinPrint.document.write('<link href="{{ asset('css/app.css') }}" rel="stylesheet">');
+				WinPrint.document.write(iframe.innerHTML);
+				WinPrint.document.close();
+				WinPrint.focus();
+				WinPrint.print();
+				WinPrint.close();
+	}
+	          
+	jQuery(document).ready(function($){
+		var countTR = $("#medTable tbody tr.medTR").length;
+		$("#medCount").append('<span class="font-weight-bold">Number of Medicines: '+ countTR +'</span>');
+
+	});
+
+</script>
+
 @endsection

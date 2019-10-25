@@ -1,7 +1,7 @@
 @if (@$employees2 != NULL)
 <div id="printable">
 	<div class="text-center">	
-		<img src="{{url( '/images/logo.png' )}}" alt="Zapport">
+		<img src="{{url( '/images/logo.png' )}}" alt="Zapport" style="display:block;margin:auto;">
 	</div>
 	<div class="container-fluid">
 		<div class="row">
@@ -43,7 +43,7 @@
 				</p>
 			</div>		
 		</div>
-		<div class="table-responsive">
+		<div class="table-secondary">
 			<table id="prntEmpCount" class="table">
 				<thead>
 					<th>Employee Number</th>

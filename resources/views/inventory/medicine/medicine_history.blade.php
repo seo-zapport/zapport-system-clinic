@@ -81,4 +81,30 @@
 
 {{ $meds->links() }}
 
+<div id="printable" class="d-none">
+	{!! @$printtable !!}
+	<br/>
+<div id="medCount"></div>
+</div>
+
+<script type="application/javascript">
+
+	function clicked(){
+				var iframe = document.getElementById('printable');
+				var WinPrint = window.open('', '', 'left=0,top=0,width=1600,height=1800,toolbar=0,scrollbars=0,status=0');
+				WinPrint.document.write('<link href="{{ asset('css/app.css') }}" rel="stylesheet">');
+				WinPrint.document.write(iframe.innerHTML);
+				WinPrint.document.close();
+				WinPrint.focus();
+				WinPrint.print();
+				WinPrint.close();
+	}
+	          
+	jQuery(document).ready(function($){
+		var countTR = $("#medTable tbody tr.medTR").length;
+		$("#medCount").append('<span class="font-weight-bold">Number of Medicines: '+ countTR +'</span>');
+
+	});
+
+</script>
 @endsection

@@ -30,22 +30,28 @@ class MedicineController extends Controller
             if ($request->has('search')) {
                 $searchGen = Generic::where('gname', $request->search)->first();
                 if ($searchGen != null) {
-                    $meds = Medicine::select('brand_id', 'generic_id')->groupBy('brand_id', 'generic_id')->where('generic_id', $searchGen->id)->orderBy('id', 'desc')->paginate(10);
-                    $meds->appends(['search' => $request->search]);
+                    $rawmeds = Medicine::select('brand_id', 'generic_id')->groupBy('brand_id', 'generic_id')->where('generic_id', $searchGen->id)->orderBy('id', 'desc');
+                    $printmeds = $rawmeds->get();
+                    $meds = $rawmeds->paginate(10)->appends(['search' => $request->search]);
+
                 }else{
                     $meds = null;
                 }
                 $search = $request->search;
             }else{
-                $meds = Medicine::select('brand_id', 'generic_id')->groupBy('brand_id', 'generic_id')->orderBy('id', 'desc')->paginate(10);
+                $rawmeds = Medicine::select('brand_id', 'generic_id')->groupBy('brand_id', 'generic_id')->orderBy('id', 'desc');
+                $printmeds = $rawmeds->get();
+                $meds = $rawmeds->paginate(10);
             }
             $gens = Generic::orderBy('gname', 'asc')->get();
 
-             if(count($meds)>0){
-                 $this->PrintMedCSV($meds,'index','',''); 
+             if(count($printmeds)>0){
+                 $resultprint = json_encode($this->PrintMedCSV($printmeds,'index','',''));
+                 $json = json_decode($resultprint, true);
+                 $printtable = $json['original']['printable']; 
              }
 
-            return view('inventory.medicine.index', compact('meds', 'gens', 'search'));
+            return view('inventory.medicine.index', compact('meds', 'gens', 'search','printtable'));
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();
             return back()->with('message', 'You\'re not employee!');
@@ -147,7 +153,7 @@ class MedicineController extends Controller
     public function show(Request $request, Medbrand $medbrand, Generic $generic, $inputDate, $expDate)
     {
         if (Gate::allows('isAdmin') || Gate::allows('isHr') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
-            $meds = Medicine::join('employeesmedical_medicine_users', 'medicines.id', 'employeesmedical_medicine_users.medicine_id')
+            $rawmeds = Medicine::join('employeesmedical_medicine_users', 'medicines.id', 'employeesmedical_medicine_users.medicine_id')
                             ->join('users as users1', 'users1.id', 'employeesmedical_medicine_users.user_id')
                             ->join('employeesmedicals', 'employeesmedicals.id', 'employeesmedical_medicine_users.employeesmedical_id')
                             ->join('employees', 'employees.id', 'employeesmedicals.employee_id')
@@ -175,22 +181,32 @@ class MedicineController extends Controller
 
             if ($request->search_name && $request->search_date == null) {
                 $search_name = $request->search_name;
-                $meds = $meds->where(\DB::raw("concat(employees.last_name, ' ', employees.first_name)"), "LIKE", '%'.$request->search_name.'%')
-                             ->orderBy('medicines.id', 'desc')->paginate(10);
+                $fmeds = $rawmeds->where(\DB::raw("concat(employees.last_name, ' ', employees.first_name)"), "LIKE", '%'.$request->search_name.'%')
+                             ->orderBy('medicines.id', 'desc');
+                    $printmeds = $fmeds->get();
+                    $meds = $fmeds->paginate(10);
+
             }
             elseif ($request->search_name == null && $request->search_date) {
                 $search_date = $request->search_date;
-                $meds = $meds->where('employeesmedical_medicine_users.created_at', $request->search_date)
-                             ->orderBy('medicines.id', 'desc')->paginate(10);
+                $fmeds = $rawmeds->where('employeesmedical_medicine_users.created_at', $request->search_date)
+                             ->orderBy('medicines.id', 'desc');
+                      $printmeds = $fmeds->get();
+                      $meds = $fmeds->paginate(10);     
             }
             elseif ($request->search_name && $request->search_date) {
                 $search_name = $request->search_name;
                 $search_date = $request->search_date;
-                $meds = $meds->where(\DB::raw("concat(employees.last_name, ' ', employees.first_name)"), "LIKE", '%'.$request->search_name.'%')
+                $fmeds = $rawmeds->where(\DB::raw("concat(employees.last_name, ' ', employees.first_name)"), "LIKE", '%'.$request->search_name.'%')
                              ->where('employeesmedical_medicine_users.created_at', $request->search_date)
-                             ->orderBy('medicines.id', 'desc')->paginate(10);
+                             ->orderBy('medicines.id', 'desc');
+                    $printmeds = $fmeds->get();
+                    $meds = $fmeds->paginate(10);  
+                        
             }else{
-                $meds = $meds->orderBy('medicines.id', 'desc')->paginate(10);
+                $fmeds = $rawmeds->orderBy('medicines.id', 'desc');
+                    $printmeds = $fmeds->get();
+                    $meds = $fmeds->paginate(10);
                 // return $countMeds;
             }
 
@@ -203,11 +219,13 @@ class MedicineController extends Controller
 
         }
 
-        $medlogs = ['meds'=> $meds->getCollection(), 'countMeds' => $countMeds];
+        $medlogs = ['meds'=> $printmeds, 'countMeds' => $countMeds];
 
-        $this->PrintMedCSV($medlogs,'logsinput',$medbrand->bname, $generic->gname); 
+        $resultprint = json_encode($this->PrintMedCSV($medlogs,'logsinput',$medbrand->bname, $generic->gname)); 
+        $json = json_decode($resultprint, true);
+        $printtable = $json['original']['printable'];
 
-        return view('inventory.medicine.medicine_history', compact('medbrand', 'generic', 'empsMeds', 'arr', 'meds', 'inputDate', 'expDate', 'search_name', 'search_date', 'countMeds'));
+        return view('inventory.medicine.medicine_history', compact('medbrand', 'generic', 'empsMeds', 'arr', 'meds', 'inputDate', 'expDate', 'search_name', 'search_date', 'countMeds','printtable'));
     }
 
     /**
@@ -265,7 +283,7 @@ class MedicineController extends Controller
         if (Gate::allows('isAdmin') || Gate::allows('isHr') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
             $log1 = Medicine::where('brand_id', $medbrand->id)->where('generic_id', $generic->id)->orderBy('created_at', 'desc')->get();
             // dd($log1);
-            $logs = Medicine::join('generics', 'generics.id', '=', 'medicines.generic_id')
+            $rawlogs = Medicine::join('generics', 'generics.id', '=', 'medicines.generic_id')
                             ->join('medbrands', 'medbrands.id', '=', 'medicines.brand_id')
                             ->join('users', 'users.id', '=', 'medicines.user_id')
                             ->select('bname', 'gname', 'expiration_date', 'user_id', \DB::raw('DATE_FORMAT(medicines.created_at, "%Y-%m-%d") as formatted_at'), 'medicines.created_at as orig', 'generic_id', 'brand_id', \DB::raw('COUNT(expiration_date) as expCount'))
@@ -273,58 +291,68 @@ class MedicineController extends Controller
                             ->distinct('expiration_date', 'medicines.created_at')
                             ->where('brand_id', $medbrand->id)
                             ->where('generic_id', $generic->id);
-            $loglist = $logs->orderBy('medicines.created_at', 'desc')->get();
+            $loglist = $rawlogs->orderBy('medicines.created_at', 'desc')->get();
             if ($request->has('expired') && $request->has('search')) {
                 $search = $request->search;
-                $logsearch = $logs->where('medicines.expiration_date', '<=', NOW())->orderBy('medicines.created_at', 'desc')->get();
+                $logsearch = $rawlogs->where('medicines.expiration_date', '<=', NOW())->orderBy('medicines.created_at', 'desc')->get();
             }
             if ($request->has('search') && $request->has('expired') == null) {
                 $search = $request->search;
-                $logs = $logs->where(\DB::raw('DATE_FORMAT(medicines.created_at, "%Y-%m-%d")'), $request->search)
-                             ->orderBy('medicines.created_at', 'desc')->paginate(10);
-                             $logs->appends(['search' => $request->search]);
+                $logs = $rawlogs->where(\DB::raw('DATE_FORMAT(medicines.created_at, "%Y-%m-%d")'), $request->search)
+                             ->orderBy('medicines.created_at', 'desc');
+                          $printlogs = $logs->get();  
+                          $logs = $logs->paginate(10)->appends(['search' => $request->search]);
             }
             elseif ($request->has('expired') && $request->has('search') == null) {
-                $logs = $logs->where('medicines.expiration_date', '<=', NOW())
-                             ->orderBy('medicines.created_at', 'desc')->paginate(10);
-                             $logs->appends(['expired' => $request->expired]);
+                $logs = $rawlogs->where('medicines.expiration_date', '<=', NOW())
+                             ->orderBy('medicines.created_at', 'desc');
+                            $printlogs = $logs->get();
+                            $logs = $logs->paginate(10)->appends(['expired' => $request->expired]);
             }
             elseif ($request->has('expired') && $request->has('search')) {
-                $logs = $logs->where(\DB::raw('DATE_FORMAT(medicines.created_at, "%Y-%m-%d")'), $request->search)
+                $logs = $rawlogs->where(\DB::raw('DATE_FORMAT(medicines.created_at, "%Y-%m-%d")'), $request->search)
                              ->where('medicines.expiration_date', '<=', NOW())
-                             ->orderBy('medicines.created_at', 'desc')->paginate(10);
-                             $logs->appends(['search' => $request->search]);
+                             ->orderBy('medicines.created_at', 'desc');
+                        $printlogs = $logs->get();     
+                        $logs = $logs->paginate(10)->appends(['search' => $request->search]);
             }else{
-                $logs = $logs->orderBy('medicines.created_at', 'desc')->paginate(10);
-                $logs->appends(['search' => $request->search]);
-                }
+                $logs = $rawlogs->orderBy('medicines.created_at', 'desc');
+                        $printlogs = $logs->get();
+                        $logs = $logs->paginate(10)->appends(['search' => $request->search]);
+                
+            }
+
                  //dd($logs);
-             $this->PrintMedCSV($logs->getCollection(),'logs',$medbrand->bname, $generic->gname); 
-           
-            return view('inventory.medicine.logs', compact('logs', 'medbrand', 'generic', 'log1', 'search', 'loglist', 'logsearch'));
+            $resultprint = json_encode($this->PrintMedCSV($printlogs,'viewlogs',$medbrand->bname, $generic->gname)); 
+            $json = json_decode($resultprint, true);
+            $printtable = $json['original']['printable'];
+
+            return view('inventory.medicine.logs', compact('logs', 'medbrand', 'generic', 'log1', 'search', 'loglist', 'logsearch','printtable'));
+        
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();
             return back()->with('message', 'You\'re not employee!');
         }else{
            return back();
-
         }
     }
 
-    public function PrintMedCSV($meds,$typecsv,$medbrand,$generic){
+    public function PrintMedCSV($meds,$typeprint,$medbrand,$generic){
 
         $relPath = 'storage/uploaded/print';
         if (!file_exists($relPath)) {
             mkdir($relPath, 777, true);
         }
 
-        $medicine = $meds;    
-        $dataemp = view('inventory.medicine.csv',compact('medicine','typecsv','medbrand','generic'))->render();
+        $medicine = $meds;
+        $typecsv = $typeprint;
+   
+        $datameds = view('inventory.medicine.csv',compact('medicine','typecsv','medbrand','generic'))->render();
+        $datameds_print = view('inventory.medicine.print_meds',compact('meds','typeprint','medbrand','generic'))->render();
 
         $fileName = "inventory_medicine";
+        File::put(public_path('/storage/uploaded/print/'.$fileName.'.csv'),$datameds);   
 
-        File::put(public_path('/storage/uploaded/print/'.$fileName.'.csv'),$dataemp);   
-
-
+        return response()->json(array('printable' => $datameds_print ));
     }
 }
