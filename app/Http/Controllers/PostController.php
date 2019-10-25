@@ -66,11 +66,12 @@ class PostController extends Controller
             $atts = $request->validated();
             $atts = $request->except('tag_id');
             $srch = Post::where('title', $request->title)->get();
+            $replaced = str_replace(' ', '-', $request->title);
             if (count($srch ) > 0) {
                 $count = count($srch)+1;
-                $atts['slug'] = $request->title.'-'.$count;
+                $atts['slug'] = $replaced.'-'.$count;
             }else{
-                $atts['slug'] = $request->title;
+                $atts['slug'] = $replaced;
             }
             auth()->user()->published(
                 new Post($atts)

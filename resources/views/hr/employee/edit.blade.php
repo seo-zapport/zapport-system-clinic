@@ -165,11 +165,11 @@
 			<div id="childrenField" class="col-12 form-row editchildren">
 				<div class="form-group col-md-4">
 					<label for="children" class="mr-2">Child's Name</label>
-					<input type="text" class="form-control mr-2" name="children[@php echo $e; @endphp][]" placeholder="Child's Name" value="{{ $child[0] }}">
+					<input id="ChildNameEdit" type="text" class="form-control mr-2" name="children[@php echo $e; @endphp][]" placeholder="Child's Name" value="{{ $child[0] }}">
 				</div>
 				<div class="form-group col-md-3">
 					<label for="children" class="mr-2">Birthday</label>
-					<input type="date" class="form-control mr-2" name="children[@php echo $e; @endphp][]" value="{{ $child[1] }}">
+					<input id="ChildBdayEdit" type="date" class="form-control mr-2" name="children[@php echo $e; @endphp][]" value="{{ $child[1] }}">
 				</div>
 				<div class="form-group col-md-3">
 					<label for="children" class="mr-2">Gender</label>
@@ -179,6 +179,7 @@
 						<option {{ ($child[2] == 'male') ? 'selected="true"' : '' }} value="male">Male</option>
 						<option {{ ($child[2] == 'female') ? 'selected="true"' : '' }} value="female">Female</option>
 					</select>
+					<span id="clear_children_edit" class="d-none text-muted font-weight-bold" style="cursor: pointer">Clear</span>
 				</div>
 				<div class="form-group col-md-2">
 					<label class="mr-2 d-block">Action</label>

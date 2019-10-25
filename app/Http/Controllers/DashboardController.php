@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Diagnosis;
 use App\Employee;
-use App\Employeesmedical;
 use App\Generic;
 use App\Medicine;
+use App\Employeesmedical;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use App\Repositories\NotificationRepository;
 
 class DashboardController extends Controller
 {
@@ -155,6 +156,14 @@ class DashboardController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function notification(Request $request, NotificationRepository $notification)
+    {
+        if ($request->ajax()) {
+            $notifications = $notification->getNotificationList();
+            return response()->json($notifications);
+        }
     }
 
 }

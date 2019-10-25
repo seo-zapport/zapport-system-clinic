@@ -37,7 +37,12 @@
             </div>
         </div> 
        
-        <li class="nav-item"><a href="{{ route('dashboard.main') }}" class="nav-link @yield('overview')"><i class="fas fa-tachometer-alt"></i><span class="collapse-label">Dashboard</span></a></li>
+        <li class="nav-item">
+            <a @if(Gate::check('isHr')) {{ "id=hrNotif" }} @elseif(Gate::check('isDoctor')) {{ "id=doctorNotif" }} @elseif(Gate::allows('isNurse')) {{ "id=nurseNotif" }} @elseif(Gate::allows('isAdmin')) {{ "id=adminNotif" }} @endif href="{{ route('dashboard.main') }}" class="nav-link @yield('overview')">
+                <i class="fas fa-tachometer-alt"></i>
+                <span class="collapse-label">Dashboard</span>
+            </a>
+        </li>
         {{-- For ADMIN, HR, DOCTOR, NURSE --}}
         @if (Gate::check('isAdmin') || Gate::check('isHr') || Gate::check('isDoctor') || Gate::allows('isNurse'))
             @if (!empty(auth()->user()->employee))

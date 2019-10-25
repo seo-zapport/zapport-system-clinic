@@ -99,43 +99,42 @@ class EmployeesmedicalController extends Controller
             }
 
             }else{
-                $newRecord              = new Employeesmedical;
-                $newRecord->user_id     = auth()->user()->id;
-                $newRecord->employee_id = $request->employee_id;
-                $newRecord->diagnosis_id   = $diagnosis;
-                $newRecord->note        = $request->note;
-                $newRecord->status      = $request->status;
-                $newRecord->remarks     = $request->remarks;
-                $newRecord->attachment  = $filename;
-                $newRecord->seen        = (Gate::check('isDoctor')) ? 1 : 0;
+                $newRecord                  = new Employeesmedical;
+                $newRecord->user_id         = auth()->user()->id;
+                $newRecord->employee_id     = $request->employee_id;
+                $newRecord->diagnosis_id    = $diagnosis;
+                $newRecord->note            = $request->note;
+                $newRecord->status          = $request->status;
+                $newRecord->remarks         = $request->remarks;
+                $newRecord->attachment      = $filename;
+                $newRecord->seen            = (Gate::check('isDoctor')) ? 1 : 0;
                 $newRecord->save();
 
                 return back();
             }
 
-            $newRecord              = new Employeesmedical;
-            $newRecord->user_id     = auth()->user()->id;
-            $newRecord->employee_id = $request->employee_id;
-            $newRecord->diagnosis_id   = $diagnosis;
-            $newRecord->note        = $request->note;
-            $newRecord->status      = $request->status;
-            $newRecord->remarks     = $request->remarks;
-            $newRecord->attachment  = $filename;
-            $newRecord->seen        = (Gate::check('isDoctor')) ? 1 : 0;
+            $newRecord                  = new Employeesmedical;
+            $newRecord->user_id         = auth()->user()->id;
+            $newRecord->employee_id     = $request->employee_id;
+            $newRecord->diagnosis_id    = $diagnosis;
+            $newRecord->note            = $request->note;
+            $newRecord->status          = $request->status;
+            $newRecord->remarks         = $request->remarks;
+            $newRecord->attachment      = $filename;
+            $newRecord->seen            = (Gate::check('isDoctor')) ? 1 : 0;
             $newRecord->save();
             $data = $newRecord->id;
 
             for ($c = 0; $c < count($arr); $c++) { 
 
                 foreach ($arr[$c] as $medQty) {
-                    $medQty->availability = 1;
+                    $medQty->availability           = 1;
                     $medQty->save();
-                    // $data2 = $medQty->employeesMedical()->attach($data, [ 'quantity' => $request->quantity[$c][$c]]);
-                    $newData = new EmployeesmedicalMedicineUser;
-                    $newData->employeesmedical_id = $data;
-                    $newData->medicine_id = $medQty->id;
-                    $newData->user_id = auth()->user()->id;
-                    $newData->quantity = $quantity[$c][0];
+                    $newData                        = new EmployeesmedicalMedicineUser;
+                    $newData->employeesmedical_id   = $data;
+                    $newData->medicine_id           = $medQty->id;
+                    $newData->user_id               = auth()->user()->id;
+                    $newData->quantity              = $quantity[$c][0];
                     $newData->save();
                 }
 

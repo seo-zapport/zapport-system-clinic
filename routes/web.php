@@ -23,6 +23,7 @@ Route::group(['prefix'	=>	'dashboard'], function(){
 	// Dashboard
 	Route::get('', 'DashboardController@index')->name('dashboard.main');
 	Route::get('profile/{employee}/employeesmedical/{employeesmedical}', 'DashboardController@show')->name('dashboard.show');
+	Route::get('notification', 'DashboardController@notification')->name('dashboard.notif');
 
 	// User Role
 	Route::get('userRoles', 'UserRoleController@index')->name('dashboard.userRoles');

@@ -39,7 +39,7 @@
 					@endphp
 						@empty
 							<tr>
-								<td colspan="3" class="text-center">No Records Found!</td>
+								<td colspan="4" class="text-center">No Records Found!</td>
 							</tr>
 					@endforelse		
 				</tbody>

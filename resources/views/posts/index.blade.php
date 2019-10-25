@@ -31,7 +31,7 @@
 					@forelse ($posts as $post)
 						<tr>
 							<td>
-								{{ $post->title }}
+								{{ ucwords($post->title) }}
 							</td>
 							<td>
 								{{ $post->created_at->format('M d, Y - h:i a') }}

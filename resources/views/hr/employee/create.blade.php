@@ -300,11 +300,11 @@
 							<div class="col-12 form-row">
 								<div class="form-group col-md-4">
 									<label for="children" class="mr-2">Child's Name</label>
-									<input type="text" class="form-control mr-2" name="children[0][]" placeholder="Children's Name">
+									<input id="ChildName" type="text" class="form-control mr-2" name="children[0][]" placeholder="Children's Name">
 								</div>
 								<div class="form-group col-md-3">
 									<label for="children" class="mr-2">Birthday</label>
-									<input type="date" class="form-control mr-2" name="children[0][]" placeholder="Add children description">
+									<input id="ChildBday" type="date" class="form-control mr-2" name="children[0][]" placeholder="Add children description">
 								</div>
 								<div class="form-group col-md-3">
 									<label for="children" class="mr-2">Gender</label>
@@ -314,6 +314,7 @@
 										<option value="male">Male</option>
 										<option value="female">Female</option>
 									</select>
+									<span id="clear_children_create" class="d-none text-muted font-weight-bold" style="cursor: pointer">Clear</span>
 								</div>
 								<div class="form-group col-md-2">
 									<label class="mr-2 d-block">Action</label>
@@ -420,7 +421,6 @@
 		        reader.readAsDataURL(input.files[0]);
 		    }
 		}
-
 
 		$(".file-upload").on('change', function(){
 		    readURL(this);
