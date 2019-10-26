@@ -100,4 +100,18 @@
 	@php } @endphp
 	</table>			
 </div>
+<br/>
+<div id="medCount">
+	@if($typeprint != null)	
+		@php 
+			$medscount = count(@$meds['meds']);
+		@endphp
+	@else
+		@php 
+			$medscount = count(@$meds);
+		@endphp
+	@endif
+	<span class="font-weight-bold">Number of Medicines: {{count(@$meds)}}</span>
+</div>
+<br/>
 

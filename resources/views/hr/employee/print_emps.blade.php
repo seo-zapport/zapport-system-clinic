@@ -1,11 +1,7 @@
 @if (@$employees2 != NULL)
 <div id="printable">
 	<div class="text-center">	
-<<<<<<< HEAD
-		<img src="{{url( '/images/logo.png' )}}" alt="Zapport" style="display:block;margin:auto;">
-=======
 		<img src="{{url( '/images/logo.png' )}}" alt="Zapport" style="display: block; margin:auto; width: 200px">
->>>>>>> a7676b1063b135fa00c398f3a5e8bed0215d42a2
 	</div>
 	<div class="container-fluid">
 		<div class="row">
@@ -123,13 +119,8 @@
 				</p>
 			</div>		
 		</div>
-<<<<<<< HEAD
-		<div class="table-secondary">
-			<table id="prntEmpCount" class="table">
-=======
 		<div class="table-responsive">
 			<table id="prntEmpCount" class="table" style="border-collapse: collapse; border-spacing: 0; width: 100%; border-bottom: 1px solid #dee2e6; border-top: 1px solid #dee2e6;">
->>>>>>> a7676b1063b135fa00c398f3a5e8bed0215d42a2
 				<thead>
 					<th  style="text-align: left; padding: 8px; border-bottom: 1px solid #dee2e6; text-align: center; font-size: 13px; font-family: arial; color: #212529;">Employee Number</th>
 					<th style="text-align: left; padding: 8px; border-bottom: 1px solid #dee2e6; text-align: center; font-size: 13px; font-family: arial; color: #212529;">Name</th>

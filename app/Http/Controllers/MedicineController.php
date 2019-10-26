@@ -336,6 +336,16 @@ class MedicineController extends Controller
         }
     }
 
+    public function PrintView() {
+
+       $meds = Medicine::select('brand_id', 'generic_id')->groupBy('brand_id', 'generic_id')->orderBy('id', 'desc')->get();
+
+       //dd($meds);
+
+       return view('inventory.medicine.printmeds')->with('meds' , $meds); 
+
+    }
+
     public function PrintMedCSV($meds,$typeprint,$medbrand,$generic){
 
         $relPath = 'storage/uploaded/print';

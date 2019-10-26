@@ -27,6 +27,9 @@
     <script src="{{ asset('js/backend.js') }}" defer></script>
     <script src="{{ asset('/js/tinymce/tinymce.js') }}"></script>
     <script src="{{ asset('/js/tinymce/tinymce.jquery.js') }}"></script>
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+    <script src="{{ asset('/js/jquery.printPage.js') }}" type="text/javascript" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -85,7 +88,7 @@
 </body>
 
 <script id="__bs_script__">//<![CDATA[
-    document.write("<script async src='http://HOST:3000/browser-sync/browser-sync-client.js?v=2.26.3'><\/script>".replace("HOST", location.hostname));
+    //document.write("<script async src='http://HOST:3000/browser-sync/browser-sync-client.js?v=2.26.3'><\/script>".replace("HOST", location.hostname));
 //]]>
 </script>
 </html>

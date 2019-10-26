@@ -46,8 +46,8 @@
 	@endphp
 	
 	<ul class="dropdown-menu">
-		<li><a href="#" onclick="clicked()"><i class="fas fa-print text-secondary"></i>PRINT</a></li>
-		<li><a href="{{ asset('storage/uploaded/print/'.$fileName.'.csv')}}" download="{{ $fileName.'.csv'}}" target="_blank"><i class="fas fa-file-excel-o text-secondary"></i>CSV</a></li>
+		<li class="nav-item-btn"><a href="#" onclick="clicked()"><i class="fas fa-print text-secondary"></i>PRINT</a></li>
+		<li class="nav-item-btn"><a href="{{ asset('storage/uploaded/print/'.$fileName.'.csv')}}" download="{{ $fileName.'.csv'}}" target="_blank"><i class="fas fa-file-csv text-secondary"></i>CSV</a></li>
 	</ul>
 </div>
 
@@ -245,56 +245,37 @@
 				<tbody>
 
 					<div id="empCount"></div>
-
 					@forelse ($employees as $employee)
 						@if (@$filter_age != NULL && @$employee->age == @$filter_age)
-<<<<<<< HEAD
-							<tr class="empTR">
-=======
 							<tr id="empRow">
->>>>>>> a7676b1063b135fa00c398f3a5e8bed0215d42a2
 								<td>{{ $employee->emp_id }}</td>
 								<td>{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
 								<td>{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
 								<td> <a href="{{ route('hr.emp.show', ['employee' => $employee->emp_id]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i>View</a></td>
 							</tr>
 						@elseif (@$filter_all != NULL && @$employee->age == @$filter_all['age'])
-<<<<<<< HEAD
-							<tr class="empTR">
-=======
 							<tr id="empRow">
->>>>>>> a7676b1063b135fa00c398f3a5e8bed0215d42a2
 								<td>{{ $employee->emp_id }}</td>
 								<td>{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
 								<td>{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
 								<td> <a href="{{ route('hr.emp.show', ['employee' => $employee->emp_id]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i>View</a></td>
 							</tr>
 						@elseif (@$filter_g_a != NULL && @$employee->age == @$filter_g_a['age'])
-<<<<<<< HEAD
-							<tr class="empTR">
-=======
 							<tr id="empRow">
->>>>>>> a7676b1063b135fa00c398f3a5e8bed0215d42a2
+
 								<td>{{ $employee->emp_id }}</td>
 								<td>{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
 								<td>{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
 								<td> <a href="{{ route('hr.emp.show', ['employee' => $employee->emp_id]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i>View</a></td>
 							</tr>
 						@elseif (@$filter_e_a != NULL && @$employee->age == @$filter_e_a['age'])
-<<<<<<< HEAD
-							<tr class="empTR">
-=======
 							<tr id="empRow">
->>>>>>> a7676b1063b135fa00c398f3a5e8bed0215d42a2
+
 								<td>{{ $employee->emp_id }}</td>
 								<td>{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
 								<td>{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
 								<td> <a href="{{ route('hr.emp.show', ['employee' => $employee->emp_id]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i>View</a></td>
 							</tr>
-<<<<<<< HEAD
-						@elseif (@$filter_age == NULL && @$filter_all == NULL && @$filter_g_a == NULL && @$filter_e_a == NULL)
-							<tr class="empTR">
-=======
 						@elseif (@$filter_s_a != NULL && @$employee->age == @$filter_s_a['age'] && @$employee->civil_status == @$filter_s_a['status'])
 							<tr id="empRow">
 								<td>{{ $employee->emp_id }}</td>
@@ -325,7 +306,6 @@
 							</tr>
 						@elseif (@$filter_age == NULL && @$filter_all == NULL && @$filter_g_a == NULL && @$filter_e_a == NULL && @$filter_s_a == NULL && @$filter_t_a_s == NULL && @$filter_g_a_s == NULL && @$filter_super == NULL)
 							<tr id="empRow">
->>>>>>> a7676b1063b135fa00c398f3a5e8bed0215d42a2
 								<td>{{ $employee->emp_id }}</td>
 								<td>{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
 								<td>{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
@@ -365,11 +345,12 @@
 	}
 
 	jQuery(document).ready(function($){
-<<<<<<< HEAD
-		var countTR = $("#empTable tbody tr.empTR").length;
-=======
+
+		jQuery(window).on('hashchange', function(e){
+		    history.replaceState ("", document.title, e.originalEvent.oldURL);
+		});
+
 		var countTR = $("#prntEmpCount tbody #prntEmpRow").length;
->>>>>>> a7676b1063b135fa00c398f3a5e8bed0215d42a2
 		$("#empCount").append('<span class="font-weight-bold">Result: '+ countTR +'</span>');
 
 	});

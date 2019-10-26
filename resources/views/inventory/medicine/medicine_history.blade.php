@@ -40,8 +40,8 @@
 				$fileName = 'inventory_medicine';
 			@endphp
 			<ul class="dropdown-menu">
-				<li><a href="#" onclick="clicked()"><i class="fas fa-print text-secondary"></i>PRINT</a></li>
-				<li><a href="{{ asset('storage/uploaded/print/'.@$fileName.'.csv')}}" download="{{ @$fileName.'.csv'}}" target="_blank"><i class="fas fa-file-excel-o text-secondary"></i>CSV</a></li>
+				<li class="nav-item-btn"><a href="#" onclick="clicked()"><i class="fas fa-print text-secondary"></i>PRINT</a></li>
+				<li class="nav-item-btn"><a href="{{ asset('storage/uploaded/print/'.@$fileName.'.csv')}}" download="{{ @$fileName.'.csv'}}" target="_blank"><i class="fas fa-file-csv text-secondary"></i>CSV</a></li>
 			</ul>
 		</div>
 	</div>
@@ -83,27 +83,55 @@
 
 <div id="printable" class="d-none">
 	{!! @$printtable !!}
-	<br/>
-<div id="medCount"></div>
 </div>
 
 <script type="application/javascript">
-
+	
 	function clicked(){
-				var iframe = document.getElementById('printable');
-				var WinPrint = window.open('', '', 'left=0,top=0,width=1600,height=1800,toolbar=0,scrollbars=0,status=0');
-				WinPrint.document.write('<link href="{{ asset('css/app.css') }}" rel="stylesheet">');
-				WinPrint.document.write(iframe.innerHTML);
-				WinPrint.document.close();
-				WinPrint.focus();
-				WinPrint.print();
-				WinPrint.close();
+	
+		var iframe = document.getElementById('printable');
+		var htmlToPrint = '' +
+			'<style type="text/css">' +
+			'table {'+
+			'border-collapse: collapse;'+ 
+			'border-spacing: 0;'+ 
+			'width: 100%;'+ 
+			'border-bottom: 1px solid #dee2e6;'+ 
+			'border-top: 1px solid #dee2e6;'+
+			'};'+
+			'th{'+
+			'padding: 8px;'+ 
+			'border-bottom: 1px solid #dee2e6;'+ 
+			'text-align: left;'+ 
+			'font-size: 13px;'+ 
+			'font-family: arial; color: #212529;'+
+			'}'+
+			'tbody tr td{'+
+			'text-align: left;'+ 
+			'padding: 8px;'+ 
+			'border-top: 1px solid #dee2e6;'+
+			'border-bottom: 1px solid #dee2e6;'+ 
+			'font-family: arial;'+ 
+			'font-size: 10px;'+ 
+			'color: #212529;'+ 
+			'}'+
+			'tr td:last-child {'+
+			'width: 20%;'+
+			'text-align: center;'+ 
+			'}'+
+			'</style>';
+		var WinPrint = window.open('', '', 'left=0,top=0,width=1600,height=1800,toolbar=0,scrollbars=0,status=0');
+			WinPrint.document.write(iframe.innerHTML);
+			WinPrint.document.write(htmlToPrint);
+			WinPrint.document.close();
+			WinPrint.focus();
+			WinPrint.print();
+			WinPrint.close();
 	}
+
 	          
 	jQuery(document).ready(function($){
-		var countTR = $("#medTable tbody tr.medTR").length;
-		$("#medCount").append('<span class="font-weight-bold">Number of Medicines: '+ countTR +'</span>');
-
+		//$('a.printPagebtn').printPage();
 	});
 
 </script>
