@@ -327,7 +327,7 @@
 	
 	</div>
 </div>
-<div id="forPRNT" class="d-none">
+<div id="forPRNT" class="d-non">
 	@php
 		echo $print;
 	@endphp
@@ -351,6 +351,7 @@
 		});
 
 		var countTR = $("#prntEmpCount tbody #prntEmpRow").length;
+		$("#empCount").html('');
 		$("#empCount").append('<span class="font-weight-bold">Result: '+ countTR +'</span>');
 
 	});

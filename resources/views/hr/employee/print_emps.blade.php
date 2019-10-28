@@ -203,8 +203,9 @@
 <script type="application/javascript">
 
 	jQuery(document).ready(function($){
-		var countTR = $("#prntEmpCount tbody tr").length;
-		$("#prntEmpRslt").append('<span class="font-weight-bold">'+ countTR +'</span>');
+		var countTR2 = $("#prntEmpCount tbody #prntEmpRow").length;
+		$("#prntEmpRslt").html('');
+		$("#prntEmpRslt").append('<p class="font-weight-bold" style="font-family: arial; font-size: 10px; color: #212529;">Total number of employees: '+ countTR2 +'</p>');
 	});
 
 </script>
