@@ -161,8 +161,8 @@ class EmployeeController extends Controller
             $emp_age = Employee::get();
 
 
-            if(count($employees2)>0){
-                $this->printCsv($employees2); 
+            if(count(@$employees2)>0){
+                $this->printCsv(@$employees2); 
             }
 
 

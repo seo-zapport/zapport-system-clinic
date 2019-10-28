@@ -192,8 +192,6 @@
 
 		var iframe = document.getElementById('printable');
 
-
-
 		 $('.btnPrint').printPage({
 		  url: "{{ url('inventory/medicine/PrintView') }}",
 		  attr: "href",

@@ -177,8 +177,8 @@
 			'}'+
 			'</style>';
 		var WinPrint = window.open('', '', 'left=0,top=0,width=1600,height=1800,toolbar=0,scrollbars=0,status=0');
-			WinPrint.document.write(iframe.innerHTML);
 			WinPrint.document.write(htmlToPrint);
+			WinPrint.document.write(iframe.innerHTML);
 			WinPrint.document.close();
 			WinPrint.focus();
 			WinPrint.print();

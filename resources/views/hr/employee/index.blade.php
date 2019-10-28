@@ -351,6 +351,7 @@
 		});
 
 		var countTR = $("#prntEmpCount tbody #prntEmpRow").length;
+		$("#empCount").html('');
 		$("#empCount").append('<span class="font-weight-bold">Result: '+ countTR +'</span>');
 
 	});
