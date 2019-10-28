@@ -327,7 +327,7 @@
 	
 	</div>
 </div>
-<div id="forPRNT" class="d-non">
+<div id="forPRNT" class="d-none">
 	@php
 		echo $print;
 	@endphp
