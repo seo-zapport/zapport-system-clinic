@@ -33,6 +33,8 @@ class EmployeeController extends Controller
             if ($request->search) {
                 $employees = Employee::orWhere(\DB::raw("concat(emp_id, ' ', first_name, ' ', last_name, ' ', middle_name)"), 'like', '%'.$request->search.'%')
                                      ->orWhere(\DB::raw("concat(emp_id, ' ', last_name, ' ', first_name, ' ', middle_name)"), 'like', '%'.$request->search.'%')->orderBy('last_name', 'desc')->paginate(10);
+                $employees2 = Employee::orWhere(\DB::raw("concat(emp_id, ' ', first_name, ' ', last_name, ' ', middle_name)"), 'like', '%'.$request->search.'%')
+                                     ->orWhere(\DB::raw("concat(emp_id, ' ', last_name, ' ', first_name, ' ', middle_name)"), 'like', '%'.$request->search.'%')->orderBy('last_name', 'desc')->get();
                 $employees->appends(['search' => $request->search]);
                 $search = $request->search;
             }elseif ($request->filter_gender != NULL && $request->filter_empType == NULL && $request->filter_age == NULL && $request->filter_status == NULL){
@@ -161,9 +163,9 @@ class EmployeeController extends Controller
             $emp_age = Employee::get();
 
 
-            if(count(@$employees2)>0){
-                $this->printCsv(@$employees2); 
-            }
+            // if(count(@$employees2)>0){
+            //     $this->printCsv(@$employees2); 
+            // }
 
 
             return view('hr.employee.index', compact('employees', 'search', 'empcount', 'filter_gender', 'filter_empType', 'filter_both', 'filter_age', 'filter_all', 'emp_age', 'filter_g_a', 'filter_e_a', 'filter_status', 'filter_g_s', 'filter_t_s', 'filter_s_a', 'filter_g_t_s', 'filter_t_a_s', 'filter_g_a_s', 'filter_super'))

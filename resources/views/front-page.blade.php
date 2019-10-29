@@ -16,7 +16,7 @@
 	</section>
 	<section id="clinic">
 		<div class="container">
-			<div class="title m-b-md text-center h3 text-secondary">
+			<div class="title text-center text-secondary">
 	            @php
 	                $i = 1;
 	                $outopen = "Closed";
@@ -34,15 +34,18 @@
 	            		@endforeach
 	                @endif
 	            @endforeach
-	            <i class='fas fa-clinic-medical'></i> Clinic is <span class="text-{{ $outopenClass }}">{{ $outopen }}</span> <br>
+	            <i class='fas fa-clinic-medical'></i> Clinic is <span class="text-{{ $outopenClass }}">{{ $outopen }}</span>
+	            <hr>
+			</div>
+			<div class="text-center text-secondary">
 	            @if (@$attendant)
 		            @foreach (@$attendant as $in)
 		            @if (count(@$attendant) == 1 && @$in == 'doctor')
-		            	<small class="text-muted"><i class="fas fa-user-md"></i> {{ ucfirst(@$in) }} is In!</small>
+		            	<p class="display-4 text-muted"><i class="fas fa-user-md"></i> {{ ucfirst(@$in) }} is In!</p>
 		            @elseif (count(@$attendant) == 1 && @$in == 'nurse')
-		            	<small class="text-muted"><i class="fas fa-user-nurse"></i> {{ ucfirst(@$in) }} is In!</small>
+		            	<p class="display-4 text-muted"><i class="fas fa-user-nurse"></i> {{ ucfirst(@$in) }} is In!</p>
 		            @elseif (count(@$attendant) == 2 && @$in == 'doctor')
-		            	<small class="text-muted"><i class="fas fa-user-md"></i> {{ ucfirst(@$in) }} is In!</small>
+		            	<p class="display-4 text-muted"><i class="fas fa-user-md"></i> {{ ucfirst(@$in) }} is In!</p>
 		            @endif
 		            @endforeach
 	            @endif

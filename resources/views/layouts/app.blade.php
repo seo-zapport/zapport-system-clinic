@@ -28,8 +28,10 @@
     <script src="{{ asset('/js/tinymce/tinymce.js') }}"></script>
     <script src="{{ asset('/js/tinymce/tinymce.jquery.js') }}"></script>
   
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
-    <script src="{{ asset('/js/jquery.printPage.js') }}" type="text/javascript" defer></script>
+@if ( Request::is('hr/employees') || Request::is('hr/employees/*') || Request::is('inventory/medicine') || Request::is('inventory/medicine/*') )
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+<script src="{{ asset('/js/jquery.printPage.js') }}" type="text/javascript" defer></script>
+@endif
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
