@@ -40,7 +40,7 @@
 				$fileName = 'inventory_medicine';
 			@endphp
 			<ul class="dropdown-menu">
-				<li class="nav-item-btn"><a href="#" onclick="clicked()"><i class="fas fa-print text-secondary"></i>PRINT</a></li>
+				<li class="nav-item-btn"><a class="btnPrint" href="#"><i class="fas fa-print text-secondary"></i>PRINT</a></li>
 				<li class="nav-item-btn"><a href="{{ asset('storage/uploaded/print/'.@$fileName.'.csv')}}" download="{{ @$fileName.'.csv'}}" target="_blank"><i class="fas fa-file-csv text-secondary"></i>CSV</a></li>
 			</ul>
 		</div>
@@ -50,7 +50,8 @@
 <div class="card">
 	<div class="card-body">
 		<div class="table-responsive">
-			<table class="table table-hover">
+			<div id="medTotal"></div>
+			<table id="MedTable" class="table table-hover">
 				<thead class="thead-dark">
 					{{-- <th>No.</th> --}}
 					<th>Date Taken</th>
@@ -60,7 +61,7 @@
 				</thead>
 				<tbody>
 				@forelse ($meds as $med)
-				<tr>
+				<tr id="MedRow">
 					<td>{{ $med->Distinct_date->format('M d, Y - h:i a') }}</td>
 					<td>{{ $med->last_name }} {{ $med->first_name }}</td>
 					<td>{{ $countMeds->where('empMeds_id', $med->empMeds_id)->where('patient', $med->patient)->where('distinct_user_id', $med->distinct_user_id)->where('Distinct_date', $med->Distinct_date)->count() }}</td>
@@ -78,60 +79,24 @@
 	</div>
 </div>
 
-
 {{ $meds->links() }}
 
-<div id="printable" class="d-none">
-	{!! @$printtable !!}
-</div>
-
 <script type="application/javascript">
-	
-	function clicked(){
-	
-		var iframe = document.getElementById('printable');
-		var htmlToPrint = '' +
-			'<style type="text/css">' +
-			'table {'+
-			'border-collapse: collapse;'+ 
-			'border-spacing: 0;'+ 
-			'width: 100%;'+ 
-			'border-bottom: 1px solid #dee2e6;'+ 
-			'border-top: 1px solid #dee2e6;'+
-			'};'+
-			'th{'+
-			'padding: 8px;'+ 
-			'border-bottom: 1px solid #dee2e6;'+ 
-			'text-align: left;'+ 
-			'font-size: 13px;'+ 
-			'font-family: arial; color: #212529;'+
-			'}'+
-			'tbody tr td{'+
-			'text-align: left;'+ 
-			'padding: 8px;'+ 
-			'border-top: 1px solid #dee2e6;'+
-			'border-bottom: 1px solid #dee2e6;'+ 
-			'font-family: arial;'+ 
-			'font-size: 10px;'+ 
-			'color: #212529;'+ 
-			'}'+
-			'tr td:last-child {'+
-			'width: 20%;'+
-			'text-align: center;'+ 
-			'}'+
-			'</style>';
-		var WinPrint = window.open('', '', 'left=0,top=0,width=1600,height=1800,toolbar=0,scrollbars=0,status=0');
-			WinPrint.document.write(iframe.innerHTML);
-			WinPrint.document.write(htmlToPrint);
-			WinPrint.document.close();
-			WinPrint.focus();
-			WinPrint.print();
-			WinPrint.close();
-	}
-
-	          
+	        
 	jQuery(document).ready(function($){
-		//$('a.printPagebtn').printPage();
+		jQuery(window).on('hashchange', function(e){
+		    history.replaceState ("", document.title, e.originalEvent.oldURL);
+		});
+
+		var countTR = $("#MedTable tbody #MedRow").length;
+		$("#medTotal").html('');
+		$("#medTotal").append('<span class="font-weight-bold">Result: '+ countTR +'</span>');
+
+		 $('.btnPrint').printPage({
+		  url: "{{ asset('storage/uploaded/print/inventory_medicine.html') }}",
+		  attr: "href",
+		  message:"Your document is being created"
+		});
 	});
 
 </script>

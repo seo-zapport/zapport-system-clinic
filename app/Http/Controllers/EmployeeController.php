@@ -31,127 +31,134 @@ class EmployeeController extends Controller
         // dd($request->filter_status);
         if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
             if ($request->search) {
+<<<<<<< HEAD
                 $employees = Employee::orWhere(\DB::raw("concat(emp_id, ' ', first_name, ' ', last_name, ' ', middle_name)"), 'like', '%'.$request->search.'%')
                                      ->orWhere(\DB::raw("concat(emp_id, ' ', last_name, ' ', first_name, ' ', middle_name)"), 'like', '%'.$request->search.'%')->orderBy('last_name', 'desc')->paginate(10);
                 $employees2 = Employee::orWhere(\DB::raw("concat(emp_id, ' ', first_name, ' ', last_name, ' ', middle_name)"), 'like', '%'.$request->search.'%')
                                      ->orWhere(\DB::raw("concat(emp_id, ' ', last_name, ' ', first_name, ' ', middle_name)"), 'like', '%'.$request->search.'%')->orderBy('last_name', 'desc')->get();
                 $employees->appends(['search' => $request->search]);
+=======
+                $rawemployees = Employee::orWhere(\DB::raw("concat(emp_id, ' ', first_name, ' ', last_name, ' ', middle_name)"), 'like', '%'.$request->search.'%')
+                                     ->orWhere(\DB::raw("concat(emp_id, ' ', last_name, ' ', first_name, ' ', middle_name)"), 'like', '%'.$request->search.'%')->orderBy('last_name', 'desc');
+                $employees2 = $rawemployees->get();
+                $employees = $rawemployees->paginate(10)->appends(['search' => $request->search]);
+>>>>>>> 59996e39bb27591a912c140ecb298e3ebf39216a
                 $search = $request->search;
             }elseif ($request->filter_gender != NULL && $request->filter_empType == NULL && $request->filter_age == NULL && $request->filter_status == NULL){
 
-                $employees = Employee::where('gender', $request->filter_gender)->orderBy('last_name', 'desc')->paginate(10);
-                $employees2 = Employee::where('gender', $request->filter_gender)->orderBy('last_name', 'desc')->get();
-                $employees->appends(['filter_gender' => $request->filter_gender]);
+                $rawemployees = Employee::where('gender', $request->filter_gender)->orderBy('last_name', 'desc');
+                $employees2 = $rawemployees->get();
+                $employees = $rawemployees->paginate(10)->appends(['filter_gender' => $request->filter_gender]);
                 $filter_gender = $request->filter_gender;
                 $empcount =  Employee::where('gender', $request->filter_gender)->get()->count();
 
             }elseif ($request->filter_gender == NULL && $request->filter_empType != NULL && $request->filter_age == NULL && $request->filter_status == NULL){
 
-                $employees = Employee::where('employee_type', $request->filter_empType)->orderBy('last_name', 'desc')->paginate(10);
-                $employees2 = Employee::where('employee_type', $request->filter_empType)->orderBy('last_name', 'desc')->get();
-                $employees->appends(['filter_empType' => $request->filter_empType]);
+                $rawemployees = Employee::where('employee_type', $request->filter_empType)->orderBy('last_name', 'desc');
+                $employees2 = $rawemployees->get();
+                $employees= $rawemployees->paginate(10)->appends(['filter_empType' => $request->filter_empType]);
                 $filter_empType = $request->filter_empType;
                 $empcount =  Employee::where('employee_type', $request->filter_empType)->get()->count();
 
             }elseif ($request->filter_gender == NULL && $request->filter_empType == NULL && $request->filter_age != NULL && $request->filter_status == NULL){
 
-                $employees = Employee::orderBy('last_name', 'desc')->paginate(10);
-                $employees2 = Employee::orderBy('last_name', 'desc')->get();
-                $employees->appends(['filter_age' => $request->filter_age]);
+                $rawemployees = Employee::orderBy('last_name', 'desc');
+                $employees2 = $rawemployees->get();
+                $employees = $rawemployees->paginate(10)->appends(['filter_age' => $request->filter_age]);
                 $filter_age = $request->filter_age;
 
             }elseif ($request->filter_gender == NULL && $request->filter_empType == NULL && $request->filter_age == NULL && $request->filter_status != NULL){
 
-                $employees = Employee::where('civil_status', $request->filter_status)->orderBy('last_name', 'desc')->paginate(10);
-                $employees2 = Employee::where('civil_status', $request->filter_status)->orderBy('last_name', 'desc')->get();
-                $employees->appends(['filter_status' => $request->filter_status]);
+                $rawemployees = Employee::where('civil_status', $request->filter_status)->orderBy('last_name', 'desc');
+                $employees2 = $rawemployees->get();
+                $employees = $rawemployees->paginate(10)->appends(['filter_status' => $request->filter_status]);
                 $filter_status = $request->filter_status;
 
             }elseif ($request->filter_gender != NULL && $request->filter_empType != NULL && $request->filter_age == NULL && $request->filter_status == NULL){
 
-                $employees = Employee::where('gender', $request->filter_gender)->where('employee_type', $request->filter_empType)->orderBy('last_name', 'desc')->paginate(10);
-                $employees2 = Employee::where('gender', $request->filter_gender)->where('employee_type', $request->filter_empType)->orderBy('last_name', 'desc')->get();
-                $employees->appends(['filter_gender' => $request->filter_gender, 'filter_empType' => $request->filter_empType]);
+                $rawemployees = Employee::where('gender', $request->filter_gender)->where('employee_type', $request->filter_empType)->orderBy('last_name', 'desc');
+                $employees2 = $rawemployees->get();
+                $employees = $rawemployees->paginate(10)->appends(['filter_gender' => $request->filter_gender, 'filter_empType' => $request->filter_empType]);
                 $filter_both = ['gender' => $request->filter_gender, 'type' => $request->filter_empType];
                 $empcount =  Employee::where('gender', $request->filter_gender)->where('employee_type', $request->filter_empType)->get()->count();
 
             }elseif ($request->filter_gender != NULL && $request->filter_empType == NULL && $request->filter_age != NULL && $request->filter_status == NULL){
 
-                $employees = Employee::where('gender', $request->filter_gender)->orderBy('last_name', 'desc')->paginate(10);
-                $employees2 = Employee::where('gender', $request->filter_gender)->orderBy('last_name', 'desc')->get();
-                $employees->appends(['filter_gender' => $request->filter_gender, 'filter_age' => $request->filter_age]);
+                $rawemployees = Employee::where('gender', $request->filter_gender)->orderBy('last_name', 'desc');
+                $employees2 = $rawemployee->get();
+                $employees = $rawemployees->paginate(10)->appends(['filter_gender' => $request->filter_gender, 'filter_age' => $request->filter_age]);
                 $filter_g_a = ['gender' => $request->filter_gender, 'age' => $request->filter_age];
                 $empcount =  Employee::where('gender', $request->filter_gender)->get()->count();
 
             }elseif ($request->filter_gender == NULL && $request->filter_empType != NULL && $request->filter_age != NULL && $request->filter_status == NULL){
 
-                $employees = Employee::where('employee_type', $request->filter_empType)->orderBy('last_name', 'desc')->paginate(10);
-                $employees2 = Employee::where('employee_type', $request->filter_empType)->orderBy('last_name', 'desc')->get();
-                $employees->appends(['filter_empType' => $request->filter_empType, 'filter_age' => $request->filter_age]);
+                $rawemployees = Employee::where('employee_type', $request->filter_empType)->orderBy('last_name', 'desc');
+                $employees2 = $rawemployees->get();
+                $employees = $rawemployees->paginate(10)->appends(['filter_empType' => $request->filter_empType, 'filter_age' => $request->filter_age]);
                 $filter_e_a = ['type' => $request->filter_empType, 'age' => $request->filter_age];
                 $empcount =  Employee::where('employee_type', $request->filter_empType)->get()->count();
 
             }elseif ($request->filter_gender != NULL && $request->filter_empType != NULL && $request->filter_age != NULL && $request->filter_status == NULL){
 
-                $employees = Employee::where('gender', $request->filter_gender)->where('employee_type', $request->filter_empType)->orderBy('last_name', 'desc')->paginate(10);
-                $employees2 = Employee::where('gender', $request->filter_gender)->where('employee_type', $request->filter_empType)->orderBy('last_name', 'desc')->get();
-                $employees->appends(['filter_gender' => $request->filter_gender, 'filter_empType' => $request->filter_empType, 'filter_age' => $request->filter_age]);
+                $rawemployees = Employee::where('gender', $request->filter_gender)->where('employee_type', $request->filter_empType)->orderBy('last_name', 'desc');
+                $employees2 = $rawemployees->get();
+                $employees = $rawemployees->paginate(10)->appends(['filter_gender' => $request->filter_gender, 'filter_empType' => $request->filter_empType, 'filter_age' => $request->filter_age]);
                 $filter_all = ['gender' => $request->filter_gender, 'type' => $request->filter_empType, 'age' => $request->filter_age];
                 $empcount =  Employee::where('gender', $request->filter_gender)->where('employee_type', $request->filter_empType)->get()->count();
 
             }elseif ($request->filter_gender != NULL && $request->filter_empType == NULL && $request->filter_age == NULL && $request->filter_status != NULL){
 
-                $employees = Employee::where('gender', $request->filter_gender)->where('civil_status', $request->filter_status)->orderBy('last_name', 'desc')->paginate(10);
-                $employees2 = Employee::where('gender', $request->filter_gender)->where('civil_status', $request->filter_status)->orderBy('last_name', 'desc')->get();
-                $employees->appends(['filter_gender' => $request->filter_gender, 'filter_status' => $request->filter_status]);
+                $rawemployees = Employee::where('gender', $request->filter_gender)->where('civil_status', $request->filter_status)->orderBy('last_name', 'desc');
+                $employees2 = $rawemployees->get();
+                $employees = $rawemployees->paginate(10)->appends(['filter_gender' => $request->filter_gender, 'filter_status' => $request->filter_status]);
                 $filter_g_s = ['gender' => $request->filter_gender, 'status' => $request->filter_status];
                 $empcount =  Employee::where('gender', $request->filter_gender)->where('civil_status', $request->filter_status)->get()->count();
 
             }elseif ($request->filter_gender == NULL && $request->filter_empType != NULL && $request->filter_age == NULL && $request->filter_status != NULL){
 
-                $employees = Employee::where('employee_type', $request->filter_empType)->where('civil_status', $request->filter_status)->orderBy('last_name', 'desc')->paginate(10);
-                $employees2 = Employee::where('employee_type', $request->filter_empType)->where('civil_status', $request->filter_status)->orderBy('last_name', 'desc')->get();
-                $employees->appends(['filter_empType' => $request->filter_empType, 'filter_status' => $request->filter_status]);
+                $rawemployees = Employee::where('employee_type', $request->filter_empType)->where('civil_status', $request->filter_status)->orderBy('last_name', 'desc');
+                $employees2 = $rawemployees->get();
+                $employees = $rawemployees->paginate(10)->appends(['filter_empType' => $request->filter_empType, 'filter_status' => $request->filter_status]);
                 $filter_t_s = ['type' => $request->filter_empType, 'status' => $request->filter_status];
                 $empcount =  Employee::where('employee_type', $request->filter_empType)->where('civil_status', $request->filter_status)->get()->count();
 
             }elseif ($request->filter_gender == NULL && $request->filter_empType == NULL && $request->filter_age != NULL && $request->filter_status != NULL){
 
-                $employees = Employee::where('civil_status', $request->filter_status)->orderBy('last_name', 'desc')->paginate(10);
-                $employees2 = Employee::where('civil_status', $request->filter_status)->orderBy('last_name', 'desc')->get();
-                $employees->appends(['filter_status' => $request->filter_status, 'filter_age' => $request->filter_age]);
+                $rawemployees = Employee::where('civil_status', $request->filter_status)->orderBy('last_name', 'desc');
+                $employees2 = $rawemployees->get();
+                $employees = $rawemployees->paginate(10)->appends(['filter_status' => $request->filter_status, 'filter_age' => $request->filter_age]);
                 $filter_s_a = ['status' => $request->filter_status, 'age' => $request->filter_age];
                 $empcount =  Employee::where('civil_status', $request->filter_status)->get()->count();
 
             }elseif ($request->filter_gender != NULL && $request->filter_empType != NULL && $request->filter_age == NULL && $request->filter_status != NULL){
 
-                $employees = Employee::where('gender', $request->filter_gender)->where('employee_type', $request->filter_empType)->where('civil_status', $request->filter_status)->orderBy('last_name', 'desc')->paginate(10);
-                $employees2 = Employee::where('gender', $request->filter_gender)->where('employee_type', $request->filter_empType)->where('civil_status', $request->filter_status)->orderBy('last_name', 'desc')->get();
-                $employees->appends(['filter_gender' => $request->filter_gender, 'filter_empType' => $request->filter_empType, 'filter_status' => $request->filter_status]);
+                $rawemployees = Employee::where('gender', $request->filter_gender)->where('employee_type', $request->filter_empType)->where('civil_status', $request->filter_status)->orderBy('last_name', 'desc');
+                $employees2 = $rawemployees->get();
+                $employees = $rawemployees->paginate(10)->appends(['filter_gender' => $request->filter_gender, 'filter_empType' => $request->filter_empType, 'filter_status' => $request->filter_status]);
                 $filter_g_t_s = ['gender' => $request->filter_gender, 'type' => $request->filter_empType, 'status' => $request->filter_status];
                 $empcount =  Employee::where('gender', $request->filter_gender)->where('employee_type', $request->filter_empType)->get()->count();
 
             }elseif ($request->filter_gender == NULL && $request->filter_empType != NULL && $request->filter_age != NULL && $request->filter_status != NULL){
 
-                $employees = Employee::where('employee_type', $request->filter_empType)->where('civil_status', $request->filter_status)->orderBy('last_name', 'desc')->paginate(10);
-                $employees2 = Employee::where('employee_type', $request->filter_empType)->where('civil_status', $request->filter_status)->orderBy('last_name', 'desc')->get();
-                $employees->appends(['filter_empType' => $request->filter_empType, 'filter_age' => $request->filter_age, 'filter_status' => $request->filter_status]);
+                $rawemployees = Employee::where('employee_type', $request->filter_empType)->where('civil_status', $request->filter_status)->orderBy('last_name', 'desc');
+                $employees2 = $rawemployees->get();
+                $employees = $rawemployees->paginate(10)->appends(['filter_empType' => $request->filter_empType, 'filter_age' => $request->filter_age, 'filter_status' => $request->filter_status]);
                 $filter_t_a_s = ['type' => $request->filter_empType, 'age' => $request->filter_age, 'status' => $request->filter_status];
                 $empcount =  Employee::where('employee_type', $request->filter_empType)->where('civil_status', $request->filter_status)->get()->count();
 
             }elseif ($request->filter_gender != NULL && $request->filter_empType == NULL && $request->filter_age != NULL && $request->filter_status != NULL){
 
-                $employees = Employee::where('gender', $request->filter_gender)->where('civil_status', $request->filter_status)->orderBy('last_name', 'desc')->paginate(10);
-                $employees2 = Employee::where('gender', $request->filter_gender)->where('civil_status', $request->filter_status)->orderBy('last_name', 'desc')->get();
-                $employees->appends(['filter_gender' => $request->filter_gender, 'filter_age' => $request->filter_age, 'filter_status' => $request->filter_status]);
+                $rawemployees = Employee::where('gender', $request->filter_gender)->where('civil_status', $request->filter_status)->orderBy('last_name', 'desc');
+                $employees2 = $rawemployees->get();
+                $employees = $rawemployees->paginate(10)->appends(['filter_gender' => $request->filter_gender, 'filter_age' => $request->filter_age, 'filter_status' => $request->filter_status]);
                 $filter_g_a_s = ['gender' => $request->filter_gender, 'age' => $request->filter_age, 'status' => $request->filter_status];
                 $empcount =  Employee::where('gender', $request->filter_gender)->where('civil_status', $request->filter_status)->get()->count();
 
             }elseif ($request->filter_gender != NULL && $request->filter_empType != NULL && $request->filter_age != NULL && $request->filter_status != NULL){
 
-                $employees = Employee::where('gender', $request->filter_gender)->where('employee_type', $request->filter_empType)->where('civil_status', $request->filter_status)->orderBy('last_name', 'desc')->paginate(10);
-                $employees2 = Employee::where('gender', $request->filter_gender)->where('employee_type', $request->filter_empType)->where('civil_status', $request->filter_status)->orderBy('last_name', 'desc')->get();
-                $employees->appends(['filter_gender' => $request->filter_gender, 'filter_empType' => $request->filter_empType, 'filter_age' => $request->filter_age, 'filter_status' => $request->filter_status]);
+                $rawemployees = Employee::where('gender', $request->filter_gender)->where('employee_type', $request->filter_empType)->where('civil_status', $request->filter_status)->orderBy('last_name', 'desc');
+                $employees2 = $rawemployees->get();
+                $employees = $rawemployees->paginate(10)->appends(['filter_gender' => $request->filter_gender, 'filter_empType' => $request->filter_empType, 'filter_age' => $request->filter_age, 'filter_status' => $request->filter_status]);
                 $filter_super = ['gender' => $request->filter_gender, 'type' => $request->filter_empType, 'age' => $request->filter_age, 'status' => $request->filter_status];
                 $empcount =  Employee::where('gender', $request->filter_gender)->where('employee_type', $request->filter_empType)->where('civil_status', $request->filter_status)->get()->count();
 
@@ -163,9 +170,19 @@ class EmployeeController extends Controller
             $emp_age = Employee::get();
 
 
+<<<<<<< HEAD
             // if(count(@$employees2)>0){
             //     $this->printCsv(@$employees2); 
             // }
+=======
+            //dd($employees2);    
+
+            if(count($employees2)>0){
+                $this->printCsv($employees2); 
+            }else{
+                $this->printCsv(null);  
+            }
+>>>>>>> 59996e39bb27591a912c140ecb298e3ebf39216a
 
 
             return view('hr.employee.index', compact('employees', 'search', 'empcount', 'filter_gender', 'filter_empType', 'filter_both', 'filter_age', 'filter_all', 'emp_age', 'filter_g_a', 'filter_e_a', 'filter_status', 'filter_g_s', 'filter_t_s', 'filter_s_a', 'filter_g_t_s', 'filter_t_a_s', 'filter_g_a_s', 'filter_super'))
@@ -545,6 +562,7 @@ class EmployeeController extends Controller
         }
     }
 
+
     public function printCsv($emplist){
 
         if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
@@ -552,10 +570,13 @@ class EmployeeController extends Controller
             $filter_age = app('request')->input('filter_age');
             $filter_gender = app('request')->input('filter_gender');
             $filter_empType = app('request')->input('filter_empType'); 
+            $filter_status = app('request')->input('filter_status'); 
+
 
             $employees = $emplist;    
-            $dataemp = view('hr.employee.csv',compact('employees','filter_age','filter_gender','filter_empType'))->render();
-            //$dataemppdf = view('hr.employee.filepdf',compact('employees','filter_age','filter_gender','filter_empType'))->render();
+            //dd($emplist);
+            $dataemp = view('hr.employee.csv',compact('employees','filter_age','filter_gender','filter_empType','filter_status'))->render();
+            $dataemp_print = view('hr.employee.printemps',compact('emplist','filter_age','filter_gender','filter_empType','filter_status'))->render();
 
             if($filter_gender != null){
                 $gender = (app('request')->input('filter_gender') == 0) ? "male": "female";
@@ -564,23 +585,41 @@ class EmployeeController extends Controller
                 $emptype = (app('request')->input('filter_empType') == 0) ? "probationary" : "regular"; 
             }
 
-            if($filter_age != null && $filter_gender != null && $filter_empType != null){
-                $fileName = 'employee-'.$filter_age.'-'.$gender.'-'.@$emptype; 
+    
+            if($filter_age != null && $filter_gender != null && $filter_empType != null && $filter_status != null ){
+                $fileName = 'employee-'.$gender.'-'.$emptype.'-'.$filter_age.'-'.ucwords($filter_status);
+            }elseif($filter_age != null && $filter_gender != null && $filter_empType != null ){
+                 $fileName = 'employee-'.$gender.'-'.$filter_age.'-'.ucwords($filter_status);
+            }elseif($filter_age != null && $filter_gender != null && $filter_status != null ){
+                 $fileName = 'employee-'.$gender.'-'.$filter_age.'-'.ucwords($filter_status);
+            }elseif($filter_age != null && $filter_empType != null && $filter_status != null ){
+                 $fileName = 'employee-'.$filter_age.'-'.$emptype.'-'.ucwords($filter_status);
+            }elseif($filter_gender != null && $filter_empType != null && $filter_status != null ){
+                 $fileName = 'employee-'.$gender.'-'.$emptype.'-'.ucwords($filter_status);
+            }elseif($filter_gender != null && $filter_empType != null){
+                 $fileName = 'employee-'.$gender.'-'.$emptype; 
+            }elseif($filter_gender != null && $filter_status != null){
+                 $fileName = 'employee-'.$gender.'-'.ucwords($filter_status);
             }elseif($filter_age != null && $filter_gender != null){
-                $fileName = 'employee-'.$filter_age.'-'.$gender; 
-            }elseif ($filter_age != null && $filter_empType != null) {
-                $fileName = 'employee-'.$filter_age.'-'.@$emptype; 
-            }elseif($filter_gender != null && $filter_empType != null){   
-                $fileName = 'employee-'.$gender.'-'.@$emptype;  
+                 $fileName = 'employee-'.$gender.'-'.$filter_age; 
+            }elseif($filter_age != null && $filter_empType != null){
+                 $fileName = 'employee-'.$filter_age.'-'.$emptype; 
+            }elseif($filter_age != null && $filter_status != null){
+                 $fileName = 'employee-'.$filter_age.'-'.ucwords($filter_status);
             }elseif($filter_age != null){
-                $fileName = 'employee-'.@$filter_age; 
+                 $fileName = 'employee-'.$filter_age;
             }elseif($filter_gender != null){
-                $fileName = 'employee-'.@$gender; 
+                 $fileName = 'employee-'.$gender; 
             }elseif($filter_empType != null){
-                $fileName = 'employee-'.@$emptype;         
+                 $fileName = 'employee-'.$emptype; 
+            }elseif($filter_status != null){
+                 $fileName = 'employee-'.ucwords($filter_status);
+            }elseif(@$request->search != null){
+                 $fileName = 'employee-'.@$request->search; 
             }else{
-                $fileName = 'employee'; 
+                $fileName ='employee';
             }
+                
 
             $relPath = 'storage/uploaded/print';
             if (!file_exists($relPath)) {
@@ -588,7 +627,7 @@ class EmployeeController extends Controller
             }
 
             File::put(public_path('/storage/uploaded/print/'.$fileName.'.csv'),$dataemp);     
-           // File::put(public_path('/storage/uploaded/print/'.$fileName.'.pdf'),$dataemppdf);     
+            File::put(public_path('/storage/uploaded/print/employee-print.html'),$dataemp_print);     
 
         }else{
             return back();

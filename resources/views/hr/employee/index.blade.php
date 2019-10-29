@@ -17,7 +17,8 @@
 	@php 
 	$filter_age = app('request')->input('filter_age');
 	$filter_gender = app('request')->input('filter_gender');
-	$filter_empType = app('request')->input('filter_empType'); 
+	$filter_empType = app('request')->input('filter_empType');
+	$filter_status = app('request')->input('filter_status');  
 	
 	if($filter_gender != null){
 	    $gender = (app('request')->input('filter_gender') == 0) ? "male": "female";
@@ -26,27 +27,44 @@
 	    $emptype = (app('request')->input('filter_empType') == 0) ? "probationary" : "regular"; 
 	}
 
-	if($filter_age != null && $filter_gender != null && $filter_empType != null){
-	    $fileName = 'employee-'.$filter_age.'-'.$gender.'-'.@$emptype; 
+	if($filter_age != null && $filter_gender != null && $filter_empType != null && $filter_status != null ){
+	    $fileName = 'employee-'.$gender.'-'.$emptype.'-'.$filter_age.'-'.ucwords($filter_status);
+	}elseif($filter_age != null && $filter_gender != null && $filter_empType != null ){
+	     $fileName = 'employee-'.$gender.'-'.$filter_age.'-'.ucwords($filter_status);
+	}elseif($filter_age != null && $filter_gender != null && $filter_status != null ){
+	     $fileName = 'employee-'.$gender.'-'.$filter_age.'-'.ucwords($filter_status);
+	}elseif($filter_age != null && $filter_empType != null && $filter_status != null ){
+	     $fileName = 'employee-'.$filter_age.'-'.$emptype.'-'.ucwords($filter_status);
+	}elseif($filter_gender != null && $filter_empType != null && $filter_status != null ){
+	     $fileName = 'employee-'.$gender.'-'.$emptype.'-'.ucwords($filter_status);
+	}elseif($filter_gender != null && $filter_empType != null){
+	     $fileName = 'employee-'.$gender.'-'.$emptype; 
+	}elseif($filter_gender != null && $filter_status != null){
+	     $fileName = 'employee-'.$gender.'-'.ucwords($filter_status);
 	}elseif($filter_age != null && $filter_gender != null){
-	    $fileName = 'employee-'.$filter_age.'-'.$gender; 
-	}elseif ($filter_age != null && $filter_empType != null) {
-	    $fileName = 'employee-'.$filter_age.'-'.@$emptype; 
-	}elseif($filter_gender != null && $filter_empType != null){   
-	    $fileName = 'employee-'.$gender.'-'.@$emptype;  
+	     $fileName = 'employee-'.$gender.'-'.$filter_age; 
+	}elseif($filter_age != null && $filter_empType != null){
+	     $fileName = 'employee-'.$filter_age.'-'.$emptype; 
+	}elseif($filter_age != null && $filter_status != null){
+	     $fileName = 'employee-'.$filter_age.'-'.ucwords($filter_status);
 	}elseif($filter_age != null){
-	    $fileName = 'employee-'.@$filter_age;
+	     $fileName = 'employee-'.$filter_age;
 	}elseif($filter_gender != null){
-	    $fileName = 'employee-'.@$gender;
+	     $fileName = 'employee-'.$gender; 
 	}elseif($filter_empType != null){
-	    $fileName = 'employee-'.@$emptype;         
+	     $fileName = 'employee-'.$emptype; 
+	}elseif($filter_status != null){
+	     $fileName = 'employee-'.ucwords($filter_status);
+	}elseif(@$request->search != null){
+	     $fileName = 'employee-'.@$request->search; 
 	}else{
-	    $fileName = 'employee'; 
+	    $fileName ='employee';
 	}
+	    
 	@endphp
 	
 	<ul class="dropdown-menu">
-		<li class="nav-item-btn"><a href="#" onclick="clicked()"><i class="fas fa-print text-secondary"></i>PRINT</a></li>
+		<li class="nav-item-btn"><a class="btnPrint" href="#"><i class="fas fa-print text-secondary"></i>PRINT</a></li> 	
 		<li class="nav-item-btn"><a href="{{ asset('storage/uploaded/print/'.$fileName.'.csv')}}" download="{{ $fileName.'.csv'}}" target="_blank"><i class="fas fa-file-csv text-secondary"></i>CSV</a></li>
 	</ul>
 </div>
@@ -353,6 +371,12 @@
 		var countTR = $("#prntEmpCount tbody #prntEmpRow").length;
 		$("#empCount").html('');
 		$("#empCount").append('<span class="font-weight-bold">Result: '+ countTR +'</span>');
+
+		 $('.btnPrint').printPage({
+		  url: "{{ asset('storage/uploaded/print/employee-print.html') }}",
+		  attr: "href",
+		  message:"Your document is being created"
+		});
 
 	});
 

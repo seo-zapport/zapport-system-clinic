@@ -7,7 +7,7 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css"> --}}
+  
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -19,13 +19,25 @@
 	<img src="{{url( '/images/logo.png' )}}" alt="Zapport" style="display:block;margin:auto;">
 </div>
 <h2>Medicines Inventory</h2>
-<h3>@if(app('request')->input('search') != "")  {{ "Filter by: ".app('request')->input('search') }} @endif</h3>
+@if(app('request')->input('search') != "")
+<h3>{{ "Search by: ".app('request')->input('search') }}</h3>
+@endif
+@if($typeprint == "viewlogs" || $typeprint == "logsinput")
+	@if($medbrand != '')
+		<h3>Brand Name: <strong class="zp-color-6b">{{$medbrand}}</strong></h3>
+	@endif
+	@if($generic != '')
+		<h3>Generic Name: <strong class="zp-color-6b">{{$generic}}</strong></h3>
+	@endif
+@endif
+
+
 <div class="table-responsive">
 	<table id="medTable" class="table table-hover">
 	 @php 
 	 	if(@$typeprint == "viewlogs"){ 
 	 @endphp
-	   	<thead class="thead-dark">
+	   	<thead>
 	   		<th>Input Date</th>
 	   		<th>Date Expire</th>
 	   		<th>Remaining Quantity</th>
@@ -34,23 +46,23 @@
 	   		<th>Input by</th>
 	   	</thead>
 	   	<tbody>
-	   		@forelse (@$meds as $log)
+	   		@forelse ($meds as $log)
 	   			<tr class="medTR">
-	   				<td class="{{ ($log->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">
+	   				<td>
 	   				{{ Carbon\carbon::parse($log->formatted_at)->format('m/d/Y') }}
 	   				</td>
-	   				<td class="{{ ($log->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">
+	   				<td>
 	   				{{ Carbon\carbon::parse($log->expiration_date)->format('m/d/Y') }}</td>
-	   				<td class="{{ ($log->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">
+	   				<td>
 	   				{{ $log->where('brand_id', $log->brand_id)->where('generic_id', $log->generic_id)->where('expiration_date', $log->expiration_date)->where('availability', 0)->where('created_at', $log->orig)->count() }}
 	   				</td>
-	   				<td class="{{ ($log->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">
+	   				<td>
 	   					{{ $log->where('brand_id', $log->brand_id)->where('generic_id', $log->generic_id)->where('expiration_date', $log->expiration_date)->where('availability', 1)->count() }}
 	   				</td>
-	   				<td class="{{ ($log->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">
+	   				<td>
 	   					{{ $log->where('brand_id', $log->brand_id)->where('generic_id', $log->generic_id)->where('expiration_date', $log->expiration_date)->where('created_at', $log->orig)->count() }}
 	   				</td>
-	   				<td class="{{ ($log->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">
+	   				<td>
 	   				{{ ucwords($log->user->employee->last_name) }} {{ ucwords($log->user->employee->first_name) }}
 	   				</td>
 	   			</tr>
@@ -68,7 +80,7 @@
 	@php 
 		}elseif(@$typeprint == "logsinput"){ 
 	@endphp
-		<thead class="thead-dark">
+		<thead>
 			<th>Date Taken</th>
 			<th>Name</th>
 			<th>No. of medicine</th>
@@ -90,14 +102,14 @@
 		</tbody>
 
 	@php }else{ @endphp
-		<thead class="thead-dark">
+		<thead >
 			<th>Generic Name</th>
 			<th>Brand Name</th>
 			<th>Remaining Quantity</th>
 		</thead>
 		<tbody>
-			@if (@$meds != null)		
-			@forelse (@$meds as $med)
+			@if ($meds != null)		
+			@forelse ($meds as $med)
 				<tr class="medTR">
 					<td>{{ ucfirst($med->generic->gname) }}</td>
 					<td>{{ ucwords($med->medBrand->bname) }}</td>
@@ -116,6 +128,10 @@
 		</tbody>
 	@php } @endphp
 	</table>			
+</div>
+<br/>
+<div id="medCount">
+	<span class="font-weight-bold">Total of Medicines: {{ @$countmed }}</span>
 </div>
 </body>
 
