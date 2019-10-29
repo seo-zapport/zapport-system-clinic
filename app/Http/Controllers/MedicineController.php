@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use File;
 use App\Generic;
 use App\Medbrand;
 use App\Medicine;
@@ -9,8 +10,8 @@ use App\Employeesmedical;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use App\EmployeesmedicalMedicineUser;
 use App\Http\Requests\MedicineRequest;
-use File;
 
 class MedicineController extends Controller
 {
@@ -178,6 +179,8 @@ class MedicineController extends Controller
                                          ->where('availability', 1)
                                          ->get();
 
+            $dates = EmployeesmedicalMedicineUser::select(\DB::raw('DATE(created_at) as medical_date'))->distinct('medical_date')->get();
+
             if ($request->search_name && $request->search_date == null) {
                 $search_name = $request->search_name;
                 $fmeds = $rawmeds->where(\DB::raw("concat(employees.last_name, ' ', employees.first_name)"), "LIKE", '%'.$request->search_name.'%')
@@ -188,7 +191,7 @@ class MedicineController extends Controller
             }
             elseif ($request->search_name == null && $request->search_date) {
                 $search_date = $request->search_date;
-                $fmeds = $rawmeds->where('employeesmedical_medicine_users.created_at', $request->search_date)
+                $fmeds = $rawmeds->where(\DB::raw('DATE(employeesmedical_medicine_users.created_at)'), $request->search_date)
                              ->orderBy('medicines.id', 'desc');
                       $printmeds = $fmeds->get();
                       $meds = $fmeds->paginate(10);     
@@ -197,7 +200,7 @@ class MedicineController extends Controller
                 $search_name = $request->search_name;
                 $search_date = $request->search_date;
                 $fmeds = $rawmeds->where(\DB::raw("concat(employees.last_name, ' ', employees.first_name)"), "LIKE", '%'.$request->search_name.'%')
-                             ->where('employeesmedical_medicine_users.created_at', $request->search_date)
+                             ->where(\DB::raw('DATE(employeesmedical_medicine_users.created_at)'), $request->search_date)
                              ->orderBy('medicines.id', 'desc');
                     $printmeds = $fmeds->get();
                     $meds = $fmeds->paginate(10);  
@@ -218,13 +221,13 @@ class MedicineController extends Controller
 
         }
 
-        //dd($printmeds);
+        // dd($meds);
 
         $medlogs = ['meds'=> $printmeds, 'countMeds' => $countMeds];
 
         $this->PrintMedCSV($medlogs,'logsinput',$medbrand->bname, $generic->gname); 
 
-        return view('inventory.medicine.medicine_history', compact('medbrand', 'generic', 'empsMeds', 'arr', 'meds', 'inputDate', 'expDate', 'search_name', 'search_date', 'countMeds'));
+        return view('inventory.medicine.medicine_history', compact('medbrand', 'generic', 'empsMeds', 'arr', 'meds', 'inputDate', 'expDate', 'search_name', 'search_date', 'countMeds', 'dates'));
     }
 
     /**

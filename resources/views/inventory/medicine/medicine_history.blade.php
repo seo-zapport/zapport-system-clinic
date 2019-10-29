@@ -23,8 +23,8 @@
 		<div class="form-group col-md-2">
 			<select name="search_date" id="search_date" class="form-control">
 				<option selected disabled="true">Search for Date</option>
-				@foreach ($meds as $med)
-					<option {{ (@$search_date == $med->Distinct_date) ? 'selected' : '' }} value="{{ $med->Distinct_date }}">{{ $med->Distinct_date->format('M d, Y - h:i a') }}</option>
+				@foreach ($dates as $date)
+					<option {{ (@$search_date == $date->medical_date) ? 'selected' : '' }} value="{{ $date->medical_date }}">{{ Carbon\carbon::parse($date->medical_date)->format('M d, Y') }}</option>
 				@endforeach
 			</select>
 		</div>
