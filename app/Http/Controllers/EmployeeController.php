@@ -77,7 +77,7 @@ class EmployeeController extends Controller
             }elseif ($request->filter_gender != NULL && $request->filter_empType == NULL && $request->filter_age != NULL && $request->filter_status == NULL){
 
                 $rawemployees = Employee::where('gender', $request->filter_gender)->orderBy('last_name', 'desc');
-                $employees2 = $rawemployee->get();
+                $employees2 = $rawemployees->get();
                 $employees = $rawemployees->paginate(10)->appends(['filter_gender' => $request->filter_gender, 'filter_age' => $request->filter_age]);
                 $filter_g_a = ['gender' => $request->filter_gender, 'age' => $request->filter_age];
                 $empcount =  Employee::where('gender', $request->filter_gender)->get()->count();
@@ -557,12 +557,13 @@ class EmployeeController extends Controller
             $filter_gender = app('request')->input('filter_gender');
             $filter_empType = app('request')->input('filter_empType'); 
             $filter_status = app('request')->input('filter_status'); 
+            $filter_search = app('request')->input('search'); 
 
 
             $employees = $emplist;    
             //dd($emplist);
-            $dataemp = view('hr.employee.csv',compact('employees','filter_age','filter_gender','filter_empType','filter_status'))->render();
-            $dataemp_print = view('hr.employee.printemps',compact('emplist','filter_age','filter_gender','filter_empType','filter_status'))->render();
+            $dataemp = view('hr.employee.csv',compact('employees','filter_age','filter_gender','filter_empType','filter_status','filter_search'))->render();
+            $dataemp_print = view('hr.employee.printemps',compact('emplist','filter_age','filter_gender','filter_empType','filter_status','filter_search'))->render();
 
             if($filter_gender != null){
                 $gender = (app('request')->input('filter_gender') == 0) ? "male": "female";
@@ -571,7 +572,6 @@ class EmployeeController extends Controller
                 $emptype = (app('request')->input('filter_empType') == 0) ? "probationary" : "regular"; 
             }
 
-    
             if($filter_age != null && $filter_gender != null && $filter_empType != null && $filter_status != null ){
                 $fileName = 'employee-'.$gender.'-'.$emptype.'-'.$filter_age.'-'.ucwords($filter_status);
             }elseif($filter_age != null && $filter_gender != null && $filter_empType != null ){
@@ -600,13 +600,12 @@ class EmployeeController extends Controller
                  $fileName = 'employee-'.$emptype; 
             }elseif($filter_status != null){
                  $fileName = 'employee-'.ucwords($filter_status);
-            }elseif(@$request->search != null){
-                 $fileName = 'employee-'.@$request->search; 
+            }elseif(@$filter_search != null){
+                 $fileName = 'employee'; 
             }else{
                 $fileName ='employee';
             }
                 
-
             $relPath = 'storage/uploaded/print';
             if (!file_exists($relPath)) {
                 mkdir($relPath, 777, true);

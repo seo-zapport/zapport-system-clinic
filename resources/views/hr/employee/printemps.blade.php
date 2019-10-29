@@ -52,8 +52,8 @@
 						Filter by Employee Type: {{ (@$filter_empType == 0) ? 'Probationary Employee' : 'Regular Employee' }}
 					@elseif(@$filter_status != null)
 						Filter by Civil Status: {{ ucwords(ucwords(app('request')->input('filter_status'))) }}
-					@elseif(@$request->search != null)
-						Search Keyword : {{ $request->search }}
+					@elseif(@$filter_search != null)
+						Search Keyword : {{ $filter_search }}
 					@else
 						
 					@endif
@@ -69,9 +69,8 @@
 				</thead>
 				<tbody>
 					@if($emplist != null)
-						
 					@forelse ($emplist as $employee)
-						@if (@$filter_age != NULL && @$employee->age == @$filter_age)
+						@if (@$filter_age != null && $employee->age == @$filter_age)
 							<tr id="prntEmpRow">
 								<td width="20%" style="text-align: left; padding: 8px; border-bottom: 1px solid #dee2e6; font-family: arial; font-size: 10px; color: #212529; text-align: center;">{{ $employee->emp_id }}</td>
 								<td width="50%" style="text-align: left; padding: 8px; border-bottom: 1px solid #dee2e6; font-family: arial; font-size: 10px; color: #212529; text-align: center;">{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
@@ -119,7 +118,7 @@
 								<td width="50%" style="text-align: left; padding: 8px; border-bottom: 1px solid #dee2e6; font-family: arial; font-size: 10px; color: #212529; text-align: center;">{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
 								<td width="30%" style="text-align: left; padding: 8px; border-bottom: 1px solid #dee2e6; font-family: arial; font-size: 10px; color: #212529; text-align: center;">{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
 							</tr>
-						@else
+						@elseif (@$filter_gender == null && @$filter_empType == null && @$filter_status == null && $filter_age == null)
 							<tr id="prntEmpRow">
 								<td width="20%" style="text-align: left; padding: 8px; border-bottom: 1px solid #dee2e6; font-family: arial; font-size: 10px; color: #212529; text-align: center;">{{ $employee->emp_id }}</td>
 								<td width="50%" style="text-align: left; padding: 8px; border-bottom: 1px solid #dee2e6; font-family: arial; font-size: 10px; color: #212529; text-align: center;">{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
@@ -127,16 +126,15 @@
 							</tr>
 						@endif						
 
-
 					@empty
 						<tr>
-							<td colspan="3">{{ "No registered Employee yet!" }}</td>
+							<td colspan="3" class="text-center">{{ "No registered Employee yet!" }}</td>
 						</tr>
 					@endforelse
 
 					@else
 						<tr>
-							<td colspan="3">{{ "No registered Employee yet!" }}</td>
+							<td colspan="3" class="text-center">{{ "No registered Employee yet!" }}</td>
 						</tr>
 					@endif
 				</tbody>
