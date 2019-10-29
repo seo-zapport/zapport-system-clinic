@@ -36,6 +36,7 @@ class MedicineController extends Controller
 
                 }else{
                     $meds = null;
+                    $printmeds = null;
                 }
                 $search = $request->search;
             }else{
@@ -44,14 +45,13 @@ class MedicineController extends Controller
                 $meds = $rawmeds->paginate(10);
             }
             $gens = Generic::orderBy('gname', 'asc')->get();
-
-             if(count($printmeds)>0){
-                 $resultprint = json_encode($this->PrintMedCSV($printmeds,'index','',''));
-                 $json = json_decode($resultprint, true);
-                 $printtable = $json['original']['printable']; 
-             }
-
-            return view('inventory.medicine.index', compact('meds', 'gens', 'search','printtable'));
+              
+            //dd($printmeds);
+            // if(count(@$printmeds)>0){
+                 $this->PrintMedCSV($printmeds,'index','','');
+           //  }
+            
+            return view('inventory.medicine.index', compact('meds', 'gens', 'search'));
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();
             return back()->with('message', 'You\'re not employee!');
@@ -203,7 +203,7 @@ class MedicineController extends Controller
                     $meds = $fmeds->paginate(10);  
                         
             }else{
-                $fmeds = $rawmeds->orderBy('medicines.id', 'desc');
+                    $fmeds = $rawmeds->orderBy('medicines.id', 'desc');
                     $printmeds = $fmeds->get();
                     $meds = $fmeds->paginate(10);
                 // return $countMeds;
@@ -218,13 +218,13 @@ class MedicineController extends Controller
 
         }
 
+        //dd($printmeds);
+
         $medlogs = ['meds'=> $printmeds, 'countMeds' => $countMeds];
 
-        $resultprint = json_encode($this->PrintMedCSV($medlogs,'logsinput',$medbrand->bname, $generic->gname)); 
-        $json = json_decode($resultprint, true);
-        $printtable = $json['original']['printable'];
+        $this->PrintMedCSV($medlogs,'logsinput',$medbrand->bname, $generic->gname); 
 
-        return view('inventory.medicine.medicine_history', compact('medbrand', 'generic', 'empsMeds', 'arr', 'meds', 'inputDate', 'expDate', 'search_name', 'search_date', 'countMeds','printtable'));
+        return view('inventory.medicine.medicine_history', compact('medbrand', 'generic', 'empsMeds', 'arr', 'meds', 'inputDate', 'expDate', 'search_name', 'search_date', 'countMeds'));
     }
 
     /**
@@ -321,12 +321,10 @@ class MedicineController extends Controller
                 
             }
 
-                 //dd($logs);
-            $resultprint = json_encode($this->PrintMedCSV($printlogs,'viewlogs',$medbrand->bname, $generic->gname)); 
-            $json = json_decode($resultprint, true);
-            $printtable = $json['original']['printable'];
-
-            return view('inventory.medicine.logs', compact('logs', 'medbrand', 'generic', 'log1', 'search', 'loglist', 'logsearch','printtable'));
+               //dd($logs);
+            $this->PrintMedCSV($printlogs,'viewlogs',$medbrand->bname, $generic->gname); 
+    
+            return view('inventory.medicine.logs', compact('logs', 'medbrand', 'generic', 'log1', 'search', 'loglist', 'logsearch'));
         
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();
@@ -334,16 +332,6 @@ class MedicineController extends Controller
         }else{
            return back();
         }
-    }
-
-    public function PrintView() {
-
-       $meds = Medicine::select('brand_id', 'generic_id')->groupBy('brand_id', 'generic_id')->orderBy('id', 'desc')->get();
-
-       //dd($meds);
-
-       return view('inventory.medicine.printmeds')->with('meds' , $meds); 
-
     }
 
     public function PrintMedCSV($meds,$typeprint,$medbrand,$generic){
@@ -355,13 +343,22 @@ class MedicineController extends Controller
 
         $medicine = $meds;
         $typecsv = $typeprint;
-   
+        //dd($meds);   
+        //
+        if($typeprint == 'logsinput'){
+            $countmed = $meds['meds']->count();
+        }else{
+            $countmed = $meds->count();
+        }
+        
+
         $datameds = view('inventory.medicine.csv',compact('medicine','typecsv','medbrand','generic'))->render();
-        $datameds_print = view('inventory.medicine.print_meds',compact('meds','typeprint','medbrand','generic'))->render();
+        $datamedsprint = view('inventory.medicine.printmeds',compact('meds','typeprint','medbrand','generic','countmed'))->render();
 
         $fileName = "inventory_medicine";
-        File::put(public_path('/storage/uploaded/print/'.$fileName.'.csv'),$datameds);   
+        //$medfilename = "Inv_Med";
 
-        return response()->json(array('printable' => $datameds_print ));
+        File::put(public_path('/storage/uploaded/print/'.$fileName.'.csv'),$datameds);   
+        File::put(public_path('/storage/uploaded/print/'.$fileName.'.html'),$datamedsprint);   
     }
 }

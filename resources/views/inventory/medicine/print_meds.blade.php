@@ -111,7 +111,7 @@
 			$medscount = count(@$meds);
 		@endphp
 	@endif
-	<span class="font-weight-bold">Number of Medicines: {{count(@$meds)}}</span>
+	<span class="font-weight-bold">Total of Medicines: {{count(@$meds)}}</span>
 </div>
 <br/>
 

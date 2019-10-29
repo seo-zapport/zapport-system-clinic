@@ -139,7 +139,6 @@ Route::group(['prefix' => 'inventory'], function(){
 	// Medicine
 	Route::get('medicine', 'MedicineController@index')->name('medicine');
 	Route::post('medicine', 'MedicineController@store')->name('medicine.add');
-	Route::get('medicine/PrintView', 'MedicineController@PrintView');
 	Route::get('medicine/PrintMedCSV', 'MedicineController@PrintMedCSV');
 	
 	Route::get('medicine/gen/{id}', 'MedicineController@getBrand');
