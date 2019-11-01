@@ -7,7 +7,6 @@
 @endsection
 @section('dash-content')
 
-
 <form id="empForm" enctype="multipart/form-data" method="post" action="@yield('action', route('hr.emp.addEmp'))">
 	<div class="row">
 		@csrf
@@ -189,7 +188,6 @@
 					@else
 					    @yield('editExp')
 					@endif
-
 
 					<hr>
 					<h5 class="text-muted"><i class="fas fa-user"></i> Personal Data</h5>
