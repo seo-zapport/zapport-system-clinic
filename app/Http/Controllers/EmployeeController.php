@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Employee;
+use App\Position;
 use App\Department;
 use App\DepartmentPosition;
-use App\Employee;
-use App\Http\Requests\EmployeeRequest;
-use App\Position;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\EmployeeRequest;
 
 use File;
 
