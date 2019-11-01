@@ -1,6 +1,7 @@
 @php
 	$headtitle = "Employee List";
 	$headrow = "Employee No.,Name,Department - Position"; 
+	$countemp = 0;
 @endphp
 {{ $headtitle }}
 @if(@$filter_age != null && @$filter_gender != null && @$filter_empType != null && @$filter_status != null )
@@ -38,25 +39,23 @@ Search Keyword : {{ $request->search }}
 {{ $headrow }}
 @if($employees != null)
 @forelse ($employees as $employee)
-@if (@$filter_age != null && $employee->age == @$filter_age)
-{{ $employee->emp_id }},{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }},{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}
-@elseif (@$filter_gender != null && @$filter_empType != null && $filter_age != null && @$employee->age == @$filter_age)
-{{ $employee->emp_id }},{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }},{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}
-@elseif (@$filter_gender != NULL && @$filter_age != null && @$employee->age == @$filter_age)
-{{ $employee->emp_id }},{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }},{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}
-@elseif (@$filter_empType != NULL && @$filter_age != NULL && @$employee->age == @$filter_age)
-{{ $employee->emp_id }},{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }},{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}
-@elseif (@$filter_status != NULL && @$filter_age != null && @$employee->age == @$filter_age && @$employee->civil_status == @$filter_status)
-{{ $employee->emp_id }},{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }},{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}
-@elseif (@$filter_empType != null  && @$filter_status != NULL && @$filter_age != null && @$employee->age == @$filter_age)
-{{ $employee->emp_id }},{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }},{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}
-@elseif (@$filter_gender != NULL && @$filter_status != NULL && @$filter_age != NULL && @$employee->age == @$filter_age)
-{{ $employee->emp_id }},{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }},{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}
-@elseif (@$filter_gender != null && @$filter_empType != null && @$filter_status != null && $filter_age != null && @$employee->age == @$filter_age)
-{{ $employee->emp_id }},{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }},{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}
-@elseif (@$filter_gender == null && @$filter_empType == null && @$filter_status == null && $filter_age == null)
-{{ $employee->emp_id }},{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }},{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}
-@endif	
+@if(@$filter_gender != null && @$filter_empType != null && @$filter_age != null && @$filter_age == @$employee->age && @$filter_status != null ){{ $employee->emp_id }},{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }},{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}@php $countemp++; @endphp
+@elseif(@$filter_gender != null && @$filter_empType != null && @$filter_age != null && @$filter_age == @$employee->age){{ $employee->emp_id }},{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }},{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}	@php $countemp++; @endphp
+@elseif(@$filter_gender != null && @$filter_age != null && @$filter_age == @$employee->age && @$filter_status != null ){{ $employee->emp_id }},{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }},{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}@php $countemp++; @endphp	
+@elseif(@$filter_empType != null && @$filter_age != null && @$filter_age == @$employee->age && @$filter_status != null ){{ $employee->emp_id }},{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }},{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}@php $countemp++; @endphp	
+@elseif(@$filter_gender != null && @$filter_empType != null && @$filter_status != null  && @$filter_age !=null && @$filter_age == @$employee->age){{ $employee->emp_id }},{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }},{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}@php $countemp++; @endphp	
+@elseif(@$filter_gender != null && @$filter_empType != null && @$filter_age == null){{ $employee->emp_id }},{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }},{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}@php $countemp++; @endphp	
+@elseif(@$filter_gender != null && @$filter_status != null && @$filter_age == null && @$filter_age != @$employee->age){{ $employee->emp_id }},{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }},{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}@php $countemp++; @endphp	
+@elseif(@$filter_gender != null && @$filter_age != null && @$filter_age == null){{ $employee->emp_id }},{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }},{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}@php $countemp++; @endphp
+@elseif(@$filter_empType != null && @$filter_age != null && @$filter_age == @$employee->age ){{ $employee->emp_id }},{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }},{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}@php $countemp++; @endphp	
+@elseif(@$filter_age != null && @$filter_age == null && @$filter_age != @$employee->age && @$filter_status != null){{ $employee->emp_id }},{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }},{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}@php $countemp++; @endphp	
+@elseif( @$filter_gender != null && @$filter_age == null && @$filter_age != @$employee->age){{ $employee->emp_id }},{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }},{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}@php $countemp++; @endphp
+@elseif( @$filter_empType != null && @$filter_age == null && @$filter_age != @$employee->age){{ $employee->emp_id }},{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }},{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}@php $countemp++; @endphp
+@elseif(@$filter_age != null && @$filter_age == @$employee->age){{ $employee->emp_id }},{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }},{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}@php $countemp++; @endphp		
+@elseif(@$filter_status != null && @$filter_age == null){{ $employee->emp_id }},{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }},{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}@php $countemp++; @endphp
+@elseif(@$filter_search != null && @$filter_age == null){{ $employee->emp_id }},{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }},{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}@php $countemp++; @endphp	
+@elseif(@$filter_gender == null && @$filter_empType == null && @$filter_age == null && @$filter_status == null ){{ $employee->emp_id }},{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }},{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}@php $countemp++; @endphp
+@endif
 @empty
 {{ "No registered Employee yet!" }}
 @endforelse

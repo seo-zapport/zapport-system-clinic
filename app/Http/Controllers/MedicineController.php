@@ -339,29 +339,53 @@ class MedicineController extends Controller
 
     public function PrintMedCSV($meds,$typeprint,$medbrand,$generic){
 
-        $relPath = 'storage/uploaded/print';
+        $relPath = 'storage/uploaded/print/inventory';
         if (!file_exists($relPath)) {
             mkdir($relPath, 777, true);
         }
 
+        $expired = array();
+        $availmeds = array();
+
+        $explog = $meds;
         $medicine = $meds;
         $typecsv = $typeprint;
-        //dd($meds);   
-        //
+        $fileName = "inventory_medicine";
+        
         if($typeprint == 'logsinput'){
             $countmed = $meds['meds']->count();
         }else{
             $countmed = $meds->count();
         }
-        
+
+        if($typeprint == 'viewlogs'){
+            foreach ($explog as $medlog) {
+                if($medlog->expiration_date <= NOW()){
+                        $expired[] = $medlog;
+                }
+                if($medlog->expiration_date >= NOW()){
+                        $availmeds[] = $medlog;
+                }  
+            }
+
+            $datamedsexpired = view('inventory.medicine.expiredcsv',compact('expired','typecsv','medbrand','generic'))->render();
+            $datamedslog = view('inventory.medicine.logcsv',compact('availmeds','typeprint','medbrand','generic','countmed'))->render();
+
+            File::put(public_path('/storage/uploaded/print/inventory/'.$fileName.'_expired.csv'),$datamedsexpired);   
+            File::put(public_path('/storage/uploaded/print/inventory/'.$fileName.'_log.csv'),$datamedslog);   
+
+            $datamedsprintexp = view('inventory.medicine.printmedsexp',compact('expired','typeprint','medbrand','generic','countmed'))->render();
+            $datamedsprintlog = view('inventory.medicine.printmedslog',compact('availmeds','typeprint','medbrand','generic','countmed'))->render();
+
+            File::put(public_path('/storage/uploaded/print/inventory/'.$fileName.'_printexp.html'),$datamedsprintexp);
+            File::put(public_path('/storage/uploaded/print/inventory/'.$fileName.'_printlog.html'),$datamedsprintlog);
+            
+        }
 
         $datameds = view('inventory.medicine.csv',compact('medicine','typecsv','medbrand','generic'))->render();
         $datamedsprint = view('inventory.medicine.printmeds',compact('meds','typeprint','medbrand','generic','countmed'))->render();
 
-        $fileName = "inventory_medicine";
-        //$medfilename = "Inv_Med";
-
-        File::put(public_path('/storage/uploaded/print/'.$fileName.'.csv'),$datameds);   
-        File::put(public_path('/storage/uploaded/print/'.$fileName.'.html'),$datamedsprint);   
+        File::put(public_path('/storage/uploaded/print/inventory/'.$fileName.'.csv'),$datameds);   
+        File::put(public_path('/storage/uploaded/print/inventory/'.$fileName.'.html'),$datamedsprint);   
     }
 }

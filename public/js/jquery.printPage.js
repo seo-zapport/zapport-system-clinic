@@ -17,6 +17,7 @@
       afterCallback: null,
       beforeCallBack: null,
       urlCallBack: false,
+      debug: true, 
     };
     $.extend(pluginOptions, options);
 

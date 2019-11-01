@@ -63,9 +63,9 @@
 	    
 	@endphp
 	
-	<ul id="printbtn" class="dropdown-menu">
-		<li class="nav-item-btn"><a class="btnPrint" href="#" onclick="clicked()"><i class="fas fa-print text-secondary"></i>PRINT</a></li> 	
-		<li class="nav-item-btn"><a href="{{ asset('storage/uploaded/print/'.$fileName.'.csv')}}" download="{{ $fileName.'.csv'}}" target="_blank"><i class="fas fa-file-csv text-secondary"></i>CSV</a></li>
+	<ul id="printbtndiv" class="dropdown-menu">
+		<li class="nav-item-btn"><a class="btnPrint" href="#"><i class="fas fa-print text-secondary"></i>PRINT</a></li> 	
+		<li class="nav-item-btn"><a href="{{ asset('storage/uploaded/print/employees/'.$fileName.'.csv')}}" download="{{ $fileName.'.csv'}}" target="_blank"><i class="fas fa-file-csv text-secondary"></i>CSV</a></li>
 	</ul>
 </div>
 
@@ -358,7 +358,7 @@
 </div>
 <script type="application/javascript">
 
-	function clicked2(){
+	function clicked(){
 		var iframe = document.getElementById('printable');
 		var WinPrint = window.open('', '', 'left=0,top=0,width=1600,height=1800,toolbar=0,scrollbars=0,status=0');
 		WinPrint.document.write('<html><head>'+'</head><body>'+iframe.innerHTML+'</body></html>');
@@ -379,14 +379,16 @@
 		$("#empCount").html('');
 		$("#empCount").append('<span class="font-weight-bold">Result: '+ countTR +'</span>');
 
-		 //$("#printbtn").find('a.btnPrint').on('click', function() {
-		 	//console.log('dsadasd');
-			  $('a.btnPrint').printPage({
-			   attr: "href",
-			   url: "{{ asset('storage/uploaded/print/employee-print.html') }}",
-			   message:"Your document is being created",
-			 });
-		 //});
+		//jQuery('#printbtndiv').find('.btnPrint').on('click',function(){
+		
+			$('.btnPrint').printPage({ 
+				attr: "href",
+				url: "{{ asset('storage/uploaded/print/employees/employee-print.html') }}",
+				message:"Your document is being created",
+			});
+
+		//});	 
+		
 
 	});
 

@@ -44,6 +44,8 @@ class EmployeeController extends Controller
                 $filter_gender = $request->filter_gender;
                 $empcount =  Employee::where('gender', $request->filter_gender)->get()->count();
 
+
+
             }elseif ($request->filter_gender == NULL && $request->filter_empType != NULL && $request->filter_age == NULL && $request->filter_status == NULL){
 
                 $rawemployees = Employee::where('employee_type', $request->filter_empType)->orderBy('last_name', 'desc');
@@ -159,7 +161,7 @@ class EmployeeController extends Controller
                 $employees2 = Employee::orderBy('last_name', 'desc')->get();
             }
 
-            $emp_age = Employee::get();
+            $emp_age = Employee::orderBY('birthday','desc')->get();
 
 
             //dd($employees2);    
@@ -559,7 +561,6 @@ class EmployeeController extends Controller
             $filter_status = app('request')->input('filter_status'); 
             $filter_search = app('request')->input('search'); 
 
-
             $employees = $emplist;    
             //dd($emplist);
             $dataemp = view('hr.employee.csv',compact('employees','filter_age','filter_gender','filter_empType','filter_status','filter_search'))->render();
@@ -573,25 +574,25 @@ class EmployeeController extends Controller
             }
 
             if($filter_age != null && $filter_gender != null && $filter_empType != null && $filter_status != null ){
-                $fileName = 'employee-'.$gender.'-'.$emptype.'-'.$filter_age.'-'.ucwords($filter_status);
+                $fileName = 'employee-'.$gender.'-'.$emptype.'-'.$filter_age.'-'.$filter_status;
             }elseif($filter_age != null && $filter_gender != null && $filter_empType != null ){
-                 $fileName = 'employee-'.$gender.'-'.$filter_age.'-'.ucwords($filter_status);
+                 $fileName = 'employee-'.$gender.'-'.$filter_age.'-'.$filter_status;
             }elseif($filter_age != null && $filter_gender != null && $filter_status != null ){
-                 $fileName = 'employee-'.$gender.'-'.$filter_age.'-'.ucwords($filter_status);
+                 $fileName = 'employee-'.$gender.'-'.$filter_age.'-'.$filter_status;
             }elseif($filter_age != null && $filter_empType != null && $filter_status != null ){
-                 $fileName = 'employee-'.$filter_age.'-'.$emptype.'-'.ucwords($filter_status);
+                 $fileName = 'employee-'.$filter_age.'-'.$emptype.'-'.$filter_status;
             }elseif($filter_gender != null && $filter_empType != null && $filter_status != null ){
-                 $fileName = 'employee-'.$gender.'-'.$emptype.'-'.ucwords($filter_status);
+                 $fileName = 'employee-'.$gender.'-'.$emptype.'-'.$filter_status;
             }elseif($filter_gender != null && $filter_empType != null){
                  $fileName = 'employee-'.$gender.'-'.$emptype; 
             }elseif($filter_gender != null && $filter_status != null){
-                 $fileName = 'employee-'.$gender.'-'.ucwords($filter_status);
+                 $fileName = 'employee-'.$gender.'-'.$filter_status;
             }elseif($filter_age != null && $filter_gender != null){
                  $fileName = 'employee-'.$gender.'-'.$filter_age; 
             }elseif($filter_age != null && $filter_empType != null){
                  $fileName = 'employee-'.$filter_age.'-'.$emptype; 
             }elseif($filter_age != null && $filter_status != null){
-                 $fileName = 'employee-'.$filter_age.'-'.ucwords($filter_status);
+                 $fileName = 'employee-'.$filter_age.'-'.$filter_status;
             }elseif($filter_age != null){
                  $fileName = 'employee-'.$filter_age;
             }elseif($filter_gender != null){
@@ -599,20 +600,20 @@ class EmployeeController extends Controller
             }elseif($filter_empType != null){
                  $fileName = 'employee-'.$emptype; 
             }elseif($filter_status != null){
-                 $fileName = 'employee-'.ucwords($filter_status);
+                 $fileName = 'employee-'.$filter_status;
             }elseif(@$filter_search != null){
                  $fileName = 'employee'; 
             }else{
                 $fileName ='employee';
             }
                 
-            $relPath = 'storage/uploaded/print';
+            $relPath = 'storage/uploaded/print/employees/';
             if (!file_exists($relPath)) {
                 mkdir($relPath, 777, true);
             }
 
-            File::put(public_path('/storage/uploaded/print/'.$fileName.'.csv'),$dataemp);     
-            File::put(public_path('/storage/uploaded/print/employee-print.html'),$dataemp_print);     
+            File::put(public_path('/storage/uploaded/print/employees/'.$fileName.'.csv'),$dataemp);     
+            File::put(public_path('/storage/uploaded/print/employees/employee-print.html'),$dataemp_print);     
 
         }else{
             return back();
