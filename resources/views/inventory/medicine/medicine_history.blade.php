@@ -15,7 +15,7 @@
 	<h1 class="zp-text">Brand Name: <strong class="zp-color-6b">{{ ucwords($medbrand->bname) }}</strong></h1>
 	<h3 class="zp-text zp-text-16">Generic Name: {{ ucwords($generic->gname) }}</h3>
 </div>
-<form method="get">
+<form id="filter_med_history" method="get">
 	<div class="form-row">
 		<div class="form-group col-md-2">
 			<input type="search" name="search_name" class="form-control" value="{{ (@$search_name != null) ? $search_name : '' }}" placeholder="Search for Names">
@@ -27,6 +27,7 @@
 					<option {{ (@$search_date == $date->medical_date) ? 'selected' : '' }} value="{{ $date->medical_date }}">{{ Carbon\carbon::parse($date->medical_date)->format('M d, Y') }}</option>
 				@endforeach
 			</select>
+			<span id="med_history_search_date" class="d-none text-muted font-weight-bold" style="cursor: pointer">Clear</span>
 		</div>
 		<div class="form-group col-md-2">
 			<button class="btn btn-success">Search</button>

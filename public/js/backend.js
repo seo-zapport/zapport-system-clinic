@@ -527,6 +527,27 @@ jQuery(document).ready(function($){
       $("#empForm select[name='children[0][]']").prop('required', false);
     }
 
-  });  
+  });
+
+// Medicines History_____________________________________________________________________________________________________
+
+  $("#filter_med_history select[name='search_date']").on('change', function(e){
+    var selected = $(this).children('option:selected').val();
+    if (selected) {
+      $("#med_history_search_date").removeClass('d-none');
+    }else{
+      $("#med_history_search_date").addClass('d-none');
+    }
+  });
+
+  $("#filter_med_history #med_history_search_date").on('click', function(e){
+    $("#filter_med_history select[name='search_date']").prop('selectedIndex', 0);
+    $(this).addClass('d-none');
+  });
+
+  var selected_date = $("#filter_med_history select[name='search_date']").val();
+  if (selected_date != null) {
+    $("#med_history_search_date").removeClass('d-none');
+  }
 
 });
