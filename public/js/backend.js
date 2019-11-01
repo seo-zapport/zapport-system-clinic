@@ -550,4 +550,25 @@ jQuery(document).ready(function($){
     $("#med_history_search_date").removeClass('d-none');
   }
 
+// Medicines Logs_____________________________________________________________________________________________________
+
+  $("#meds_log select[name='search']").on('change', function(e){
+    var selected = $(this).children('option:selected').val();
+    if (selected) {
+      $("#med_log_search_date").removeClass('d-none');
+    }else{
+      $("#med_log_search_date").addClass('d-none');
+    }
+  });
+
+  $("#meds_log #med_log_search_date").on('click', function(e){
+    $("#meds_log select[name='search']").prop('selectedIndex', 0);
+    $(this).addClass('d-none');
+  });
+
+  var selected_log_date =  $("#meds_log select[name='search']").val();
+  if (selected_log_date != null) {
+    $("#med_log_search_date").removeClass('d-none');
+  }
+
 });

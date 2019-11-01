@@ -15,7 +15,7 @@
 	<h1 class="zp-text">Brand Name: <strong class="zp-color-6b">{{ ucwords($medbrand->bname) }}</strong></h1>
 	<h3 class="zp-text zp-text-16">Generic Name: {{ ucwords($generic->gname) }}</h3>
 </div>
-<form method="get">
+<form id="meds_log" method="get">
 	<div class="form-row">
 		<div class="form-group col-md-4 mb-0">
 			<select name="search" id="search" class="form-control">
@@ -40,8 +40,9 @@
 					@endforelse
 				@endif
 			</select>
+			<span id="med_log_search_date" class="d-none text-muted font-weight-bold" style="cursor: pointer">Clear</span>
 		</div>
-		<div class="form-group col-md-2 d-inline-flex mb-0">
+		<div class="form-group col-md-2 mb-0">
 			<button type="submit" class="btn btn-success mr-2">Search</button>
 			<a href="{{ route('medicine.log', ['medbrand' => $medbrand->bname, 'generic' => $generic->gname]) }}" class="btn btn-info text-white">Clear</a>
 		</div>

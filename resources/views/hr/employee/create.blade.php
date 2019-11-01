@@ -33,7 +33,7 @@
 			</div>
 			<div class="form-row">
 				<div class="form-group col-md-12">
-					<label for="emp_id">Employee ID <span id="emp_id_warning" class="text-danger d-none">is already taken</span></label>
+					<label for="emp_id">Employee ID <span id="emp_id_warning" class="text-danger font-weight-bold d-none">is already taken</span></label>
 					<input type="text" name="emp_id" value="@yield('editEmpID', old('emp_id'))" class="form-control" placeholder="Employee ID" required oninvalid="this.setCustomValidity('Please Enter Employee ID')" oninput="setCustomValidity('')">
 				</div>
 
