@@ -11,8 +11,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\EmployeeRequest;
+use Illuminate\Support\Facades\Storage;
 
 class EmployeeController extends Controller
 {
