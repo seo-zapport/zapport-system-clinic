@@ -194,7 +194,7 @@ class MedicineController extends Controller
                 $fmeds = $rawmeds->where(\DB::raw('DATE(employeesmedical_medicine_users.created_at)'), $request->search_date)
                              ->orderBy('medicines.id', 'desc');
                       $printmeds = $fmeds->get();
-                      $meds = $fmeds->paginate(10);     
+                      $meds = $fmeds->paginate(10);
             }
             elseif ($request->search_name && $request->search_date) {
                 $search_name = $request->search_name;
@@ -203,7 +203,7 @@ class MedicineController extends Controller
                              ->where(\DB::raw('DATE(employeesmedical_medicine_users.created_at)'), $request->search_date)
                              ->orderBy('medicines.id', 'desc');
                     $printmeds = $fmeds->get();
-                    $meds = $fmeds->paginate(10);  
+                    $meds = $fmeds->paginate(10);
                         
             }else{
                     $fmeds = $rawmeds->orderBy('medicines.id', 'desc');

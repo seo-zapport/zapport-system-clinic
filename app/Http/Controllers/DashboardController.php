@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Diagnosis;
-use App\Employee;
 use App\Generic;
+use App\Employee;
 use App\Medicine;
+use App\Diagnosis;
 use App\Employeesmedical;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

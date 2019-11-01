@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\PostTag;
-use App\Post;
 use App\Tag;
+use App\Post;
+use App\PostTag;
 use Illuminate\Http\Request;
 
 class PostTagController extends Controller

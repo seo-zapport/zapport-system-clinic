@@ -3,15 +3,16 @@
 namespace App\Http\View\Composers;
 
 use Illuminate\View\View;
+use App\Repositories\NotificationRepository;
 
 
 class NotificationComposer
 {
     public $notificationList = [];
     /**
-     * Create a movie composer.
+     * Create a notification composer.
      *
-     *  @param NotificationRepository $movie
+     *  @param NotificationRepository $notification
      *
      * @return void
      */

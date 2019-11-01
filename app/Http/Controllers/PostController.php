@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Tag;
 use App\Post;
 use App\Media;
 use App\Employee;
-use App\Tag;
 use Illuminate\Http\Request;
 use App\Http\Requests\PostRequest;
 use Illuminate\Support\Facades\Gate;
