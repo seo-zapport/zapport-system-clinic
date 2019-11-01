@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Diagnosis;
-use App\Employee;
-use App\Employeesmedical;
-use App\EmployeesmedicalMedicineUser;
-use App\Generic;
-use App\Http\Requests\EmployeesmedicalRequest;
-use App\Medicine;
 use App\Mednote;
+use App\Generic;
+use App\Employee;
+use App\Medicine;
+use App\Diagnosis;
+use App\Employeesmedical;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use App\EmployeesmedicalMedicineUser;
+use App\Http\Requests\EmployeesmedicalRequest;
 
 class EmployeesmedicalController extends Controller
 {
@@ -137,7 +137,6 @@ class EmployeesmedicalController extends Controller
                     $newData->quantity              = $quantity[$c][0];
                     $newData->save();
                 }
-
             }
 
             return back();
@@ -150,7 +149,6 @@ class EmployeesmedicalController extends Controller
             return back();
 
         }
-
     }
 
     /**
@@ -273,7 +271,6 @@ class EmployeesmedicalController extends Controller
                 }
 
                 $search = $empMed->paginate(10);
-
                 $search->appends(['search' => $request->search]);
                 $result = $request->search;
 
@@ -299,7 +296,6 @@ class EmployeesmedicalController extends Controller
             $gen = Generic::find($id);
             $data = array();
             $data['brand_id'] = $gen->medbrand->pluck('bname', 'id');
-
             // $data['id'] = Medicine::where('generic_id', $id)->where('availability', 0)->where('expiration_date', '>', NOW())->count();
             return json_encode($data);
         }elseif (Gate::allows('isBanned')) {
@@ -335,7 +331,6 @@ class EmployeesmedicalController extends Controller
             return back();
         }
     }
-
 
     public function storeFollowup(Request $request, Employee $employee, Employeesmedical $employeesmedical)
     {
@@ -401,7 +396,6 @@ class EmployeesmedicalController extends Controller
                         $newData->quantity = $quantity[$c][0];
                         $newData->save();
                     }
-
                 }
             }
 
