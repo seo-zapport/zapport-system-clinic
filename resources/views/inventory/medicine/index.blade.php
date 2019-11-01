@@ -33,7 +33,7 @@
 				@endphp
 				<ul class="dropdown-menu">
 					 <li class="nav-item-btn"><a class="btnPrint" href="#"><i class="fas fa-print text-secondary"></i>PRINT</a></li> 
-					 <li class="nav-item-btn"><a href="{{ asset('storage/uploaded/print/inventory_medicine.csv')}}" download="{{ @$fileName.'.csv'}}" target="_blank"><i class="fas fa-file-csv text-secondary"></i>CSV</a></li>
+					 <li class="nav-item-btn"><a href="{{ asset('storage/uploaded/print/inventory/inventory_medicine.csv')}}" download="{{ @$fileName.'.csv'}}" target="_blank"><i class="fas fa-file-csv text-secondary"></i>CSV</a></li>
 				</ul>
 			</div>
 		</div>
@@ -148,7 +148,7 @@
 		$("#medTotal").append('<span class="font-weight-bold">Result: '+ countTR +'</span>');
 
 		 $('.btnPrint').printPage({
-		  url: "{{ asset('storage/uploaded/print/inventory_medicine.html') }}",
+		  url: "{{ asset('storage/uploaded/print/inventory/inventory_medicine.html') }}",
 		  attr: "href",
 		  message:"Your document is being created"
 		});

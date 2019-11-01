@@ -35,10 +35,12 @@
 		<h3>Generic Name: <strong class="zp-color-6b">{{$generic}}</strong></h3>
 	@endif
 @endif
+
+
 <div class="table-responsive">
 	<table id="medTable" class="table table-hover">
 	 @php 
-	 	$i = 0;
+	 	$i =0;
 	 	if(@$typeprint == "viewlogs"){ 
 	 @endphp
 	   	<thead>
@@ -50,7 +52,7 @@
 	   		<th>Input by</th>
 	   	</thead>
 	   	<tbody>
-	   		@forelse ($meds as $log)
+	   		@forelse ($availmeds as $log)
 	   			<tr class="medTR">
 	   				<td>
 	   				{{ Carbon\carbon::parse($log->formatted_at)->format('m/d/Y') }}
@@ -81,59 +83,6 @@
 	   				</tr>
 	   		@endforelse
 	   	</tbody>	
-
-	@php 
-		}elseif(@$typeprint == "logsinput"){ 
-	@endphp
-		<thead>
-			<th>Date Taken</th>
-			<th>Name</th>
-			<th>No. of medicine</th>
-			<th>Given by</th>
-		</thead>
-		<tbody>
-		@forelse (@$meds['meds'] as $med)
-		<tr>
-			<td>{{ $med->Distinct_date->format('m/d/Y - h:i a') }}</td>
-			<td>{{ $med->last_name }} {{ $med->first_name }}</td>
-			<td>{{ $meds['countMeds']->where('empMeds_id', $med->empMeds_id)->where('patient', $med->patient)->where('distinct_user_id', $med->distinct_user_id)->where('Distinct_date', $med->Distinct_date)->count() }}</td>
-			<td>{{ $med->givenLname }} {{ $med->givenFname }}</td>
-		</tr>
-		@php $i++; @endphp
-		@empty
-		<tr>
-			<td colspan="4" class="text-center">No Records Yet!</td>
-		</tr>
-		@endforelse
-		</tbody>
-
-	@php }else{ @endphp
-		<thead >
-			<th>Generic Name</th>
-			<th>Brand Name</th>
-			<th>Remaining Quantity</th>
-		</thead>
-		<tbody>
-			@if ($meds != null)		
-			@forelse ($meds as $med)
-				<tr class="medTR">
-					<td>{{ ucfirst($med->generic->gname) }}</td>
-					<td>{{ ucwords($med->medBrand->bname) }}</td>
-					<td>{{ $med->where('generic_id', $med->generic_id)->where('brand_id', $med->brand_id)->where('availability', 0)->where('expiration_date', '>', NOW())->count() }}</td>
-				</tr>
-		    	@php $i++; @endphp
-				@empty
-					<tr>
-						<td colspan="3" class="text-center">{{ "No registered Medicine yet!" }}</td>
-					</tr>
-
-			@endforelse
-			@else
-				<tr>
-					<td colspan="3" class="text-center">{{ "No Record Found!" }}</td>
-				</tr>
-			@endif
-		</tbody>
 	@php } @endphp
 	</table>			
 </div>

@@ -16,7 +16,8 @@
       message: "Please wait while we create your document" ,
       afterCallback: null,
       beforeCallBack: null,
-      urlCallBack: false
+      urlCallBack: false,
+      debug: true, 
     };
     $.extend(pluginOptions, options);
 
@@ -71,7 +72,7 @@
 
         if(!$('#printPage')[0]){
           $("body").append(components.iframe(url));
-          $('#printPage').on("load",function() {  printit(pluginOptions);  });
+          $('#printPage').bind("load",function() {  printit(pluginOptions);  });
         }else{
           $('#printPage').attr("src", url);
         }

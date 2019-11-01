@@ -18,6 +18,11 @@
 <div id="printable">
 	<div class="text-center">	
 		<img src="{{url( '/images/logo.png' )}}" alt="Zapport" style="display: block; margin:auto; width: 200px">
+		<div style="margin-top: 20px; margin-bottom: 20px;">
+		<p class="text-center" style="line-height:0px;">14/F UNIT 14-G BURGUNDY CORPORATE TOWER</p>
+		<p class="text-center" style="line-height:0px;">Sen Gil Puyat Ave., San Lorenzo</p>
+		<p class="text-center" style="line-height:0px;">Makati City Philippines</p>
+		</div>
 	</div>
 	<div class="container-fluid">
 		<div class="row">
@@ -52,14 +57,17 @@
 						Filter by Employee Type: {{ (@$filter_empType == 0) ? 'Probationary Employee' : 'Regular Employee' }}
 					@elseif(@$filter_status != null)
 						Filter by Civil Status: {{ ucwords(ucwords(app('request')->input('filter_status'))) }}
-					@elseif(@$request->search != null)
-						Search Keyword : {{ $request->search }}
+					@elseif(@$filter_search != null)
+						Search Keyword : {{ $filter_search }}
 					@else
 						
 					@endif
 				</p>
 			</div>		
 		</div>
+		@php
+			$countemp = 0;
+		@endphp
 		<div class="table-responsive">
 			<table id="prntEmpCount" class="table">
 				<thead  style="text-align: center;">
@@ -69,74 +77,161 @@
 				</thead>
 				<tbody>
 					@if($emplist != null)
-						
 					@forelse ($emplist as $employee)
-						@if (@$filter_age != NULL && @$employee->age == @$filter_age)
-							<tr id="prntEmpRow">
-								<td width="20%" style="text-align: left; padding: 8px; border-bottom: 1px solid #dee2e6; font-family: arial; font-size: 10px; color: #212529; text-align: center;">{{ $employee->emp_id }}</td>
-								<td width="50%" style="text-align: left; padding: 8px; border-bottom: 1px solid #dee2e6; font-family: arial; font-size: 10px; color: #212529; text-align: center;">{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
-								<td width="30%" style="text-align: left; padding: 8px; border-bottom: 1px solid #dee2e6; font-family: arial; font-size: 10px; color: #212529; text-align: center;">{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
-							</tr>
-						@elseif (@$filter_gender != null && @$filter_empType != null && $filter_age != null && @$employee->age == @$filter_age)
-							<tr id="prntEmpRow">
-								<td width="20%" style="text-align: left; padding: 8px; border-bottom: 1px solid #dee2e6; font-family: arial; font-size: 10px; color: #212529; text-align: center;">{{ $employee->emp_id }}</td>
-								<td width="50%" style="text-align: left; padding: 8px; border-bottom: 1px solid #dee2e6; font-family: arial; font-size: 10px; color: #212529; text-align: center;">{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
-								<td width="30%" style="text-align: left; padding: 8px; border-bottom: 1px solid #dee2e6; font-family: arial; font-size: 10px; color: #212529; text-align: center;">{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
-							</tr>
-						@elseif (@$filter_gender != NULL && @$filter_age != null && @$employee->age == @$filter_age)
-							<tr id="prntEmpRow">
-								<td width="20%" style="text-align: left; padding: 8px; border-bottom: 1px solid #dee2e6; font-family: arial; font-size: 10px; color: #212529; text-align: center;">{{ $employee->emp_id }}</td>
-								<td width="50%" style="text-align: left; padding: 8px; border-bottom: 1px solid #dee2e6; font-family: arial; font-size: 10px; color: #212529; text-align: center;">{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
-								<td width="30%" style="text-align: left; padding: 8px; border-bottom: 1px solid #dee2e6; font-family: arial; font-size: 10px; color: #212529; text-align: center;">{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
-							</tr>
-						@elseif (@$filter_empType != NULL && @$filter_age != NULL && @$employee->age == @$filter_age)
-							<tr id="prntEmpRow">
-								<td width="20%" style="text-align: left; padding: 8px; border-bottom: 1px solid #dee2e6; font-family: arial; font-size: 10px; color: #212529; text-align: center;">{{ $employee->emp_id }}</td>
-								<td width="50%" style="text-align: left; padding: 8px; border-bottom: 1px solid #dee2e6; font-family: arial; font-size: 10px; color: #212529; text-align: center;">{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
-								<td width="30%" style="text-align: left; padding: 8px; border-bottom: 1px solid #dee2e6; font-family: arial; font-size: 10px; color: #212529; text-align: center;">{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
-							</tr>
-						@elseif (@$filter_status != NULL && @$filter_age != null && @$employee->age == @$filter_age && @$employee->civil_status == @$filter_status)
-							<tr id="prntEmpRow">
-								<td width="20%" style="text-align: left; padding: 8px; border-bottom: 1px solid #dee2e6; font-family: arial; font-size: 10px; color: #212529; text-align: center;">{{ $employee->emp_id }}</td>
-								<td width="50%" style="text-align: left; padding: 8px; border-bottom: 1px solid #dee2e6; font-family: arial; font-size: 10px; color: #212529; text-align: center;">{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
-								<td width="30%" style="text-align: left; padding: 8px; border-bottom: 1px solid #dee2e6; font-family: arial; font-size: 10px; color: #212529; text-align: center;">{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
-							</tr>
-						@elseif (@$filter_empType != null  && @$filter_status != NULL && @$filter_age != null && @$employee->age == @$filter_age)
-							<tr id="prntEmpRow">
-								<td width="20%" style="text-align: left; padding: 8px; border-bottom: 1px solid #dee2e6; font-family: arial; font-size: 10px; color: #212529; text-align: center;">{{ $employee->emp_id }}</td>
-								<td width="50%" style="text-align: left; padding: 8px; border-bottom: 1px solid #dee2e6; font-family: arial; font-size: 10px; color: #212529; text-align: center;">{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
-								<td width="30%" style="text-align: left; padding: 8px; border-bottom: 1px solid #dee2e6; font-family: arial; font-size: 10px; color: #212529; text-align: center;">{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
-							</tr>
-						@elseif (@$filter_gender != NULL && @$filter_status != NULL && @$filter_age != NULL && @$employee->age == @$filter_age)
-							<tr id="prntEmpRow">
-								<td width="20%" style="text-align: left; padding: 8px; border-bottom: 1px solid #dee2e6; font-family: arial; font-size: 10px; color: #212529; text-align: center;">{{ $employee->emp_id }}</td>
-								<td width="50%" style="text-align: left; padding: 8px; border-bottom: 1px solid #dee2e6; font-family: arial; font-size: 10px; color: #212529; text-align: center;">{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
-								<td width="30%" style="text-align: left; padding: 8px; border-bottom: 1px solid #dee2e6; font-family: arial; font-size: 10px; color: #212529; text-align: center;">{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
-							</tr>
-						@elseif (@$filter_gender != null && @$filter_empType != null && @$filter_status != null && $filter_age != null && @$employee->age == @$filter_age)
-							<tr id="prntEmpRow">
-								<td width="20%" style="text-align: left; padding: 8px; border-bottom: 1px solid #dee2e6; font-family: arial; font-size: 10px; color: #212529; text-align: center;">{{ $employee->emp_id }}</td>
-								<td width="50%" style="text-align: left; padding: 8px; border-bottom: 1px solid #dee2e6; font-family: arial; font-size: 10px; color: #212529; text-align: center;">{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
-								<td width="30%" style="text-align: left; padding: 8px; border-bottom: 1px solid #dee2e6; font-family: arial; font-size: 10px; color: #212529; text-align: center;">{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
-							</tr>
-						@else
-							<tr id="prntEmpRow">
-								<td width="20%" style="text-align: left; padding: 8px; border-bottom: 1px solid #dee2e6; font-family: arial; font-size: 10px; color: #212529; text-align: center;">{{ $employee->emp_id }}</td>
-								<td width="50%" style="text-align: left; padding: 8px; border-bottom: 1px solid #dee2e6; font-family: arial; font-size: 10px; color: #212529; text-align: center;">{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
-								<td width="30%" style="text-align: left; padding: 8px; border-bottom: 1px solid #dee2e6; font-family: arial; font-size: 10px; color: #212529; text-align: center;">{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
-							</tr>
-						@endif						
-
-
+					@if(@$filter_gender != null && @$filter_empType != null && @$filter_age != null && @$filter_age == @$employee->age && @$filter_status != null )
+						<tr id="prntEmpRow">
+							<td width="20%" style="padding: 8px; border-bottom: 1px solid #dee2e6; text-align: center;">{{ $employee->emp_id }}</td>
+							<td width="50%" style="padding: 8px; border-bottom: 1px solid #dee2e6; text-align: center;">{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
+							<td width="30%" style="padding: 8px; border-bottom: 1px solid #dee2e6; text-align: center;">{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
+						</tr>
+						@php 
+							$countemp++;
+						@endphp
+					@elseif(@$filter_gender != null && @$filter_empType != null && @$filter_age != null && @$filter_age == @$employee->age)
+						<tr id="prntEmpRow">
+							<td width="20%" style="padding: 8px; border-bottom: 1px solid #dee2e6; text-align: center;">{{ $employee->emp_id }}</td>
+							<td width="50%" style="padding: 8px; border-bottom: 1px solid #dee2e6; text-align: center;">{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
+							<td width="30%" style="padding: 8px; border-bottom: 1px solid #dee2e6; text-align: center;">{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
+						</tr>
+						@php 
+							$countemp++;
+						@endphp	
+					@elseif(@$filter_gender != null && @$filter_age != null && @$filter_age == @$employee->age && @$filter_status != null )
+						<tr id="prntEmpRow">
+							<td width="20%" style="padding: 8px; border-bottom: 1px solid #dee2e6; text-align: center;">{{ $employee->emp_id }}</td>
+							<td width="50%" style="padding: 8px; border-bottom: 1px solid #dee2e6; text-align: center;">{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
+							<td width="30%" style="padding: 8px; border-bottom: 1px solid #dee2e6; text-align: center;">{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
+						</tr>
+						@php 
+							$countemp++;
+						@endphp	
+					@elseif(@$filter_empType != null && @$filter_age != null && @$filter_age == @$employee->age && @$filter_status != null )
+						<tr id="prntEmpRow">
+							<td width="20%" style="padding: 8px; border-bottom: 1px solid #dee2e6; text-align: center;">{{ $employee->emp_id }}</td>
+							<td width="50%" style="padding: 8px; border-bottom: 1px solid #dee2e6; text-align: center;">{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
+							<td width="30%" style="padding: 8px; border-bottom: 1px solid #dee2e6; text-align: center;">{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
+						</tr>
+						@php 
+							$countemp++;
+						@endphp	
+					@elseif(@$filter_gender != null && @$filter_empType != null && @$filter_status != null  && @$filter_age !=null && @$filter_age == @$employee->age)
+						<tr id="prntEmpRow">
+							<td width="20%" style="padding: 8px; border-bottom: 1px solid #dee2e6; text-align: center;">{{ $employee->emp_id }}</td>
+							<td width="50%" style="padding: 8px; border-bottom: 1px solid #dee2e6; text-align: center;">{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
+							<td width="30%" style="padding: 8px; border-bottom: 1px solid #dee2e6; text-align: center;">{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
+						</tr>
+						@php 
+							$countemp++;
+						@endphp	
+					@elseif(@$filter_gender != null && @$filter_empType != null && @$filter_age == null)
+						<tr id="prntEmpRow">
+							<td width="20%" style="padding: 8px; border-bottom: 1px solid #dee2e6; text-align: center;">{{ $employee->emp_id }}</td>
+							<td width="50%" style="padding: 8px; border-bottom: 1px solid #dee2e6; text-align: center;">{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
+							<td width="30%" style="padding: 8px; border-bottom: 1px solid #dee2e6; text-align: center;">{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
+						</tr>
+						@php 
+							$countemp++;
+						@endphp	
+					@elseif(@$filter_gender != null && @$filter_status != null && @$filter_age == null && @$filter_age != @$employee->age)
+						<tr id="prntEmpRow">
+							<td width="20%" style="padding: 8px; border-bottom: 1px solid #dee2e6; text-align: center;">{{ $employee->emp_id }}</td>
+							<td width="50%" style="padding: 8px; border-bottom: 1px solid #dee2e6; text-align: center;">{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
+							<td width="30%" style="padding: 8px; border-bottom: 1px solid #dee2e6; text-align: center;">{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
+						</tr>
+						@php 
+							$countemp++;
+						@endphp	
+					@elseif(@$filter_gender != null && @$filter_age != null && @$filter_age == null)
+						<tr id="prntEmpRow">
+							<td width="20%" style="padding: 8px; border-bottom: 1px solid #dee2e6; text-align: center;">{{ $employee->emp_id }}</td>
+							<td width="50%" style="padding: 8px; border-bottom: 1px solid #dee2e6; text-align: center;">{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
+							<td width="30%" style="padding: 8px; border-bottom: 1px solid #dee2e6; text-align: center;">{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
+						</tr>
+						@php 
+							$countemp++;
+						@endphp
+					@elseif(@$filter_empType != null && @$filter_age != null && @$filter_age == @$employee->age )
+						<tr id="prntEmpRow">
+							<td width="20%" style="padding: 8px; border-bottom: 1px solid #dee2e6; text-align: center;">{{ $employee->emp_id }}</td>
+							<td width="50%" style="padding: 8px; border-bottom: 1px solid #dee2e6; text-align: center;">{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
+							<td width="30%" style="padding: 8px; border-bottom: 1px solid #dee2e6; text-align: center;">{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
+						</tr>
+						@php 
+							$countemp++;
+						@endphp	
+					@elseif(@$filter_age != null && @$filter_age == null && @$filter_age != @$employee->age && @$filter_status != null)
+						<tr id="prntEmpRow">
+							<td width="20%" style="padding: 8px; border-bottom: 1px solid #dee2e6; text-align: center;">{{ $employee->emp_id }}</td>
+							<td width="50%" style="padding: 8px; border-bottom: 1px solid #dee2e6; text-align: center;">{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
+							<td width="30%" style="padding: 8px; border-bottom: 1px solid #dee2e6; text-align: center;">{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
+						</tr>
+						@php 
+							$countemp++;
+						@endphp	
+					@elseif( @$filter_gender != null && @$filter_age == null && @$filter_age != @$employee->age)
+						<tr id="prntEmpRow">
+							<td width="20%" style="padding: 8px; border-bottom: 1px solid #dee2e6; text-align: center;">{{ $employee->emp_id }}</td>
+							<td width="50%" style="padding: 8px; border-bottom: 1px solid #dee2e6; text-align: center;">{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
+							<td width="30%" style="padding: 8px; border-bottom: 1px solid #dee2e6; text-align: center;">{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
+						</tr>
+						@php 
+							$countemp++;
+						@endphp
+					@elseif( @$filter_empType != null && @$filter_age == null && @$filter_age != @$employee->age)
+						<tr id="prntEmpRow">
+							<td width="20%" style="padding: 8px; border-bottom: 1px solid #dee2e6; text-align: center;">{{ $employee->emp_id }}</td>
+							<td width="50%" style="padding: 8px; border-bottom: 1px solid #dee2e6; text-align: center;">{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
+							<td width="30%" style="padding: 8px; border-bottom: 1px solid #dee2e6; text-align: center;">{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
+						</tr>
+						@php 
+							$countemp++;
+						@endphp
+					@elseif(@$filter_age != null && @$filter_age == @$employee->age)
+						<tr id="prntEmpRow">
+							<td width="20%" style="padding: 8px; border-bottom: 1px solid #dee2e6; text-align: center;">{{ $employee->emp_id }}</td>
+							<td width="50%" style="padding: 8px; border-bottom: 1px solid #dee2e6; text-align: center;">{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
+							<td width="30%" style="padding: 8px; border-bottom: 1px solid #dee2e6; text-align: center;">{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
+						</tr>
+						@php 
+							$countemp++;
+						@endphp		
+					@elseif(@$filter_status != null && @$filter_age == null)
+						<tr id="prntEmpRow">
+							<td width="20%" style="padding: 8px; border-bottom: 1px solid #dee2e6; text-align: center;">{{ $employee->emp_id }}</td>
+							<td width="50%" style="padding: 8px; border-bottom: 1px solid #dee2e6; text-align: center;">{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
+							<td width="30%" style="padding: 8px; border-bottom: 1px solid #dee2e6; text-align: center;">{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
+						</tr>
+						@php 
+							$countemp++;
+						@endphp
+					@elseif(@$filter_search != null && @$filter_age == null)
+						<tr id="prntEmpRow">
+							<td width="20%" style="padding: 8px; border-bottom: 1px solid #dee2e6; text-align: center;">{{ $employee->emp_id }}</td>
+							<td width="50%" style="padding: 8px; border-bottom: 1px solid #dee2e6; text-align: center;">{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
+							<td width="30%" style="padding: 8px; border-bottom: 1px solid #dee2e6; text-align: center;">{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
+						</tr>
+						@php 
+							$countemp++;
+						@endphp	
+					@elseif(@$filter_gender == null && @$filter_empType == null && @$filter_age == null && @$filter_status == null )
+						<tr id="prntEmpRow">
+							<td width="20%" style="padding: 8px; border-bottom: 1px solid #dee2e6; text-align: center;">{{ $employee->emp_id }}</td>
+							<td width="50%" style="padding: 8px; border-bottom: 1px solid #dee2e6; text-align: center;">{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
+							<td width="30%" style="padding: 8px; border-bottom: 1px solid #dee2e6; text-align: center;">{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
+						</tr>
+						@php 
+							$countemp++;
+						@endphp
+					@endif
 					@empty
 						<tr>
-							<td colspan="3">{{ "No registered Employee yet!" }}</td>
+							<td colspan="3" class="text-center" style="padding: 8px; border-bottom: 1px solid #dee2e6;">{{ "No registered Employee yet!" }}</td>
 						</tr>
 					@endforelse
 
 					@else
 						<tr>
-							<td colspan="3">{{ "No registered Employee yet!" }}</td>
+							<td colspan="3" class="text-center" style="padding: 8px; border-bottom: 1px solid #dee2e6;">{{ "No registered Employee yet!" }}</td>
 						</tr>
 					@endif
 				</tbody>
@@ -144,7 +239,7 @@
 		</div>
 	</div>
 	<div style="margin-top: 20px">
-		<p id="prntEmpRslt" style="font-family: arial; font-size: 10px; color: #212529;">Total number of employees: {{ count(@$emplist)}}</p>
+		<p id="prntEmpRslt" style="font-family: arial; font-size: 10px; color: #212529;">Total number of employees: {{ @$countemp }}</p>
 		@if (Auth::user()->employee != null)
 		<p style="font-family: arial; font-size: 10px; color: #212529; float: right; margin-top: 30px;">Printed by: <span>{{ Auth::user()->employee->first_name }} {{ Auth::user()->employee->last_name }} {{ Auth::user()->employee->middle_name }}</span></p>
 		@endif

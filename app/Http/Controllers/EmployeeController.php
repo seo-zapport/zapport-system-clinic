@@ -2,17 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use File;
-use App\Position;
-use App\Employee;
 use App\Department;
 use App\DepartmentPosition;
+use App\Employee;
+use App\Http\Requests\EmployeeRequest;
+use App\Position;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-use App\Http\Requests\EmployeeRequest;
 use Illuminate\Support\Facades\Storage;
+
+use File;
 
 class EmployeeController extends Controller
 {
@@ -42,6 +43,8 @@ class EmployeeController extends Controller
                 $employees = $rawemployees->paginate(10)->appends(['filter_gender' => $request->filter_gender]);
                 $filter_gender = $request->filter_gender;
                 $empcount =  Employee::where('gender', $request->filter_gender)->get()->count();
+
+
 
             }elseif ($request->filter_gender == NULL && $request->filter_empType != NULL && $request->filter_age == NULL && $request->filter_status == NULL){
 
@@ -76,7 +79,7 @@ class EmployeeController extends Controller
             }elseif ($request->filter_gender != NULL && $request->filter_empType == NULL && $request->filter_age != NULL && $request->filter_status == NULL){
 
                 $rawemployees = Employee::where('gender', $request->filter_gender)->orderBy('last_name', 'desc');
-                $employees2 = $rawemployee->get();
+                $employees2 = $rawemployees->get();
                 $employees = $rawemployees->paginate(10)->appends(['filter_gender' => $request->filter_gender, 'filter_age' => $request->filter_age]);
                 $filter_g_a = ['gender' => $request->filter_gender, 'age' => $request->filter_age];
                 $empcount =  Employee::where('gender', $request->filter_gender)->get()->count();
@@ -158,18 +161,21 @@ class EmployeeController extends Controller
                 $employees2 = Employee::orderBy('last_name', 'desc')->get();
             }
 
-            $emp_age = Employee::get();
+            $emp_age = Employee::orderBY('birthday','desc')->get();
+
 
             //dd($employees2);    
 
             if(count($employees2)>0){
                 $this->printCsv($employees2); 
             }else{
-                $this->printCsv(null);
+                $this->printCsv(null);  
             }
+
 
             return view('hr.employee.index', compact('employees', 'search', 'empcount', 'filter_gender', 'filter_empType', 'filter_both', 'filter_age', 'filter_all', 'emp_age', 'filter_g_a', 'filter_e_a', 'filter_status', 'filter_g_s', 'filter_t_s', 'filter_s_a', 'filter_g_t_s', 'filter_t_a_s', 'filter_g_a_s', 'filter_super'))
             ->nest('print', 'hr.employee.print_emps', compact('employees2', 'search', 'empcount', 'filter_gender', 'filter_empType', 'filter_both', 'filter_age', 'filter_all', 'emp_age', 'filter_g_a', 'filter_e_a', 'filter_status', 'filter_g_s', 'filter_t_s', 'filter_s_a', 'filter_g_t_s', 'filter_t_a_s', 'filter_g_a_s', 'filter_super'));
+
 
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();
@@ -544,72 +550,74 @@ class EmployeeController extends Controller
         }
     }
 
+
     public function printCsv($emplist){
 
         if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
-
+    
             $filter_age = app('request')->input('filter_age');
             $filter_gender = app('request')->input('filter_gender');
-            $filter_empType = app('request')->input('filter_empType');
-            $filter_status = app('request')->input('filter_status');
+            $filter_empType = app('request')->input('filter_empType'); 
+            $filter_status = app('request')->input('filter_status'); 
+            $filter_search = app('request')->input('search'); 
 
-            $employees = $emplist;
+            $employees = $emplist;    
             //dd($emplist);
-            $dataemp = view('hr.employee.csv',compact('employees','filter_age','filter_gender','filter_empType','filter_status'))->render();
-            $dataemp_print = view('hr.employee.printemps',compact('emplist','filter_age','filter_gender','filter_empType','filter_status'))->render();
+            $dataemp = view('hr.employee.csv',compact('employees','filter_age','filter_gender','filter_empType','filter_status','filter_search'))->render();
+            $dataemp_print = view('hr.employee.printemps',compact('emplist','filter_age','filter_gender','filter_empType','filter_status','filter_search'))->render();
 
             if($filter_gender != null){
                 $gender = (app('request')->input('filter_gender') == 0) ? "male": "female";
             }
             if($filter_empType != null){
-                $emptype = (app('request')->input('filter_empType') == 0) ? "probationary" : "regular";
+                $emptype = (app('request')->input('filter_empType') == 0) ? "probationary" : "regular"; 
             }
 
             if($filter_age != null && $filter_gender != null && $filter_empType != null && $filter_status != null ){
-                $fileName = 'employee-'.$gender.'-'.$emptype.'-'.$filter_age.'-'.ucwords($filter_status);
+                $fileName = 'employee-'.$gender.'-'.$emptype.'-'.$filter_age.'-'.$filter_status;
             }elseif($filter_age != null && $filter_gender != null && $filter_empType != null ){
-                 $fileName = 'employee-'.$gender.'-'.$filter_age.'-'.ucwords($filter_status);
+                 $fileName = 'employee-'.$gender.'-'.$filter_age.'-'.$filter_status;
             }elseif($filter_age != null && $filter_gender != null && $filter_status != null ){
-                 $fileName = 'employee-'.$gender.'-'.$filter_age.'-'.ucwords($filter_status);
+                 $fileName = 'employee-'.$gender.'-'.$filter_age.'-'.$filter_status;
             }elseif($filter_age != null && $filter_empType != null && $filter_status != null ){
-                 $fileName = 'employee-'.$filter_age.'-'.$emptype.'-'.ucwords($filter_status);
+                 $fileName = 'employee-'.$filter_age.'-'.$emptype.'-'.$filter_status;
             }elseif($filter_gender != null && $filter_empType != null && $filter_status != null ){
-                 $fileName = 'employee-'.$gender.'-'.$emptype.'-'.ucwords($filter_status);
+                 $fileName = 'employee-'.$gender.'-'.$emptype.'-'.$filter_status;
             }elseif($filter_gender != null && $filter_empType != null){
-                 $fileName = 'employee-'.$gender.'-'.$emptype;
+                 $fileName = 'employee-'.$gender.'-'.$emptype; 
             }elseif($filter_gender != null && $filter_status != null){
-                 $fileName = 'employee-'.$gender.'-'.ucwords($filter_status);
+                 $fileName = 'employee-'.$gender.'-'.$filter_status;
             }elseif($filter_age != null && $filter_gender != null){
-                 $fileName = 'employee-'.$gender.'-'.$filter_age;
+                 $fileName = 'employee-'.$gender.'-'.$filter_age; 
             }elseif($filter_age != null && $filter_empType != null){
-                 $fileName = 'employee-'.$filter_age.'-'.$emptype;
+                 $fileName = 'employee-'.$filter_age.'-'.$emptype; 
             }elseif($filter_age != null && $filter_status != null){
-                 $fileName = 'employee-'.$filter_age.'-'.ucwords($filter_status);
+                 $fileName = 'employee-'.$filter_age.'-'.$filter_status;
             }elseif($filter_age != null){
                  $fileName = 'employee-'.$filter_age;
             }elseif($filter_gender != null){
-                 $fileName = 'employee-'.$gender;
+                 $fileName = 'employee-'.$gender; 
             }elseif($filter_empType != null){
-                 $fileName = 'employee-'.$emptype;
+                 $fileName = 'employee-'.$emptype; 
             }elseif($filter_status != null){
-                 $fileName = 'employee-'.ucwords($filter_status);
-            }elseif(@$request->search != null){
-                 $fileName = 'employee-'.@$request->search;
+                 $fileName = 'employee-'.$filter_status;
+            }elseif(@$filter_search != null){
+                 $fileName = 'employee'; 
             }else{
                 $fileName ='employee';
             }
-
-            $relPath = 'storage/uploaded/print';
+                
+            $relPath = 'storage/uploaded/print/employees/';
             if (!file_exists($relPath)) {
                 mkdir($relPath, 777, true);
             }
 
-            File::put(public_path('/storage/uploaded/print/'.$fileName.'.csv'),$dataemp);
-            File::put(public_path('/storage/uploaded/print/employee-print.html'),$dataemp_print);
+            File::put(public_path('/storage/uploaded/print/employees/'.$fileName.'.csv'),$dataemp);     
+            File::put(public_path('/storage/uploaded/print/employees/employee-print.html'),$dataemp_print);     
 
         }else{
             return back();
         }
-
+        
     }
 }

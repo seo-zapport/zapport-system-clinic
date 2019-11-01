@@ -63,9 +63,9 @@
 	    
 	@endphp
 	
-	<ul class="dropdown-menu">
+	<ul id="printbtndiv" class="dropdown-menu">
 		<li class="nav-item-btn"><a class="btnPrint" href="#"><i class="fas fa-print text-secondary"></i>PRINT</a></li> 	
-		<li class="nav-item-btn"><a href="{{ asset('storage/uploaded/print/'.$fileName.'.csv')}}" download="{{ $fileName.'.csv'}}" target="_blank"><i class="fas fa-file-csv text-secondary"></i>CSV</a></li>
+		<li class="nav-item-btn"><a href="{{ asset('storage/uploaded/print/employees/'.$fileName.'.csv')}}" download="{{ $fileName.'.csv'}}" target="_blank"><i class="fas fa-file-csv text-secondary"></i>CSV</a></li>
 	</ul>
 </div>
 
@@ -261,10 +261,16 @@
 					<th>Action</th>
 				</thead>
 				<tbody>
-
 					<div id="empCount"></div>
 					@forelse ($employees as $employee)
-						@if (@$filter_age != NULL && @$employee->age == @$filter_age)
+						@if(@$filter_search != null)
+							<tr id="empRow">
+								<td>{{ $employee->emp_id }}</td>
+								<td>{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
+								<td>{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
+								<td> <a href="{{ route('hr.emp.show', ['employee' => $employee->emp_id]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i>View</a></td>
+							</tr>
+						@elseif (@$filter_age != NULL && @$employee->age == @$filter_age)
 							<tr id="empRow">
 								<td>{{ $employee->emp_id }}</td>
 								<td>{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}</td>
@@ -362,6 +368,7 @@
 		WinPrint.close();
 	}
 
+
 	jQuery(document).ready(function($){
 
 		jQuery(window).on('hashchange', function(e){
@@ -372,11 +379,16 @@
 		$("#empCount").html('');
 		$("#empCount").append('<span class="font-weight-bold">Result: '+ countTR +'</span>');
 
-		 $('.btnPrint').printPage({
-		  url: "{{ asset('storage/uploaded/print/employee-print.html') }}",
-		  attr: "href",
-		  message:"Your document is being created"
-		});
+		//jQuery('#printbtndiv').find('.btnPrint').on('click',function(){
+		
+			$('.btnPrint').printPage({ 
+				attr: "href",
+				url: "{{ asset('storage/uploaded/print/employees/employee-print.html') }}",
+				message:"Your document is being created",
+			});
+
+		//});	 
+		
 
 	});
 

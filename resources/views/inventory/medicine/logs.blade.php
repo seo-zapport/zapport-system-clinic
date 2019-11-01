@@ -59,8 +59,12 @@
 					$fileName = 'inventory_medicine';
 				@endphp
 				<ul class="dropdown-menu">
-					<li class="nav-item-btn"><a class="btnPrint" href="#"><i class="fas fa-print text-secondary"></i>PRINT</a></li> 
-					<li class="nav-item-btn"><a href="{{ asset('storage/uploaded/print/'.@$fileName.'.csv')}}" download="{{ @$fileName.'.csv'}}" target="_blank"><i class="fas fa-file-csv text-secondary"></i>CSV</a></li>
+					<li class="nav-item-btn"><a class="btnPrint" href="#"><i class="fas fa-print text-secondary"></i>PRINT All</a></li> 
+					@if(app('request')->input('expired') != 'on')
+					<li class="nav-item-btn"><a class="btnPrintlog" href="#"><i class="fas fa-print text-secondary"></i>PRINT Available</a></li> 
+					<li class="nav-item-btn"><a class="btnPrintexpire" href="#"><i class="fas fa-print text-secondary"></i>PRINT Expired</a></li> 
+					@endif
+					<li class="nav-item-btn"><a href="{{ asset('storage/uploaded/print/inventory/'.@$fileName.'.csv')}}" download="{{ @$fileName.'.csv'}}" target="_blank"><i class="fas fa-file-csv text-secondary"></i>CSV</a></li>
 				</ul>
 			</div>
 		</div>
@@ -145,12 +149,25 @@
 		var countTR = $("#MedTable tbody #MedRow").length;
 		$("#medTotal").html('');
 		$("#medTotal").append('<span class="font-weight-bold">Result: '+ countTR +'</span>');
-
+		 
 		 $('.btnPrint').printPage({
-		  url: "{{ asset('storage/uploaded/print/inventory_medicine.html') }}",
-		  attr: "href",
-		  message:"Your document is being created"
+    	  	url: "{{ asset('storage/uploaded/print/inventory/inventory_medicine.html') }}",
+    	  	attr: "href",
+    	  	message:"Your document is being created"
+    	});
+
+		$('.btnPrintexpire').printPage({
+			url: "{{ asset('storage/uploaded/print/inventory/inventory_medicine_printexp.html') }}",
+			attr: "href",
+			message:"Your document is being created"
+		}); 
+
+		$('.btnPrintlog').printPage({
+			url: "{{ asset('storage/uploaded/print/inventory/inventory_medicine_printlog.html') }}",
+			attr: "href",
+			message:"Your document is being created"
 		});
+		 
 	});
 
 </script>
