@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use File;
 use App\Employee;
 use App\Position;
 use App\Department;
@@ -12,8 +13,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\EmployeeRequest;
-
-use File;
 
 class EmployeeController extends Controller
 {
