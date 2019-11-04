@@ -32,7 +32,7 @@
 					<th>Action</th>
 				</thead>
 				<tbody>
-					@forelse(@$emps->unique('emp_id') as $emp)
+					@forelse(@$emps as $emp)
 						<tr>
 							<td>{{ $emp->emp_id }}</td>
 							<td>{{ ucwords($emp->last_name . " " . $emp->first_name . " " . $emp->middle_name) }}</td>

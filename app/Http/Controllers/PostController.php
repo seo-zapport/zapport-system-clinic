@@ -61,7 +61,6 @@ class PostController extends Controller
      */
     public function store(PostRequest $request)
     {
-        // dd($request->all());
         if (Gate::check('isAdmin') || Gate::check('isHr') || Gate::check('isDoctor') || Gate::allows('isNurse')) {
             $atts = $request->validated();
             $atts = $request->except('tag_id');
@@ -88,7 +87,6 @@ class PostController extends Controller
             foreach ($array_atts as $finalAtts) {
                 $lastID->tags()->attach($finalAtts);
             }
-            // $tag->posts()->attach($lastID);
 
             return redirect()->route('post.show', ['post' => $lastID->slug]);
         }else{
@@ -142,14 +140,12 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        // dd($request->all());
         $this->authorize('update', $post);
         $atts = $request->validate([
             'title'        =>  'required',
             'description'  =>  'required',
         ]);
         $atts = $request->except(['tag_id', 'tag_old']);
-        // dd($atts);
         $post->update($atts);
 
         $tagID = $request->input('tag_id');
@@ -164,7 +160,6 @@ class PostController extends Controller
                 $post->tags()->attach($finalAtts);
             }
         }
-        // $post->tags()->updateExistingPivot($request->tag_old, array('tag_id' => $request->tag_id));
         return redirect()->route('post.show', ['post' => $post->slug]);
     }
 

@@ -99,7 +99,6 @@
 												@endforelse
 											</tbody>
 										</table>
-										{{ $empMeds->links() }}					  				
 						  			</div>
 						  		</div>
 						  	</div>

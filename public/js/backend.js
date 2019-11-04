@@ -443,12 +443,14 @@ jQuery(document).ready(function($){
 
   $("#myform #select_generic").on('click', function(e){
     $('#myform select[name="generic_id[0][0]"]').prop('selectedIndex',0);
+    $('#myform select[name="generic_id[0][0]"]').prop('required',false);
     $('#myform select[name="brand_id[0][0]"] option').remove();
-    $('#myform select[name="brand_id[0][0]"] option').prop('required',false);
+    $('#myform select[name="brand_id[0][0]"]').prop('required',false);
     $('#myform select[name="brand_id[0][0]"]').append('<option selected="true" disabled="disabled"> Select Medicine </option>')
     $('#myform input[name="quantity[0][0]"]').prop('required',false);
     $('#myform input[name="quantity[0][0]"]').removeAttr('max');
     $('#myform input[name="quantity[0][0]"]').prop('placeholder','Quantity');
+    $('#myform input[name="quantity[0][0]"]').val('');
     $(this).addClass('d-none');
   });
 
@@ -459,16 +461,29 @@ jQuery(document).ready(function($){
     $("#select_generic").addClass('d-none');
   }
 
+  $('#myform input[name="quantity[0][0]"]').on('keyup', function(){
+    var empMedQtty =  $('#myform input[name="quantity[0][0]"]').val();
+   if (empMedQtty != '') {
+    $('#myform select[name="brand_id[0][0]"]').prop('required',true);
+    $('#myform select[name="generic_id[0][0]"]').prop('required',true);
+   }else{
+    $('#myform select[name="brand_id[0][0]"]').prop('required',false);
+    $('#myform select[name="generic_id[0][0]"]').prop('required',false);
+   }
+  });
+
 // Employees Medical Medicine In Show Blade_____________________________________________________________________________________________________
 
   $("#myform-show #select_generic_show").on('click', function(e){
     $('#myform-show select[name="generic_id[0][0]"]').prop('selectedIndex',0);
+    $('#myform-show select[name="generic_id[0][0]"]').prop('required',false);
     $('#myform-show select[name="brand_id[0][0]"] option').remove();
-    $('#myform-show select[name="brand_id[0][0]"] option').prop('required',false);
+    $('#myform-show select[name="brand_id[0][0]"]').prop('required',false);
     $('#myform-show select[name="brand_id[0][0]"]').append('<option selected="true" disabled="disabled"> Select Medicine </option>')
     $('#myform-show input[name="quantity[0][0]"]').prop('required',false);
     $('#myform-show input[name="quantity[0][0]"]').removeAttr('max');
     $('#myform-show input[name="quantity[0][0]"]').prop('placeholder','Quantity');
+    $('#myform-show input[name="quantity[0][0]"]').val('');
     $(this).addClass('d-none');
   });
 
@@ -478,6 +493,17 @@ jQuery(document).ready(function($){
   }else{
     $("#select_generic_show").addClass('d-none');
   }
+
+  $('#myform-show input[name="quantity[0][0]"]').on('keyup', function(){
+    var empMedQtty =  $('#myform-show input[name="quantity[0][0]"]').val();
+   if (empMedQtty != '') {
+    $('#myform-show select[name="brand_id[0][0]"]').prop('required',true);
+    $('#myform-show select[name="generic_id[0][0]"]').prop('required',true);
+   }else{
+    $('#myform-show select[name="brand_id[0][0]"]').prop('required',false);
+    $('#myform-show select[name="generic_id[0][0]"]').prop('required',false);
+   }
+  });
 
 // Employees Children if any (CREATE)_____________________________________________________________________________________________________
 

@@ -40,7 +40,6 @@ class NotificationRepository
                     $arr[] = $reg->hired_date->diffForHumans();
                 }
             }
-
         }
         return [
              'admin_nurse_doctor' =>  @$empsMedsCount,

@@ -29,7 +29,7 @@ class DashboardController extends Controller
     {
         if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')){
 
-            $empMeds = Employeesmedical::where('remarks', 'followUp')->paginate(10);
+            $empMeds = Employeesmedical::where('remarks', 'followUp')->get();
 
         }
         if (Gate::allows('isAdmin') || Gate::allows('isDoctor')){

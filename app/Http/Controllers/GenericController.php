@@ -63,7 +63,6 @@ class GenericController extends Controller
         }else{
             return back();
         }
-
     }
 
     /**
@@ -80,7 +79,6 @@ class GenericController extends Controller
             });
 
             $allBrands = $unique->values()->all();
-            // dd($allBrands);
 
             return view('inventory.genericname.show', compact('generic', 'allBrands'));
         }elseif (Gate::allows('isBanned')) {

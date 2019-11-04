@@ -45,16 +45,15 @@
 		</div>
 		<div class="container-fluid">
 			<div class="row">
-				<div class="col-12 col-md-6 mb-4 mt-4">
-					<h1 class="text-secondary" style="font-size: 22px;">Full Report</h1>
-				</div>
-				<div class="col-12 col-md-6 mb-4 mt-4 text-right d-flex justify-content-end">
+				<div class="col-12 float-right text-right d-flex justify-content-end">
 					<button id="printThatText" name="printThatText" onclick="printPage();" class="btn btn-outline-info">Print</button>
 				</div>			
+				<div class="col-12 text-center mb-4 mt-4">
+					<h1 id="CurrDate" class="text-secondary" style="font-size: 22px;">Annual Report</h1>
+				</div>
 			</div>
 			<div class="row">
 				<div id="annualReport" class="col-12">
-					<h5>Annual Report</h5>
 					<div id="annualFilter" class="form-group">
 						<select name="select_date" id="select_date" class="form-control">
 							<option selected="true" disabled="true" value="">Select Year</option>
@@ -65,15 +64,44 @@
 					</div>
 						@foreach ($emps as $key => $emp)
 						<ol id="year-{{ $key }}" class="d-none">
-							<h3>{{ $key }}</h3>
+							{{-- <h3 class="text-secondary">{{ $key }}</h3> --}}
 							@foreach ($emp->unique('diagnosis') as $filter)
-								<ul>
-									<li><h3>Diagnosis: {{ ucfirst($filter->diagnosis) }}</h3></li>
+								<ul class="mb-4 p-0">
+									<li><h3 class="h4">{{ ucfirst($filter->diagnosis) }}</h3></li>
 									<ul>
-										<li>Male: {{ $emp->where('gender', 0)->where('diagnosis', $filter->diagnosis)->count() }}</li>
-										<li>Female: {{ $emp->where('gender', 1)->where('diagnosis', $filter->diagnosis)->count() }}</li>
-										<li>Total: {{ $emp->where('diagnosis', $filter->diagnosis)->count() }}</li>
+										<li class="mb-2 font-weight-bold">Male:</li>
+											{{-- <ul class="p-0"> --}}
+												@foreach ($emp->unique('age') as $age)
+													
+														{!! 
+															( $emp->where('gender', 0)->where('diagnosis', $filter->diagnosis)->where('age', $age->age)->count() > 0 ) 
+																?
+															  		'- ' . 'Age: ' . $age->age . ' : ' . $emp->where('gender', 0)->where('diagnosis', $filter->diagnosis)->where('age', $age->age)->count() . '<br>'
+															  	: 
+															  		''
+														!!}
+													
+												@endforeach
+											{{-- </ul> --}}
+											<div class="font-weight-bold">Total number of Male: <span>{{ $emp->where('gender', 0)->where('diagnosis', $filter->diagnosis)->count() }}</span></div>
+
+										<li class="mb-2 mt-2 font-weight-bold">Female:</li>
+											{{-- <ul class="p-0"> --}}
+												@foreach ($emp->unique('age') as $age)
+													
+														{!! 
+															( $emp->where('gender', 1)->where('diagnosis', $filter->diagnosis)->where('age', $age->age)->count() > 0 ) 
+																?
+															  		'- ' . 'Age: ' . $age->age . ' : ' . $emp->where('gender', 1)->where('diagnosis', $filter->diagnosis)->where('age', $age->age)->count() . '<br>'
+															  	: 
+															  		''
+														!!}
+													
+												@endforeach
+											{{-- </ul> --}}
+											<div class="font-weight-bold">Total number of Female:  <span>{{ $emp->where('gender', 1)->where('diagnosis', $filter->diagnosis)->count() }}</span></div><br>
 									</ul>
+									<div class="font-weight-bold">Total: {{ $emp->where('diagnosis', $filter->diagnosis)->count() }}</div>
 								</ul>
 							@endforeach
 						</ol>
@@ -103,14 +131,17 @@
 
 		$("#year-"+yearNow+"").removeClass('d-none');
 
+		$("#CurrDate").append(' '+yearNow);
+
 		$('select[name="select_date"]').on('change',function(){
+			document.getElementById("CurrDate").innerHTML = '';
 			var date_selected = $(this).val();
 			$("#annualReport").each(function() {
 				$(this).find('ol').addClass('d-none');
 			});
 			$("#year-"+date_selected+"").removeClass('d-none');
+			$("#CurrDate").append('Annual Report '+date_selected);
 		});
-
 
 	});
 

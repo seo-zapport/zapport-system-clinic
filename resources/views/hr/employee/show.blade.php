@@ -100,7 +100,7 @@
 					</div>
 					<div class="form-row">
 						<div class="form-group col-md-6">
-							<label for="college">Tertiary / College</label>
+							<label for="college">Tertiary / Highschool</label>
 							<p class="h5">{{ strtoupper(@$employee->highschool) }}</p>
 						</div>
 						<div class="form-group col-md-6">
