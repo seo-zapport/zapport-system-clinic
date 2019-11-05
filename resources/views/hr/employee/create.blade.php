@@ -112,11 +112,15 @@
 					<h5 class="text-muted"><i class="fas fa-user-graduate"></i> Education</h5>
 					<hr>
 					<div class="form-row">
-						<div class="form-group col-md-6">
+						<div class="form-group col-md-4">
 							<label for="college">Tertiary / College</label>
 							<input type="text" name="college" value="@yield('editCollege', old('college'))" class="form-control" placeholder="Tertiary / College">
 						</div>
-						<div class="form-group col-md-6">
+						<div class="form-group col-md-4">
+							<label for="college">Course</label>
+							<input type="text" name="course" value="@yield('editCourse', old('course'))" class="form-control" placeholder="Course">
+						</div>
+						<div class="form-group col-md-4">
 							<label for="college_grad_date">Year Graduated</label>
 							<input type="date" name="college_grad_date" value="@yield('editCollegeGrad', old('college_grad_date'))" class="form-control">
 						</div>
@@ -153,19 +157,19 @@
 							<div class="form-row">
 								<div class="form-group col-md-3">
 									<label for="experience" class="mr-2">Name of Company</label>
-									<input type="text" class="form-control mr-2" name="experience[0][]" placeholder="Name of Company">
+									<input id="company_name" type="text" class="form-control mr-2" name="experience[0][]" placeholder="Name of Company">
 								</div>
 								<div class="form-group col-md-3">
 									<label for="experience" class="mr-2">Position</label>
-									<input type="text" class="form-control mr-2" name="experience[0][]" placeholder="Position">
+									<input id="work_position" type="text" class="form-control mr-2" name="experience[0][]" placeholder="Position">
 								</div>
 								<div class="form-group col-md-5">
 									<label for="experience" class="mr-2">Period Covered</label>
 									<div class="form-inline">
 										<div class="form-group">
-											<input type="date" class="form-control " name="experience[0][]">
+											<input id="work_exp_1" type="date" class="form-control " name="experience[0][]">
 											<span class="mx-1"> To</span>
-											<input type="date" class="form-control " name="experience[0][]">										
+											<input id="work_exp_2" type="date" class="form-control " name="experience[0][]">										
 										</div>
 									</div>
 								</div>
@@ -173,15 +177,6 @@
 									<label for="experience" class="mr-2">Action</label>
 									<a id="addWork" class="btn btn-success text-white mb-2"><i class="fa fa-plus"></i>  <i class="fas fa-briefcase"></i></a>
 								</div>
-
-								{{-- <div class="form-group col-md-3">
-									<label for="experience" class="mr-2">Period Covered</label>
-									<input type="date" class="form-control " name="experience[0][]">
-								</div>
-								<div class="form-group col-md-3">
-									<label for="experience" class="ml-2 mr-2">To</label>
-									<input type="date" class="form-control " name="experience[0][]">
-								</div> --}}
 							</div>
 						</div>
 					</div>
@@ -426,6 +421,7 @@
 
 		$(".upload-button").on('click', function() {
 		   $(".file-upload").get(0).click();
+		   console.log($(".file-upload").get(0));
 		});
 	});
 

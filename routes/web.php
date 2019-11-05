@@ -15,7 +15,6 @@
 Route::get('/', 'FrontpageController@index');
 Route::get('show-post/{post}', 'FrontpageController@show')->name('frnt.show.post');
 
-
 Auth::routes();
 
 Route::group(['prefix'	=>	'dashboard'], function(){

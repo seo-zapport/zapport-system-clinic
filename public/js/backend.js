@@ -158,68 +158,116 @@ jQuery(document).ready(function($){
 
     // Form Validation Add Required IF first OR second input is not EMPTY
 
-    // Spouse_________________________________________________________________________________
-    var spouse = $("#empForm input[name='spouse_name']");
-    var date_of_merriage = $("#empForm input[name='date_of_merriage']");
-    spouse.blur(function() {
-      if ($(this).val()) {
-        date_of_merriage.prop('required', true);
-      }else{
-        date_of_merriage.prop('required', false);
-      }
-    });
-
-    date_of_merriage.blur(function() {
-      if ($(this).val()) {
-        spouse.prop('required', true);
-      }else{
-        spouse.prop('required', false);
-      }
-    });
     // College variables_________________________________________________________________________________
     var college =  $("#empForm input[name='college']");
     var grad_date = $("#empForm input[name='college_grad_date']");
     var hostname = window.location.hostname;
-    if (window.location.href == "http://"+hostname+"/hr/employees/7/edit") {
-      // College_________________________________________________________________________________
-      $("#empForm input[name='college'], input[name='college_grad_date']").on('change', function(){
-        var collegeVal = $('input[name="college"]').val();
-        var gradDateVal = $('input[name="college_grad_date"]').val();
-        if (collegeVal == '' && gradDateVal == '') {
-          college.prop('required', false);
-          grad_date.prop('required', false);
+
+    if (window.location.href == "http://"+hostname+"/hr/employees/create") {
+
+      // College if location == create_________________________________________________________________________________
+      $("#empForm input[name='college'], input[name='college_grad_date'], input[name='course']").on('change', function(){
+        var college_input = $('input[name="college"]').val();
+        var college_grad = $('input[name="college_grad_date"]').val();
+        var college_course = $('input[name="course"]').val();
+        if (college_input == '' && college_grad == '' && college_course =='') {
+         $('input[name="college"]').prop('required', false);
+         $('input[name="college_grad_date"]').prop('required', false);
+         $('input[name="course"]').prop('required', false);
         }else{
-          college.prop('required', true);
-          grad_date.prop('required', true);
+          $('input[name="college"]').prop('required', true);
+          $('input[name="college_grad_date"]').prop('required', true);
+          $('input[name="course"]').prop('required', true);
+        }
+      });
+
+      // Experience if location == create_________________________________________________________________________________
+
+      $("#empForm #company_name, #work_position, #work_exp_1, #work_exp_2").on('change', function(){
+        var company_name = $("#company_name").val();
+        var work_position = $("#work_position").val();
+        var work_exp_1 = $("#work_exp_1").val();
+        var work_exp_2 = $("#work_exp_2").val();
+        if (company_name == '' && work_position == '' && work_exp_1 == '' && work_exp_2 == '') {
+          $("#company_name").prop('required', false);
+          $("#work_position").prop('required', false);
+          $("#work_exp_1").prop('required', false);
+          $("#work_exp_2").prop('required', false);
+        }else{
+          $("#company_name").prop('required', true);
+          $("#work_position").prop('required', true);
+          $("#work_exp_1").prop('required', true);
+          $("#work_exp_2").prop('required', true);
+        }
+      });
+
+      // Spouse if location == create_________________________________________________________________________________
+
+      $("#empForm input[name='spouse_name'], input[name='date_of_marriage']").on('change', function(){
+        var spouse = $("#empForm input[name='spouse_name']").val();
+        var date_of_marriage = $("#empForm input[name='date_of_marriage']").val();
+        if (spouse == '' && date_of_marriage == '') {
+          $("#empForm input[name='spouse_name']").prop('required', false);
+          $("#empForm input[name='date_of_marriage']").prop('required', false);
+        }else{
+          $("#empForm input[name='spouse_name']").prop('required', true);
+          $("#empForm input[name='date_of_marriage']").prop('required', true);
+        }
+      });
+
+    }else{
+
+      // College if location == edit_________________________________________________________________________________
+      $("#empForm input[name='college'], input[name='college_grad_date'], input[name='course']").on('change', function(){
+        var college_input = $('input[name="college"]').val();
+        var college_grad = $('input[name="college_grad_date"]').val();
+        var college_course = $('input[name="course"]').val();
+        if (college_input == '' && college_grad == '' && college_course =='') {
+         $('input[name="college"]').prop('required', false);
+         $('input[name="college_grad_date"]').prop('required', false);
+         $('input[name="course"]').prop('required', false);
+        }else{
+          $('input[name="college"]').prop('required', true);
+          $('input[name="college_grad_date"]').prop('required', true);
+          $('input[name="course"]').prop('required', true);
+        }
+      });
+
+      // Experience if location == edit_________________________________________________________________________________
+
+      $("#empForm #company_name, #work_position, #work_exp_1, #work_exp_2").on('change', function(){
+        var company_name = $("#company_name").val();
+        var work_position = $("#work_position").val();
+        var work_exp_1 = $("#work_exp_1").val();
+        var work_exp_2 = $("#work_exp_2").val();
+        if (company_name == '' && work_position == '' && work_exp_1 == '' && work_exp_2 == '') {
+          $("#company_name").prop('required', false);
+          $("#work_position").prop('required', false);
+          $("#work_exp_1").prop('required', false);
+          $("#work_exp_2").prop('required', false);
+        }else{
+          $("#company_name").prop('required', true);
+          $("#work_position").prop('required', true);
+          $("#work_exp_1").prop('required', true);
+          $("#work_exp_2").prop('required', true);
+        }
+      });
+
+      // Spouse if location == edit_________________________________________________________________________________
+
+      $("#empForm input[name='spouse_name'], input[name='date_of_marriage']").on('change', function(){
+        var spouse = $("#empForm input[name='spouse_name']").val();
+        var date_of_marriage = $("#empForm input[name='date_of_marriage']").val();
+        if (spouse == '' && date_of_marriage == '') {
+          $("#empForm input[name='spouse_name']").prop('required', false);
+          $("#empForm input[name='date_of_marriage']").prop('required', false);
+        }else{
+          $("#empForm input[name='spouse_name']").prop('required', true);
+          $("#empForm input[name='date_of_marriage']").prop('required', true);
         }
       });
 
     }
-    // College if location == create_________________________________________________________________________________
-      college.blur(function() {
-        if ($(this).val()) {
-          grad_date.prop('required', true);
-        }else{
-          grad_date.prop('required', false);
-        }
-      });
-
-      grad_date.blur(function() {
-        if ($(this).val()) {
-          college.prop('required', true);
-        }else{
-          college.prop('required', false);
-        }
-      });
-    // Experience_________________________________________________________________________________
-    var experience = $("#empForm input[name='experience[0][]']");
-    experience.blur(function() {
-      if ($(this).val()) {
-        experience.prop('required', true);
-      }else{
-        experience.prop('required', false);
-      }
-    });
 
     // Children (CREATE)_________________________________________________________________________________
 
@@ -302,10 +350,12 @@ jQuery(document).ready(function($){
    });
 
 
-  var count = $("#newConsTable #newCons").length
-  var FFcount = $("#forFollowUp #FFup").length
-  var incCount = $("#IncReq #inc").length
-  var forRegCount = $("#CandReg #forReg").length
+  var count = $("#newConsTable #newCons").length;
+  var FFcount = $("#forFollowUp #FFup").length;
+  var incCount = $("#IncReq #inc").length;
+  var forRegCount = $("#CandReg #forReg").length;
+  var PreEmpCount = $("#IncPreEmp #incPre").length;
+  
   if (count > 0) {
    $("#v-new-consultation-tab").append('<span class="text-center text-white bg-danger float-right">'+count+'</span>');
   }
@@ -317,6 +367,9 @@ jQuery(document).ready(function($){
   }  
   if (forRegCount) {
     $("#v-inc-emp-6months-tab").append('<span class="text-center text-white bg-danger float-right">'+forRegCount+'</span>');
+  }
+    if(PreEmpCount > 0){
+    $("#v-inc-preEmp-tab").append('<span class="text-center text-white bg-danger float-right">'+PreEmpCount+'</span>');
   }
 
   $.ajax({

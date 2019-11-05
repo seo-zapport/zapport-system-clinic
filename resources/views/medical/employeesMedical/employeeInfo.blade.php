@@ -118,8 +118,8 @@
 					<tr>
 						<td>{{ $i++ }}</td>
 						<td>{{ $medsHistory->created_at->format('M d, Y - h:i a') }}</td>
-						<td>{{ $medsHistory->diagnoses->diagnosis }}</td>
-						<td>{{ $medsHistory->note }}</td>
+						<td>{{ ucwords($medsHistory->diagnoses->diagnosis) }}</td>
+						<td>{{ Str::words($medsHistory->note, 15) }}</td>
 						<td>{{ ($medsHistory->remarks == 'followUp') ? 'Follow up' : 'Done' }}</td>
 						<td><a href="{{ route('medical.show', ['employee' => $employee->emp_id, 'employeesmedical' => $medsHistory->id]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i>View</a></td>
 					</tr>
