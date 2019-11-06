@@ -181,7 +181,13 @@
 												<th>Action</th>
 											</thead>
 											@forelse (@$emps2 as $emp)
-											@if ($emp->hired_date->diffForHumans() == '6 months ago' || $emp->hired_date->diffForHumans() == '5 months ago')
+											@php
+												$hired_month = $emp->hired_date->diff(Carbon\carbon::now())->format('%m');
+												$hired_year = $emp->hired_date->diff(Carbon\carbon::now())->format('%y');
+												$month = (int)$hired_month;
+												$year = (int)$hired_year;
+											@endphp
+											@if ($month > 5 || $year >= 1)
 												<tr id="forReg">
 													<td>{{ $emp->emp_id }}</td>
 													<td>{{ $emp->last_name }} {{ $emp->first_name }} {{ $emp->middle_name }}</td>

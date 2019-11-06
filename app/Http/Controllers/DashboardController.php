@@ -36,10 +36,15 @@ class DashboardController extends Controller
         if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')){
 
             $preEmp = Preemployment::get();
-            foreach ($preEmp as $preEmpID) {
-                $array[] = $preEmpID->employee_id;
+            if ($preEmp->count() > 0) {
+                foreach ($preEmp as $preEmpID) {
+                    $array[] = $preEmpID->employee_id;
+                }
+
+                $noPreEmpMeds = Employee::whereNotIn('id', $array)->get();
+            }else{
+                $noPreEmpMeds = Employee::get();
             }
-            $noPreEmpMeds = Employee::whereNotIn('id', $array)->get();
 
         }
         if (Gate::allows('isAdmin') || Gate::allows('isDoctor')){
