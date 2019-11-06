@@ -60,12 +60,12 @@
 					$fileName = 'inventory_medicine';
 				@endphp
 				<ul class="dropdown-menu">
-					<li class="nav-item-btn"><a class="btnPrint" href="#"><i class="fas fa-print text-secondary"></i>PRINT All</a></li> 
+					<li class="nav-item-btn"><a class="btnPrint" href="#"><i class="fas fa-print text-secondary"></i> PRINT All</a></li> 
 					@if(app('request')->input('expired') != 'on')
-					<li class="nav-item-btn"><a class="btnPrintlog" href="#"><i class="fas fa-print text-secondary"></i>PRINT Available</a></li> 
-					<li class="nav-item-btn"><a class="btnPrintexpire" href="#"><i class="fas fa-print text-secondary"></i>PRINT Expired</a></li> 
+					<li class="nav-item-btn"><a class="btnPrintlog" href="#"><i class="fas fa-print text-secondary"></i> PRINT Available</a></li> 
+					<li class="nav-item-btn"><a class="btnPrintexpire" href="#"><i class="fas fa-print text-secondary"></i> PRINT Expired</a></li> 
 					@endif
-					<li class="nav-item-btn"><a href="{{ asset('storage/uploaded/print/inventory/'.@$fileName.'.csv')}}" download="{{ @$fileName.'.csv'}}" target="_blank"><i class="fas fa-file-csv text-secondary"></i>CSV</a></li>
+					<li class="nav-item-btn"><a href="{{ asset('storage/uploaded/print/inventory/'.@$fileName.'.csv')}}" download="{{ @$fileName.'.csv'}}" target="_blank"><i class="fas fa-file-csv text-secondary"></i> CSV</a></li>
 				</ul>
 			</div>
 		</div>

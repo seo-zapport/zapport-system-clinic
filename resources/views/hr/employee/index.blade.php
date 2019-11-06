@@ -368,7 +368,6 @@
 		WinPrint.close();
 	}
 
-
 	jQuery(document).ready(function($){
 
 		jQuery(window).on('hashchange', function(e){
@@ -379,16 +378,11 @@
 		$("#empCount").html('');
 		$("#empCount").append('<span class="font-weight-bold">Result: '+ countTR +'</span>');
 
-		//jQuery('#printbtndiv').find('.btnPrint').on('click',function(){
-		
-			$('.btnPrint').printPage({ 
-				attr: "href",
-				url: "{{ asset('storage/uploaded/print/employees/employee-print.html') }}",
-				message:"Your document is being created",
-			});
-
-		//});	 
-		
+		$('.btnPrint').printPage({ 
+			attr: "href",
+			url: "{{ asset('storage/uploaded/print/employees/employee-print.html') }}",
+			message:"Your document is being created",
+		});
 
 	});
 

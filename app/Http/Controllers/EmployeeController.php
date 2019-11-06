@@ -302,6 +302,10 @@ class EmployeeController extends Controller
     public function show(Employee $employee)
     {
         if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
+     
+            $dataemp = view('hr.employee.printviewinfo',compact('employee'))->render();
+            File::put(public_path('/storage/uploaded/print/employees/printinfo.html'),$dataemp);  
+
             return view('hr.employee.show', compact('employee'));
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();

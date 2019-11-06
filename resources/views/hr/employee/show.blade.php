@@ -299,13 +299,36 @@
 					</div>
 					<hr>
 					<div class="form-group text-right">
+						<a href="#" id="btnPrint" class="btn btn-success text-white">Print</a>
 						<a href="{{ route('hr.emp.edit', ['employee' => @$employee->emp_id]) }}" class="btn btn-info text-white">Edit</a>
 					</div>
+
+				
+					<script type="application/javascript">
+
+						jQuery(document).ready(function($){
+
+							jQuery(window).on('hashchange', function(e){
+							    history.replaceState ("", document.title, e.originalEvent.oldURL);
+							});
+
+							$('#btnPrint').printPage({ 
+								attr: "href",
+								url: "{{ asset('storage/uploaded/print/employees/printinfo.html') }}",
+								message:"Your document is being created",
+							});
+
+						});
+
+					</script>
+
 
 				@endsection
 			</div>
 		</div>
 	</div>
 </div>
+
+
 
 
