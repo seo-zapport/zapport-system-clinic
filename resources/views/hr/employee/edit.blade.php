@@ -42,6 +42,7 @@
 @section('editPhilhealth', $employee->philhealth_no)
 @section('editHdmf', $employee->hdmf_no)
 @section('editCollege', strtoupper($employee->college))
+@section('editCourse', strtoupper($employee->course))
 @section('editCollegeGrad', ($employee->college_grad_date != null) ? $employee->college_grad_date->format('Y-m-d') : $employee->college_grad_date)
 @section('editHighschool', strtoupper($employee->highschool))
 @section('editHighschoolGrad', $employee->highschool_grad_date->format('Y-m-d'))
@@ -121,19 +122,19 @@
 				<div id="workField" class="form-row editwork">
 					<div class="form-group col-md-3">
 						<label for="experience" class="mr-2">Name of Company</label>
-						<input type="text" class="form-control mr-2" name="experience[@php echo $i; @endphp][]" placeholder="Name of Company" value="{{ $exp[0] }}">
+						<input id="company_name" type="text" class="form-control mr-2" name="experience[@php echo $i; @endphp][]" placeholder="Name of Company" value="{{ $exp[0] }}">
 					</div>
 					<div class="form-group col-md-3">
 						<label for="experience" class="mr-2">Position</label>
-						<input type="text" class="form-control mr-2" name="experience[@php echo $i; @endphp][]" placeholder="Position" value="{{ $exp[1] }}">
+						<input id="work_position" type="text" class="form-control mr-2" name="experience[@php echo $i; @endphp][]" placeholder="Position" value="{{ $exp[1] }}">
 					</div>
 					<div class="form-group col-md-5">
 						<label for="experience" class="mr-2">Period Covered</label>
 						<div class="form-inline">
 							<div class="form-group">
-								<input type="date" class="form-control mr-2" name="experience[@php echo $i; @endphp][]" value="{{ $exp[2] }}">
+								<input id="work_exp_1" type="date" class="form-control mr-2" name="experience[@php echo $i; @endphp][]" value="{{ $exp[2] }}">
 								<label for="experience" class="mx-1">To</label>
-								<input type="date" class="form-control ml-2 mr-2" name="experience[@php echo $i; @endphp][]" value="{{ $exp[3] }}">
+								<input id="work_exp_2" type="date" class="form-control ml-2 mr-2" name="experience[@php echo $i; @endphp][]" value="{{ $exp[3] }}">
 							</div>
 						</div>
 					</div>

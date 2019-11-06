@@ -50,7 +50,6 @@ class EmployeesmedicalController extends Controller
      */
     public function store(EmployeesmedicalRequest $request)
     {
-        // dd($request->all());
         if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
 
             $this->validate($request, $request->rules(), $request->messages());
@@ -63,7 +62,6 @@ class EmployeesmedicalController extends Controller
                 $diagnosis = $insrtDiagnosis->id;
             }
 
-            // $arr = array_values($request->generic_id);
             if ($request->generic_id != null && $request->brand_id != null && $request->quantity != null) {
                 $arr1 = array_map( 'array_values', $request->generic_id);
                 $generic_id = array_values($arr1);
@@ -147,7 +145,6 @@ class EmployeesmedicalController extends Controller
         }else{
 
             return back();
-
         }
     }
 
@@ -240,10 +237,6 @@ class EmployeesmedicalController extends Controller
     public function listofEmployee(Request $request)
     {
         if (Gate::allows('isAdmin') || Gate::allows('isHr') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
-            // $emps = Employee::where('emp_id', 'like', '%'.$request->search.'%')
-            //                 ->orWhere('last_name', 'like', '%'.$request->search.'%')
-            //                 ->orWhere('first_name', 'like', '%'.$request->search.'%')
-            //                 ->orWhere('middle_name', 'like', '%'.$request->search.'%')->orderBy('last_name', 'asc')->paginate(10);
             $emps = Employee::orWhere(\DB::raw("concat(emp_id, ' ', first_name, ' ', last_name, ' ', middle_name)"), 'like', '%'.$request->search.'%')
                             ->orWhere(\DB::raw("concat(emp_id, ' ', last_name, ' ', first_name, ' ', middle_name)"), 'like', '%'.$request->search.'%')->paginate(10);
             $emps->appends(['search' => $request->search]);
@@ -296,7 +289,6 @@ class EmployeesmedicalController extends Controller
             $gen = Generic::find($id);
             $data = array();
             $data['brand_id'] = $gen->medbrand->pluck('bname', 'id');
-            // $data['id'] = Medicine::where('generic_id', $id)->where('availability', 0)->where('expiration_date', '>', NOW())->count();
             return json_encode($data);
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();
@@ -344,7 +336,6 @@ class EmployeesmedicalController extends Controller
                 );
 
             if ($request->generic_id != null && $request->brand_id != null && $request->quantity != null) {
-                // $arr = array_values($request->generic_id);
                 $arr1 = array_map( 'array_values', $request->generic_id);
                 $generic_id = array_values($arr1);
 
@@ -388,7 +379,6 @@ class EmployeesmedicalController extends Controller
                     foreach ($arr[$c] as $medQty) {
                         $medQty->availability = 1;
                         $medQty->save();
-                        // $data2 = $medQty->employeesMedical()->attach($employeesmedical, ['quantity' => $request->quantity[$c][$c]]);
                         $newData = new EmployeesmedicalMedicineUser;
                         $newData->employeesmedical_id = $employeesmedical->id;
                         $newData->medicine_id = $medQty->id;
@@ -410,7 +400,7 @@ class EmployeesmedicalController extends Controller
 
     public function download($file_name)
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse') || Gate::allows('isHr')) {
             return response()->download(storage_path("app/public/uploaded/attachments/".$file_name));
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();
@@ -424,6 +414,9 @@ class EmployeesmedicalController extends Controller
     {
         if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
             $emps = Employee::join('employeesmedicals', 'employees.id', 'employeesmedicals.employee_id')
+                            ->select('emp_id', 'first_name', 'last_name', 'middle_name', 'department_id', 'position_id')
+                            ->groupBy('emp_id', 'first_name', 'last_name', 'middle_name', 'department_id', 'position_id')
+                            ->distinct('emp_id')
                             ->orWhere(\DB::raw("concat(emp_id, ' ', first_name, ' ', last_name, ' ', middle_name)"), 'like', '%'.$request->search.'%')
                             ->orWhere(\DB::raw("concat(emp_id, ' ', last_name, ' ', first_name, ' ', middle_name)"), 'like', '%'.$request->search.'%')
                             ->paginate(10);
@@ -437,35 +430,15 @@ class EmployeesmedicalController extends Controller
 
     public function fullReport()
     {
-
-        // $diagnoses = Diagnosis::get();
-        // foreach ($diagnoses as $diagnosis) {
-        //     $arr[] = $diagnosis->join('employeesmedicals', 'diagnoses.id', 'employeesmedicals.diagnosis_id')
-        //                                          ->join('employees', 'employees.id', 'employeesmedicals.employee_id')
-        //                                          ->select('diagnosis', 'employees.gender', 'employeesmedicals.created_at as created_at')
-        //                                          ->where('diagnosis', $diagnosis->diagnosis)
-        //                                          ->orderBy('created_at', 'asc')
-        //                                          ->get()
-        //                                          ->groupBy(function($date) {
-        //                                              return Carbon::parse($date->created_at)->format('M, Y');
-        //                                            });
-        // }
-
-        // $arr_count = count($arr);
-
         $emps = Employeesmedical::join('diagnoses', 'diagnoses.id', 'employeesmedicals.diagnosis_id')
                                                  ->join('employees', 'employees.id', 'employeesmedicals.employee_id')
-                                                 ->select('employeesmedicals.id', 'employees.gender', 'diagnosis', 'employeesmedicals.created_at')
+                                                 ->select('employeesmedicals.id', 'employees.gender', 'diagnosis', 'employeesmedicals.created_at', \DB::raw('floor(DATEDIFF(CURDATE(),employees.birthday) /365) as age'))
                                                  ->orderBy('employeesmedicals.created_at', 'desc')
                                                  ->get()
                                                  ->groupBy(function($date) {
                                                      return Carbon::parse($date->created_at)->format('Y');
                                                    });
-        $emp_age = Employee::get();
-        // dd($emps);
 
-        // $arr_count = count($arr);
-
-        return view('medical.employeesMedical.fullReport', compact('diagnoses', 'arr', 'arr_count', 'emps', 'emp_age'));
+        return view('medical.employeesMedical.fullReport', compact('diagnoses', 'arr', 'arr_count', 'emps'));
     }
 }

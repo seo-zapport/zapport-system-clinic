@@ -28,6 +28,6 @@ class NotificationComposer
      */
     public function compose(View $view)
     {
-        $view->with('count', $this->notificationList);
+        $view->with($this->notificationList);
     }
 }

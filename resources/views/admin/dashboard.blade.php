@@ -17,6 +17,7 @@
 				  @endif
 				  @if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
 				  	<a class="nav-link" id="v-follow-up-tab" data-toggle="pill" href="#v-follow-up" role="tab" aria-controls="v-follow-up" aria-selected="false">For Follow up</a>
+				  	<a class="nav-link" id="v-inc-preEmp-tab" data-toggle="pill" href="#v-inc-preEmp" role="tab" aria-controls="v-inc-preEmp" aria-selected="false">Pre-employement Medical</a>
 				  @endif
 				  @if (Gate::check('isAdmin') || Gate::check('isHr'))
 				  	<a class="nav-link" id="v-inc-requirements-tab" data-toggle="pill" href="#v-inc-requirements" role="tab" aria-controls="v-inc-requirements" aria-selected="false">Employees with incomplete requirements</a>
@@ -48,8 +49,8 @@
 														<td>{{ $seen->employee->emp_id }}</td>
 														<td>{{ ucwords($seen->employee->last_name) }} {{ ucwords($seen->employee->first_name) }} {{ ucwords($seen->employee->middle_name) }}</td>
 														<td>{{ $seen->created_at->format('M d, Y - h:i a') }}</td>
-														<td>{{ $seen->diagnoses->diagnosis }}</td>
-														<td>{{ $seen->note }}</td>
+														<td>{{ ucwords($seen->diagnoses->diagnosis) }}</td>
+														<td>{{ Str::words($seen->note, 10) }}</td>
 														<td>{{ ($seen->remarks == 'followUp') ? 'Follow up' : 'Done' }}</td>
 														<td><a href="{{ route('medical.show', ['employee' => $seen->employee->emp_id, 'employeesmedical' => $seen->id]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a></td>
 													</tr>
@@ -87,8 +88,8 @@
 														<td>{{ $empMed->employee->emp_id }}</td>
 														<td>{{ ucwords($empMed->employee->last_name) }} {{ ucwords($empMed->employee->first_name) }} {{ ucwords($empMed->employee->middle_name) }}</td>
 														<td>{{ $empMed->created_at->format('M d, Y - h:i a') }}</td>
-														<td>{{ $empMed->diagnoses->diagnosis }}</td>
-														<td>{{ $empMed->note }}</td>
+														<td>{{ ucwords($empMed->diagnoses->diagnosis) }}</td>
+														<td>{{ Str::words($empMed->note, 10) }}</td>
 														<td>{{ ($empMed->remarks == 'followUp') ? 'Follow up' : 'Done' }}</td>
 														<td><a href="{{ route('medical.show', ['employee' => $empMed->employee->emp_id, 'employeesmedical' => $empMed->id]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a></td>
 													</tr>
@@ -99,10 +100,40 @@
 												@endforelse
 											</tbody>
 										</table>
-										{{ $empMeds->links() }}					  				
 						  			</div>
 						  		</div>
 						  	</div>
+						</div>
+
+						<div class="tab-pane fade" id="v-inc-preEmp" role="tabpanel" aria-labelledby="v-inc-preEmp-tab">
+							<div class="card">
+								<div class="card-header"><strong>Employees without Pre-employment medical</strong></div>
+								<div class="card-body">
+									<div class="table-responsive">
+										<table id="IncPreEmp" class="table table-hover">
+											<thead class="thead-dark">
+												<th>Employee Number</th>
+												<th>Employee Name</th>
+												<th>Department - Positon</th>
+												<th>Action</th>
+											</thead>
+											@forelse (@$noPreEmpMeds as $emp)
+												<tr id="incPre">
+													<td>{{ $emp->emp_id }}</td>
+													<td>{{ $emp->last_name }} {{ $emp->first_name }} {{ $emp->middle_name }}</td>
+													<td>{{ $emp->departments->department }} - {{ $emp->positions->position }}</td>
+													<td><a href="{{ route('medical.employeeInfo', ['employee' => $emp->emp_id]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a></td>
+												</tr>
+												@empty
+													<tr>
+														<td colspan="4" class="text-center">Employees with no requirements not found!</td>
+													</tr>
+											@endforelse
+										</table>									
+									</div>
+
+								</div>
+							</div>
 						</div>
 					@endif
 					@if (Gate::check('isAdmin') || Gate::check('isHr'))
@@ -176,6 +207,7 @@
 		@else
 			<div class="col-12">
 				<div class="card">
+					<div class="card-header"><strong>Medical Records</strong></div>
 					<div class="card-body">
 						@if (empty(auth()->user()->employee))
 						<h2>Welcome!</h2>
@@ -215,9 +247,12 @@
 											<td>{{ $i++ }}</td>
 											<td>{{ $medsHistory->created_at->format('M d, Y - h:i a') }}</td>
 											<td>{{ $medsHistory->diagnoses->diagnosis }}</td>
-											<td>{{ $medsHistory->note }}</td>
+											<td>{{ Str::words($medsHistory->note, 15) }}</td>
 											<td>{{ ($medsHistory->remarks == 'followUp') ? 'Follow up' : 'Done' }}</td>
-											<td><a href="{{ route('dashboard.show', ['employee' => $medsHistory->employee->emp_id, 'employeesmedical' => $medsHistory->id]) }}" class="btn btn-info text-white">View</a></td>
+											<td>
+												<a href="{{ route('dashboard.show', ['employee' => $medsHistory->employee->emp_id, 'employeesmedical' => $medsHistory->id]) }}" class="btn btn-info text-white">	View
+												</a>
+											</td>
 										</tr>
 										@empty
 											<tr>

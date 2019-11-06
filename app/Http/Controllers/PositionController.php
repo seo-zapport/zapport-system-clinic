@@ -75,7 +75,6 @@ class PositionController extends Controller
             $posID['position_id'] = $lastID;
             $depID = request()->input(['department_id']);
             $dep = Department::find($depID);
-            // dd($dep);
             $dep->positions()->attach($posID);
             return back();
         }elseif (Gate::allows('isBanned')) {

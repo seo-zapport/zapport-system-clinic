@@ -79,11 +79,15 @@
 				<hr>
 
 				<div class="form-row">
-					<div class="form-group col-md-6">
+					<div class="form-group col-md-4">
 						<label for="college">Tertiary / College</label>
 						<p class="h5">{{ strtoupper(@$employee->college) }}</p>
 					</div>
-					<div class="form-group col-md-6">
+					<div class="form-group col-md-4">
+						<label for="course">Course</label>
+						<p class="h5">{{ strtoupper(@$employee->course) }}</p>
+					</div>
+					<div class="form-group col-md-4">
 						<label for="college_grad_date">Year Graduated</label>
 						<p class="h5">{{ ($employee->college_grad_date != null) ? Carbon\carbon::parse($employee->college_grad_date)->format("M d, Y") : @$employee->college_grad_date }}</p>
 					</div>

@@ -55,8 +55,5 @@
 	</div>
 </div>
 
-
-
-
 {{ $posts->links() }}
 @endsection

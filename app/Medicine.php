@@ -35,15 +35,4 @@ class Medicine extends Model
     {
         $this->attributes['created_at'] = (new Carbon($value))->format('Y-m-d H');
     }
-
-    // public function getExpirationdateAttribute()
-    // {
-    //     return Carbon::parse($this->attributes['expiration_date'])->format('M d, Y');
-    // }
-
-    // public function getCreatedatAttribute()
-    // {
-    //     return Carbon::parse($this->attributes['created_at'])->format('M d, Y');
-    // }
-
 }

@@ -2,10 +2,11 @@
 
 namespace App\Repositories;
 
-use App\Diagnosis;
-use App\Employee;
 use App\Generic;
+use App\Employee;
 use App\Medicine;
+use App\Diagnosis;
+use App\Preemployment;
 use App\Employeesmedical;
 use Illuminate\Support\Facades\Gate;
 
@@ -24,6 +25,15 @@ class NotificationRepository
         if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')){
             $empsMedsCount = Employeesmedical::where('remarks', 'followUp')->count();
         }
+        if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')){
+
+            $preEmp = Preemployment::get();
+            foreach ($preEmp as $preEmpID) {
+                $array[] = $preEmpID->employee_id;
+            }
+            $noPreEmpMedsCount = Employee::whereNotIn('id', $array)->count();
+
+        }
         if (Gate::allows('isAdmin') || Gate::allows('isDoctor')){
             $empsMedFF =  Employeesmedical::where('seen', 0)->count();
         }
@@ -40,10 +50,9 @@ class NotificationRepository
                     $arr[] = $reg->hired_date->diffForHumans();
                 }
             }
-
         }
         return [
-             'admin_nurse_doctor' =>  @$empsMedsCount,
+             'admin_nurse_doctor' =>  @$empsMedsCount + @$noPreEmpMedsCount,
              'admin_doctor' =>  @$empsMedFF,
              'admin_hr' =>  @$emps,
              'admin_hr2' =>  (@$arr != null) ? count(@$arr) : NULL,

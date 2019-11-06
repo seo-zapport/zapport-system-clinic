@@ -6179,7 +6179,8 @@ figure {
 #v-new-consultation-tab span,
 #v-follow-up-tab span,
 #v-inc-requirements-tab span,
-#v-inc-emp-6months-tab span {
+#v-inc-emp-6months-tab span,
+#v-inc-preEmp-tab span {
   height: 25px;
   width: 25px;
   background-color: #bbb;
@@ -7327,6 +7328,3 @@ figure {
   }
 }
 
-.nav-item-btn{
-  padding: 2px 7px;
-}

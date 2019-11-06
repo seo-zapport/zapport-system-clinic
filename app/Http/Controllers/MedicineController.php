@@ -91,12 +91,6 @@ class MedicineController extends Controller
 
             if (count($meds) > 0) {
 
-                // foreach ($meds as $med) {
-                //     dd($med->qty_stock + $request->qty_input);
-                //     $med->qty_stock = $med->qty_stock + $request->qty_input;
-                //     $med->save();
-                // }
-
                  $arr = array();
                 for ($i=1; $i <= $multiplier; $i++) { 
                     $arr[] = $request;
@@ -209,7 +203,6 @@ class MedicineController extends Controller
                     $fmeds = $rawmeds->orderBy('medicines.id', 'desc');
                     $printmeds = $fmeds->get();
                     $meds = $fmeds->paginate(10);
-                // return $countMeds;
             }
 
         }elseif (Gate::allows('isBanned')) {
@@ -220,8 +213,6 @@ class MedicineController extends Controller
            return back();
 
         }
-
-        // dd($meds);
 
         $medlogs = ['meds'=> $printmeds, 'countMeds' => $countMeds];
 
@@ -284,7 +275,6 @@ class MedicineController extends Controller
     {
         if (Gate::allows('isAdmin') || Gate::allows('isHr') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
             $log1 = Medicine::where('brand_id', $medbrand->id)->where('generic_id', $generic->id)->orderBy('created_at', 'desc')->get();
-            // dd($log1);
             $rawlogs = Medicine::join('generics', 'generics.id', '=', 'medicines.generic_id')
                             ->join('medbrands', 'medbrands.id', '=', 'medicines.brand_id')
                             ->join('users', 'users.id', '=', 'medicines.user_id')
@@ -324,7 +314,6 @@ class MedicineController extends Controller
                 
             }
 
-               //dd($logs);
             $this->PrintMedCSV($printlogs,'viewlogs',$medbrand->bname, $generic->gname); 
     
             return view('inventory.medicine.logs', compact('logs', 'medbrand', 'generic', 'log1', 'search', 'loglist', 'logsearch'));

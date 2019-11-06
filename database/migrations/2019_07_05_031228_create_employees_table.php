@@ -40,6 +40,7 @@ class CreateEmployeesTable extends Migration
             $table->text('highschool');
             $table->date('highschool_grad_date');
             $table->text('college')->nullable();
+            $table->text('course')->nullable();
             $table->date('college_grad_date')->nullable();
             // Work Experience
             $table->text('experience')->nullable();

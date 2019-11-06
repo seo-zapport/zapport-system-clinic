@@ -21,7 +21,6 @@
 							<img src="{{ asset('storage/uploaded/'.@$employee->profile_img) }}" alt="{{ @$employee->profile_img }}" class="img-fluid rounded" onerror="javascript:this.src='{{url( '/images/default.png' )}}'" >
 						</div>
 					</div>
-						
 				@endif
 			</div>
 			<div class="col-10">
@@ -36,16 +35,22 @@
 							</button>
 							<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
 								@if (@$employee->preemployment == null)
-									<a class="dropdown-item" href="#" data-toggle="modal" data-target="#pre-emp">Add</a>
+									@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
+										<a class="dropdown-item" href="#" data-toggle="modal" data-target="#pre-emp">Add</a>
+									@else
+										<a class="dropdown-item" href="#" onclick="return confirm('Access denied! Only Doctor or Nurse can add an Item')">Add</a>
+									@endif
 								@else
-									<form method="POST" action="{{ route('pre_emp.delete', ['pre_emp.delete' => @$employee->preemployment->id]) }}">
-										@csrf
-										@method('DELETE')
-										<button class="dropdown-item"  onclick="return confirm('Are you sure you want to delete {{ @$employee->preemployment->pre_employment_med }} File?')" data-id="{{ @$employee->preemployment->id }}">
-											Remove
-										</button>
-									</form>
-									<a class="dropdown-item" href="{{ route('pre_emp.download', ['pre_emp' => @$employee->preemployment->pre_employment_med]) }}" download>View</a>
+									@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
+										<form method="POST" action="{{ route('pre_emp.delete', ['pre_emp.delete' => @$employee->preemployment->id]) }}">
+											@csrf
+											@method('DELETE')
+											<button class="dropdown-item"  onclick="return confirm('Are you sure you want to delete {{ @$employee->preemployment->pre_employment_med }} File?')" data-id="{{ @$employee->preemployment->id }}">
+												Remove
+											</button>
+										</form>
+									@endif
+										<a class="dropdown-item" href="{{ route('pre_emp.download', ['pre_emp' => @$employee->preemployment->pre_employment_med]) }}" download>View</a>
 								@endif
 							</div>
 						</div>
@@ -113,8 +118,8 @@
 					<tr>
 						<td>{{ $i++ }}</td>
 						<td>{{ $medsHistory->created_at->format('M d, Y - h:i a') }}</td>
-						<td>{{ $medsHistory->diagnoses->diagnosis }}</td>
-						<td>{{ $medsHistory->note }}</td>
+						<td>{{ ucwords($medsHistory->diagnoses->diagnosis) }}</td>
+						<td>{{ Str::words($medsHistory->note, 15) }}</td>
 						<td>{{ ($medsHistory->remarks == 'followUp') ? 'Follow up' : 'Done' }}</td>
 						<td><a href="{{ route('medical.show', ['employee' => $employee->emp_id, 'employeesmedical' => $medsHistory->id]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i>View</a></td>
 					</tr>
@@ -127,8 +132,6 @@
 		</table>		
 	</div>
 </div>
-
-
 
 {{ $search->links() }}
 @include('layouts.errors')
@@ -329,7 +332,6 @@ jQuery(document).ready(function($) {
 	          brand.empty();
 	          qty.val('');
 	       }
-
 
 			function getData2(gid, bid, qty){
 

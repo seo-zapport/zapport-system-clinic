@@ -27,7 +27,7 @@ class EmployeeController extends Controller
      */
     public function index(Request $request)
     {
-        // dd($request->filter_status);
+
         if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
             if ($request->search) {
                 $rawemployees = Employee::orWhere(\DB::raw("concat(emp_id, ' ', first_name, ' ', last_name, ' ', middle_name)"), 'like', '%'.$request->search.'%')
@@ -42,8 +42,6 @@ class EmployeeController extends Controller
                 $employees = $rawemployees->paginate(10)->appends(['filter_gender' => $request->filter_gender]);
                 $filter_gender = $request->filter_gender;
                 $empcount =  Employee::where('gender', $request->filter_gender)->get()->count();
-
-
 
             }elseif ($request->filter_gender == NULL && $request->filter_empType != NULL && $request->filter_age == NULL && $request->filter_status == NULL){
 
@@ -162,19 +160,14 @@ class EmployeeController extends Controller
 
             $emp_age = Employee::orderBY('birthday','desc')->get();
 
-
-            //dd($employees2);    
-
             if(count($employees2)>0){
                 $this->printCsv($employees2); 
             }else{
-                $this->printCsv(null);  
+                $this->printCsv(null);
             }
-
 
             return view('hr.employee.index', compact('employees', 'search', 'empcount', 'filter_gender', 'filter_empType', 'filter_both', 'filter_age', 'filter_all', 'emp_age', 'filter_g_a', 'filter_e_a', 'filter_status', 'filter_g_s', 'filter_t_s', 'filter_s_a', 'filter_g_t_s', 'filter_t_a_s', 'filter_g_a_s', 'filter_super'))
             ->nest('print', 'hr.employee.print_emps', compact('employees2', 'search', 'empcount', 'filter_gender', 'filter_empType', 'filter_both', 'filter_age', 'filter_all', 'emp_age', 'filter_g_a', 'filter_e_a', 'filter_status', 'filter_g_s', 'filter_t_s', 'filter_s_a', 'filter_g_t_s', 'filter_t_a_s', 'filter_g_a_s', 'filter_super'));
-
 
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();
@@ -200,7 +193,6 @@ class EmployeeController extends Controller
         }else{
             return back();
         }
-
     }
 
     /**
@@ -269,6 +261,7 @@ class EmployeeController extends Controller
             $newEmp->highschool                 = $request->highschool;
             $newEmp->highschool_grad_date       = $request->highschool_grad_date;
             $newEmp->college                    = $request->college;
+            $newEmp->course                     = $request->course;
             $newEmp->college_grad_date          = $request->college_grad_date;
             $newEmp->person_to_contact          = $request->person_to_contact;
             $newEmp->person_to_contact_address  = $request->person_to_contact_address;
@@ -433,7 +426,7 @@ class EmployeeController extends Controller
                 $childrens  = serialize($arr1[0]);
             }
 
-            if ($employee->profile_img != null && $request->hasFile('profile_img')) {
+            if ($employee->profile_img != 'default.png' && $request->hasFile('profile_img')) {
 
                 Storage::delete('public/uploaded/'.$employee->profile_img);
                 $filePath = 'public/uploaded';
@@ -441,7 +434,7 @@ class EmployeeController extends Controller
                 $newFileName = rand(11111, 99999).'.'.$fileExtension;
                 $request->file('profile_img')->storeAs($filePath, $newFileName);
 
-            }elseif($employee->profile_img == null && $request->hasFile('profile_img')){
+            }elseif($employee->profile_img == 'default.png' && $request->hasFile('profile_img')){
 
                 $filePath = 'public/uploaded';
                 $fileExtension = $request->file('profile_img')->getClientOriginalExtension();
@@ -483,6 +476,7 @@ class EmployeeController extends Controller
             $employee->highschool                   = $request->highschool;
             $employee->highschool_grad_date         = $request->highschool_grad_date;
             $employee->college                      = $request->college;
+            $employee->course                       = $request->course;
             $employee->college_grad_date            = $request->college_grad_date;
             $employee->person_to_contact            = $request->person_to_contact;
             $employee->person_to_contact_address    = $request->person_to_contact_address;
@@ -552,7 +546,6 @@ class EmployeeController extends Controller
             return back();
         }
     }
-
 
     public function printCsv($emplist){
 

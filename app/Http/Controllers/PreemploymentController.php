@@ -129,7 +129,7 @@ class PreemploymentController extends Controller
 
     public function download($pre_emp)
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse') || Gate::allows('isHr')) {
             return response()->download(storage_path("app/public/uploaded/pre-employment/".$pre_emp));
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();

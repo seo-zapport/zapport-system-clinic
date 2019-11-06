@@ -36,15 +36,21 @@
 							</button>
 							<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
 								@if (@$employee->preemployment == null)
-									<a class="dropdown-item" href="#" data-toggle="modal" data-target="#pre-emp">Add</a>
+									@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
+										<a class="dropdown-item" href="#" data-toggle="modal" data-target="#pre-emp">Add</a>
+									@else
+										<a class="dropdown-item" href="#" onclick="return confirm('Access denied! Only Doctor or Nurse can add an Item')">Add</a>
+									@endif
 								@else
-									<form method="POST" action="{{ route('pre_emp.delete', ['pre_emp.delete' => @$employee->preemployment->id]) }}">
-										@csrf
-										@method('DELETE')
-										<button class="dropdown-item"  onclick="return confirm('Are you sure you want to delete {{ @$employee->preemployment->pre_employment_med }} File?')" data-id="{{ @$employee->preemployment->id }}">
-											Remove
-										</button>
-									</form>
+									@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
+										<form method="POST" action="{{ route('pre_emp.delete', ['pre_emp.delete' => @$employee->preemployment->id]) }}">
+											@csrf
+											@method('DELETE')
+											<button class="dropdown-item"  onclick="return confirm('Are you sure you want to delete {{ @$employee->preemployment->pre_employment_med }} File?')" data-id="{{ @$employee->preemployment->id }}">
+												Remove
+											</button>
+										</form>
+									@endif
 									<a class="dropdown-item" href="{{ route('pre_emp.download', ['pre_emp' => @$employee->preemployment->pre_employment_med]) }}" download>View</a>
 								@endif
 							</div>
@@ -75,9 +81,6 @@
 			<div class="row my-3">
 				<div class="col-12 col-md-8">
 					<h2 class="text-secondary zp-text-22">Diagnosis: <span class="text-dark">{{ ucwords($employeesmedical->diagnoses->diagnosis) }}</span></h2>
-					{{-- <p class="mb-2"><small class="text-muted">Date: {{ $employeesmedical->created_at->format('M d, Y - h:i a') }}</small></p>
-					<p class="mb-1"><span class="text-dark font-weight-bold">Attendant</span>: {{ ucwords($employeesmedical->user->employee->first_name) }} {{ ucwords($employeesmedical->user->employee->middle_name) }} {{ ucwords($employeesmedical->user->employee->last_name) }}</p>
-					<p class="mb-1"><span class="text-dark font-weight-bold">Remarks</span>: {{ ($employeesmedical->remarks == 'followUp') ? 'Follow up' : 'Done' }}</p> --}}
 				</div>
 				@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
 				<div class="col-12 col-md-4 text-right">
@@ -107,14 +110,6 @@
 			</ul>
 			<div class="tab-content" id="pills-tabContent">
 				<div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-					{{-- <div class="zp-notes light-yellow">
-						<div class="zp-notes-header">
-							<h4 class="zp-notes-title">Doctor's Note</h4>
-						</div>
-						<div class="zp-notes-body">
-							<p>{{ ucfirst($employeesmedical->note) }}</p>
-						</div>
-					</div> --}}
 					<div class="table-responsive">
 						<table class="table">
 							<thead class="thead-dark">
@@ -131,7 +126,11 @@
 									<td>{{ ucfirst($employeesmedical->note) }}</td>
 									<td>
 										@if ($employeesmedical->attachment != null)
-											<a class="btn-dl" href="{{ route('download', ['file_name' => $employeesmedical->attachment]) }}" download>{{ $employeesmedical->attachment }}</a>
+											<a class="btn-dl" href="{{ route('download', ['file_name' => $employeesmedical->attachment]) }}" download>
+												{{ $employeesmedical->attachment }}
+											</a>
+										@else
+											<span class="text-muted">None</span>
 										@endif
 									</td>
 									<td class="w-15">{{ ucwords($employeesmedical->user->employee->first_name) }} {{ ucwords($employeesmedical->user->employee->middle_name) }} {{ ucwords($employeesmedical->user->employee->last_name) }}</td>
@@ -486,12 +485,6 @@ jQuery(document).ready(function($) {
     i++;
 
     });
-    // Children
-    // $("#editMedicine").click(function(event) {
-    //   $('<div id="medicineField" class="col-auto my-1 form-inline editmedicine"><label for="children" class="mr-2">Child\'s Name</label><input type="text" class="form-control mr-2" name="children['+e+'][]" placeholder="Child\'s Name" value=""><label for="children" class="mr-2">Birthday</label><input type="date" class="form-control mr-2" name="children['+e+'][]" " value=""><label for="children" class="mr-2">Gender</label><input type="text" class="form-control mr-2" name="children['+e+'][]" placeholder="Gender" value=""><a id="removeChildren" class="btn btn-danger text-white"><i class="fa fa-times"></i></a></div>').appendTo('#meds');
-    // e++;
-
-    // });
 
     // Children
     $("body").on("click", "#removeChildren", function(event){

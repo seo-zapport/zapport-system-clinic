@@ -6,6 +6,7 @@ use App\Generic;
 use App\Employee;
 use App\Medicine;
 use App\Diagnosis;
+use App\Preemployment;
 use App\Employeesmedical;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -29,7 +30,16 @@ class DashboardController extends Controller
     {
         if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')){
 
-            $empMeds = Employeesmedical::where('remarks', 'followUp')->paginate(10);
+            $empMeds = Employeesmedical::where('remarks', 'followUp')->get();
+
+        }
+        if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')){
+
+            $preEmp = Preemployment::get();
+            foreach ($preEmp as $preEmpID) {
+                $array[] = $preEmpID->employee_id;
+            }
+            $noPreEmpMeds = Employee::whereNotIn('id', $array)->get();
 
         }
         if (Gate::allows('isAdmin') || Gate::allows('isDoctor')){
@@ -79,7 +89,7 @@ class DashboardController extends Controller
             $meds = Medicine::get();
         }
 
-        return view('admin.dashboard', compact('empMeds', 'emps', 'notSeen', 'employee', 'gens', 'meds', 'search', 'result', 'emps2'));
+        return view('admin.dashboard', compact('empMeds', 'emps', 'notSeen', 'employee', 'gens', 'meds', 'search', 'result', 'emps2', 'noPreEmpMeds'));
     }
 
     /**

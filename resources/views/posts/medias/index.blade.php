@@ -101,7 +101,7 @@
 											<input type="text" value="{{ asset('storage/uploaded/media/'.$m->file_name) }}" readonly="">
 										</label>
 									</div>
-									<button type="submit" class="btn btn-link text-secondary">edit</button>
+									<button type="submit" class="btn btn-link text-secondary">Update</button>
 								</form>
 								<div class="actions">
 									<form action="{{ route('media.delete', ['media' => $m->id]) }}" method="post">

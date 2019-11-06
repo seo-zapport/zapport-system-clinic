@@ -221,60 +221,6 @@
 	</div>
 </div>
 
-<!-- Large modal -->
-{{-- <div id="featImgModal" class="modal fade media-model zp-core-ui" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-	<div class="modal-dialog media-dialog">
-		<div class="media-modal-content modal-content" role="document">
-			<div class="edit-attachment-frame mode-select hide-menu hide-router">
-				<div class="edit-media-header">
-					<button type="button" class="close media-modal-close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true" class="media-modal-icon">×</span>
-					</button>
-				</div>
-				<div class="media-frame-title">
-					<h1 id="myLargeModalLabel">Select Featured Image</h1>
-				</div>
-				<div class="media-frame-content">
-					<div class="attachment-details save-ready">
-						<div class="attachment-media-view landscape">
-							<div class="thumbnail thumbnail-image">
-								<ul id="allFT" tabindex="-1" class="attachment ui-media">
-									@foreach ($employees as $media)
-										<li class="attachment-list">
-											<div class="attachment-preview type-image landscape">
-												<div class="thumbnail" id="ftdimg" data-target="{{ '#modal-'.$media->id }}">
-													<div class="centered">
-														<img src="{{ asset('storage/uploaded/media/'.$media->file_name) }}">
-													</div>
-												</div>
-											</div>
-										</li>
-									@endforeach
-								</ul>
-							</div>
-						</div>
-						<div class="attachment-info">
-							<div class="details">
-								<div class="filename"><strong>File name:</strong><span id="filename"></span></div>
-								<div class="filetype"><strong>File type:</strong><span id="filetype"></span></div>
-								<div class="uploaded"><strong>Uploaded on:</strong><span id="uploaded_date"></span></div>
-								<div class="file-size"><strong>File size:</strong><span id="filesize"></span></div>
-								<div class="dimensions"><strong>Dimensions:</strong><span id="dimensions"></span></div>
-							</div>
-							<div class="actions">
-								<button class="btn btn-info" data-dismiss="modal" aria-label="Close">insert</button>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="col-12 text-center">
-		</div>
-	</div>
-</div> --}}
-
-
 <!-- Modal Add -->
 <div id="featImgModal" class="modal fade media-model zp-core-ui" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 	<div class="modal-dialog media-dialog" role="document">
@@ -435,7 +381,7 @@
 	        	success: function(response){
 	        		$('#tagForm')[0].reset();
 	        		$("#tagModal").modal('hide');
-	        		$('select[name="tag_id[]"]').append('<option value="'+ response.id +'">'+ response.tag_name +'</option>');
+	        		$('select[name="tag_id[]"]').append('<option selected="true" value="'+ response.id +'">'+ response.tag_name +'</option>');
 	        	},
 	        	error: function(response){
 	        		document.getElementById("errorlogTag").innerHTML = '';
