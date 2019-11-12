@@ -341,10 +341,12 @@ class MedicineController extends Controller
         $typecsv = $typeprint;
         $fileName = "inventory_medicine";
         
-        if($typeprint == 'logsinput'){
-            $countmed = $meds['meds']->count();
-        }else{
-            $countmed = $meds->count();
+        if ($meds != null) {
+            if($typeprint == 'logsinput'){
+                $countmed = $meds['meds']->count();
+            }else{
+                $countmed = $meds->count();
+            }
         }
 
         if($typeprint == 'viewlogs'){

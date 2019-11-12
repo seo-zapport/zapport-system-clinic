@@ -189,6 +189,8 @@
 											<td>
 												@if ($followups->attachment != null)
 													<a class="btn-dl" href="{{ route('download', ['file_name' => $followups->attachment]) }}" download>{{ $followups->attachment }}</a>
+												@else
+													<span class="text-muted">None</span>
 												@endif
 											</td>
 											<td  class="text-muted w-15">{{ $followups->created_at->format('M d, Y - h:i a') }}</td>
