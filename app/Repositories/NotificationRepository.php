@@ -46,7 +46,7 @@ class NotificationRepository
 
             $emps2 = Employee::where('employee_type', 0)->get();
             foreach ($emps2 as $reg) {
-                if ($reg->hired_date->diffForHumans() == '6 months ago' || $reg->hired_date->diffForHumans() == '5 months ago') {
+                if ($reg->hired_date->diffForHumans() == '8 months ago' || $reg->hired_date->diffForHumans() == '7 months ago' || $reg->hired_date->diffForHumans() == '6 months ago' || $reg->hired_date->diffForHumans() == '5 months ago' || strstr($reg->hired_date->diffForHumans(), 'years ago')) {
                     $arr[] = $reg->hired_date->diffForHumans();
                 }
             }

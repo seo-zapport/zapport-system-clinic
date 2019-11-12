@@ -178,7 +178,7 @@
 		<div class="c-info row">
 		@php
 			$arr = unserialize(@$employee->children);
-			if (!empty(@$arr)) {
+			if (!empty($arr)) {
 				$count = count(@$arr);
 			}else{ 
 				if (!empty(@$arr)){

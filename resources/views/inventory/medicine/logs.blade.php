@@ -65,7 +65,11 @@
 					<li class="nav-item-btn"><a class="btnPrintlog" href="#"><i class="fas fa-print text-secondary"></i> PRINT Available</a></li> 
 					<li class="nav-item-btn"><a class="btnPrintexpire" href="#"><i class="fas fa-print text-secondary"></i> PRINT Expired</a></li> 
 					@endif
-					<li class="nav-item-btn"><a href="{{ asset('storage/uploaded/print/inventory/'.@$fileName.'.csv')}}" download="{{ @$fileName.'.csv'}}" target="_blank"><i class="fas fa-file-csv text-secondary"></i> CSV</a></li>
+					<li class="nav-item-btn"><a href="{{ asset('storage/uploaded/print/inventory/'.@$fileName.'.csv')}}" download="{{ @$fileName.'.csv'}}" target="_blank"><i class="fas fa-file-csv text-secondary"></i> CSV All</a></li>
+					@if(app('request')->input('expired') != 'on')
+					<li class="nav-item-btn"><a href="{{ asset('storage/uploaded/print/inventory/'.@$fileName.'_log.csv')}}" download="{{ @$fileName.'_log.csv'}}" target="_blank"><i class="fas fa-file-csv text-secondary"></i> CSV Available</a></li>
+					<li class="nav-item-btn"><a href="{{ asset('storage/uploaded/print/inventory/'.@$fileName.'_expired.csv')}}" download="{{ @$fileName.'_expired.csv'}}" target="_blank"><i class="fas fa-file-csv text-secondary"></i> CSV Expired</a></li>
+					@endif
 				</ul>
 			</div>
 		</div>
@@ -118,7 +122,6 @@
 							<a href="{{ route('medicine.show', ['medbrand' => $log->bname, 'generic' => $log->gname, 'inputDate' => $log->orig, 'expDate' => 
 							$log->expiration_date]) }}" class="show-edit btn btn-link {{ ($log->expiration_date <= NOW()) ? ' text-white' : 'text-secondary' }}"><i class="far fa-eye"></i>View</a>
 							</td>
-
 						</tr>
 					@php
 						$i++;
