@@ -134,6 +134,7 @@ Route::group(['prefix' => 'inventory'], function(){
 	Route::post('medicine/generic', 'GenericController@store')->name('genericname.add');
 	Route::delete('medicine/generic/{generic}', 'GenericController@destroy')->name('genericname.delete');
 	Route::get('medicine/generic/{generic}', 'GenericController@show')->name('genericname.show');
+	Route::get('medicine/generic/suggestions/{generic}', 'GenericController@genericSuggestions')->name('generic_suggestions');
 
 	// Medicine
 	Route::get('medicine', 'MedicineController@index')->name('medicine');

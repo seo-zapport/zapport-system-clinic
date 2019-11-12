@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title', '| New Post')
-
+@section('new_post', 'active')
 @section('heading-title')
 	<i class="fas fa-book text-secondary"></i> Add New Post
 @endsection

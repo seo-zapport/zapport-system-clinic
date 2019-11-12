@@ -9,10 +9,11 @@
 
 <div class="row">
 	<div class="col-12 col-md-6">
-		<form method="get">
+		<form id="diagnosis_suggetions" method="get" autocomplete="off">
 			<div class="form-row">
 				<div class="form-group col-md-4">
 					<input type="search" name="search" class="form-control" value="{{ (!empty($search)) ? $search : '' }}" placeholder="Search for Generic Name">
+					<div id="suggestions_list" class="autocomplete-items" style="position: absolute; width: 97%"></div>
 				</div>
 				<div class="form-group col-md-1 d-inline-flex">
 					<button type="submit" class="btn btn-success mr-2">Search</button>
@@ -52,6 +53,7 @@
 					<th>Stock Logs</th>
 				</thead>
 				<tbody>
+					<span class="font-weight-bold">Total number of Medicines: {{ $total_meds }}</span>
 					@if ($meds != null)		
 					@forelse ($meds as $med)
 						<tr id="MedRow">
