@@ -25,10 +25,10 @@
 			        	@foreach ($position->departments as $department)
 							<tr>
 								<td>
-									{{ ucwords($position->position) }}
+									{{ strtoupper($position->position) }}
 								</td>
 				        		<td>
-				        			{{ ucwords($department->department) }}
+				        			{{ strtoupper($department->department) }}
 				        		</td>
 								<td>
 									{{ $employees->where('department_id', $department->id)->where('position_id', $position->id)->count() }}
@@ -52,7 +52,8 @@
 							</tr>
 					@endforelse
 				</tbody>
-			</table>			
+			</table>
+			{{ $positions->links() }}			
 		</div>
 
 		@include('layouts.errors')
@@ -85,7 +86,7 @@
 					<select name="department_id" id="department_id" class="form-control" required>
 							<option selected="true" disabled="disabled" value=""> Select Department </option>
 						@foreach ($departments as $department)
-							<option value="{{ $department->id }}">{{ $department->department }}</option>
+							<option value="{{ $department->id }}">{{ strtoupper($department->department) }}</option>
 						@endforeach
 					</select>
 					</div>

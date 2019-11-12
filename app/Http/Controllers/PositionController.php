@@ -26,7 +26,7 @@ class PositionController extends Controller
     public function index()
     {
         if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
-            $positions = Position::orderBy('id', 'desc')->get();
+            $positions = Position::orderBy('id', 'desc')->paginate(10);
             $departments = Department::orderBy('department', 'asc')->get();
             $employees = Employee::get();
             return view('hr.position.index', compact('positions', 'departments', 'employees'));
