@@ -11,15 +11,16 @@
 		<button class="btn zp-btn btn-outline-zp btn-sm" data-toggle="collapse" data-target="#clinicMedia" aria-expanded="false" aria-controls="clinicMedia">Add Media</button>
 	</div>
 	<div class="media-form-wrap collapse" id="clinicMedia">
-		<form id="media_up"  enctype="multipart/form-data" >
+		<form id="media_up" method="POST" enctype="multipart/form-data" action="{{ route('media.upload') }}">
 			@csrf
 			<div class="uploader">
 		    	<h5 class="text-muted my-4">Select a files to upload</h5>
 				<label for="upload_file" id="label_file_upload">
 					Select Files
-				</label>
+				</label><br>
+				<small id="errorlogMedia" class="text-muted mb-2 mt-2"></small>
 				<div class="uploader_wrap">
-					<input type="file" name="file[]" id="upload_file" multiple>
+					<input type="file" name="file_name[]" id="upload_file" multiple>
 				</div>
 			</div>
 		</form>
@@ -140,4 +141,5 @@
 			<div class="no-media-wrap"><p class="no-media">No media files found.</p></div>
 		</div>
 @endforelse
+
 @endsection

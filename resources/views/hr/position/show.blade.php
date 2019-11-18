@@ -3,7 +3,7 @@
 @section('reg_pos', 'active')
 {{-- @section('dash-title', ucwords($position->position)) --}}
 @section('heading-title')
-	<i class="fas fa-tasks text-secondary"></i> {{ ucwords($position->position) }}
+	<i class="fas fa-tasks text-secondary"></i> {{ strtoupper($department->department) }} - {{ ucwords($position->position) }}
 @endsection
 @section('dash-content')
 @section('back')
@@ -41,9 +41,9 @@
 							<tr>
 								<td colspan="4" class="text-center">No Records Found!</td>
 							</tr>
-					@endforelse		
+					@endforelse
 				</tbody>
-			</table>			
+			</table>
 		</div>
 	</div>
 </div>

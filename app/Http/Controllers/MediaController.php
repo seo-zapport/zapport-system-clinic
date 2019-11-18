@@ -176,4 +176,39 @@ class MediaController extends Controller
             return back();
         }
     }
+
+    public function addMedia(Request $request)
+    {
+
+        if (Gate::check('isAdmin') || Gate::check('isHr') || Gate::check('isDoctor') || Gate::allows('isNurse')) {
+            $atts = $request->validate(
+                [
+                'file_name.*'   =>  ['mimes:jpg,jpeg,png,gif', 'max:2240'],
+                ]
+            );
+
+            if ($request->hasFile('file_name')) {
+                $counter = count($request->file_name);
+                foreach ($request->file_name as $files) {
+                    $filepath = 'public/uploaded/media';
+                    $fileName = $files->getClientOriginalName();
+                    $atts['alt'] = $fileName;
+                    $mediaSearch = Media::where('file_name', $fileName)->first();
+                    if ($mediaSearch === NULL) {
+                        $files->storeAs($filepath, $fileName);
+                        $atts['file_name'] = $fileName;
+                        auth()->user()->addMedia(
+                            new Media($atts)
+                        );
+                    }
+                }
+                return back();
+            }
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
+        }else{
+            return back();
+        }
+    }
 }

@@ -21,7 +21,7 @@
 				<tbody>
 					@forelse ($deps as $dep)
 						<tr>
-							<td>{{ $dep->department }}</td>
+							<td>{{ strtoupper($dep->department) }}</td>
 							<td>{{ $dep->employee->count() }}</td>
 							<td class="w-15 px-0">
 								<form method="post" action="{{ route('hr.dep.deleteDep', ['department' => $dep->department]) }}">

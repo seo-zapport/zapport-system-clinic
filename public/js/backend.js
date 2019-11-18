@@ -399,7 +399,7 @@ jQuery(document).ready(function($){
   });
 
 
-// Employee Gender_____________________________________________________________________________________________________
+  // Employee Gender_____________________________________________________________________________________________________
 
   $("#advncfilter select[name='filter_gender']").on('change', function(e){
     var selected = $(this).children('option:selected').val();
@@ -423,7 +423,7 @@ jQuery(document).ready(function($){
     $("#clear_gender").addClass('d-none');
   }
 
-// Employee Type_____________________________________________________________________________________________________
+  // Employee Type_____________________________________________________________________________________________________
 
   $("#advncfilter select[name='filter_empType']").on('change', function(e){
     var selected = $(this).children('option:selected').val();
@@ -446,7 +446,7 @@ jQuery(document).ready(function($){
     $("#clear_type").addClass('d-none');
   }
 
-// Employee Age_____________________________________________________________________________________________________
+  // Employee Age_____________________________________________________________________________________________________
 
   $("#advncfilter select[name='filter_age']").on('change', function(e){
     var selected = $(this).children('option:selected').val();
@@ -469,7 +469,7 @@ jQuery(document).ready(function($){
     $("#clear_age").addClass('d-none');
   }
 
-// Employee Status_____________________________________________________________________________________________________
+  // Employee Status_____________________________________________________________________________________________________
 
   $("#advncfilter select[name='filter_status']").on('change', function(e){
     var selected = $(this).children('option:selected').val();
@@ -492,7 +492,7 @@ jQuery(document).ready(function($){
     $("#clear_status").addClass('d-none');
   }
 
-// Employees Medical Medicine_____________________________________________________________________________________________________
+  // Employees Medical Medicine_____________________________________________________________________________________________________
 
   $("#myform #select_generic").on('click', function(e){
     $('#myform select[name="generic_id[0][0]"]').prop('selectedIndex',0);
@@ -525,7 +525,7 @@ jQuery(document).ready(function($){
    }
   });
 
-// Employees Medical Medicine In Show Blade_____________________________________________________________________________________________________
+  // Employees Medical Medicine In Show Blade_____________________________________________________________________________________________________
 
   $("#myform-show #select_generic_show").on('click', function(e){
     $('#myform-show select[name="generic_id[0][0]"]').prop('selectedIndex',0);
@@ -558,7 +558,7 @@ jQuery(document).ready(function($){
    }
   });
 
-// Employees Children if any (CREATE)_____________________________________________________________________________________________________
+  // Employees Children if any (CREATE)_____________________________________________________________________________________________________
 
   $("#children select[name='children[0][]']").on('change', function(e){
     var selected = $(this).children('option:selected').val();
@@ -583,7 +583,7 @@ jQuery(document).ready(function($){
 
   });
 
-// Employees Children if any (EDIT)_____________________________________________________________________________________________________
+  // Employees Children if any (EDIT)_____________________________________________________________________________________________________
 
   $("#children select[name='children[0][]']").on('change', function(e){
     var selected = $(this).children('option:selected').val();
@@ -608,7 +608,7 @@ jQuery(document).ready(function($){
 
   });
 
-// Medicines History_____________________________________________________________________________________________________
+  // Medicines History_____________________________________________________________________________________________________
 
   $("#filter_med_history select[name='search_date']").on('change', function(e){
     var selected = $(this).children('option:selected').val();
@@ -629,7 +629,7 @@ jQuery(document).ready(function($){
     $("#med_history_search_date").removeClass('d-none');
   }
 
-// Medicines Logs_____________________________________________________________________________________________________
+  // Medicines Logs_____________________________________________________________________________________________________
 
   $("#meds_log select[name='search']").on('change', function(e){
     var selected = $(this).children('option:selected').val();
@@ -650,7 +650,7 @@ jQuery(document).ready(function($){
     $("#med_log_search_date").removeClass('d-none');
   }
 
-// Generic Suggestions_____________________________________________________________________________________________________
+  // Generic Suggestions_____________________________________________________________________________________________________
   $("#diagnosis_suggetions input[name='search']").on('keyup', function(){
     var query = $(this).val();
     $.ajax({
@@ -674,5 +674,57 @@ jQuery(document).ready(function($){
       $("input[name='search']").val(value);
       $('#suggestions_list').html("");
   });
+
+  // Media Upload_____________________________________________________________________________________________________
+
+  $("#media_up").on('change', function(e){
+    e.preventDefault();
+    $(this).submit();
+  });
+
+  // $("#media_up").on('change', function(e){
+  //   e.preventDefault();
+  //   loc2 = location.href;
+  //   var hostname = window.location.hostname;
+  //     if (loc2 === "http://"+hostname+"/media") {
+  //       var url = 'media/insert';
+  //     }
+  //   $.ajaxSetup({
+  //       headers: {
+  //           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+  //       },
+  //   });
+  //   $.ajax({
+  //     type: 'POST',
+  //     url: url,
+  //     data: new FormData($(this)[0]),
+  //     dataType: 'json',
+  //     cache: false,
+  //     processData: false,
+  //     contentType: false,
+  //     mimeType:"multipart/form-data",
+  //     success: function(response)
+  //     {
+  //       location.reload();
+  //     },
+  //     error: function(response)
+  //     {
+  //       console.log(response)
+  //       $('#media_up')[0].reset();
+  //       document.getElementById("errorlogMedia").innerHTML = '';
+
+  //       var customError = response.responseJSON.errors2;
+  //       if (jQuery.isEmptyObject(customError) === false) {
+  //         document.getElementById("errorlogMedia").innerHTML += customError + "<br>";
+  //       }
+  //       if (jQuery.isEmptyObject(response.responseJSON.errors) === false) {
+  //         var errors = response.responseJSON.errors.file_name;
+  //         errors.forEach(function(i){
+  //         document.getElementById("errorlogMedia").innerHTML += i + "<br>";
+  //       });
+  //       }
+  //     }
+  //   });
+  // });
 
 });

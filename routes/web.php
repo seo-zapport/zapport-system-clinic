@@ -75,6 +75,7 @@ Route::group(['prefix'	=>	'media'], function(){
 
 	// Media
 	Route::get('', 'MediaController@index')->name('media.index');
+	Route::post('insert', 'MediaController@addMedia')->name('media.upload');
 	Route::put('{media}/edit', 'MediaController@update')->name('media.edit');
 	Route::delete('{media}', 'MediaController@destroy')->name('media.delete');
 
