@@ -335,11 +335,17 @@
 								<td>{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
 								<td> <a href="{{ route('hr.emp.show', ['employee' => $employee->emp_id]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i>View</a></td>
 							</tr>
+						@else
+							@if ($loop->first)
+							<tr>
+								<td colspan="4" class="text-center">{{ "0 Matches Found!" }}</td>
+							</tr>
+							@endif
 						@endif
 
 						@empty
 							<tr>
-								<td colspan="4" class="text-center">{{ "No registered Employee yet!" }}</td>
+								<td colspan="4" class="text-center">{{ "0 Matches Found!" }}</td>
 							</tr>
 					@endforelse
 				</tbody>

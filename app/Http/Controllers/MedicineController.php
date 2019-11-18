@@ -42,17 +42,27 @@ class MedicineController extends Controller
                 $search = $request->search;
             }else{
                 $rawmeds = Medicine::select('brand_id', 'generic_id')->groupBy('brand_id', 'generic_id')->orderBy('id', 'desc');
+                $countsmed = $rawmeds->count();
                 $printmeds = $rawmeds->get();
                 $meds = $rawmeds->paginate(10);
             }
+
             $gens = Generic::orderBy('gname', 'asc')->get();
               
             //dd($printmeds);
             // if(count(@$printmeds)>0){
                  $this->PrintMedCSV($printmeds,'index','','');
-           //  }
-            
-            return view('inventory.medicine.index', compact('meds', 'gens', 'search'));
+           //  } 
+
+            if ($printmeds != null) {
+                $countMeds = Medicine::select('brand_id', 'generic_id')->groupBy('brand_id', 'generic_id')->orderBy('id', 'desc')->get();
+                $total_meds = $countMeds->count();
+            }else{
+                $countMeds = Medicine::select('brand_id', 'generic_id')->groupBy('brand_id', 'generic_id')->orderBy('id', 'desc')->get();
+                $total_meds = $countMeds->count();
+            }
+
+            return view('inventory.medicine.index', compact('meds', 'gens', 'search', 'total_meds'));
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();
             return back()->with('message', 'You\'re not employee!');
@@ -161,6 +171,7 @@ class MedicineController extends Controller
                             ->where('medicines.created_at', $inputDate)
                             ->where('expiration_date', $expDate)
                             ->where('availability', 1);
+
             $countMeds = Employeesmedical::join('employeesmedical_medicine_users', 'employeesmedicals.id', 'employeesmedical_medicine_users.employeesmedical_id')
                                          ->join('medicines', 'medicines.id', 'employeesmedical_medicine_users.medicine_id')
                                          ->join('users as users1', 'users1.id', 'employeesmedical_medicine_users.user_id')
@@ -173,7 +184,12 @@ class MedicineController extends Controller
                                          ->where('availability', 1)
                                          ->get();
 
-            $dates = EmployeesmedicalMedicineUser::select(\DB::raw('DATE(created_at) as medical_date'))->distinct('medical_date')->get();
+            $dates = EmployeesmedicalMedicineUser::join('medicines', 'employeesmedical_medicine_users.medicine_id', 'medicines.id')
+                                                 ->select(\DB::raw('DATE(employeesmedical_medicine_users.created_at) as medical_date'), 'medicines.brand_id', 'medicines.generic_id')
+                                                 ->where('brand_id', $medbrand->id)
+                                                 ->where('generic_id', $generic->id)
+                                                 ->distinct('medical_date')
+                                                 ->get();
 
             if ($request->search_name && $request->search_date == null) {
                 $search_name = $request->search_name;
@@ -182,15 +198,13 @@ class MedicineController extends Controller
                     $printmeds = $fmeds->get();
                     $meds = $fmeds->paginate(10);
 
-            }
-            elseif ($request->search_name == null && $request->search_date) {
+            }elseif ($request->search_name == null && $request->search_date) {
                 $search_date = $request->search_date;
                 $fmeds = $rawmeds->where(\DB::raw('DATE(employeesmedical_medicine_users.created_at)'), $request->search_date)
                              ->orderBy('medicines.id', 'desc');
                       $printmeds = $fmeds->get();
                       $meds = $fmeds->paginate(10);
-            }
-            elseif ($request->search_name && $request->search_date) {
+            }elseif ($request->search_name && $request->search_date) {
                 $search_name = $request->search_name;
                 $search_date = $request->search_date;
                 $fmeds = $rawmeds->where(\DB::raw("concat(employees.last_name, ' ', employees.first_name)"), "LIKE", '%'.$request->search_name.'%')
@@ -199,7 +213,7 @@ class MedicineController extends Controller
                     $printmeds = $fmeds->get();
                     $meds = $fmeds->paginate(10);
                         
-            }else{
+            }else {
                     $fmeds = $rawmeds->orderBy('medicines.id', 'desc');
                     $printmeds = $fmeds->get();
                     $meds = $fmeds->paginate(10);
@@ -341,10 +355,12 @@ class MedicineController extends Controller
         $typecsv = $typeprint;
         $fileName = "inventory_medicine";
         
-        if($typeprint == 'logsinput'){
-            $countmed = $meds['meds']->count();
-        }else{
-            $countmed = $meds->count();
+        if ($meds != null) {
+            if($typeprint == 'logsinput'){
+                $countmed = $meds['meds']->count();
+            }else{
+                $countmed = $meds->count();
+            }
         }
 
         if($typeprint == 'viewlogs'){

@@ -650,4 +650,29 @@ jQuery(document).ready(function($){
     $("#med_log_search_date").removeClass('d-none');
   }
 
+// Generic Suggestions_____________________________________________________________________________________________________
+  $("#diagnosis_suggetions input[name='search']").on('keyup', function(){
+    var query = $(this).val();
+    $.ajax({
+      type: 'GET',
+      url: '/inventory/medicine/generic/suggestions/'+query,
+      data: { 'generic': query },
+      success: function(response)
+      {
+        console.log(response);
+        $('#suggestions_list').html(response);
+      },
+      error: function(response)
+      {
+        console.log(response);
+      }
+    });
+  })
+
+  $(document).on('click', '#diagnosis_suggetions li', function(){
+      var value = $(this).text();
+      $("input[name='search']").val(value);
+      $('#suggestions_list').html("");
+  });
+
 });

@@ -53,7 +53,7 @@
 					@endforelse
 				</tbody>
 			</table>
-			{{ $positions->links() }}			
+			{{ $positions->links() }}
 		</div>
 
 		@include('layouts.errors')

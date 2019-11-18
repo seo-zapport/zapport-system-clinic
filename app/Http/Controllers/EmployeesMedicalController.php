@@ -431,13 +431,13 @@ class EmployeesmedicalController extends Controller
     public function fullReport()
     {
         $emps = Employeesmedical::join('diagnoses', 'diagnoses.id', 'employeesmedicals.diagnosis_id')
-                                                 ->join('employees', 'employees.id', 'employeesmedicals.employee_id')
-                                                 ->select('employeesmedicals.id', 'employees.gender', 'diagnosis', 'employeesmedicals.created_at', \DB::raw('floor(DATEDIFF(CURDATE(),employees.birthday) /365) as age'))
-                                                 ->orderBy('employeesmedicals.created_at', 'desc')
-                                                 ->get()
-                                                 ->groupBy(function($date) {
-                                                     return Carbon::parse($date->created_at)->format('Y');
-                                                   });
+                                ->join('employees', 'employees.id', 'employeesmedicals.employee_id')
+                                ->select('employeesmedicals.id', 'employees.gender', 'diagnosis', 'employeesmedicals.created_at', \DB::raw('floor(DATEDIFF(CURDATE(),employees.birthday) /365) as age'))
+                                ->orderBy('employeesmedicals.created_at', 'desc')
+                                ->get()
+                                ->groupBy(function($date) {
+                                    return Carbon::parse($date->created_at)->format('Y');
+                                  });
 
         return view('medical.employeesMedical.fullReport', compact('diagnoses', 'arr', 'arr_count', 'emps'));
     }
