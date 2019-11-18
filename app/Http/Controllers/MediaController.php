@@ -186,7 +186,7 @@ class MediaController extends Controller
                     'file_name.*'   =>  ['mimes:jpg,jpeg,png,gif', 'max:2240'],
                 ],
                 [
-                    'file_name.*.max'   =>  'Maximum file size should be 2240kb.',
+                    'file_name.*.max'   =>  'Maximum file size should be 2.24MB.',
                     'file_name.*.mimes'   =>  'The Image must be a file of type: jpg, jpeg, png, gif.',
                 ]
             );

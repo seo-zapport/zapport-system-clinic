@@ -682,49 +682,4 @@ jQuery(document).ready(function($){
     $(this).submit();
   });
 
-  // $("#media_up").on('change', function(e){
-  //   e.preventDefault();
-  //   loc2 = location.href;
-  //   var hostname = window.location.hostname;
-  //     if (loc2 === "http://"+hostname+"/media") {
-  //       var url = 'media/insert';
-  //     }
-  //   $.ajaxSetup({
-  //       headers: {
-  //           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-  //       },
-  //   });
-  //   $.ajax({
-  //     type: 'POST',
-  //     url: url,
-  //     data: new FormData($(this)[0]),
-  //     dataType: 'json',
-  //     cache: false,
-  //     processData: false,
-  //     contentType: false,
-  //     mimeType:"multipart/form-data",
-  //     success: function(response)
-  //     {
-  //       location.reload();
-  //     },
-  //     error: function(response)
-  //     {
-  //       console.log(response)
-  //       $('#media_up')[0].reset();
-  //       document.getElementById("errorlogMedia").innerHTML = '';
-
-  //       var customError = response.responseJSON.errors2;
-  //       if (jQuery.isEmptyObject(customError) === false) {
-  //         document.getElementById("errorlogMedia").innerHTML += customError + "<br>";
-  //       }
-  //       if (jQuery.isEmptyObject(response.responseJSON.errors) === false) {
-  //         var errors = response.responseJSON.errors.file_name;
-  //         errors.forEach(function(i){
-  //         document.getElementById("errorlogMedia").innerHTML += i + "<br>";
-  //       });
-  //       }
-  //     }
-  //   });
-  // });
-
 });
