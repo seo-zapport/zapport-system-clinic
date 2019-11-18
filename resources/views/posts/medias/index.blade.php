@@ -6,7 +6,25 @@
 	<i class="fas fa-photo-video text-secondary"></i> Media
 @endsection
 @section('dash-content')
-
+<div class="media-attach-tools">
+	<div class="media-button-wrap">
+		<button class="btn zp-btn btn-outline-zp btn-sm" data-toggle="collapse" data-target="#clinicMedia" aria-expanded="false" aria-controls="clinicMedia">Add Media</button>
+	</div>
+	<div class="media-form-wrap collapse" id="clinicMedia">
+		<form id="media_up"  enctype="multipart/form-data" >
+			@csrf
+			<div class="uploader">
+		    	<h5 class="text-muted my-4">Select a files to upload</h5>
+				<label for="upload_file" id="label_file_upload">
+					Select Files
+				</label>
+				<div class="uploader_wrap">
+					<input type="file" name="file[]" id="upload_file" multiple>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
 <div class="media-frame zp-core-ui mode-grid hide-menu">
 	<div class="media-frame-content" data-columns="11">
 		<div class="attachment-browser hide-sidebar">

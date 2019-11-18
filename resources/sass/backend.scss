@@ -24,8 +24,6 @@
  *----------------------*/
 @import "navigation/admin_sidebar";
 
-
-
 /**
  * Primary admin
  *----------------------*/
@@ -37,6 +35,11 @@
 }
 @import "site/login";
 @import "site/admin_primary";
+
+/**
+ * Section: Media
+ *----------------------*/
+@import "site/admin_media";
 
 
 /**
