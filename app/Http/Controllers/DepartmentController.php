@@ -22,8 +22,9 @@ class DepartmentController extends Controller
     public function index()
     {
         if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
-            $deps = Department::orderBy('id', 'desc')->get();
-            return view('hr.department.index', compact('deps'));
+            $deps = Department::orderBy('id', 'desc')->paginate(10);
+            $depsCount = Department::get();
+            return view('hr.department.index', compact('deps', 'depsCount'));
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();
             return back()->with('message', 'You\'re not employee!');
@@ -77,7 +78,14 @@ class DepartmentController extends Controller
      */
     public function show(Department $department)
     {
-
+        if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
+            return view('hr.department.show', compact('department'));
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
+        }else{
+            return back();
+        }
     }
 
     /**

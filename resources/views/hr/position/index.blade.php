@@ -19,6 +19,8 @@
 					<th width="20%">Department</th>
 					<th width="10%">No. of Employees</th>
 				</thead>
+				<span class="font-weight-bold">Result: {{ $positions->count() }}</span><br>
+				<span class="font-weight-bold">Total number of Positions: {{ $positionsCount->count() }}</span>
 				<tbody>
 					@forelse ($positions as $position)
 			        	@foreach ($position->departments as $department)

@@ -21,6 +21,8 @@
 					<th>Generic Name</th>
 					<th width="10%" class="text-center">Quantity</th>
 				</thead>
+				<span class="font-weight-bold">Result: {{ $gens->count() }}</span><br>
+				<span class="font-weight-bold">Total number of Generics: {{ $gensCount->count() }}</span>
 				<tbody>
 					@forelse ($gens as $gen)
 						<tr>

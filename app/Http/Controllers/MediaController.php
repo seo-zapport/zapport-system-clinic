@@ -179,7 +179,6 @@ class MediaController extends Controller
 
     public function addMedia(Request $request)
     {
-
         if (Gate::check('isAdmin') || Gate::check('isHr') || Gate::check('isDoctor') || Gate::allows('isNurse')) {
             $atts = $request->validate(
                 [
