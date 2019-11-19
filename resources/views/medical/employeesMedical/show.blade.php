@@ -221,8 +221,11 @@
 				<form onsubmit="return test(this)" id="myform-show" method="post" action="{{ route('medical.storeFollowup', ['employee' => $employee->emp_id, 'employeesmedical' => $employeesmedical->id]) }}" enctype="multipart/form-data">
 					@csrf
 					<div class="form-group">
-						<label for="diagnosis">Attachment</label>
-						<input type="file" name="attachment" class="form-control-file file-upload">
+						<p class="mb-1">Attachments</p>
+						<label for="diagnosis_show" class="lbl_upload">Attachments</label>
+						<div class="uploader_wrap">
+							<input type="file" name="attachment" id="diagnosis_show" class="form-control-file file-upload">
+						</div>
 					</div>
 					<div class="form-group">
 						<label for="followup_note">Note:</label>

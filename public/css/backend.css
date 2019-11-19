@@ -7343,7 +7343,6 @@ figure {
 
 .media-attach-tools {
   position: relative;
-  /**Uploader*/
 }
 
 .media-attach-tools .media-button-wrap,
@@ -7357,11 +7356,13 @@ figure {
   padding-bottom: 2.75em;
 }
 
-.media-attach-tools .uploader {
+/**Uploader*/
+
+.uploader {
   text-align: center;
 }
 
-.media-attach-tools .uploader_wrap {
+.uploader_wrap {
   position: absolute;
   overflow: hidden;
   z-index: 0;
@@ -7371,7 +7372,9 @@ figure {
   height: 28px;
 }
 
-.media-attach-tools .uploader_wrap input#upload_file {
+.uploader_wrap input#upload_file,
+.uploader_wrap input#diagnosis,
+.uploader_wrap input#diagnosis_show {
   position: absolute;
   opacity: 0;
   width: 100%;
@@ -7380,7 +7383,8 @@ figure {
   top: 0;
 }
 
-.media-attach-tools label#label_file_upload {
+label#label_file_upload,
+label.lbl_upload {
   display: inline-block;
   text-decoration: none;
   font-size: 13px;
@@ -7397,25 +7401,29 @@ figure {
   box-sizing: border-box;
 }
 
-.media-attach-tools label#label_file_upload:active {
+label#label_file_upload:active,
+label.lbl_upload:active {
   background: #eee;
   border-color: #999;
   box-shadow: inset 0 2px 5px -3px rgba(0, 0, 0, 0.5);
   transform: translateY(1px);
 }
 
-.media-attach-tools label#label_file_upload:hover {
+label#label_file_upload:hover,
+label.lbl_upload:hover {
   background: #fafafa;
   border-color: #999;
   color: #23282d;
 }
 
-.media-attach-tools label#label_file_upload:focus {
+label#label_file_upload:focus,
+label.lbl_upload:focus {
   border-color: #5b9dd9;
   box-shadow: 0 0 3px rgba(0, 115, 170, 0.8);
 }
 
-.media-attach-tools #label_file_upload {
+#label_file_upload,
+.lbl_upload {
   color: #555;
   border-color: #ccc;
   background: #f7f7f7;
