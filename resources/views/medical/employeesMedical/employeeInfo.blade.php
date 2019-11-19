@@ -11,7 +11,7 @@
 	<i class="fas fa-arrow-left"></i>
 </a>
 @endsection
-<div class="card mb-5">
+<div class="card mb-35">
 	<div class="card-body">
 		<div class="row">
 			<div class="col-2">
@@ -104,11 +104,10 @@
 		<table class="table table-hover">
 			<thead class="thead-dark">
 				<th>No.</th>
-				<th>Date and Time</th>
 				<th>Diagnosis</th>
 				<th>Notes</th>
+				<th>Date and Time</th>
 				<th>Remarks</th>
-				<th>Action</th>
 			</thead>
 			<tbody>
 				@php
@@ -117,11 +116,12 @@
 				@forelse ($search as $medsHistory)
 					<tr>
 						<td>{{ $i++ }}</td>
-						<td>{{ $medsHistory->created_at->format('M d, Y - h:i a') }}</td>
-						<td>{{ ucwords($medsHistory->diagnoses->diagnosis) }}</td>
+						<td>{{ ucwords($medsHistory->diagnoses->diagnosis) }}
+							<div class="row-actions"><a href="{{ route('medical.show', ['employee' => $employee->emp_id, 'employeesmedical' => $medsHistory->id]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i>View</a></div>
+						</td>
 						<td>{{ Str::words($medsHistory->note, 15) }}</td>
+						<td>{{ $medsHistory->created_at->format('M d, Y - h:i a') }}</td>
 						<td>{{ ($medsHistory->remarks == 'followUp') ? 'Follow up' : 'Done' }}</td>
-						<td><a href="{{ route('medical.show', ['employee' => $employee->emp_id, 'employeesmedical' => $medsHistory->id]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i>View</a></td>
 					</tr>
 					@empty
 						<tr>
@@ -132,8 +132,7 @@
 		</table>		
 	</div>
 </div>
-
-{{ $search->links() }}
+<div class="pagination-wrap">{{ $search->links() }}</div>
 @include('layouts.errors')
 <!-- Modal Add -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

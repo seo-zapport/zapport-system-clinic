@@ -114,16 +114,16 @@
 						<table class="table">
 							<thead class="thead-dark">
 								<tr>
-									<th>Doctor's Note</th>
+									<th width="38%">Doctor's Note</th>
 									<th>Attachment</th>
 									<th>Attendant</th>
-									<th>Remarks</th>
+									<th width="5%">Remarks</th>
 									<th>Date</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr>
-									<td>{{ ucfirst($employeesmedical->note) }}</td>
+									<td width="38%">{{ ucfirst($employeesmedical->note) }}</td>
 									<td>
 										@if ($employeesmedical->attachment != null)
 											<a class="btn-dl" href="{{ route('download', ['file_name' => $employeesmedical->attachment]) }}" download>
@@ -134,7 +134,7 @@
 										@endif
 									</td>
 									<td class="w-15">{{ ucwords($employeesmedical->user->employee->first_name) }} {{ ucwords($employeesmedical->user->employee->middle_name) }} {{ ucwords($employeesmedical->user->employee->last_name) }}</td>
-									<td class="w-15">{{ ($employeesmedical->remarks == 'followUp') ? 'Follow up' : 'Done' }}</td>
+									<td width="5%" class="w-15">{{ ($employeesmedical->remarks == 'followUp') ? 'Follow up' : 'Done' }}</td>
 									<td class="text-muted w-15">{{ $employeesmedical->created_at->format('M d, Y - h:i a') }}</td>
 								</tr>
 							</tbody>

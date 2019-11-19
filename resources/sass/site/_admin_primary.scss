@@ -42,6 +42,36 @@
 	width: 5% !important;
 }
 
+/**Table*/
+.row-actions.visible{
+	position: static;
+}
+.row-actions {
+    color: #ddd;
+    font-size: 12px;
+    padding: 2px 0 0;
+    position: relative;
+    left: -9999em;
+    a, span, button{
+    	font-size:12px;
+    	padding: 0;
+    }
+}
+
+/**pagination*/
+.pagination-wrap{
+	display: flex;
+	-moz-display: flex;
+	-webkit-display: flex;
+	justify-content:flex-end;
+	-moz-justify-content:flex-end;
+	-webkit-justify-content:flex-end;
+	position: relative;
+	.pagination{
+		margin-left: 0;
+	}
+}
+
 /**text*/
 .zp-text {
     font-size: 18px;
@@ -310,6 +340,10 @@
 		color: #055651;
 		padding:0.3rem 0.5rem;
 	}
+}
+#medTotal{
+	line-height: 1.2;
+	text-align: right;
 }
 
 
@@ -890,4 +924,9 @@
 		position: absolute;
 	    width: 96%;
 	}
+}
+
+/**print*/
+.print_dropdown{
+	left: -28px !important;
 }

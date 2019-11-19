@@ -15,27 +15,27 @@
 			<table class="table table-hover">
 				<thead class="thead-dark">
 					<th>Category</th>
-					<th>Number of Posts</th>
-					<th>Action</th>
+					<th width="10%" class="text-center">Number of Posts</th>
 				</thead>
 				<tbody>
 					@forelse ($tags as $tag)
 						<tr>
 							<td>
 								{{ $tag->tag_name }}
+
+								<div class="row-actions">
+									<span id="{{ $tag->tag_name }}" class="show-edit btn btn-link text-secondary"><i class="far fa-edit"></i> Quick Edit</span> <span class="text-muted">|</span>
+									<form method="post" action="{{ route('destroy.tag', ['tag' => $tag->tag_name]) }}"  class="d-inline-block">
+										@csrf
+										@method('DELETE')
+										<button class="btn btn-link text-danger" onclick="return confirm('Are you sure you want to delete {{ ucfirst($tag->tag_name) }} Tag?')" data-id="{{ $tag->tag_name }}">
+											<i class="fas fa-trash-alt"></i> Delete
+										</button>
+									</form>
+								</div>
 							</td>
-							<td>
+							<td class="text-center">
 								{{ $tag->posts->count() }}
-							</td>
-							<td class="w-15 px-0">
-								<span id="{{ $tag->tag_name }}" class="show-edit btn btn-link text-secondary"><i class="far fa-edit"></i> Quick Edit</span>
-								<form method="post" action="{{ route('destroy.tag', ['tag' => $tag->tag_name]) }}"  class="d-inline-block">
-									@csrf
-									@method('DELETE')
-									<button class="btn btn-link text-danger" onclick="return confirm('Are you sure you want to delete {{ ucfirst($tag->tag_name) }} Tag?')" data-id="{{ $tag->tag_name }}">
-										<i class="fas fa-trash-alt"></i> Delete
-									</button>
-								</form>
 							</td>
 						</tr>
 						<tr class="inline-edit-row form-hide form-hidden-{{ $tag->tag_name }}">

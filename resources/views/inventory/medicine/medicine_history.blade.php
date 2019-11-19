@@ -48,7 +48,7 @@
 	</div>
 </form>
 
-<div class="card">
+<div class="card mb-3">
 	<div class="card-body">
 		<div class="table-responsive">
 			<div id="medTotal"></div>
@@ -79,9 +79,7 @@
 		</div>
 	</div>
 </div>
-
-{{ $meds->links() }}
-
+<div class="pagination-wrap">{{ $meds->links() }}</div>
 <script type="application/javascript">
 	        
 	jQuery(document).ready(function($){

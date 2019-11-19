@@ -23,20 +23,20 @@
 		<div class="table-responsive">
 			<table class="table table-hover">
 				<thead class="thead-dark">
-					<th>ID No.</th>
+					<th width="10%">ID No.</th>
 					<th>Name</th>
-					<th>Department - Positon</th>
-					<th>Action</th>
+					<th width="25%" class="">Department - Positon</th>
 				</thead>
 				<tbody>
 					@forelse(@$emps as $emp)
 						<tr>
 							<td>{{ $emp->emp_id }}</td>
-							<td>{{ ucwords($emp->last_name . " " . $emp->first_name . " " . $emp->middle_name) }}</td>
-							<td>{{ strtoupper($emp->departments->department) . " - " . ucwords( $emp->positions->position) }}</td>
-							<td class="w-15 px-0">
-								<a href="{{ route('medical.employeeInfo', ['employee' => $emp->emp_id]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i> View</a>
+							<td>{{ ucwords($emp->last_name . " " . $emp->first_name . " " . $emp->middle_name) }}
+								<div class="row-actions">
+									<a href="{{ route('medical.employeeInfo', ['employee' => $emp->emp_id]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i> View</a>
+								</div>
 							</td>
+							<td>{{ strtoupper($emp->departments->department) . " - " . ucwords( $emp->positions->position) }}</td>
 						</tr>
 						@empty
 							<tr>

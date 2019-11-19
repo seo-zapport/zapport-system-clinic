@@ -12,26 +12,26 @@
 			<a class="btn btn-info text-white" href="#" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus"></i> Add Department</a>
 		</div>
 		<div class="table-responsive">
-			<table class="table">
+			<table class="table table-hover">
 				<thead class="thead-dark">
 					<th>Department</th>
-					<th>No. of Employees</th>
-					<th>Action</th>
+					<th width="10%" class="text-center">No. of Employees</th>
 				</thead>
 				<tbody>
 					@forelse ($deps as $dep)
 						<tr>
-							<td>{{ strtoupper($dep->department) }}</td>
-							<td>{{ $dep->employee->count() }}</td>
-							<td class="w-15 px-0">
-								<form method="post" action="{{ route('hr.dep.deleteDep', ['department' => $dep->department]) }}">
-					        		@csrf
-					        		@method('DELETE')
-									<button class="btn btn-link text-danger"  onclick="return confirm('Are you sure you want to delete {{ ucfirst($dep->department) }} Department?')" data-id="{{ $dep->department }}">
-										<i class="fas fa-trash-alt"></i> Delete
-									</button>
-					        	</form>
-					        </td>
+							<td>{{ strtoupper($dep->department) }}
+								<div class="row-actions">
+									<form method="post" action="{{ route('hr.dep.deleteDep', ['department' => $dep->department]) }}">
+						        		@csrf
+						        		@method('DELETE')
+										<button class="btn btn-link text-danger"  onclick="return confirm('Are you sure you want to delete {{ ucfirst($dep->department) }} Department?')" data-id="{{ $dep->department }}">
+											<i class="fas fa-trash-alt"></i> Delete
+										</button>
+						        	</form>
+						        </div>
+						    </td>
+							<td class="text-center">{{ $dep->employee->count() }}</td>
 						</tr>
 						@empty
 							<tr>

@@ -13,35 +13,34 @@
 	</div>
 @endif
 
-<div class="card mb-5">
+<div class="card mb-3">
 	<div class="card-body">
 		<div class="table-responsive">
 			<table class="table table-hover">
 				<thead class="thead-dark">
 					<th>Generic Name</th>
-					<th>Quantity</th>
-					<th>Action</th>
+					<th width="10%" class="text-center">Quantity</th>
 				</thead>
 				<tbody>
 					@forelse ($gens as $gen)
 						<tr>
 							<td>
 				        		{{ ucwords($gen->gname) }}
+								<div class="row-actions">
+									<a href="{{ route('genericname.show', ['generic' => $gen->gname]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i>View</a>
+									@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
+									<small class="text-muted">|</small>
+						        	<form method="post" action="{{ route('genericname.delete', ['generic' => $gen->gname]) }}" class="d-inline">
+						        		@csrf
+						        		@method('DELETE')
+										<button class="btn btn-link text-danger"  onclick="return confirm('Are you sure you want to delete {{ ucfirst($gen->gname) }} Generic Name?')" data-id="{{ $gen->gname }}">
+											<i class="fas fa-trash-alt"></i> Delete
+										</button>
+						        	</form>
+									@endif
+								</div>
 							</td>
-							<td>{{ $gen->medicines->where('availability', 0)->where('expiration_date', '>=', NOW())->count() }}</td>
-							<td class="w-15 px-0">
-								<a href="{{ route('genericname.show', ['generic' => $gen->gname]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i>View</a>
-								@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
-								<small class="text-muted">|</small>
-					        	<form method="post" action="{{ route('genericname.delete', ['generic' => $gen->gname]) }}" class="d-inline">
-					        		@csrf
-					        		@method('DELETE')
-									<button class="btn btn-link text-danger"  onclick="return confirm('Are you sure you want to delete {{ ucfirst($gen->gname) }} Generic Name?')" data-id="{{ $gen->gname }}">
-										<i class="fas fa-trash-alt"></i> Delete
-									</button>
-					        	</form>
-								@endif
-							</td>
+							<td class="text-center">{{ $gen->medicines->where('availability', 0)->where('expiration_date', '>=', NOW())->count() }}</td>
 						</tr>
 						@empty
 							<tr>
@@ -53,9 +52,7 @@
 		</div>
 	</div>
 </div>
-
-
-{{ $gens->links() }}
+<div class="pagination-wrap">{{ $gens->links() }}</div>
 @include('layouts.errors')
 @if (session('generic_message'))
 	<div class="alert alert-danger alert-posts">

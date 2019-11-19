@@ -41,18 +41,20 @@
 												<th>Diagnosis</th>
 												<th>Notes</th>
 												<th>Remarks</th>
-												<th>Action</th>
 											</thead>
 											<tbody>
 												@forelse (@$notSeen as $seen)
 													<tr id="newCons">
 														<td>{{ $seen->employee->emp_id }}</td>
-														<td>{{ ucwords($seen->employee->last_name) }} {{ ucwords($seen->employee->first_name) }} {{ ucwords($seen->employee->middle_name) }}</td>
+														<td>{{ ucwords($seen->employee->last_name) }} {{ ucwords($seen->employee->first_name) }} {{ ucwords($seen->employee->middle_name) }}
+															<div class="row-actions">
+																<a href="{{ route('medical.show', ['employee' => $seen->employee->emp_id, 'employeesmedical' => $seen->id]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a>	
+															</div>
+														</td>
 														<td>{{ $seen->created_at->format('M d, Y - h:i a') }}</td>
 														<td>{{ ucwords($seen->diagnoses->diagnosis) }}</td>
 														<td>{{ Str::words($seen->note, 10) }}</td>
 														<td>{{ ($seen->remarks == 'followUp') ? 'Follow up' : 'Done' }}</td>
-														<td><a href="{{ route('medical.show', ['employee' => $seen->employee->emp_id, 'employeesmedical' => $seen->id]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a></td>
 													</tr>
 													@empty
 														<tr>
@@ -80,18 +82,21 @@
 												<th>Diagnosis</th>
 												<th>Notes</th>
 												<th>Remarks</th>
-												<th>Action</th>
 											</thead>
 											<tbody>
 												@forelse (@$empMeds as $empMed)
 													<tr id="FFup">
 														<td>{{ $empMed->employee->emp_id }}</td>
-														<td>{{ ucwords($empMed->employee->last_name) }} {{ ucwords($empMed->employee->first_name) }} {{ ucwords($empMed->employee->middle_name) }}</td>
+														<td>
+															{{ ucwords($empMed->employee->last_name) }} {{ ucwords($empMed->employee->first_name) }} {{ ucwords($empMed->employee->middle_name) }}
+															<div class="row-actions">
+																<a href="{{ route('medical.show', ['employee' => $empMed->employee->emp_id, 'employeesmedical' => $empMed->id]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a>
+															</div>
+														</td>
 														<td>{{ $empMed->created_at->format('M d, Y - h:i a') }}</td>
 														<td>{{ ucwords($empMed->diagnoses->diagnosis) }}</td>
 														<td>{{ Str::words($empMed->note, 10) }}</td>
 														<td>{{ ($empMed->remarks == 'followUp') ? 'Follow up' : 'Done' }}</td>
-														<td><a href="{{ route('medical.show', ['employee' => $empMed->employee->emp_id, 'employeesmedical' => $empMed->id]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a></td>
 													</tr>
 													@empty
 														<tr>
@@ -112,24 +117,23 @@
 									<div class="table-responsive">
 										<table id="IncPreEmp" class="table table-hover">
 											<thead class="thead-dark">
-												<th>Employee Number</th>
+												<th width="13%">Employee Number</th>
 												<th>Employee Name</th>
-												<th>Department - Positon</th>
-												<th>Action</th>
+												<th width="20%">Department - Positon</th>
 											</thead>
 											@forelse (@$noPreEmpMeds as $emp)
 												<tr id="incPre">
 													<td>{{ $emp->emp_id }}</td>
-													<td>{{ $emp->last_name }} {{ $emp->first_name }} {{ $emp->middle_name }}</td>
+													<td>{{ $emp->last_name }} {{ $emp->first_name }} {{ $emp->middle_name }}
+														<div class="row-actions"><a href="{{ route('medical.employeeInfo', ['employee' => $emp->emp_id]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a></div></td>
 													<td>{{ $emp->departments->department }} - {{ $emp->positions->position }}</td>
-													<td><a href="{{ route('medical.employeeInfo', ['employee' => $emp->emp_id]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a></td>
 												</tr>
 												@empty
 													<tr>
 														<td colspan="4" class="text-center">Employees with no requirements not found!</td>
 													</tr>
 											@endforelse
-										</table>									
+										</table>
 									</div>
 
 								</div>
@@ -144,17 +148,16 @@
 									<div class="table-responsive">
 										<table id="IncReq" class="table table-hover">
 											<thead class="thead-dark">
-												<th>Employee Number</th>
+												<th width="13%">Employee Number</th>
 												<th>Employee Name</th>
-												<th>Department - Positon</th>
-												<th>Action</th>
+												<th width="20%">Department - Positon</th>
 											</thead>
 											@forelse (@$emps as $emp)
 												<tr id="inc">
 													<td>{{ $emp->emp_id }}</td>
-													<td>{{ $emp->last_name }} {{ $emp->first_name }} {{ $emp->middle_name }}</td>
+													<td>{{ $emp->last_name }} {{ $emp->first_name }} {{ $emp->middle_name }}
+														<div class="row-actions"><a href="{{ route('hr.emp.show', ['employee' => $emp->emp_id]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a></div></td>
 													<td>{{ $emp->departments->department }} - {{ $emp->positions->position }}</td>
-													<td><a href="{{ route('hr.emp.show', ['employee' => $emp->emp_id]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a></td>
 												</tr>
 												@empty
 													<tr>
@@ -175,10 +178,9 @@
 									<div class="table-responsive">
 										<table id="CandReg" class="table table-hover">
 											<thead class="thead-dark">
-												<th>Employee Number</th>
+												<th width="13%">Employee Number</th>
 												<th>Employee Name</th>
-												<th>Department - Positon</th>
-												<th>Action</th>
+												<th width="20%">Department - Positon</th>
 											</thead>
 											@forelse (@$emps2 as $emp)
 											@php
@@ -190,9 +192,9 @@
 											@if ($month > 5 || $year >= 1)
 												<tr id="forReg">
 													<td>{{ $emp->emp_id }}</td>
-													<td>{{ $emp->last_name }} {{ $emp->first_name }} {{ $emp->middle_name }}</td>
+													<td>{{ $emp->last_name }} {{ $emp->first_name }} {{ $emp->middle_name }}
+														<div class="row-actions"><a href="{{ route('hr.emp.show', ['employee' => $emp->emp_id]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a></div></td>
 													<td>{{ $emp->departments->department }} - {{ $emp->positions->position }}</td>
-													<td><a href="{{ route('hr.emp.show', ['employee' => $emp->emp_id]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a></td>
 												</tr>
 											@endif
 												@empty
@@ -238,11 +240,10 @@
 							<table class="table table-hover">
 								<thead class="thead-dark">
 									<th>No.</th>
-									<th>Date and Time</th>
 									<th>Diagnosis</th>
 									<th>Notes</th>
 									<th>Remarks</th>
-									<th>Action</th>
+									<th>Date and Time</th>
 								</thead>
 								<tbody>
 									@php
@@ -251,14 +252,12 @@
 									@forelse ($search as $medsHistory)
 										<tr>
 											<td>{{ $i++ }}</td>
-											<td>{{ $medsHistory->created_at->format('M d, Y - h:i a') }}</td>
-											<td>{{ $medsHistory->diagnoses->diagnosis }}</td>
+											<td>{{ $medsHistory->diagnoses->diagnosis }}
+												<div class="row-actions"><a href="{{ route('dashboard.show', ['employee' => $medsHistory->employee->emp_id, 'employeesmedical' => $medsHistory->id]) }}" class="btn btn-info text-white">	View
+												</a></div></td>
 											<td>{{ Str::words($medsHistory->note, 15) }}</td>
 											<td>{{ ($medsHistory->remarks == 'followUp') ? 'Follow up' : 'Done' }}</td>
-											<td>
-												<a href="{{ route('dashboard.show', ['employee' => $medsHistory->employee->emp_id, 'employeesmedical' => $medsHistory->id]) }}" class="btn btn-info text-white">	View
-												</a>
-											</td>
+											<td>{{ $medsHistory->created_at->format('M d, Y - h:i a') }}</td>
 										</tr>
 										@empty
 											<tr>

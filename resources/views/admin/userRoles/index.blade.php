@@ -30,11 +30,10 @@
 			<table class="table table-hover user-roles">
 				<thead class="thead-dark">
 					<tr>
-						<th>ID</th>
+						<th width="8%">ID</th>
 						<th>Username</th>
-						<th>Email</th>
-						<th>Role</th>
-						<th>Action</th>
+						<th width="30%">Email</th>
+						<th width="10%">Role</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -44,7 +43,30 @@
 						<td>
 				        	{{ $user->id }}
 						</td>
-						<td>{{ $user->name }}</td>
+						<td>
+							{{ $user->name }}
+							<div class="row-actions">
+								@forelse ($user->roles as $role)
+									<span id="{{ $user->id }}" class="show-edit btn btn-link text-secondary"><i class="far fa-edit"></i> Quick Edit</span>
+								@empty
+									<span id="{{ $user->id }}" class="show-edit btn btn-link text-secondary"><i class="far fa-edit"></i> Quick Edit</span>
+								@endforelse
+								<small class="text-muted">|</small>
+
+
+					        	<form method="post" action="{{ route('dashboard.delete.user', ['user' => $user->id]) }}" class="d-inline-flex">
+					        		@csrf
+					        		@method('DELETE')
+					        		<div class="form-row align-items-center">
+					            		<div class="col-auto my-1 form-inline">
+											<button class="btn btn-link text-danger"  onclick="return confirm('Are you sure you want to remove {{ ucfirst($user->name) }} ?')" data-id="{{ $user->user }}">
+												<i class="fas fa-trash-alt"></i> Delete
+											</button>
+										</div>
+									</div>
+					        	</form>
+							</div>
+						</td>
 						<td>{{ $user->email }}</td>
 						<td>
 							@forelse ($user->roles as $role)
@@ -54,28 +76,6 @@
 								@empty
 								Set New Role
 							@endforelse
-						</td>
-						<td class="w-15 px-0">
-							@forelse ($user->roles as $role)
-								<span id="{{ $user->id }}" class="show-edit btn btn-link text-secondary"><i class="far fa-edit"></i> Quick Edit</span>
-							@empty
-								<span id="{{ $user->id }}" class="show-edit btn btn-link text-secondary"><i class="far fa-edit"></i> Quick Edit</span>
-							@endforelse
-							<small class="text-muted">|</small>
-
-
-				        	<form method="post" action="{{ route('dashboard.delete.user', ['user' => $user->id]) }}" class="d-inline-flex">
-				        		@csrf
-				        		@method('DELETE')
-				        		<div class="form-row align-items-center">
-				            		<div class="col-auto my-1 form-inline">
-										<button class="btn btn-link text-danger"  onclick="return confirm('Are you sure you want to remove {{ ucfirst($user->name) }} ?')" data-id="{{ $user->user }}">
-											<i class="fas fa-trash-alt"></i> Delete
-										</button>
-									</div>
-								</div>
-				        	</form>
-
 						</td>
 					</tr>
 					@forelse ($user->roles as $role)

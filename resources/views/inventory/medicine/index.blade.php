@@ -32,38 +32,41 @@
 				@php 
 					$fileName = 'inventory_medicine';
 				@endphp
-				<ul class="dropdown-menu">
-					 <li class="nav-item-btn"><a class="btnPrint" href="#"><i class="fas fa-print text-secondary"></i> PRINT</a></li> 
-					 <li class="nav-item-btn"><a href="{{ asset('storage/uploaded/print/inventory/inventory_medicine.csv')}}" download="{{ @$fileName.'.csv'}}" target="_blank"><i class="fas fa-file-csv text-secondary"></i> CSV</a></li>
-				</ul>
+				<div class="dropdown-menu print_dropdown">
+					 <a href="#" class="btnPrint dropdown-item"><i class="fas fa-print text-secondary"></i> PRINT</a>
+					 <a href="{{ asset('storage/uploaded/print/inventory/inventory_medicine.csv')}}" class="dropdown-item" download="{{ @$fileName.'.csv'}}" target="_blank"><i class="fas fa-file-csv text-secondary"></i> CSV</a>
+				</div>
 			</div>
 		</div>
 	@endif
 </div>
 
-<div class="card mb-5">
+<div class="card mb-3">
 	<div class="card-body">
+		<div class="d-flex mb-3">
+			<div class="col-12 col-md-6"><span class="text-primary">Total number of Medicines: {{ $total_meds }}</span></div>
+			<div id="medTotal" class="col-12 col-md-6"></div>
+		</div>
 		<div class="table-responsive">
-			<div id="medTotal"></div>
 			<table id="MedTable" class="table table-hover">
 				<thead class="thead-dark">
 					<th>Generic Name</th>
 					<th>Brand Name</th>
-					<th>Remaining Quantity</th>
-					<th>Stock Logs</th>
+					<th width="10%" class="text-center">Remaining Quantity</th>
 				</thead>
 				<tbody>
-					<span class="font-weight-bold">Total number of Medicines: {{ $total_meds }}</span>
+					
 					@if ($meds != null)		
 					@forelse ($meds as $med)
 						<tr id="MedRow">
-							<td>{{ ucfirst($med->generic->gname) }}</td>
-							<td>{{ ucwords($med->medBrand->bname) }}</td>
-							<td>{{ $med->where('generic_id', $med->generic_id)->where('brand_id', $med->brand_id)->where('availability', 0)->where('expiration_date', '>', NOW())->count() }}</td>
-							<td class="w-15 px-0">
-								{{-- {{ $med->qty_stock }} --}}
-								<a href="{{ route('medicine.log', ['medbrand' => $med->medBrand->bname, 'generic' => $med->generic->gname]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i> View</a>
+							<td>{{ ucfirst($med->generic->gname) }}
+								<div class="row-actions">
+									{{-- {{ $med->qty_stock }} --}}
+									<a href="{{ route('medicine.log', ['medbrand' => $med->medBrand->bname, 'generic' => $med->generic->gname]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i> View</a>
+								</div>
 							</td>
+							<td>{{ ucwords($med->medBrand->bname) }}</td>
+							<td class="text-center">{{ $med->where('generic_id', $med->generic_id)->where('brand_id', $med->brand_id)->where('availability', 0)->where('expiration_date', '>', NOW())->count() }}</td>
 						</tr>
 						@empty
 							<tr>
@@ -83,7 +86,7 @@
 
 
 @if ($meds != null)
-	{{ $meds->links() }}
+	<div class="pagination-wrap">{{ $meds->links() }}</div>
 @endif
 <br>
 @include('layouts.errors')
@@ -147,7 +150,7 @@
 
 		var countTR = $("#MedTable tbody #MedRow").length;
 		$("#medTotal").html('');
-		$("#medTotal").append('<span class="font-weight-bold">Result: '+ countTR +'</span>');
+		$("#medTotal").append('<span>'+ countTR +' items</span>');
 
 		 $('.btnPrint').printPage({
 		  url: "{{ asset('storage/uploaded/print/inventory/inventory_medicine.html') }}",

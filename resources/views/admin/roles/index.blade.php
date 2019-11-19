@@ -16,8 +16,7 @@
 				<thead class="thead-dark">
 					<tr>
 						<th>Role Type</th>
-						<th>Count</th>
-						<th>Action</th>
+						<th width="8%">Count</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -26,22 +25,21 @@
 					<tr>
 						<td>
 				        	{{ $role->role }}
-				        	
+							<div class="row-actions">
+								<a href="{{ route('dashboard.showRoles', ['role' => $role->role]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i> View</a>
+								<small class="text-muted">|</small>
+					        	<form method="post" action="{{ route('dashboard.deleteRole', ['role' => $role->role]) }}" class="d-inline">
+					        		@csrf
+					        		@method('DELETE')
+					        		
+									<button class="btn btn-link text-danger"  onclick="return confirm('Are you sure you want to delete {{ ucfirst($role->role) }} Role?')" data-id="{{ $role->role }}">
+										<i class="fas fa-trash-alt"></i> Delete
+									</button>
+									
+					        	</form>
+							</div>
 						</td>
 						<td>{{ $role->users->count() }}</td>
-						<td class="w-15 px-0">
-							<a href="{{ route('dashboard.showRoles', ['role' => $role->role]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i> View</a>
-							<small class="text-muted">|</small>
-				        	<form method="post" action="{{ route('dashboard.deleteRole', ['role' => $role->role]) }}" class="d-inline">
-				        		@csrf
-				        		@method('DELETE')
-				        		
-								<button class="btn btn-link text-danger"  onclick="return confirm('Are you sure you want to delete {{ ucfirst($role->role) }} Role?')" data-id="{{ $role->role }}">
-									<i class="fas fa-trash-alt"></i> Delete
-								</button>
-								
-				        	</form>
-						</td>
 					</tr>
 				@empty
 					<td colspan="3" class="text-center">{{ "No Roles Yet!" }}</td>

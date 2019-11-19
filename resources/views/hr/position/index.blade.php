@@ -7,7 +7,7 @@
 @endsection
 @section('dash-content')
 
-<div class="card mb-5">
+<div class="card mb-3">
 	<div class="card-body">
 		<div class="form-group">
 			<a class="btn btn-info text-white" href="#" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus"></i> Add Position</a>
@@ -16,9 +16,8 @@
 			<table class="table table-hover">
 				<thead class="thead-dark">
 					<th>Position</th>
-					<th>Department</th>
-					<th>No. of Employees</th>
-					<th>Action</th>
+					<th width="20%">Department</th>
+					<th width="10%">No. of Employees</th>
 				</thead>
 				<tbody>
 					@forelse ($positions as $position)
@@ -26,23 +25,23 @@
 							<tr>
 								<td>
 									{{ strtoupper($position->position) }}
+									<div class="row-actions">
+										<a href="{{ route('hr.pos.show', ['position' => $position->position, 'department' => $department->department]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a>
+										<small class="text-muted">|</small>
+							        	<form method="post" action="{{ route('hr.pos.deletePos', ['position' => $position->position]) }}" class="d-inline-block">
+							        		@csrf
+							        		@method('DELETE')
+												<button class="btn btn-link text-danger" onclick="return confirm('Are you sure you want to delete {{ ucfirst($position->position) }} Position?')" data-id="{{ $position->postion }}">
+													<i class="fas fa-trash-alt"></i> Delete
+												</button>
+							        	</form>	
+									</div>
 								</td>
 				        		<td>
 				        			{{ strtoupper($department->department) }}
 				        		</td>
 								<td>
 									{{ $employees->where('department_id', $department->id)->where('position_id', $position->id)->count() }}
-								</td>
-								<td class="w-15 px-0">
-									<a href="{{ route('hr.pos.show', ['position' => $position->position, 'department' => $department->department]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a>
-									<small class="text-muted">|</small>
-						        	<form method="post" action="{{ route('hr.pos.deletePos', ['position' => $position->position]) }}" class="d-inline-block">
-						        		@csrf
-						        		@method('DELETE')
-											<button class="btn btn-link text-danger" onclick="return confirm('Are you sure you want to delete {{ ucfirst($position->position) }} Position?')" data-id="{{ $position->postion }}">
-												<i class="fas fa-trash-alt"></i> Delete
-											</button>
-						        	</form>	
 								</td>
 							</tr>
 			        	@endforeach
@@ -53,7 +52,6 @@
 					@endforelse
 				</tbody>
 			</table>
-			{{ $positions->links() }}
 		</div>
 
 		@include('layouts.errors')
@@ -66,6 +64,7 @@
 		
 	</div>
 </div>
+<div class="pagination-wrap">{{ $positions->links() }}</div>
 
 
 <!-- Modal Add -->

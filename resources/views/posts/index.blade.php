@@ -18,27 +18,26 @@
 	</div>
 </form>
 
-<div class="card mb-5">
+<div class="card mb-3">
 	<div class="card-body">
 		<div class="table-responsive">
 			<table class="table table-hover">
 				<thead class="thead-dark">
 					<th>Title</th>
-					<th>Date Published</th>
-					<th>Action</th>
+					<th width="15%">Date Published</th>
 				</thead>
 				<tbody>
 					@forelse ($posts as $post)
 						<tr>
 							<td>
 								{{ ucwords($post->title) }}
+								<div class="row-actions">
+									<a href="{{ route('post.show', ['post' => $post->slug]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a> <span class="text-muted">|</span>
+									<a href="{{ route('post.edit', ['post' => $post->slug]) }}" class="btn btn-link text-info"><i class="far fa-edit"></i> Edit</a>
+								</div>
 							</td>
 							<td>
 								{{ $post->created_at->format('M d, Y - h:i a') }}
-							</td>
-							<td class="w-15 px-0">
-								<a href="{{ route('post.show', ['post' => $post->slug]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a> <small class="text-muted">|</small>
-								<a href="{{ route('post.edit', ['post' => $post->slug]) }}" class="btn btn-link text-secondary"><i class="far fa-edit"></i> Edit</a>
 							</td>
 						</tr>
 					@empty
@@ -54,6 +53,5 @@
 		</div>
 	</div>
 </div>
-
-{{ $posts->links() }}
+<div class="pagination-wrap">{{ $posts->links() }}</div>
 @endsection

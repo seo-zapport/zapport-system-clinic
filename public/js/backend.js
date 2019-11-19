@@ -682,4 +682,11 @@ jQuery(document).ready(function($){
     $(this).submit();
   });
 
+  // Snippet Actions Hover_____________________________________________________________________________________________________
+  $("table.table-hover tr").hover(function(e) {
+    $(this).find('td').find('.row-actions').addClass('visible');
+  },function(e){
+    $(this).find('td').find('.row-actions').removeClass('visible');
+  });
+
 });
