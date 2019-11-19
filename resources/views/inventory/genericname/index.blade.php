@@ -15,14 +15,18 @@
 
 <div class="card mb-3">
 	<div class="card-body">
+		<div class="d-flex mb-3">
+			<div class="col-12 col-md-6">
+				<span class="text-primary">Total number of Generics: {{ $gensCount->count() }}</span>
+			</div>
+			<div class="col-12 col-md-6 count_items"><span>{{ $gens->count() }} items</span></div>
+		</div>
 		<div class="table-responsive">
 			<table class="table table-hover">
 				<thead class="thead-dark">
 					<th>Generic Name</th>
 					<th width="10%" class="text-center">Quantity</th>
 				</thead>
-				<span class="font-weight-bold">Result: {{ $gens->count() }}</span><br>
-				<span class="font-weight-bold">Total number of Generics: {{ $gensCount->count() }}</span>
 				<tbody>
 					@forelse ($gens as $gen)
 						<tr>

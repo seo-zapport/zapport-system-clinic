@@ -6699,7 +6699,8 @@ figure {
   padding: 0.3rem 0.5rem;
 }
 
-#medTotal {
+#medTotal,
+.count_items {
   line-height: 1.2;
   text-align: right;
 }

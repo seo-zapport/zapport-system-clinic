@@ -11,24 +11,22 @@
 		<div class="form-group">
 			<a class="btn btn-info text-white" href="#" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus"></i> Add Department</a>
 		</div>
+		<div class="d-flex mb-3">
+			<div class="col-12 col-md-6">
+				<span class="text-primary">Total number of Departments: {{ $depsCount->count() }}</span>
+			</div>
+			<div class="col-12 col-md-6 count_items"><span>{{ $deps->count() }} items</span></div>
+		</div>
 		<div class="table-responsive">
 			<table class="table table-hover">
 				<thead class="thead-dark">
 					<th>Department</th>
-<<<<<<< HEAD
 					<th width="10%" class="text-center">No. of Employees</th>
-=======
-					<th>No. of Positions</th>
-					<th>No. of Employees</th>
-					<th>Action</th>
->>>>>>> b2332c5cd4459bec51ae9cacf4e06c02cfa3c771
+					<th width="10%">No. of Positions</th>
 				</thead>
-				<span class="font-weight-bold">Result: {{ $deps->count() }}</span><br>
-				<span class="font-weight-bold">Total number of Departments: {{ $depsCount->count() }}</span>
 				<tbody>
 					@forelse ($deps as $dep)
 						<tr>
-<<<<<<< HEAD
 							<td>{{ strtoupper($dep->department) }}
 								<div class="row-actions">
 									<form method="post" action="{{ route('hr.dep.deleteDep', ['department' => $dep->department]) }}">
@@ -41,21 +39,7 @@
 						        </div>
 						    </td>
 							<td class="text-center">{{ $dep->employee->count() }}</td>
-=======
-							<td>{{ strtoupper($dep->department) }}</td>
 							<td>{{ $dep->positions->count() }}</td>
-							<td>{{ $dep->employee->count() }}</td>
-							<td class="w-15 px-0">
-								<a href="{{ route('hr.dep.showDep', ['department' => $dep->department]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a>
-								<form method="post" action="{{ route('hr.dep.deleteDep', ['department' => $dep->department]) }}" class="d-inline-block">
-					        		@csrf
-					        		@method('DELETE')
-									<button class="btn btn-link text-danger"  onclick="return confirm('Are you sure you want to delete {{ ucfirst($dep->department) }} Department?')" data-id="{{ $dep->department }}">
-										<i class="fas fa-trash-alt"></i> Delete
-									</button>
-					        	</form>
-					        </td>
->>>>>>> b2332c5cd4459bec51ae9cacf4e06c02cfa3c771
 						</tr>
 						@empty
 							<tr>
