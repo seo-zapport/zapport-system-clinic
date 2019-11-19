@@ -28,6 +28,24 @@ class DashboardController extends Controller
      */
     public function index(Request $request)
     {
+        // Pre-Employment
+        $preEmpFold = 'storage/uploaded/pre-employment/';
+        if (!file_exists($preEmpFold)) {
+            mkdir($preEmpFold, 777, true);
+        }
+        // Attachments
+        $attachmentFold = 'storage/uploaded/attachments/';
+        if (!file_exists($attachmentFold)) {
+            mkdir($attachmentFold, 777, true);
+        }
+        // Media
+        $mediaFold = 'storage/uploaded/media/';
+        if (!file_exists($mediaFold)) {
+            mkdir($mediaFold, 777, true);
+        }
+
+        // __________________________________________________________________________________________________________________
+
         if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')){
 
             $empMeds = Employeesmedical::where('remarks', 'followUp')->get();
