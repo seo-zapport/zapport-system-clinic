@@ -32,6 +32,8 @@
 					<th>Action</th>
 				</thead>
 				<tbody>
+					<span class="font-weight-bold">Result: {{ $emps->count() }}</span><br>
+					<span class="font-weight-bold">Total number of Employee: {{ $totalEmps->count() }}</span>
 					@forelse(@$emps as $emp)
 						<tr>
 							<td>{{ $emp->emp_id }}</td>

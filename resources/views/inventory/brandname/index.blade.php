@@ -22,6 +22,8 @@
 					<th>No. of Generics</th>
 					<th>Action</th>
 				</thead>
+				<span class="font-weight-bold">Result: {{ $brands->count() }}</span><br>
+				<span class="font-weight-bold">Total number of Brands: {{ $brandCount->count() }}</span>
 				<tbody>
 					@forelse ($brands as $brand)
 						<tr>

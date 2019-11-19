@@ -86,6 +86,7 @@ Route::group(['prefix' => 'hr'], function(){
 	// Department
 	Route::get('department', 'DepartmentController@index')->name('hr.dep.department');
 	Route::post('department', 'DepartmentController@store')->name('hr.dep.addDep');
+	Route::get('department/{department}', 'DepartmentController@show')->name('hr.dep.showDep');
 	Route::delete('department/{department}', 'DepartmentController@destroy')->name('hr.dep.deleteDep');
 
 	// Position

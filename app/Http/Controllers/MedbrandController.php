@@ -27,7 +27,8 @@ class MedbrandController extends Controller
         if (Gate::allows('isAdmin') || Gate::allows('isHr') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
             $gens = Generic::get();
             $brands = Medbrand::orderBy('bname', 'asc')->paginate(10);
-            return view('inventory.brandname.index', compact('brands', 'gens'));
+            $brandCount = Medbrand::orderBy('bname', 'asc')->get();
+            return view('inventory.brandname.index', compact('brands', 'gens', 'brandCount'));
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();
             return back()->with('message', 'You\'re not employee!');

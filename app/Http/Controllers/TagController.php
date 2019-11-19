@@ -22,8 +22,9 @@ class TagController extends Controller
      */
     public function index()
     {
-        $tags = Tag::orderBy('id', 'desc')->get();
-        return view('posts.category.index', compact('tags'));
+        $tags = Tag::orderBy('id', 'desc')->paginate(10);
+        $count = Tag::get();
+        return view('posts.category.index', compact('tags', 'count'));
     }
 
     /**

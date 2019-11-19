@@ -15,16 +15,21 @@
 			<table class="table">
 				<thead class="thead-dark">
 					<th>Department</th>
+					<th>No. of Positions</th>
 					<th>No. of Employees</th>
 					<th>Action</th>
 				</thead>
+				<span class="font-weight-bold">Result: {{ $deps->count() }}</span><br>
+				<span class="font-weight-bold">Total number of Departments: {{ $depsCount->count() }}</span>
 				<tbody>
 					@forelse ($deps as $dep)
 						<tr>
 							<td>{{ strtoupper($dep->department) }}</td>
+							<td>{{ $dep->positions->count() }}</td>
 							<td>{{ $dep->employee->count() }}</td>
 							<td class="w-15 px-0">
-								<form method="post" action="{{ route('hr.dep.deleteDep', ['department' => $dep->department]) }}">
+								<a href="{{ route('hr.dep.showDep', ['department' => $dep->department]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a>
+								<form method="post" action="{{ route('hr.dep.deleteDep', ['department' => $dep->department]) }}" class="d-inline-block">
 					        		@csrf
 					        		@method('DELETE')
 									<button class="btn btn-link text-danger"  onclick="return confirm('Are you sure you want to delete {{ ucfirst($dep->department) }} Department?')" data-id="{{ $dep->department }}">
@@ -39,7 +44,8 @@
 							</tr>
 					@endforelse
 				</tbody>
-			</table>			
+			</table>
+			{{ $deps->links() }}
 		</div>
 
 		@include('layouts.errors')

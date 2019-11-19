@@ -29,6 +29,8 @@
 					<th>Action</th>
 				</thead>
 				<tbody>
+					<span class="font-weight-bold">Result: {{ $emps->count() }}</span><br>
+					<span class="font-weight-bold">Total number of Employee: {{ $countEmp->count() }}</span>
 					@forelse(@$emps as $emp)
 						<tr>
 							<td>{{ $emp->emp_id }}</td>
@@ -48,7 +50,6 @@
 		</div>
 	</div>
 </div>
-
-{{-- {{ $emps->links() }} --}}
+{{ $emps->links() }}
 
 @endsection

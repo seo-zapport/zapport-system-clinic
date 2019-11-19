@@ -241,7 +241,8 @@ class EmployeesmedicalController extends Controller
                             ->orWhere(\DB::raw("concat(emp_id, ' ', last_name, ' ', first_name, ' ', middle_name)"), 'like', '%'.$request->search.'%')->paginate(10);
             $emps->appends(['search' => $request->search]);
             $search = $request->search;
-            return view('medical.employeesMedical.listofemployee', compact('emps', 'search'));
+            $countEmp = Employee::get();
+            return view('medical.employeesMedical.listofemployee', compact('emps', 'search', 'countEmp'));
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();
             return back()->with('message', 'You\'re not employee!');
@@ -422,7 +423,12 @@ class EmployeesmedicalController extends Controller
                             ->paginate(10);
             $emps->appends(['search' => $request->search]);
             $search = $request->search;
-            return view('medical.employeesMedical.employeesWithRecord', compact('emps', 'search'));
+            $totalEmps = Employee::join('employeesmedicals', 'employees.id', 'employeesmedicals.employee_id')
+                            ->select('emp_id', 'first_name', 'last_name', 'middle_name', 'department_id', 'position_id')
+                            ->groupBy('emp_id', 'first_name', 'last_name', 'middle_name', 'department_id', 'position_id')
+                            ->distinct('emp_id')
+                            ->get();
+            return view('medical.employeesMedical.employeesWithRecord', compact('emps', 'search', 'totalEmps'));
         }else{
             return back();
         }

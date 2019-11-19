@@ -27,9 +27,10 @@ class PositionController extends Controller
     {
         if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
             $positions = Position::orderBy('id', 'desc')->paginate(10);
+            $positionsCount = Position::get();
             $departments = Department::orderBy('department', 'asc')->get();
             $employees = Employee::get();
-            return view('hr.position.index', compact('positions', 'departments', 'employees'));
+            return view('hr.position.index', compact('positions', 'departments', 'employees', 'positionsCount'));
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();
             return back()->with('message', 'You\'re not employee!');

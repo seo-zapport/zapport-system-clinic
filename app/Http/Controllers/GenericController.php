@@ -25,8 +25,9 @@ class GenericController extends Controller
     {
         if (Gate::allows('isAdmin') || Gate::allows('isHr') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
             $gens = Generic::orderBy('gname', 'asc')->paginate(10);
+            $gensCount = Generic::orderBy('gname', 'asc')->get();
             $brands = Medbrand::get();
-            return view('inventory.genericname.index', compact('gens', 'brands'));
+            return view('inventory.genericname.index', compact('gens', 'brands', 'gensCount'));
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();
             return back()->with('message', 'You\'re not employee!');

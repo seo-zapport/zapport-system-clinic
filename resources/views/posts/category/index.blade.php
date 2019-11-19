@@ -19,6 +19,7 @@
 					<th>Action</th>
 				</thead>
 				<tbody>
+					<span class="font-weight-bold">Total: {{ $count->count() }}</span>
 					@forelse ($tags as $tag)
 						<tr>
 							<td>
@@ -60,7 +61,8 @@
 						</tr>
 					@endforelse
 				</tbody>
-			</table>			
+			</table>
+			{{ $tags->links() }}
 		</div>
 	</div>
 </div>
