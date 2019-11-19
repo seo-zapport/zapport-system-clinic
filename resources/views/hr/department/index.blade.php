@@ -21,7 +21,7 @@
 			<table class="table table-hover">
 				<thead class="thead-dark">
 					<th>Department</th>
-					<th width="10%">No. of Positions</th>
+					<th width="20%">No. of Positions</th>
 					<th width="10%" class="text-center">No. of Employees</th>
 				</thead>
 				<tbody>
