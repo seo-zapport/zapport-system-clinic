@@ -83,7 +83,7 @@
 						</select>
 					</div>
 					@foreach ($emps as $key => $emp)
-						<div id="year-{{ $key }}" class="row d-none">
+						<div id="year-{{ $key }}" class="ol row d-none">
 							@foreach ($emp->unique('diagnosis') as $filter)
 								<div class="col-6 table-wrap">
 									<h2 class="text-muted printable-title">Illness: <span>{{ ucfirst($filter->diagnosis) }}</span></h2>
@@ -98,11 +98,19 @@
 											</thead>
 											<tbody>
 												@foreach ($emp->unique('age') as $age)
+													@if ($emp->where('gender', 0)->where('diagnosis', $filter->diagnosis)->where('age', $age->age)->count() > 0 || $emp->where('gender', 1)->where('diagnosis', $filter->diagnosis)->where('age', $age->age)->count() > 0)
 													<tr>
 														<td>{{ ( $age->gender  === 0 ) ? 'Male' : 'Female'}}</td>
 														<td> {{  $age->age  }} </td>
-														<td>{{ $emp->where('gender', 0)->where('diagnosis', $filter->diagnosis)->where('age', $age->age)->count() }}</td>
+														<td>
+															@if ($age->gender === 0)
+																{{ $emp->where('gender', 0)->where('diagnosis', $filter->diagnosis)->where('age', $age->age)->count() }}
+															@else
+																{{ $emp->where('gender', 1)->where('diagnosis', $filter->diagnosis)->where('age', $age->age)->count() }}
+															@endif
+														</td>
 													</tr>
+													@endif
 												@endforeach
 											</tbody>
 											<tfoot>
@@ -148,7 +156,7 @@
 					document.getElementById("CurrDate").innerHTML = '';
 					var date_selected = $(this).val();
 					$("#annualReport").each(function() {
-						$(this).find('ol').addClass('d-none');
+						$(this).find('.ol').addClass('d-none');
 					});
 					$("#year-"+date_selected+"").removeClass('d-none');
 					$("#CurrDate").append('Annual Report '+date_selected);
