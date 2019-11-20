@@ -87,8 +87,11 @@
 					@if ($employeesmedical->remarks == 'followUp')
 						<button class="btn btn-success text-white" data-toggle="modal" data-target="#exampleModalCenter">Add Notes</button>
 					@endif
-
+					
 					<button class="btn btn-info text-white" data-toggle="modal" data-target="#exampleModalCenter2">Edit Remarks</button>
+					@if ($employeesmedical->remarks != 'followUp')
+					<button class="btn btn-success text-white btnPrint">Print</button>
+					@endif
 				</div>
 				@endif
 			</div>
@@ -332,6 +335,12 @@
 
 <script type="application/javascript">
 jQuery(document).ready(function($) {
+
+	$('.btnPrint').printPage({ 
+		attr: "href",
+		url: "{{ asset('storage/uploaded/print/medrecord/emp-med-record.html') }}",
+		message:"Your document is being created",
+	});
 
 	$("#preEmpForm2").on('submit', function(e) {
 		e.preventDefault();

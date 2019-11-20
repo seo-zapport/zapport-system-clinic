@@ -28,7 +28,7 @@
     <script src="{{ asset('/js/tinymce/tinymce.js') }}"></script>
     <script src="{{ asset('/js/tinymce/tinymce.jquery.js') }}"></script>
   
-   @if ( Request::is('hr/employees') || request()->route()->getName() == 'hr.emp.show' || Request::is('inventory/medicine') || Request::is('inventory/medicine/*') )
+   @if ( Request::is('hr/employees') || request()->route()->getName() == 'hr.emp.show' || Request::is('inventory/medicine') || Request::is('inventory/medicine/*') || request()->route()->getName() == 'medical.show')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
     <script src="{{ asset('/js/jquery.printPage.js') }}" type="text/javascript" defer></script>
    @endif  

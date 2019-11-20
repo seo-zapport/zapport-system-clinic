@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\Gate;
 use App\EmployeesmedicalMedicineUser;
 use App\Http\Requests\EmployeesmedicalRequest;
 
+use File;
+
 class EmployeesmedicalController extends Controller
 {
     public function __construct()
@@ -170,6 +172,8 @@ class EmployeesmedicalController extends Controller
 
             $gens = Generic::orderBy('gname', 'asc')->get();
             $meds = Medicine::get();
+
+            $this->printMedicalRecord($employee, $employeesmedical, $empMeds);
 
             return view('medical.employeesMedical.show', compact('employee', 'employeesmedical', 'empMeds', 'gens', 'meds'));
 
@@ -446,5 +450,16 @@ class EmployeesmedicalController extends Controller
                                   });
 
         return view('medical.employeesMedical.fullReport', compact('diagnoses', 'arr', 'arr_count', 'emps'));
+    }
+
+    public function printMedicalRecord($employee, $employeesmedical, $empMeds){
+
+        $relPath = 'storage/uploaded/print/medrecord/';
+        if (!file_exists($relPath)) {
+            mkdir($relPath, 777, true);
+        }
+        $datamedrec = view('medical.employeesMedical.printmedrecord',compact('employee','employeesmedical','empMeds'))->render();
+        File::put(public_path('/storage/uploaded/print/medrecord/emp-med-record.html'),$datamedrec); 
+
     }
 }

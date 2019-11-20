@@ -248,6 +248,4 @@
 </div>
 
 </body>
-
-</script>
 </html>
