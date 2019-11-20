@@ -239,11 +239,11 @@
 
 							<table class="table table-hover">
 								<thead class="thead-dark">
-									<th>No.</th>
+									<th width="7%">No.</th>
 									<th>Diagnosis</th>
 									<th>Notes</th>
-									<th>Remarks</th>
-									<th>Date and Time</th>
+									<th width="10%">Remarks</th>
+									<th width="15%">Date and Time</th>
 								</thead>
 								<tbody>
 									@php
@@ -253,7 +253,7 @@
 										<tr>
 											<td>{{ $i++ }}</td>
 											<td>{{ $medsHistory->diagnoses->diagnosis }}
-												<div class="row-actions"><a href="{{ route('dashboard.show', ['employee' => $medsHistory->employee->emp_id, 'employeesmedical' => $medsHistory->id]) }}" class="btn btn-info text-white">	View
+												<div class="row-actions"><a href="{{ route('dashboard.show', ['employee' => $medsHistory->employee->emp_id, 'employeesmedical' => $medsHistory->id]) }}" class="btn text-secondary"><i class="far fa-eye"></i> View
 												</a></div></td>
 											<td>{{ Str::words($medsHistory->note, 15) }}</td>
 											<td>{{ ($medsHistory->remarks == 'followUp') ? 'Follow up' : 'Done' }}</td>

@@ -6,10 +6,13 @@
 @endsection
 @section('dash-content')
 
-<div class="card mb-5">
+<div class="card mb-3">
 	<div class="card-body">
 		<div class="form-group">
 			<a class="btn btn-info text-white" href="#" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus"></i>Add Category</a>
+		</div>
+		<div class="text-right mb-3">
+			<span class="d-inline-block">{{ $count->count() }} items</span>
 		</div>
 		<div class="table-responsive">
 			<table class="table table-hover">
@@ -18,7 +21,6 @@
 					<th width="10%" class="text-center">Number of Posts</th>
 				</thead>
 				<tbody>
-					<span class="font-weight-bold">Total: {{ $count->count() }}</span>
 					@forelse ($tags as $tag)
 						<tr>
 							<td>
@@ -62,11 +64,11 @@
 					@endforelse
 				</tbody>
 			</table>
-			{{ $tags->links() }}
+			
 		</div>
 	</div>
 </div>
-
+<div class="pagination-wrap">{{ $tags->links() }}</div>
 @include('layouts.errors')
 @if (session('tag_error'))
 	<div class="alert alert-danger alert-posts">

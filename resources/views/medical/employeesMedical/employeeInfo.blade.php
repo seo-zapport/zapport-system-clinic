@@ -11,7 +11,7 @@
 	<i class="fas fa-arrow-left"></i>
 </a>
 @endsection
-<div class="card mb-35">
+<div class="card mb-3">
 	<div class="card-body">
 		<div class="row">
 			<div class="col-2">
@@ -50,7 +50,7 @@
 											</button>
 										</form>
 									@endif
-										<a class="dropdown-item" href="{{ route('pre_emp.download', ['pre_emp' => @$employee->preemployment->pre_employment_med]) }}" download>View</a>
+										<a class="dropdown-item" href="{{ route('pre_emp.download', ['pre_emp' => @$employee->preemployment->pre_employment_med]) }}" download> View</a>
 								@endif
 							</div>
 						</div>
@@ -117,7 +117,7 @@
 					<tr>
 						<td>{{ $i++ }}</td>
 						<td>{{ ucwords($medsHistory->diagnoses->diagnosis) }}
-							<div class="row-actions"><a href="{{ route('medical.show', ['employee' => $employee->emp_id, 'employeesmedical' => $medsHistory->id]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i>View</a></div>
+							<div class="row-actions"><a href="{{ route('medical.show', ['employee' => $employee->emp_id, 'employeesmedical' => $medsHistory->id]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i> View</a></div>
 						</td>
 						<td>{{ Str::words($medsHistory->note, 15) }}</td>
 						<td>{{ $medsHistory->created_at->format('M d, Y - h:i a') }}</td>
@@ -163,8 +163,11 @@
 						<div id="diagnosis_list" class="autocomplete-items"></div>
 					</div>
 					<div class="form-group">
-						<label for="diagnosis">Attachment</label>
-						<input type="file" name="attachment" class="form-control-file file-upload">
+						<p class="mb-1">Attachment</p>
+						<label for="diagnosis" class="lbl_upload">Select a attachment</label>
+						<div class="uploader_wrap">
+							<input type="file" name="attachment" id="diagnosis" class="form-control-file file-upload">
+						</div>
 					</div>
 					<div class="form-group">
 						<label for="note">Note:</label>

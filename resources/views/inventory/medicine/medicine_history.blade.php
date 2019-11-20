@@ -40,9 +40,9 @@
 			@php 
 				$fileName = 'inventory_medicine';
 			@endphp
-			<ul class="dropdown-menu">
-				<li class="nav-item-btn"><a class="btnPrint" href="#"><i class="fas fa-print text-secondary"></i> PRINT</a></li>
-				<li class="nav-item-btn"><a href="{{ asset('storage/uploaded/print/inventory/'.@$fileName.'.csv')}}" download="{{ @$fileName.'.csv'}}" target="_blank"><i class="fas fa-file-csv text-secondary"></i> CSV</a></li>
+			<ul class="dropdown-menu print_dropdown">
+				<a href="#" class="btnPrint dropdown-item" ><i class="fas fa-print text-secondary"></i> PRINT</a>
+				<a href="{{ asset('storage/uploaded/print/inventory/'.@$fileName.'.csv')}}" class=" dropdown-item" download="{{ @$fileName.'.csv'}}" target="_blank"><i class="fas fa-file-csv text-secondary"></i> CSV</a>
 			</ul>
 		</div>
 	</div>
@@ -50,8 +50,8 @@
 
 <div class="card mb-3">
 	<div class="card-body">
+		<div id="medTotal" class="mb-3"></div>
 		<div class="table-responsive">
-			<div id="medTotal"></div>
 			<table id="MedTable" class="table table-hover">
 				<thead class="thead-dark">
 					{{-- <th>No.</th> --}}
@@ -89,7 +89,7 @@
 
 		var countTR = $("#MedTable tbody #MedRow").length;
 		$("#medTotal").html('');
-		$("#medTotal").append('<span class="font-weight-bold">Result: '+ countTR +'</span>');
+		$("#medTotal").append('<span>'+ countTR +' items</span>');
 
 		 $('.btnPrint').printPage({
 		  url: "{{ asset('storage/uploaded/print/inventory/inventory_medicine.html') }}",

@@ -11,15 +11,24 @@
 		<div class="form-group">
 			<a class="btn btn-info text-white" href="#" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus"></i> Add Department</a>
 		</div>
+		<div class="d-flex mb-3">
+			<div class="col-12 col-md-6">
+				<span class="text-primary">Total number of Departments: {{ $depsCount->count() }}</span>
+			</div>
+			<div class="col-12 col-md-6 count_items"><span>{{ $deps->count() }} items</span></div>
+		</div>
 		<div class="table-responsive">
 			<table class="table table-hover">
 				<thead class="thead-dark">
 					<th>Department</th>
+<<<<<<< HEAD
 					<th>No. of Positions</th>
 					<th>No. of Employees</th>
+=======
+					<th width="20%">No. of Positions</th>
+					<th width="10%" class="text-center">No. of Employees</th>
+>>>>>>> abc73e3b3a0e3dc728e5c056b348d93b6387cee2
 				</thead>
-				<span class="font-weight-bold">Result: {{ $deps->count() }}</span><br>
-				<span class="font-weight-bold">Total number of Departments: {{ $depsCount->count() }}</span>
 				<tbody>
 					@forelse ($deps as $dep)
 						<tr>
@@ -36,7 +45,11 @@
 						        </div>
 						    </td>
 							<td>{{ $dep->positions->count() }}</td>
+<<<<<<< HEAD
 							<td>{{ $dep->employee->count() }}</td>
+=======
+							<td class="text-center">{{ $dep->employee->count() }}</td>
+>>>>>>> abc73e3b3a0e3dc728e5c056b348d93b6387cee2
 						</tr>
 						@empty
 							<tr>

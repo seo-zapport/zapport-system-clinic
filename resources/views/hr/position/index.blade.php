@@ -12,6 +12,12 @@
 		<div class="form-group">
 			<a class="btn btn-info text-white" href="#" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus"></i> Add Position</a>
 		</div>
+		<div class="d-flex mb-3">
+			<div class="col-12 col-md-6">
+				<span class="text-primary">Total number of Positions: {{ $positionsCount->count() }}</span>
+			</div>
+			<div class="col-12 col-md-6 count_items"><span>{{ $positions->count() }} items</span></div>
+		</div>
 		<div class="table-responsive">
 			<table class="table table-hover">
 				<thead class="thead-dark">
@@ -19,8 +25,6 @@
 					<th width="20%">Department</th>
 					<th width="10%">No. of Employees</th>
 				</thead>
-				<span class="font-weight-bold">Result: {{ $positions->count() }}</span><br>
-				<span class="font-weight-bold">Total number of Positions: {{ $positionsCount->count() }}</span>
 				<tbody>
 					@forelse ($positions as $position)
 			        	@foreach ($position->departments as $department)

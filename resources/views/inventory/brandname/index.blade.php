@@ -15,14 +15,18 @@
 
 <div class="card mb-3">
 	<div class="card-body">
+		<div class="d-flex mb-3">
+			<div class="col-12 col-md-6">
+				<span class="text-primary">Total number of Brands: {{ $brandCount->count() }}</span>
+			</div>
+			<div class="col-12 col-md-6 count_items"><span>{{ $brands->count() }} items</span></div>
+		</div>
 		<div class="table-responsive">
 			<table class="table table-hover">
 				<thead class="thead-dark">
 					<th>Brand Name</th>
 					<th width="10%" class="text-center">No. of Generics</th>
 				</thead>
-				<span class="font-weight-bold">Result: {{ $brands->count() }}</span><br>
-				<span class="font-weight-bold">Total number of Brands: {{ $brandCount->count() }}</span>
 				<tbody>
 					@forelse ($brands as $brand)
 						<tr>

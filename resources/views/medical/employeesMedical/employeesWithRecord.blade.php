@@ -23,6 +23,12 @@
 
 <div class="card mb-3">
 	<div class="card-body" id="medical_employee_list">
+		<div class="d-flex mb-3">
+			<div class="col-12 col-md-6">
+				<span class="text-primary">Total number of Employee: {{ $totalEmps->count() }}</span>
+			</div>
+			<div class="col-12 col-md-6 count_items"><span>{{ $emps->count() }} items</span></div>
+		</div>
 		<div class="table-responsive">
 			<table class="table table-hover">
 				<thead class="thead-dark">
@@ -31,8 +37,6 @@
 					<th width="20%">Department - Positon</th>
 				</thead>
 				<tbody>
-					<span class="font-weight-bold">Result: {{ $emps->count() }}</span><br>
-					<span class="font-weight-bold">Total number of Employee: {{ $totalEmps->count() }}</span>
 					@forelse(@$emps as $emp)
 						<tr>
 							<td>{{ $emp->emp_id }}</td>

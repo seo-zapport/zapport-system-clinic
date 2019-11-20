@@ -20,10 +20,11 @@ class LastUserActivity
     {
         if (Auth::check()) {
             $user = auth()->user();
+            $expiresAt = now()->addMinutes(59);
             if ($user != null) {
                 foreach ($user->roles as $uRole) {
                     if ($uRole->role === 'doctor' || $uRole->role === 'nurse') {
-                        Cache::add('user-is-online-'. $uRole->pivot->user_id, true);
+                        Cache::add('user-is-online-'. $uRole->pivot->user_id, true, $expiresAt);
                     }
                 }
             }

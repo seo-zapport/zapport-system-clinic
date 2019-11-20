@@ -16,7 +16,7 @@
 	<h3 class="zp-text zp-text-16">Generic Name: {{ ucwords($generic->gname) }}</h3>
 </div>
 <form id="meds_log" method="get">
-	<div class="form-row">
+	<div class="form-row align-items-center">
 		<div class="form-group col-md-4 mb-0">
 			<select name="search" id="search" class="form-control">
 				<option selected disabled='true'>Filter Date</option>
@@ -59,18 +59,19 @@
 				@php 
 					$fileName = 'inventory_medicine';
 				@endphp
-				<ul class="dropdown-menu">
-					<li class="nav-item-btn"><a class="btnPrint" href="#"><i class="fas fa-print text-secondary"></i> PRINT All</a></li> 
+				<ul class="dropdown-menu print_dropdown">
+					<a class="btnPrint dropdown-item" href="#"><i class="fas fa-print text-secondary"></i> PRINT All</a>
 					@if(app('request')->input('expired') != 'on')
-					<li class="nav-item-btn"><a class="btnPrintlog" href="#"><i class="fas fa-print text-secondary"></i> PRINT Available</a></li> 
-					<li class="nav-item-btn"><a class="btnPrintexpire" href="#"><i class="fas fa-print text-secondary"></i> PRINT Expired</a></li> 
+					<a class="btnPrintlog dropdown-item" href="#"><i class="fas fa-print text-secondary"></i> PRINT Available</a>
+					<a class="btnPrintexpire dropdown-item" href="#"><i class="fas fa-print text-secondary"></i> PRINT Expired</a>
 					@endif
-					<li class="nav-item-btn"><a href="{{ asset('storage/uploaded/print/inventory/'.@$fileName.'.csv')}}" download="{{ @$fileName.'.csv'}}" target="_blank"><i class="fas fa-file-csv text-secondary"></i> CSV All</a></li>
+					<a href="{{ asset('storage/uploaded/print/inventory/'.@$fileName.'.csv')}}" class="dropdown-item" download="{{ @$fileName.'.csv'}}" target="_blank"><i class="fas fa-file-csv text-secondary"></i> CSV All</a></li>
 					@if(app('request')->input('expired') != 'on')
-					<li class="nav-item-btn"><a href="{{ asset('storage/uploaded/print/inventory/'.@$fileName.'_log.csv')}}" download="{{ @$fileName.'_log.csv'}}" target="_blank"><i class="fas fa-file-csv text-secondary"></i> CSV Available</a></li>
-					<li class="nav-item-btn"><a href="{{ asset('storage/uploaded/print/inventory/'.@$fileName.'_expired.csv')}}" download="{{ @$fileName.'_expired.csv'}}" target="_blank"><i class="fas fa-file-csv text-secondary"></i> CSV Expired</a></li>
+					<a href="{{ asset('storage/uploaded/print/inventory/'.@$fileName.'_log.csv')}}" class="dropdown-item" download="{{ @$fileName.'_log.csv'}}" target="_blank"><i class="fas fa-file-csv text-secondary"></i> CSV Available</a></li>
+					<a href="{{ asset('storage/uploaded/print/inventory/'.@$fileName.'_expired.csv')}}" class="dropdown-item" download="{{ @$fileName.'_expired.csv'}}" target="_blank"><i class="fas fa-file-csv text-secondary"></i> CSV Expired</a></li>
 					@endif
 				</ul>
+
 			</div>
 		</div>
 	</div>
@@ -79,18 +80,17 @@
 <br>
 <div class="card mb-3">
 	<div class="card-body">
+		<div id="medTotal" class="mb-3"></div>
 		<div class="table-responsive">
-			<div id="medTotal"></div>
 			<table id="MedTable" class="table table-hover">
 				<thead class="thead-dark">
 					<th>No.</th>
+					<th>Input by</th>
 					<th>Input Date</th>
 					<th>Date Expire</th>
 					<th>Remaining Quantity</th>
 					<th>No. of deducted Meds</th>
 					<th>No. of Medicines</th>
-					<th>Input by</th>
-					<th>Action</th>
 				</thead>
 				<tbody>
 					@php
@@ -100,6 +100,13 @@
 						<tr id="MedRow">
 							<td class="{{ ($log->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">
 							{{ $i }}
+							</td>
+							<td class="{{ ($log->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">
+								{{ ucwords($log->user->employee->last_name) }} {{ ucwords($log->user->employee->first_name) }}
+								<div class="row-actions">
+									<a href="{{ route('medicine.show', ['medbrand' => $log->bname, 'generic' => $log->gname, 'inputDate' => $log->orig, 'expDate' => 
+									$log->expiration_date]) }}" class="show-edit btn btn-link {{ ($log->expiration_date <= NOW()) ? ' text-white' : 'text-secondary' }}"><i class="far fa-eye"></i> View</a>
+								</div>
 							</td>
 							<td class="{{ ($log->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">
 							{{ Carbon\carbon::parse($log->formatted_at)->format('M d, Y') }}
@@ -114,13 +121,6 @@
 							</td>
 							<td class="{{ ($log->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">
 								{{ $log->where('brand_id', $log->brand_id)->where('generic_id', $log->generic_id)->where('expiration_date', $log->expiration_date)->where('created_at', $log->orig)->count() }}
-							</td>
-							<td class="{{ ($log->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">
-							{{ ucwords($log->user->employee->last_name) }} {{ ucwords($log->user->employee->first_name) }}
-							</td>
-							<td class="{{ ($log->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">
-							<a href="{{ route('medicine.show', ['medbrand' => $log->bname, 'generic' => $log->gname, 'inputDate' => $log->orig, 'expDate' => 
-							$log->expiration_date]) }}" class="show-edit btn btn-link {{ ($log->expiration_date <= NOW()) ? ' text-white' : 'text-secondary' }}"><i class="far fa-eye"></i>View</a>
 							</td>
 						</tr>
 					@php
@@ -152,7 +152,7 @@
 
 		var countTR = $("#MedTable tbody #MedRow").length;
 		$("#medTotal").html('');
-		$("#medTotal").append('<span class="font-weight-bold">Result: '+ countTR +'</span>');
+		$("#medTotal").append('<span>'+ countTR +' items</span>');
 		 
 		 $('.btnPrint').printPage({
     	  	url: "{{ asset('storage/uploaded/print/inventory/inventory_medicine.html') }}",

@@ -24,13 +24,13 @@
 			<table class="table">
 				<thead class="thead-dark">
 					<th>Generic Name</th>
-					<th>Quantity</th>
+					<th width="10%" class="text-center">Quantity</th>
 				</thead>
 				<tbody>
 					@forelse ($medbrand->medicines->unique('brand_id') as $gen)
 						<tr>
 							<td>{{ ucfirst($gen->generic->gname) }}</td>
-							<td>{{ $gen->where('brand_id', $medbrand->id)->where('generic_id', $gen->generic->id)->where('expiration_date', '>', NOW())->where('availability', 0)->count() }}</td>
+							<td class="text-center">{{ $gen->where('brand_id', $medbrand->id)->where('generic_id', $gen->generic->id)->where('expiration_date', '>', NOW())->where('availability', 0)->count() }}</td>
 						</tr>
 						@empty
 							<tr>

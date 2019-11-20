@@ -19,7 +19,7 @@
 					<th>Brand Name</th>
 					{{-- <th>Input Date</th> --}}
 					{{-- <th>Date Expire</th> --}}
-					<th>Remaining Quantity</th>
+					<th width="10%" class="text-center">Remaining Quantity</th>
 				</thead>
 				<tbody>
 					@forelse ($allBrands as $gen)
@@ -27,7 +27,7 @@
 							<td>
 								{{ ucwords($gen->medbrand->bname) }}
 							</td>
-							<td>
+							<td class="text-center">
 								{{ $gen->where('brand_id', $gen->medbrand->id)->where('availability', 0)->where('expiration_date', '>', NOW())->count() }}
 							</td>
 						</tr>
