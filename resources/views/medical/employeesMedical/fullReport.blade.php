@@ -101,6 +101,7 @@
 												@foreach ($emp->unique('age') as $age)
 													@if ($emp->where('gender', 0)->where('diagnosis', $filter->diagnosis)->where('age', $age->age)->count() > 0 || $emp->where('gender', 1)->where('diagnosis', $filter->diagnosis)->where('age', $age->age)->count() > 0)
 													<tr>
+
 														@if ($filter->diagnosis == $age->diagnosis)
 															<td  rowspan="{{ $emp->where('diagnosis', $filter->diagnosis)->count() }}">
 																	{{ $filter->diagnosis }}
