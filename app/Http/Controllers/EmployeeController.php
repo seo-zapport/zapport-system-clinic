@@ -53,7 +53,7 @@ class EmployeeController extends Controller
 
             }elseif ($request->filter_gender == NULL && $request->filter_empType == NULL && $request->filter_age != NULL && $request->filter_status == NULL){
 
-                $rawemployees = Employee::orderBy('last_name', 'desc');
+                $rawemployees = Employee::where(\DB::raw('TIMESTAMPDIFF(YEAR,birthday,NOW())'), $request->filter_age)->orderBy('last_name', 'desc');
                 $employees2 = $rawemployees->get();
                 $employees = $rawemployees->paginate(10)->appends(['filter_age' => $request->filter_age]);
                 $filter_age = $request->filter_age;
@@ -75,7 +75,7 @@ class EmployeeController extends Controller
 
             }elseif ($request->filter_gender != NULL && $request->filter_empType == NULL && $request->filter_age != NULL && $request->filter_status == NULL){
 
-                $rawemployees = Employee::where('gender', $request->filter_gender)->orderBy('last_name', 'desc');
+                $rawemployees = Employee::where(\DB::raw('TIMESTAMPDIFF(YEAR,birthday,NOW())'), $request->filter_age)->where('gender', $request->filter_gender)->orderBy('last_name', 'desc');
                 $employees2 = $rawemployees->get();
                 $employees = $rawemployees->paginate(10)->appends(['filter_gender' => $request->filter_gender, 'filter_age' => $request->filter_age]);
                 $filter_g_a = ['gender' => $request->filter_gender, 'age' => $request->filter_age];
@@ -83,7 +83,7 @@ class EmployeeController extends Controller
 
             }elseif ($request->filter_gender == NULL && $request->filter_empType != NULL && $request->filter_age != NULL && $request->filter_status == NULL){
 
-                $rawemployees = Employee::where('employee_type', $request->filter_empType)->orderBy('last_name', 'desc');
+                $rawemployees = Employee::where(\DB::raw('TIMESTAMPDIFF(YEAR,birthday,NOW())'), $request->filter_age)->where('employee_type', $request->filter_empType)->orderBy('last_name', 'desc');
                 $employees2 = $rawemployees->get();
                 $employees = $rawemployees->paginate(10)->appends(['filter_empType' => $request->filter_empType, 'filter_age' => $request->filter_age]);
                 $filter_e_a = ['type' => $request->filter_empType, 'age' => $request->filter_age];
@@ -91,7 +91,7 @@ class EmployeeController extends Controller
 
             }elseif ($request->filter_gender != NULL && $request->filter_empType != NULL && $request->filter_age != NULL && $request->filter_status == NULL){
 
-                $rawemployees = Employee::where('gender', $request->filter_gender)->where('employee_type', $request->filter_empType)->orderBy('last_name', 'desc');
+                $rawemployees = Employee::where(\DB::raw('TIMESTAMPDIFF(YEAR,birthday,NOW())'), $request->filter_age)->where('gender', $request->filter_gender)->where('employee_type', $request->filter_empType)->orderBy('last_name', 'desc');
                 $employees2 = $rawemployees->get();
                 $employees = $rawemployees->paginate(10)->appends(['filter_gender' => $request->filter_gender, 'filter_empType' => $request->filter_empType, 'filter_age' => $request->filter_age]);
                 $filter_all = ['gender' => $request->filter_gender, 'type' => $request->filter_empType, 'age' => $request->filter_age];
@@ -115,7 +115,7 @@ class EmployeeController extends Controller
 
             }elseif ($request->filter_gender == NULL && $request->filter_empType == NULL && $request->filter_age != NULL && $request->filter_status != NULL){
 
-                $rawemployees = Employee::where('civil_status', $request->filter_status)->orderBy('last_name', 'desc');
+                $rawemployees = Employee::where(\DB::raw('TIMESTAMPDIFF(YEAR,birthday,NOW())'), $request->filter_age)->where('civil_status', $request->filter_status)->orderBy('last_name', 'desc');
                 $employees2 = $rawemployees->get();
                 $employees = $rawemployees->paginate(10)->appends(['filter_status' => $request->filter_status, 'filter_age' => $request->filter_age]);
                 $filter_s_a = ['status' => $request->filter_status, 'age' => $request->filter_age];
@@ -131,7 +131,7 @@ class EmployeeController extends Controller
 
             }elseif ($request->filter_gender == NULL && $request->filter_empType != NULL && $request->filter_age != NULL && $request->filter_status != NULL){
 
-                $rawemployees = Employee::where('employee_type', $request->filter_empType)->where('civil_status', $request->filter_status)->orderBy('last_name', 'desc');
+                $rawemployees = Employee::where(\DB::raw('TIMESTAMPDIFF(YEAR,birthday,NOW())'), $request->filter_age)->where('employee_type', $request->filter_empType)->where('civil_status', $request->filter_status)->orderBy('last_name', 'desc');
                 $employees2 = $rawemployees->get();
                 $employees = $rawemployees->paginate(10)->appends(['filter_empType' => $request->filter_empType, 'filter_age' => $request->filter_age, 'filter_status' => $request->filter_status]);
                 $filter_t_a_s = ['type' => $request->filter_empType, 'age' => $request->filter_age, 'status' => $request->filter_status];
@@ -139,7 +139,7 @@ class EmployeeController extends Controller
 
             }elseif ($request->filter_gender != NULL && $request->filter_empType == NULL && $request->filter_age != NULL && $request->filter_status != NULL){
 
-                $rawemployees = Employee::where('gender', $request->filter_gender)->where('civil_status', $request->filter_status)->orderBy('last_name', 'desc');
+                $rawemployees = Employee::where(\DB::raw('TIMESTAMPDIFF(YEAR,birthday,NOW())'), $request->filter_age)->where('gender', $request->filter_gender)->where('civil_status', $request->filter_status)->orderBy('last_name', 'desc');
                 $employees2 = $rawemployees->get();
                 $employees = $rawemployees->paginate(10)->appends(['filter_gender' => $request->filter_gender, 'filter_age' => $request->filter_age, 'filter_status' => $request->filter_status]);
                 $filter_g_a_s = ['gender' => $request->filter_gender, 'age' => $request->filter_age, 'status' => $request->filter_status];
@@ -147,7 +147,7 @@ class EmployeeController extends Controller
 
             }elseif ($request->filter_gender != NULL && $request->filter_empType != NULL && $request->filter_age != NULL && $request->filter_status != NULL){
 
-                $rawemployees = Employee::where('gender', $request->filter_gender)->where('employee_type', $request->filter_empType)->where('civil_status', $request->filter_status)->orderBy('last_name', 'desc');
+                $rawemployees = Employee::where(\DB::raw('TIMESTAMPDIFF(YEAR,birthday,NOW())'), $request->filter_age)->where('gender', $request->filter_gender)->where('employee_type', $request->filter_empType)->where('civil_status', $request->filter_status)->orderBy('last_name', 'desc');
                 $employees2 = $rawemployees->get();
                 $employees = $rawemployees->paginate(10)->appends(['filter_gender' => $request->filter_gender, 'filter_empType' => $request->filter_empType, 'filter_age' => $request->filter_age, 'filter_status' => $request->filter_status]);
                 $filter_super = ['gender' => $request->filter_gender, 'type' => $request->filter_empType, 'age' => $request->filter_age, 'status' => $request->filter_status];
