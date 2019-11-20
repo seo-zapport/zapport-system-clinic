@@ -442,12 +442,14 @@ class EmployeesmedicalController extends Controller
     {
         $emps = Employeesmedical::join('diagnoses', 'diagnoses.id', 'employeesmedicals.diagnosis_id')
                                 ->join('employees', 'employees.id', 'employeesmedicals.employee_id')
-                                ->select('employeesmedicals.id', 'employees.gender', 'diagnosis', 'employeesmedicals.created_at', \DB::raw('floor(DATEDIFF(CURDATE(),employees.birthday) /365) as age'))
+                                // ->select('employeesmedicals.id', 'employees.gender', 'diagnosis', 'employeesmedicals.created_at', \DB::raw('floor(DATEDIFF(CURDATE(),employees.birthday) /365) as old_age'))
+                                ->select('employeesmedicals.id', 'employees.gender', 'diagnosis', 'employeesmedicals.created_at', \DB::raw('TIMESTAMPDIFF(YEAR,birthday,NOW()) as age'))
                                 ->orderBy('employeesmedicals.created_at', 'desc')
                                 ->get()
                                 ->groupBy(function($date) {
                                     return Carbon::parse($date->created_at)->format('Y');
                                   });
+                                // dd($emps);
 
         return view('medical.employeesMedical.fullReport', compact('diagnoses', 'arr', 'arr_count', 'emps'));
     }

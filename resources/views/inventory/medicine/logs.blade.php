@@ -16,7 +16,7 @@
 	<h3 class="zp-text zp-text-16">Generic Name: {{ ucwords($generic->gname) }}</h3>
 </div>
 <form id="meds_log" method="get">
-	<div class="form-row align-items-center">
+	<div class="form-row">
 		<div class="form-group col-md-4 mb-0">
 			<select name="search" id="search" class="form-control">
 				<option selected disabled='true'>Filter Date</option>
@@ -46,7 +46,7 @@
 			<button type="submit" class="btn btn-success mr-2">Search</button>
 			<a href="{{ route('medicine.log', ['medbrand' => $medbrand->bname, 'generic' => $generic->gname]) }}" class="btn btn-info text-white">Clear</a>
 		</div>
-		<div class="form-check col-12 col-md-4 mb-0">
+		<div class="form-check col-12 col-md-4 mb-0" style="margin-top: 5px">
 			<input type="checkbox" class="form-check-input" {{ (isset($_GET['expired'])) ? 'checked' : '' }} id="exampleCheck1" name="expired" onclick="this.form.submit()">
 			<label class="form-check-label" for="exampleCheck1">Filter Expired Medicines</label>
 		</div>		

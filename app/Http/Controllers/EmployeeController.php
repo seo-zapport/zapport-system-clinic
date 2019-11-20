@@ -165,8 +165,6 @@ class EmployeeController extends Controller
             }else{
                 $this->printCsv(null);
             }
-            $getAge = Employee::select(\DB::raw('TIMESTAMPDIFF(YEAR,birthday,NOW()) as Empage'))->get();
-            // dd($employees);
 
             return view('hr.employee.index', compact('employees', 'search', 'empcount', 'filter_gender', 'filter_empType', 'filter_both', 'filter_age', 'filter_all', 'emp_age', 'filter_g_a', 'filter_e_a', 'filter_status', 'filter_g_s', 'filter_t_s', 'filter_s_a', 'filter_g_t_s', 'filter_t_a_s', 'filter_g_a_s', 'filter_super'))
             ->nest('print', 'hr.employee.print_emps', compact('employees2', 'search', 'empcount', 'filter_gender', 'filter_empType', 'filter_both', 'filter_age', 'filter_all', 'emp_age', 'filter_g_a', 'filter_e_a', 'filter_status', 'filter_g_s', 'filter_t_s', 'filter_s_a', 'filter_g_t_s', 'filter_t_a_s', 'filter_g_a_s', 'filter_super'));
