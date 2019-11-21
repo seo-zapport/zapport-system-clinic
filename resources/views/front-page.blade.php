@@ -57,10 +57,12 @@
 		<div class="container">
 			<div class="slick-posts">
 				@foreach ($posts as $post)
-					<div>
+					<div class="test">
 						<div class="card p-2 mx-1">
-							<img src="{{ ($post->medias != null) ? asset('storage/uploaded/media/'.$post->medias->file_name) : asset('storage/uploaded/media/No_image.png') }}" class="card-img-top">
-							<div class="card-body">
+							<div class="img-wrap">
+								<img src="{{ ($post->medias != null) ? asset('storage/uploaded/media/'.$post->medias->file_name) : asset('storage/uploaded/media/No_image.png') }}" class="card-img-top">
+							</div>
+							<div class="card-body"><!--//344x193-->
 								<a href="{{ route('frnt.show.post', ['post' => $post->slug]) }}">
 									<h5 class="card-title">{{ $post->title }}</h5>
 								</a>

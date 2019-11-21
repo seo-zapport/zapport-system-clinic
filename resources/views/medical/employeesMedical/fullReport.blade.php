@@ -88,6 +88,7 @@
 											@endif
 											<tbody>
 												@foreach ($emp->unique('age') as $age)
+<<<<<<< HEAD
 												<tr>
 													@if ($emp->where('gender', 0)->where('diagnosis', $filter->diagnosis)->where('age', $age->age)->count() > 0)
 														<td>
@@ -111,6 +112,34 @@
 													</td>
 													@endif
 												</tr>
+=======
+													<tr>
+														@if ($emp->where('gender', 0)->where('diagnosis', $filter->diagnosis)->where('age', $age->age)->count() > 0)
+															<td>
+																Male
+															</td>
+															<td>
+																{{  $age->age  }}
+															</td>
+															<td>
+																{{ $emp->where('gender', 0)->where('diagnosis', $filter->diagnosis)->where('age', $age->age)->count() }}
+															</td>
+														@endif
+														</tr>
+														<tr>
+														@if ($emp->where('gender', 1)->where('diagnosis', $filter->diagnosis)->where('age', $age->age)->count() > 0)
+															<td>
+																Female 
+															</td>
+															<td>
+																{{  $age->age  }}
+															</td>
+															<td>
+																{{ $emp->where('gender', 1)->where('diagnosis', $filter->diagnosis)->where('age', $age->age)->count() }}
+															</td>
+														@endif
+													</tr>
+>>>>>>> 59cdd5b2d9e0da991baff6198d8f931fb8a0eee9
 												@endforeach
 											</tbody>
 											<tfoot class="bg-zap">
