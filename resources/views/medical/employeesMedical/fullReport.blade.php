@@ -88,35 +88,29 @@
 											@endif
 											<tbody>
 												@foreach ($emp->unique('age') as $age)
-													@if ($emp->where('gender', 0)->where('diagnosis', $filter->diagnosis)->where('age', $age->age)->count() > 0 || $emp->where('gender', 1)->where('diagnosis', $filter->diagnosis)->where('age', $age->age)->count() > 0)
-														
-													</br>
-														{{$age->diagnosis}}
 													<tr>
-<<<<<<< HEAD
-													
-
-													
-														@if ($filter->diagnosis == $age->diagnosis)
-															<td  rowspan="{{ $emp->where('diagnosis', $filter->diagnosis)->count() }}">
-																	{{ $filter->diagnosis }}
+														@if ($emp->where('gender', 0)->where('diagnosis', $filter->diagnosis)->where('age', $age->age)->count() > 0)
+															<td>
+																Male 
+															</td>
+															<td>
+																{{  $age->age  }}
+															</td>
+															<td>
+																{{ $emp->where('gender', 0)->where('diagnosis', $filter->diagnosis)->where('age', $age->age)->count() }}
+															</td>
+														@elseif ($emp->where('gender', 1)->where('diagnosis', $filter->diagnosis)->where('age', $age->age)->count() > 0)
+															<td>
+																Female 
+															</td>
+															<td>
+																{{  $age->age  }}
+															</td>
+															<td>
+																{{ $emp->where('gender', 1)->where('diagnosis', $filter->diagnosis)->where('age', $age->age)->count() }}
 															</td>
 														@endif
-														
-								
-=======
->>>>>>> 3735ed47f1c66c2710a124bef82b5d0b1eb584d4
-														<td>{{ ( $age->gender  === 0 ) ? 'Male' : 'Female'}}</td>
-														<td> {{  $age->age  }} </td>
-														<td>
-															@if ($age->gender === 0)
-																{{ $emp->where('gender', 0)->where('diagnosis', $filter->diagnosis)->where('age', $age->age)->count() }}
-															@else
-																{{ $emp->where('gender', 1)->where('diagnosis', $filter->diagnosis)->where('age', $age->age)->count() }}
-															@endif
-														</td>
 													</tr>
-													@endif
 												@endforeach
 											</tbody>
 											<tfoot class="bg-zap">
@@ -128,8 +122,7 @@
 											</tfoot>
 										</table>								
 									</div>
-								</div>		
-
+								</div>								
 							@endforeach
 						</div>
 					@endforeach
