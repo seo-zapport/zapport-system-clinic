@@ -43,13 +43,18 @@
 			<div class="print-content">
 				<div class="text-center">	
 					<img src="{{url( '/images/logo.png' )}}" alt="Zapport">
+					<div style="margin-top: 20px; margin-bottom: 20px;">
+						<p class="text-center text-secondary" style="line-height:0px;">14/F UNIT 14-G BURGUNDY CORPORATE TOWER</p>
+						<p class="text-center text-secondary" style="line-height:0px;">Sen Gil Puyat Ave., San Lorenzo</p>
+						<p class="text-center text-secondary" style="line-height:0px;">Makati City Philippines</p>
+					</div>
 				</div>
 				<div class="container">
 					<div class="col-12 text-right d-flex justify-content-end">
 						<button id="printThatText" name="printThatText" onclick="printPage();" class="btn btn-outline-info">Print</button>
 					</div>			
 					<div class="col-12 text-center mb-4 mt-4">
-						<h1 id="CurrDate" class="text-secondary" style="font-size: 22px;">Illness Annual Report</h1>
+						<h1 id="CurrDate" class="text-secondary" style="font-size: 20px;">Illness Annual Report</h1>
 					</div>
 				</div>
 				<div id="annualReport" class="container mb-3">
@@ -137,7 +142,7 @@
 						$(this).find('.ol').addClass('d-none');
 					});
 					$("#year-"+date_selected+"").removeClass('d-none');
-					$("#CurrDate").append('Annual Report '+date_selected);
+					$("#CurrDate").append('Illness Annual Report '+date_selected);
 				});
 			});
 		</script>
