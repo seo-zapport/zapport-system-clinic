@@ -88,19 +88,38 @@
 											@endif
 											<tbody>
 												@foreach ($emp->unique('age') as $age)
+<<<<<<< HEAD
 													@if ($emp->where('gender', 0)->where('diagnosis', $filter->diagnosis)->where('age', $age->age)->count() > 0 || $emp->where('gender', 1)->where('diagnosis', $filter->diagnosis)->where('age', $age->age)->count() > 0)
 													<tr>
 														<td>{{ ( $age->gender  === 0 ) ? 'Male' : 'Female'}}</td>
 														<td> {{  $age->age  }} </td>
 														<td>
 															@if ($age->gender === 0)
+=======
+													<tr>
+														@if ($emp->where('gender', 0)->where('diagnosis', $filter->diagnosis)->where('age', $age->age)->count() > 0)
+															<td>
+																Male 
+															</td>
+															<td>
+																{{  $age->age  }}
+															</td>
+															<td>
+>>>>>>> c04ddb1da72050072d948d38561577da54b772e2
 																{{ $emp->where('gender', 0)->where('diagnosis', $filter->diagnosis)->where('age', $age->age)->count() }}
-															@else
+															</td>
+														@elseif ($emp->where('gender', 1)->where('diagnosis', $filter->diagnosis)->where('age', $age->age)->count() > 0)
+															<td>
+																Female 
+															</td>
+															<td>
+																{{  $age->age  }}
+															</td>
+															<td>
 																{{ $emp->where('gender', 1)->where('diagnosis', $filter->diagnosis)->where('age', $age->age)->count() }}
-															@endif
-														</td>
+															</td>
+														@endif
 													</tr>
-													@endif
 												@endforeach
 											</tbody>
 											<tfoot class="bg-zap">
