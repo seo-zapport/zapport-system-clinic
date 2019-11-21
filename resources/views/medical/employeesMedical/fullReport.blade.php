@@ -63,6 +63,7 @@
 					@foreach ($emps as $key => $emp)
 						<div id="year-{{ $key }}" class="ol row d-none">
 							@foreach ($emp->unique('diagnosis') as $filter)
+<<<<<<< HEAD
 								{{-- <div class="col-2 {{ ( $loop->first ) ? '' : 'd-flex justify-content-center align-items-center' }}"> --}}
 								<div class="col-2 d-flex justify-content-center align-items-center diag-wrapper">
 									{{-- @if ($loop->first) <span class="d-block p-2 diag-title">Illness</span> @endif --}}
@@ -72,11 +73,16 @@
 								</div>
 								<div class="col-10 table-wrap">
 									{{-- <h2 class="text-muted printable-title">Illness: <span>{{ ucfirst($filter->diagnosis) }}</span></h2> --}}
+=======
+								<div class="col-12 table-wrap">
+									<h2 class="text-muted printable-title">Illness: <span>{{ ucfirst($filter->diagnosis) }}</span></h2>
+>>>>>>> 71422e204c27aba21d7335345063f5a64418d722
 									<div class="table-responsive">
 										<table class="table table-sm">
 											@if ($loop->first)
 											<thead>
 												<tr>
+													<th>Illness</th>
 													<th>Gender</th>
 													<th>Age</th>
 													<th>Total of Person</th>
@@ -87,6 +93,13 @@
 												@foreach ($emp->unique('age') as $age)
 													@if ($emp->where('gender', 0)->where('diagnosis', $filter->diagnosis)->where('age', $age->age)->count() > 0 || $emp->where('gender', 1)->where('diagnosis', $filter->diagnosis)->where('age', $age->age)->count() > 0)
 													<tr>
+
+														@if ($filter->diagnosis == $age->diagnosis)
+															<td  rowspan="{{ $emp->where('diagnosis', $filter->diagnosis)->count() }}">
+																	{{ $filter->diagnosis }}
+															</td>
+														@endif
+
 														<td>{{ ( $age->gender  === 0 ) ? 'Male' : 'Female'}}</td>
 														<td> {{  $age->age  }} </td>
 														<td>
