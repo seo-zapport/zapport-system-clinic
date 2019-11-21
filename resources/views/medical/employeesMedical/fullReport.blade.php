@@ -88,38 +88,29 @@
 											@endif
 											<tbody>
 												@foreach ($emp->unique('age') as $age)
-<<<<<<< HEAD
-													@if ($emp->where('gender', 0)->where('diagnosis', $filter->diagnosis)->where('age', $age->age)->count() > 0 || $emp->where('gender', 1)->where('diagnosis', $filter->diagnosis)->where('age', $age->age)->count() > 0)
-													<tr>
-														<td>{{ ( $age->gender  === 0 ) ? 'Male' : 'Female'}}</td>
-														<td> {{  $age->age  }} </td>
+												<tr>
+													@if ($emp->where('gender', 0)->where('diagnosis', $filter->diagnosis)->where('age', $age->age)->count() > 0)
 														<td>
-															@if ($age->gender === 0)
-=======
-													<tr>
-														@if ($emp->where('gender', 0)->where('diagnosis', $filter->diagnosis)->where('age', $age->age)->count() > 0)
-															<td>
-																Male 
-															</td>
-															<td>
-																{{  $age->age  }}
-															</td>
-															<td>
->>>>>>> c04ddb1da72050072d948d38561577da54b772e2
-																{{ $emp->where('gender', 0)->where('diagnosis', $filter->diagnosis)->where('age', $age->age)->count() }}
-															</td>
+															Male 
+														</td>
+														<td>
+															{{ $age->age }}
+														</td>
+														<td>
+													{{ $emp->where('gender', 0)->where('diagnosis', $filter->diagnosis)->where('age', $age->age)->count() }}
+														</td>
 														@elseif ($emp->where('gender', 1)->where('diagnosis', $filter->diagnosis)->where('age', $age->age)->count() > 0)
-															<td>
-																Female 
-															</td>
-															<td>
-																{{  $age->age  }}
-															</td>
-															<td>
-																{{ $emp->where('gender', 1)->where('diagnosis', $filter->diagnosis)->where('age', $age->age)->count() }}
-															</td>
-														@endif
-													</tr>
+														<td>
+															Female 
+														</td>
+														<td>
+															{{ $age->age }}
+														</td>
+														<td>
+													{{ $emp->where('gender', 1)->where('diagnosis', $filter->diagnosis)->where('age', $age->age)->count() }}
+													</td>
+													@endif
+												</tr>
 												@endforeach
 											</tbody>
 											<tfoot class="bg-zap">
