@@ -27,6 +27,7 @@
 		-ms-user-select: none;
 		user-select: none;
 		i{
+			display: inline;
 			line-height: 1.5;
 			margin-right: 5px;
 			text-align: center;
@@ -213,20 +214,22 @@
 // notification
 #v-new-consultation-tab, #v-follow-up-tab, #v-inc-requirements-tab, #v-inc-emp-6months-tab, #v-inc-preEmp-tab{
 	span{
-		height: 25px;
-		width: 25px;
 		background-color: #bbb;
 		border-radius: 50%;
 		display: inline-block;
+		font-size: 12px;
+		height: 21px;
 		padding: 2px;
+		width: 21px;
 	}
 }
 
 #Notifs{
-	height: 25px;
-	width: 25px;
 	background-color: #bbb;
 	border-radius: 50%;
 	display: inline-block;
+	font-size: 12px;
+	height: 21px;
 	padding: 2px;
+	width: 21px;
 }
