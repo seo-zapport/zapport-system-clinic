@@ -157,6 +157,11 @@
 			.zp-categories a:hover{
 				color: #404448;
 			}
+			.slick-slide .card-img-top{
+				height: 10vw;
+				object-fit: cover;
+				position: relative;	
+			}
 		</style>
 	</head>
 	<body id="page-top" class="zp-front-page" data-spy="scroll" data-target="#mainNav">
