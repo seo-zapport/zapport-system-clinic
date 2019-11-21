@@ -41,7 +41,7 @@
 		<div class="row">
 			<div class="col-8 col-md-8">
 				<p><span class="text-dark font-weight-bold">Note's</span></p>
-				<p>{{ ucwords($employeesmedical->diagnoses->diagnosis) }}</p>
+				<p>{{ ucfirst($employeesmedical->note) }}</p>
 			</div>
 			<div class="col-4 col-md-4">
 				<p><span class="text-dark font-weight-bold">Date:</span> {{ $employeesmedical->created_at->format('M d, Y - h:i a') }}</p>
@@ -78,7 +78,8 @@
 					@foreach ($employeesmedical->medNote as $followups)
 						<div class="col-1 col-md-1"></div>
 						<div class="col-7 col-md-7">
-							<p><span class="text-dark font-weight-bold">Note's: </span> {{ ucfirst($followups->followup_note) }}</p>
+							<p>@php if($loop->first){ @endphp <span class="text-dark font-weight-bold">Note's: </span> @php } @endphp</p> 
+							<p> {{ ucfirst($followups->followup_note) }}</p>
 							<div class="table-responsive" style="margin: 0px 35px; float: left;">
 								<table class="table">
 									<thead >

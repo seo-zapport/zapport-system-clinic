@@ -335,13 +335,11 @@
 								<td>{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
 							</tr>
 						@else
-							@if(app('request')->input('filter_age') != '')
-								@if ($loop->first && app('request')->input('filter_age') == '') 
+								@if ($loop->first) 
 								 <tr>
 									<td colspan="3" class="text-center">{{ "0 Matches Found!" }}</td>
 								 </tr>
 								@endif
-							@endif
 						@endif
 
 						@empty

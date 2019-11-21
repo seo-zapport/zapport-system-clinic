@@ -100,14 +100,20 @@
 											<tbody>
 												@foreach ($emp->unique('age') as $age)
 													@if ($emp->where('gender', 0)->where('diagnosis', $filter->diagnosis)->where('age', $age->age)->count() > 0 || $emp->where('gender', 1)->where('diagnosis', $filter->diagnosis)->where('age', $age->age)->count() > 0)
+														
+													</br>
+														{{$age->diagnosis}}
 													<tr>
+													
 
+													
 														@if ($filter->diagnosis == $age->diagnosis)
 															<td  rowspan="{{ $emp->where('diagnosis', $filter->diagnosis)->count() }}">
 																	{{ $filter->diagnosis }}
 															</td>
 														@endif
-
+														
+								
 														<td>{{ ( $age->gender  === 0 ) ? 'Male' : 'Female'}}</td>
 														<td> {{  $age->age  }} </td>
 														<td>
@@ -130,7 +136,8 @@
 											</tfoot>
 										</table>								
 									</div>
-								</div>								
+								</div>		
+
 							@endforeach
 						</div>
 

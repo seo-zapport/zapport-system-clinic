@@ -71,7 +71,7 @@
 		</div>
 		<div class="college  row">
 			<div class="col-4 col-lg-4 bor">Tertiary/College</div>
-			<div class="col-4 col-lg-4 bor text-center">{{ strtoupper(@$employee->college) }}</div>
+			<div class="col-4 col-lg-4 bor text-center">{{ strtoupper(@$employee->course) }} / {{ strtoupper(@$employee->college) }}</div>
 			<div class="col-4 col-lg-4 bor text-center">{{ ($employee->college_grad_date != null) ? Carbon\carbon::parse($employee->college_grad_date)->format("M d, Y") : @$employee->college_grad_date }}</div>
 		</div>
 		<div class="high  row">
@@ -180,7 +180,16 @@
 			$arr = unserialize(@$employee->children);
 			if (!empty($arr)) {
 				$count = count(@$arr);
+				 for($child = 0; $child < 3; $child++){	
+				@endphp
+					<div class="col-3 col-lg-3 bor">Children's Name: </div>
+					<div class="col-3 col-lg-3 bor">None</div>
+					<div class="col-3 col-lg-3 bor">Birthday/Gender: </div>
+					<div class="col-3 col-lg-3 bor">None</div>
+				@php
+				}
 			}else{ 
+				echo 'meron';
 				if (!empty(@$arr)){
 				@endphp
 				@php
@@ -196,10 +205,6 @@
 					}
 				}
 				@endphp
-						<div class="col-3 col-lg-3 bor">Children's Name: </div>
-						<div class="col-3 col-lg-3 bor">None</div>
-						<div class="col-3 col-lg-3 bor">Birthday/Gender: </div>
-						<div class="col-3 col-lg-3 bor">None</div>
 			@php 
 			}
 			@endphp
