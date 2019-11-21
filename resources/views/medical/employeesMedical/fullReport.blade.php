@@ -139,7 +139,6 @@
 			</div>
 		</div>
 		<script type="text/javascript">
-
 			function printPage()
 			{
 			    var myDropDown = document.getElementById('printThatText');
@@ -151,15 +150,10 @@
 			    annualFilter.style.display = "block";
 			    return true;
 			}
-
 			jQuery(document).ready(function($){
-
 				var yearNow = new Date().getFullYear();
-
 				$("#year-"+yearNow+"").removeClass('d-none');
-
 				$("#CurrDate").append(' '+yearNow);
-
 				$('select[name="select_date"]').on('change',function(){
 					document.getElementById("CurrDate").innerHTML = '';
 					var date_selected = $(this).val();
@@ -169,7 +163,6 @@
 					$("#year-"+date_selected+"").removeClass('d-none');
 					$("#CurrDate").append('Annual Report '+date_selected);
 				});
-
 			});
 		</script>
 	</body>
