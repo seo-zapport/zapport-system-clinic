@@ -91,7 +91,7 @@
 													<tr>
 														@if ($emp->where('gender', 0)->where('diagnosis', $filter->diagnosis)->where('age', $age->age)->count() > 0)
 															<td>
-																Male 
+																Male
 															</td>
 															<td>
 																{{  $age->age  }}
@@ -99,7 +99,10 @@
 															<td>
 																{{ $emp->where('gender', 0)->where('diagnosis', $filter->diagnosis)->where('age', $age->age)->count() }}
 															</td>
-														@elseif ($emp->where('gender', 1)->where('diagnosis', $filter->diagnosis)->where('age', $age->age)->count() > 0)
+														@endif
+														</tr>
+														<tr>
+														@if ($emp->where('gender', 1)->where('diagnosis', $filter->diagnosis)->where('age', $age->age)->count() > 0)
 															<td>
 																Female 
 															</td>
