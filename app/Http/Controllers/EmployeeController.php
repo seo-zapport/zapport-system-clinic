@@ -166,7 +166,9 @@ class EmployeeController extends Controller
                 $this->printCsv(null);
             }
 
-            return view('hr.employee.index', compact('employees', 'search', 'empcount', 'filter_gender', 'filter_empType', 'filter_both', 'filter_age', 'filter_all', 'emp_age', 'filter_g_a', 'filter_e_a', 'filter_status', 'filter_g_s', 'filter_t_s', 'filter_s_a', 'filter_g_t_s', 'filter_t_a_s', 'filter_g_a_s', 'filter_super'))
+            $class = ( request()->is('hr/employees*') ) ?'admin-hr-employees' : '';//**add Class in the body*/
+
+            return view('hr.employee.index', compact('class','employees', 'search', 'empcount', 'filter_gender', 'filter_empType', 'filter_both', 'filter_age', 'filter_all', 'emp_age', 'filter_g_a', 'filter_e_a', 'filter_status', 'filter_g_s', 'filter_t_s', 'filter_s_a', 'filter_g_t_s', 'filter_t_a_s', 'filter_g_a_s', 'filter_super'))
             ->nest('print', 'hr.employee.print_emps', compact('employees2', 'search', 'empcount', 'filter_gender', 'filter_empType', 'filter_both', 'filter_age', 'filter_all', 'emp_age', 'filter_g_a', 'filter_e_a', 'filter_status', 'filter_g_s', 'filter_t_s', 'filter_s_a', 'filter_g_t_s', 'filter_t_a_s', 'filter_g_a_s', 'filter_super'));
 
         }elseif (Gate::allows('isBanned')) {
@@ -186,7 +188,10 @@ class EmployeeController extends Controller
     {
         if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
             $departments = Department::get();
-            return view('hr.employee.create', compact('departments'));
+
+            $class = ( request()->is('hr/employees*') ) ?'admin-hr-employees' : '';//**add Class in the body*/
+
+            return view('hr.employee.create', compact('class','departments'));
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();
             return back()->with('message', 'You\'re not employee!');
@@ -297,9 +302,11 @@ class EmployeeController extends Controller
         if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
      
             $dataemp = view('hr.employee.printviewinfo',compact('employee'))->render();
-            File::put(public_path('/storage/uploaded/print/employees/printinfo.html'),$dataemp);  
+            File::put(public_path('/storage/uploaded/print/employees/printinfo.html'),$dataemp); 
 
-            return view('hr.employee.show', compact('employee'));
+            $class = ( request()->is('hr/employees*') ) ?'admin-hr-employees' : '';//**add Class in the body*/
+
+            return view('hr.employee.show', compact('class','employee'));
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();
             return back()->with('message', 'You\'re not employee!');
@@ -323,7 +330,9 @@ class EmployeeController extends Controller
             $uniqDep = Department::where('id', '!=', $depID)->get();
             // Filter Civil Status IDs that are not included
 
-            return view('hr.employee.edit', compact('employee', 'departments', 'uniqDep'));
+            $class = ( request()->is('hr/employees*') ) ?'admin-hr-employees' : '';//**add Class in the body*/
+            
+            return view('hr.employee.edit', compact('class', 'employee', 'departments', 'uniqDep'));
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();
             return back()->with('message', 'You\'re not employee!');

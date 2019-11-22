@@ -1,5 +1,9 @@
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm mb-4 top-navbar">
     <div class="container-fluid">
+        <button class="zp-navbar-show " type="button" data-target="#navbarSidebarHideShow" aria-controls="navbarSidebarHideShow" aria-expanded="false" aria-label="{{ __('Hide/Show navigation') }}">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
         <a class="navbar-brand" href="{{ url('/') }}">
             {{-- {{ config('app.name', 'Laravel') }} --}}
             <img src="{{ url('/images/logo.png') }}" alt="Zapport Clinic">

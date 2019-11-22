@@ -5,4 +5,4 @@
 	@if ( request()->is('register') )admin-register @endif
 	@if ( request()->is('password/reset') )admin-reset @endif
 	@if ( request()->is('medical*') )admin-medical @endif
-@endsection
+@stop

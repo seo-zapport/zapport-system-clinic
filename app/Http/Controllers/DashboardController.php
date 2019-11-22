@@ -112,7 +112,9 @@ class DashboardController extends Controller
             $meds = Medicine::get();
         }
 
-        return view('admin.dashboard', compact('empMeds', 'emps', 'notSeen', 'employee', 'gens', 'meds', 'search', 'result', 'emps2', 'noPreEmpMeds'));
+        $class = ( request()->is('dashboard*') ) ?'admin-dashboard' : '';//**add Class in the body*/
+
+        return view('admin.dashboard', compact('class','empMeds', 'emps', 'notSeen', 'employee', 'gens', 'meds', 'search', 'result', 'emps2', 'noPreEmpMeds'));
     }
 
     /**

@@ -9,18 +9,19 @@
 <div class="card mb-5">
 	<div class="card-body">
 		<div class="table-responsive">
-			<table class="table">
+			<table class="table table-hover">
 				<thead class="thead-dark">
 					<th>Position</th>
-					<th>No. of Employees</th>
-					<th>Action</th>
+					<th width="10%">No. of Employees</th>
 				</thead>
 				<tbody>
 					@foreach ($department->positions as $position)
 					<tr>
-						<td>{{ strtoupper($position->position) }}</td>
-						<td>{{ $position->employee->count() }}</td>
-						<td><a href="{{ route('hr.pos.show', ['position' => $position->position, 'department' => $department->department]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a></td>
+						<td>
+							{{ strtoupper($position->position) }}
+							<div class="row-actions"><a href="{{ route('hr.pos.show', ['position' => $position->position, 'department' => $department->department]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a></div>
+						</td>
+						<td >{{ $position->employee->count() }}</td>
 					</tr>
 					@endforeach
 				</tbody>

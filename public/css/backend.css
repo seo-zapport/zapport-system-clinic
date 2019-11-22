@@ -5,7 +5,7 @@
  *----------------------*/
 
 /*!
- * Font Awesome Free 5.9.0 by @fontawesome - https://fontawesome.com
+ * Font Awesome Free 5.10.2 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
  */
 
@@ -13,6 +13,7 @@
 .fas,
 .far,
 .fal,
+.fad,
 .fab {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
@@ -1431,6 +1432,10 @@ readers do not read off random characters that represent icons */
 
 .fa-copyright:before {
   content: "\F1F9";
+}
+
+.fa-cotton-bureau:before {
+  content: "\F89E";
 }
 
 .fa-couch:before {
@@ -5791,7 +5796,7 @@ readers do not read off random characters that represent icons */
 }
 
 /*!
- * Font Awesome Free 5.9.0 by @fontawesome - https://fontawesome.com
+ * Font Awesome Free 5.10.2 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
  */
 
@@ -5800,8 +5805,8 @@ readers do not read off random characters that represent icons */
   font-style: normal;
   font-weight: 900;
   font-display: auto;
-  src: url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.eot?ef3df98419d143d9617fe163bf4edc0b);
-  src: url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.eot?ef3df98419d143d9617fe163bf4edc0b) format("embedded-opentype"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.woff2?b5cf8ae26748570d8fb95a47f46b69e1) format("woff2"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.woff?4bced7c4c0d61d4f988629bb8ae80b8b) format("woff"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.ttf?acf50f59802f20d8b45220eaae532a1c) format("truetype"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.svg?b557f56e367e59344ca95f9d1fb44352) format("svg");
+  src: url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.eot?42e1fbd2cf655a0b44a2dfae9ca2f8c1);
+  src: url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.eot?42e1fbd2cf655a0b44a2dfae9ca2f8c1) format("embedded-opentype"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.woff2?d6d8d5da9214dc7d46b297672a602d55) format("woff2"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.woff?3ded831d708bf90b2da86756551b5c1c) format("woff"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.ttf?896e20e26ad07dc63c9526ed814117e9) format("truetype"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-solid-900.svg?6ed5e3bc9018d2a03e2f1fadbf8a0a4a) format("svg");
 }
 
 .fa,
@@ -5811,7 +5816,7 @@ readers do not read off random characters that represent icons */
 }
 
 /*!
- * Font Awesome Free 5.9.0 by @fontawesome - https://fontawesome.com
+ * Font Awesome Free 5.10.2 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
  */
 
@@ -5820,8 +5825,8 @@ readers do not read off random characters that represent icons */
   font-style: normal;
   font-weight: normal;
   font-display: auto;
-  src: url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-brands-400.eot?03783c5172ee1ad128c576bf88fac168);
-  src: url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-brands-400.eot?03783c5172ee1ad128c576bf88fac168) format("embedded-opentype"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-brands-400.woff2?7559b3774a0625e8ca6c0160f8f6cfd8) format("woff2"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-brands-400.woff?fe9d62e0d16a333a20e63c3e7595f82e) format("woff"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-brands-400.ttf?ed2b8bf117160466ba6220a8f1da54a4) format("truetype"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-brands-400.svg?073c2f3ce60eaf69cc2767ef3d989078) format("svg");
+  src: url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-brands-400.eot?14c590d124662eb50efa4c00f027b79c);
+  src: url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-brands-400.eot?14c590d124662eb50efa4c00f027b79c) format("embedded-opentype"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-brands-400.woff2?3e1b2a654a784ceb385157140b4ccd71) format("woff2"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-brands-400.woff?df02c782834b113d605d8329368737b4) format("woff"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-brands-400.ttf?5e8aa9ea0ebcd2218178f554cdd8e6b0) format("truetype"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-brands-400.svg?bfa9c38bd6081dafe7278dedc4aad1d9) format("svg");
 }
 
 .fab {
@@ -5829,7 +5834,7 @@ readers do not read off random characters that represent icons */
 }
 
 /*!
- * Font Awesome Free 5.9.0 by @fontawesome - https://fontawesome.com
+ * Font Awesome Free 5.10.2 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
  */
 
@@ -5838,8 +5843,8 @@ readers do not read off random characters that represent icons */
   font-style: normal;
   font-weight: 400;
   font-display: auto;
-  src: url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-regular-400.eot?fc9c63c8224fb341fc933641cbdd12ef);
-  src: url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-regular-400.eot?fc9c63c8224fb341fc933641cbdd12ef) format("embedded-opentype"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-regular-400.woff2?e07d9e40b26048d9abe2ef966cd6e263) format("woff2"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-regular-400.woff?e5770f9863963fb576942e25214a226d) format("woff"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-regular-400.ttf?59215032a4397507b80e5625dc323de3) format("truetype"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-regular-400.svg?8fdea4e89ac405d9f8db327adb331d8d) format("svg");
+  src: url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-regular-400.eot?aa66d0e0e38c75666e98db33abae955e);
+  src: url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-regular-400.eot?aa66d0e0e38c75666e98db33abae955e) format("embedded-opentype"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-regular-400.woff2?ac21cac3f22cc9642f5af32e0c750797) format("woff2"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-regular-400.woff?5623624dd1b017c66c29d1ac69cdcfa3) format("woff"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-regular-400.ttf?285a9d2a28886ad64c4e45cbd733cf7c) format("truetype"), url(/fonts/vendor/@fortawesome/fontawesome-free/webfa-regular-400.svg?95f13e0be408d117bd3d9b366084a3ef) format("svg");
 }
 
 .far {
@@ -6193,6 +6198,78 @@ figure {
   margin-left: 78px;
 }
 
+/**dashboard-sidebar*/
+
+/**dashboard*/
+
+.admin-dashboard #v-pills-tab {
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.075em;
+  padding: 10px;
+}
+
+.admin-dashboard .text-white.float-right.bg-danger {
+  background-color: #2dc3b8 !important;
+}
+
+.admin-dashboard .nav-pills .nav-link {
+  color: #6c757d;
+  position: relative;
+  margin-left: 15px;
+  padding: 0.5rem 0.75rem;
+  transition: ease-in 0.7s all;
+}
+
+.admin-dashboard .nav-pills .nav-link:before {
+  content: "";
+  display: inline-block;
+  position: absolute;
+  background-color: transparent;
+  width: 90%;
+  height: 2px;
+  left: 0;
+  right: 0;
+  bottom: 0px;
+  margin: auto;
+}
+
+.admin-dashboard .nav-pills .nav-link:hover {
+  color: #00988d;
+}
+
+.admin-dashboard .nav-pills .nav-link:hover:before {
+  background-color: #00988d;
+}
+
+.admin-dashboard .nav-pills .nav-link:hover .dash-badge {
+  background-color: #00988d !important;
+}
+
+.admin-dashboard .nav-pills .nav-link.active,
+.admin-dashboard .nav-pills .show > .nav-link {
+  background-color: transparent;
+  color: #00988d;
+}
+
+.admin-dashboard .nav-pills .nav-link.active:before,
+.admin-dashboard .nav-pills .show > .nav-link:before {
+  background-color: #00988d;
+}
+
+.admin-dashboard .nav-pills .nav-link.active .dash-badge,
+.admin-dashboard .nav-pills .show > .nav-link .dash-badge {
+  background-color: #00988d !important;
+}
+
+.admin-dashboard .nav-pills .dash-badge {
+  background-color: #6c757d !important;
+  color: #fff;
+  text-align: center;
+}
+
+/**notification*/
+
 #v-new-consultation-tab span,
 #v-follow-up-tab span,
 #v-inc-requirements-tab span,
@@ -6205,6 +6282,7 @@ figure {
   height: 21px;
   padding: 2px;
   width: 21px;
+  margin-left: 5px;
 }
 
 #Notifs {
@@ -6215,6 +6293,34 @@ figure {
   height: 21px;
   padding: 2px;
   width: 21px;
+}
+
+/**Mobile-hide-show-btn*/
+
+.zp-navbar-show {
+  padding: 0.25rem 0.75rem;
+  font-size: 1.125rem;
+  line-height: 1;
+  background-color: transparent;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+}
+
+.navbar-light .zp-navbar-show {
+  color: rgba(0, 0, 0, 0.5);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+.zp-sidebClose {
+  display: none;
+  position: absolute;
+  right: 5px;
+  z-index: 15;
+}
+
+.zp-sidebClose i {
+  font-size: 28px;
+  color: #fff;
 }
 
 /**
@@ -6425,6 +6531,12 @@ figure {
   background-color: rgba(54, 197, 187, 0.8);
 }
 
+/**color*/
+
+.zp-2a9 {
+  color: #2ab3a9;
+}
+
 /**notes*/
 
 .zp-notes {
@@ -6506,15 +6618,6 @@ figure {
 
 .list-notes-followup p {
   margin-bottom: 4px;
-}
-
-/**dashboard*/
-
-.admin-dashboard #v-pills-tab {
-  background-color: #fff;
-  border: 1px solid rgba(0, 0, 0, 0.125);
-  border-radius: 0.075em;
-  padding: 10px;
 }
 
 /**Employee*/
@@ -7440,6 +7543,14 @@ label.lbl_upload:focus {
 }
 
 @media (min-width: 768px) {
+  /**admin-navbar*/
+
+  .navbar-expand-md .zp-navbar-show {
+    display: none;
+  }
+
+  /**signin*/
+
   .signin-container {
     width: 430px;
     display: table;
@@ -7474,6 +7585,34 @@ label.lbl_upload:focus {
     display: table-cell;
     vertical-align: top;
     width: 60%;
+  }
+}
+
+@media (max-width: 768px) {
+  #zapAdminMenuBg,
+  #zapAdminMenuWrap {
+    width: 100%;
+  }
+
+  #zapContent,
+  #zapFooter {
+    margin-left: 0;
+  }
+
+  #adminMainMenu {
+    opacity: 0;
+    margin-left: -999px;
+    position: relative;
+    z-index: 100;
+  }
+
+  .zp-sidebClose {
+    display: block;
+  }
+
+  .sticky-menu #zapAdminMenuWrap {
+    height: 100%;
+    overflow-y: scroll;
   }
 }
 
