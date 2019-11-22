@@ -43,7 +43,7 @@
     <link href="{{ asset('css/backend.css') }}" rel="stylesheet">
     @include('layouts.classes')
 </head>
-<body class="@yield('body-class')">
+<body class="{{ ( ! empty($class) ) ? $class : '' }}">
     <div id="zapWrap" class="sticky-menu">
         @guest
             @yield('content')

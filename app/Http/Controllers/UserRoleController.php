@@ -34,7 +34,10 @@ class UserRoleController extends Controller
                 $arr[] = $userRole->user_id;
             }
             $noRoles = User::whereNotIn('id', $arr)->get();
-            return view('admin.userRoles.index', compact('users', 'roles', 'noRoles', 'noUsers'));
+
+            $class = ( request()->is('dashboard/userRoles*') ) ?'admin-user-roles' : '';//**add Class in the body*/
+
+            return view('admin.userRoles.index', compact('class', 'users', 'roles', 'noRoles', 'noUsers'));
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();
             return back()->with('message', 'You\'re not employee!');

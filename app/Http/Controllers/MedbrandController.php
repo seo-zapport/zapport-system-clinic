@@ -28,7 +28,10 @@ class MedbrandController extends Controller
             $gens = Generic::get();
             $brands = Medbrand::orderBy('bname', 'asc')->paginate(10);
             $brandCount = Medbrand::orderBy('bname', 'asc')->get();
-            return view('inventory.brandname.index', compact('brands', 'gens', 'brandCount'));
+
+            $class = ( request()->is('inventory/medicine/brandname*') ) ?'admin-inventory admin-med-brand' : '';//**add Class in the body*/
+
+            return view('inventory.brandname.index', compact('class', 'brands', 'gens', 'brandCount'));
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();
             return back()->with('message', 'You\'re not employee!');
@@ -94,7 +97,10 @@ class MedbrandController extends Controller
     public function show(Medbrand $medbrand)
     {
         if (Gate::allows('isAdmin') || Gate::allows('isHr') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
-            return view('inventory.brandname.show', compact('medbrand'));
+
+            $class = ( request()->is('inventory/medicine/brandname*') ) ?'admin-inventory admin-med-brand' : '';//**add Class in the body*/
+
+            return view('inventory.brandname.show', compact('class','medbrand'));
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();
             return back()->with('message', 'You\'re not employee!');

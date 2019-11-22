@@ -175,7 +175,9 @@ class EmployeesmedicalController extends Controller
 
             $this->printMedicalRecord($employee, $employeesmedical, $empMeds);
 
-            return view('medical.employeesMedical.show', compact('employee', 'employeesmedical', 'empMeds', 'gens', 'meds'));
+            $class = ( request()->is('medical/employees*') ) ?'admin-medical admin-med-employees employee-medical-diagnosis' : '';//**add Class in the body*/
+
+            return view('medical.employeesMedical.show', compact('class', 'employee', 'employeesmedical', 'empMeds', 'gens', 'meds'));
 
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();
@@ -246,7 +248,10 @@ class EmployeesmedicalController extends Controller
             $emps->appends(['search' => $request->search]);
             $search = $request->search;
             $countEmp = Employee::get();
-            return view('medical.employeesMedical.listofemployee', compact('emps', 'search', 'countEmp'));
+
+            $class = ( request()->is('medical/employees*') ) ?'admin-medical admin-med-employees' : '';//**add Class in the body*/
+
+            return view('medical.employeesMedical.listofemployee', compact('class', 'emps', 'search', 'countEmp'));
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();
             return back()->with('message', 'You\'re not employee!');
@@ -278,7 +283,10 @@ class EmployeesmedicalController extends Controller
 
             $gens = Generic::orderBy('gname', 'asc')->get();
             $meds = Medicine::get();
-            return view('medical.employeesMedical.employeeInfo', compact('employee', 'gens', 'meds', 'search', 'result'));
+
+            $class = ( request()->is('medical/employees*') ) ?'admin-medical admin-med-employees employee-info' : '';//**add Class in the body*/
+
+            return view('medical.employeesMedical.employeeInfo', compact('class', 'employee', 'gens', 'meds', 'search', 'result'));
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();
             return back()->with('message', 'You\'re not employee!');
@@ -432,7 +440,10 @@ class EmployeesmedicalController extends Controller
                             ->groupBy('emp_id', 'first_name', 'last_name', 'middle_name', 'department_id', 'position_id')
                             ->distinct('emp_id')
                             ->get();
-            return view('medical.employeesMedical.employeesWithRecord', compact('emps', 'search', 'totalEmps'));
+
+            $class = ( request()->is('medical/employees*') ) ?'admin-medical admin-med-employees medical-record' : '';//**add Class in the body*/
+
+            return view('medical.employeesMedical.employeesWithRecord', compact('class', 'emps', 'search', 'totalEmps'));
         }else{
             return back();
         }
@@ -451,7 +462,9 @@ class EmployeesmedicalController extends Controller
                                   });
                                 // dd($emps);
 
-        return view('medical.employeesMedical.fullReport', compact('diagnoses', 'arr', 'arr_count', 'emps'));
+            $class = ( request()->is('medical/employees*') ) ?'admin-medical admin-med-employees' : '';//**add Class in the body*/
+
+        return view('medical.employeesMedical.fullReport', compact('class', 'diagnoses', 'arr', 'arr_count', 'emps'));
     }
 
     public function printMedicalRecord($employee, $employeesmedical, $empMeds){

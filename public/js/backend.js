@@ -357,19 +357,19 @@ jQuery(document).ready(function($){
   var PreEmpCount = $("#IncPreEmp #incPre").length;
   
   if (count > 0) {
-   $("#v-new-consultation-tab").append('<span class="text-center text-white bg-danger float-right">'+count+'</span>');
+   $("#v-new-consultation-tab").append('<span class="dash-badge">'+count+'</span>');
   }
   if(FFcount > 0){
-    $("#v-follow-up-tab").append('<span class="text-center text-white bg-danger float-right">'+FFcount+'</span>');
+    $("#v-follow-up-tab").append('<span class="dash-badge">'+FFcount+'</span>');
   }
   if (incCount) {
-    $("#v-inc-requirements-tab").append('<span class="text-center text-white bg-danger float-right">'+incCount+'</span>');
+    $("#v-inc-requirements-tab").append('<span class="dash-badge">'+incCount+'</span>');
   }  
   if (forRegCount) {
-    $("#v-inc-emp-6months-tab").append('<span class="text-center text-white bg-danger float-right">'+forRegCount+'</span>');
+    $("#v-inc-emp-6months-tab").append('<span class="dash-badge">'+forRegCount+'</span>');
   }
     if(PreEmpCount > 0){
-    $("#v-inc-preEmp-tab").append('<span class="text-center text-white bg-danger float-right">'+PreEmpCount+'</span>');
+    $("#v-inc-preEmp-tab").append('<span class="dash-badge">'+PreEmpCount+'</span>');
   }
 
   $.ajax({
@@ -687,6 +687,31 @@ jQuery(document).ready(function($){
     $(this).find('td').find('.row-actions').addClass('visible');
   },function(e){
     $(this).find('td').find('.row-actions').removeClass('visible');
+  });
+
+ // Sidebar hide&show_____________________________________________________________________________________________________
+  $('.zp-navbar-show').on('click', function(e){
+    $('#adminMainMenu').stop(true, true).animate({
+      opacity: 1,
+      marginLeft: '0'
+    }, 'slow', 'linear');
+  });
+
+  $('.zp-sidebClose').on('click', function(e){
+    $('#adminMainMenu').stop(true, true).animate({
+      opacity: 0,
+      marginLeft: '-999px'
+    }, 'slow', 'linear');
+  });
+
+ // Remove inline style_____________________________________________________________________________________________________
+  $(window).on('load resize', function(){
+    var viewWidth = $(window).width();
+    if ( viewWidth >= 750) {
+      if ( $('#adminMainMenu').attr('style') ) {
+        $('#adminMainMenu').removeAttr('style');
+      }
+    }
   });
 
 });

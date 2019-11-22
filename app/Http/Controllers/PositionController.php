@@ -30,7 +30,10 @@ class PositionController extends Controller
             $positionsCount = Position::get();
             $departments = Department::orderBy('department', 'asc')->get();
             $employees = Employee::get();
-            return view('hr.position.index', compact('positions', 'departments', 'employees', 'positionsCount'));
+
+            $class = ( request()->is('hr/position*') ) ?'admin-hr-position' : '';//**add Class in the body*/
+
+            return view('hr.position.index', compact('class', 'positions', 'departments', 'employees', 'positionsCount'));
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();
             return back()->with('message', 'You\'re not employee!');
@@ -96,7 +99,10 @@ class PositionController extends Controller
     {
         if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
             $employees = Employee::where('position_id', $position->id)->where('department_id', $department->id)->get();
-            return view('hr.position.show', compact('position', 'department', 'employees'));
+
+            $class = ( request()->is('hr/position*') ) ?'admin-hr-position' : '';//**add Class in the body*/
+
+            return view('hr.position.show', compact('class', 'position', 'department', 'employees'));
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();
             return back()->with('message', 'You\'re not employee!');

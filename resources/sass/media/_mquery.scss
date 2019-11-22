@@ -2,7 +2,13 @@
 	.container-lg-w12{max-width: 1200px;}
 }
 @media (min-width: 768px){
+	
+	/**admin-navbar*/
+    .navbar-expand-md .zp-navbar-show {
+        display: none;
+    }
 
+	/**signin*/
     .signin-container {
         width: 430px;
         display: table;
@@ -34,6 +40,28 @@
 	        width: 60%;
 	    }
     }
+}
+
+@media (max-width: 768px) {
+	#zapAdminMenuBg, #zapAdminMenuWrap{
+		width: 100%;
+	}
+	#zapContent, #zapFooter{
+		margin-left: 0;
+	}
+	#adminMainMenu{
+		opacity: 0;
+		margin-left: -999px;
+		position: relative;
+		z-index: 100;
+	}
+	.zp-sidebClose{
+		display: block;
+	}
+	.sticky-menu #zapAdminMenuWrap{
+		height: 100%;
+		overflow-y: scroll;
+	}
 }
 @media only screen and (max-width: 480px){
     .edit-attachment-frame .attachment-media-view {
