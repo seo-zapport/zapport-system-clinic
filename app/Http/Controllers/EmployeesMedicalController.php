@@ -417,7 +417,7 @@ class EmployeesmedicalController extends Controller
 
     public function EmployeesWithRecord(Request $request)
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse') || Gate::allows('isHr')) {
             $emps = Employee::join('employeesmedicals', 'employees.id', 'employeesmedicals.employee_id')
                             ->select('emp_id', 'first_name', 'last_name', 'middle_name', 'department_id', 'position_id')
                             ->groupBy('emp_id', 'first_name', 'last_name', 'middle_name', 'department_id', 'position_id')
@@ -440,18 +440,23 @@ class EmployeesmedicalController extends Controller
 
     public function fullReport()
     {
-        $emps = Employeesmedical::join('diagnoses', 'diagnoses.id', 'employeesmedicals.diagnosis_id')
-                                ->join('employees', 'employees.id', 'employeesmedicals.employee_id')
-                                // ->select('employeesmedicals.id', 'employees.gender', 'diagnosis', 'employeesmedicals.created_at', \DB::raw('floor(DATEDIFF(CURDATE(),employees.birthday) /365) as old_age'))
-                                ->select('employeesmedicals.id', 'employees.gender', 'diagnosis', 'employeesmedicals.created_at', \DB::raw('TIMESTAMPDIFF(YEAR,birthday,NOW()) as age'))
-                                ->orderBy('employeesmedicals.created_at', 'desc')
-                                ->get()
-                                ->groupBy(function($date) {
-                                    return Carbon::parse($date->created_at)->format('Y');
-                                  });
-                                // dd($emps);
+        if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse') || Gate::allows('isHr')) {
+            $emps = Employeesmedical::join('diagnoses', 'diagnoses.id', 'employeesmedicals.diagnosis_id')
+                                    ->join('employees', 'employees.id', 'employeesmedicals.employee_id')
+                                    ->select('employeesmedicals.id', 'employees.gender', 'diagnosis', 'employeesmedicals.created_at', \DB::raw('TIMESTAMPDIFF(YEAR,birthday,NOW()) as age'))
+                                    ->orderBy('employeesmedicals.created_at', 'desc')
+                                    ->get()
+                                    ->groupBy(function($date) {
+                                        return Carbon::parse($date->created_at)->format('Y');
+                                      });
 
-        return view('medical.employeesMedical.fullReport', compact('diagnoses', 'arr', 'arr_count', 'emps'));
+            return view('medical.employeesMedical.fullReport', compact('diagnoses', 'arr', 'arr_count', 'emps'));
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
+        }else{
+            return back();
+        }
     }
 
     public function printMedicalRecord($employee, $employeesmedical, $empMeds){
