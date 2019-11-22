@@ -21,13 +21,8 @@
 			<table class="table table-hover">
 				<thead class="thead-dark">
 					<th>Department</th>
-<<<<<<< HEAD
-					<th>No. of Positions</th>
-					<th>No. of Employees</th>
-=======
 					<th width="20%">No. of Positions</th>
 					<th width="10%" class="text-center">No. of Employees</th>
->>>>>>> abc73e3b3a0e3dc728e5c056b348d93b6387cee2
 				</thead>
 				<tbody>
 					@forelse ($deps as $dep)
@@ -45,11 +40,7 @@
 						        </div>
 						    </td>
 							<td>{{ $dep->positions->count() }}</td>
-<<<<<<< HEAD
-							<td>{{ $dep->employee->count() }}</td>
-=======
 							<td class="text-center">{{ $dep->employee->count() }}</td>
->>>>>>> abc73e3b3a0e3dc728e5c056b348d93b6387cee2
 						</tr>
 						@empty
 							<tr>
