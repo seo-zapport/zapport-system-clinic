@@ -268,6 +268,9 @@
 		</div>
 	@endif
 
+@endsection
+
+@section('scripts')
 <script type="application/javascript">
 	// Search Diagnosis
 
@@ -290,5 +293,4 @@
 	});
 
 </script>
-
 @endsection

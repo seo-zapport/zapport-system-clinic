@@ -375,6 +375,9 @@
 
 @include('layouts.errors')
 
+@endsection
+
+@section('scripts')
 <script type="application/javascript">
 	jQuery(document).ready(function($) {
 		$("#empForm input[name='emp_id']").on('change', function(){
@@ -427,5 +430,4 @@
 
 // $(document).ready(function() {});
 </script>
-
 @endsection

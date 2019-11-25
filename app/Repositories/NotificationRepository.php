@@ -23,10 +23,10 @@ class NotificationRepository
      */
     public function getNotificationList()
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')){
+        if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse')){
             $empsMedsCount = Employeesmedical::where('remarks', 'followUp')->count();
         }
-        if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')){
+        if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse')){
 
             $preEmp = Preemployment::get();
             if ($preEmp->count() > 0) {
@@ -39,10 +39,10 @@ class NotificationRepository
                 $noPreEmpMedsCount = Employee::count();
             }
         }
-        if (Gate::allows('isAdmin') || Gate::allows('isDoctor')){
+        if (Gate::check('isAdmin') || Gate::check('isDoctor')){
             $empsMedFF =  Employeesmedical::where('seen', 0)->count();
         }
-        if (Gate::allows('isAdmin') || Gate::allows('isHr') ) { 
+        if (Gate::check('isAdmin') || Gate::check('isHr') ) { 
 
             $emps = Employee::where('tin_no', '=', NULL)->orWhere('sss_no', '=', NULL)
                                                         ->orWhere('philhealth_no', '=', NULL)

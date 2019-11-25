@@ -299,7 +299,9 @@
 	</div>
 </div>
 
+@endsection
 
+@section('scripts')
 <script type="application/javascript">
 	$(document).ready(function(){
 		$('#addFileForm').on('submit', function(e){
@@ -626,5 +628,4 @@
 
 	});
 </script>
-
 @endsection

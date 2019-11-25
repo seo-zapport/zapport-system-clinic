@@ -358,6 +358,10 @@
 		echo $print;
 	@endphp
 </div>
+
+@endsection
+
+@section('scripts')
 <script type="application/javascript">
 
 	function clicked(){
@@ -386,8 +390,11 @@
 			message:"Your document is being created",
 		});
 
+		var countTR2 = $("#prntEmpCount tbody #prntEmpRow").length;
+		$("#prntEmpRslt").html('');
+		$("#prntEmpRslt").append('<p class="font-weight-bold" style="font-family: arial; font-size: 10px; color: #212529;">Total number of employees: '+ countTR2 +'</p>');
+
 	});
 
 </script>
-
 @endsection

@@ -80,6 +80,9 @@
 	</div>
 </div>
 <div class="pagination-wrap">{{ $meds->links() }}</div>
+@endsection
+
+@section('scripts')
 <script type="application/javascript">
 	        
 	jQuery(document).ready(function($){
