@@ -366,6 +366,10 @@
 		echo $print;
 	@endphp
 </div>
+
+@endsection
+
+@section('scripts')
 <script type="application/javascript">
 
 	function clicked(){
@@ -394,11 +398,18 @@
 			message:"Your document is being created",
 		});
 
+		var countTR2 = $("#prntEmpCount tbody #prntEmpRow").length;
+		$("#prntEmpRslt").html('');
+		$("#prntEmpRslt").append('<p class="font-weight-bold" style="font-family: arial; font-size: 10px; color: #212529;">Total number of employees: '+ countTR2 +'</p>');
+
 	});
 
 </script>
+<<<<<<< HEAD
 
 			{{-- <div class="col-12 col-md-6 count_items">
 				<p><span class="zp-tct">Total Items: </span> {{ $deps->count() }} <span  class="zp-ct"> Items</span></p>
 			</div> --}}
+=======
+>>>>>>> 21f26d170b8aff7771586c44591dcb9f05d34e51
 @endsection

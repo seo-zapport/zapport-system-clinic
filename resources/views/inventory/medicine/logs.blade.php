@@ -143,6 +143,9 @@
 
 <div class="pagination-wrap">{{ $logs->links() }}</div>
 
+@endsection
+
+@section('scripts')
 <script type="application/javascript">
 
 	jQuery(document).ready(function($){
@@ -175,5 +178,4 @@
 	});
 
 </script>
-
 @endsection

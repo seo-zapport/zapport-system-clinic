@@ -142,6 +142,9 @@
 	</div>
 </div>
 
+@endsection
+
+@section('scripts')
 <script type="application/javascript">
 
 	jQuery(document).ready(function($){
@@ -162,5 +165,4 @@
 	});
 
 </script>
-
 @endsection

@@ -195,9 +195,16 @@ class DashboardController extends Controller
 
     public function notification(Request $request, NotificationRepository $notification)
     {
-        if ($request->ajax()) {
-            $notifications = $notification->getNotificationList();
-            return response()->json($notifications);
+        if (Gate::allows('isAdmin') || Gate::allows('isHr') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
+            if ($request->ajax()) {
+                $notifications = $notification->getNotificationList();
+                return response()->json($notifications);
+            }
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
+        }else{
+           return back();
         }
     }
 
