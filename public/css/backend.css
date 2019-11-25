@@ -6537,6 +6537,18 @@ figure {
   color: #2ab3a9;
 }
 
+/**countable*/
+
+.zp-countable {
+  margin-bottom: 10px;
+}
+
+.zp-countable span,
+.zp-countable p {
+  line-height: 1.5;
+  margin-bottom: 5px;
+}
+
 /**notes*/
 
 .zp-notes {
@@ -7432,12 +7444,6 @@ figure {
   width: 96%;
 }
 
-/**print*/
-
-.print_dropdown {
-  left: -28px !important;
-}
-
 /**
  * Section: Media
  *----------------------*/
@@ -7586,6 +7592,22 @@ label.lbl_upload:focus {
     vertical-align: top;
     width: 60%;
   }
+
+  /**countable*/
+
+  .zp-countable .zp-tct {
+    display: none;
+  }
+
+  .zp-countable .zp-ct {
+    display: inline-block;
+  }
+
+  /**print*/
+
+  .print_dropdown {
+    left: -28px !important;
+  }
 }
 
 @media (max-width: 768px) {
@@ -7597,6 +7619,42 @@ label.lbl_upload:focus {
   #zapContent,
   #zapFooter {
     margin-left: 0;
+  }
+
+  #zapContent {
+    /**wrapper*/
+    /**breadcrumb*/
+    /**countable*/
+  }
+
+  #zapContent .primary-site {
+    padding-left: 0;
+  }
+
+  #zapContent .wrap {
+    margin-right: 0;
+    margin-left: 0;
+  }
+
+  #zapContent .breadcrumb {
+    margin-left: 0;
+  }
+
+  #zapContent .zp-countable p {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  #zapContent .zp-countable .zp-tct {
+    display: inline-block;
+  }
+
+  #zapContent .zp-countable .zp-ct {
+    display: none;
+  }
+
+  #zapContent .count_items {
+    text-align: left;
   }
 
   #adminMainMenu {

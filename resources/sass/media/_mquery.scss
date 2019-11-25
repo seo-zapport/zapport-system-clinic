@@ -40,6 +40,21 @@
 	        width: 60%;
 	    }
     }
+
+	/**countable*/
+	.zp-countable{
+		.zp-tct{
+			display: none;
+		}
+		.zp-ct{
+			display: inline-block;
+		}
+	}
+
+	/**print*/
+	.print_dropdown{
+		left: -28px !important;
+	}
 }
 
 @media (max-width: 768px) {
@@ -48,6 +63,41 @@
 	}
 	#zapContent, #zapFooter{
 		margin-left: 0;
+	}
+	#zapContent{
+		/**wrapper*/
+		.primary-site{
+			padding-left: 0;
+		}
+		.wrap{
+			margin-right: 0;
+			margin-left: 0;
+		}
+
+		/**breadcrumb*/
+		.breadcrumb{
+			margin-left: 0;
+		}
+
+		/**countable*/
+		.zp-countable{
+			p{
+				display: -webkit-box;
+				display: flex;
+				-webkit-box-pack: justify;
+				justify-content: space-between;
+			}
+			.zp-tct{
+				display: inline-block;
+			}
+			.zp-ct{
+				display: none;
+			}
+		}
+		.count_items{
+			text-align: left;
+		}
+
 	}
 	#adminMainMenu{
 		opacity: 0;

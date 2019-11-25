@@ -11,11 +11,13 @@
 		<div class="form-group">
 			<a class="btn btn-info text-white" href="#" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus"></i> Add Department</a>
 		</div>
-		<div class="d-flex mb-3">
+		<div class="row zp-countable">
 			<div class="col-12 col-md-6">
-				<span class="text-primary">Total number of Departments: {{ $depsCount->count() }}</span>
+				<p class="text-primary"><span>Total number of Departments:</span> {{ $depsCount->count() }}</p>
 			</div>
-			<div class="col-12 col-md-6 count_items"><span>{{ $deps->count() }} items</span></div>
+			<div class="col-12 col-md-6 count_items">
+				<p><span class="zp-tct">Total Items: </span> {{ $deps->count() }} <span  class="zp-ct"> Items</span></p>
+			</div>
 		</div>
 		<div class="table-responsive">
 			<table class="table table-hover">

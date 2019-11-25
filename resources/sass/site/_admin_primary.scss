@@ -100,6 +100,16 @@
 	color: $clr-2a9;
 }
 
+/**countable*/
+.zp-countable{
+	margin-bottom: 10px;
+	span,p{
+		// display: block;
+		line-height: 1.5;
+		margin-bottom: 5px;
+	}
+}
+
 /**notes*/
 .zp-notes {
     border: 1px solid transparent;
@@ -919,9 +929,4 @@
 		position: absolute;
 	    width: 96%;
 	}
-}
-
-/**print*/
-.print_dropdown{
-	left: -28px !important;
 }

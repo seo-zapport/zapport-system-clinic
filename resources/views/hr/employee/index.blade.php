@@ -10,77 +10,85 @@
 
 {{-- <a href="{{ route('print.emp') }}" class="btn btn-outline-info float-right" target="_blank">Print</a> --}}
 
-<!--- PRINT --->
-<div class="form-group float-right">
-	<button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PRINT <span class="caret"></span>
-	</button>
-	@php 
-	$filter_age = app('request')->input('filter_age');
-	$filter_gender = app('request')->input('filter_gender');
-	$filter_empType = app('request')->input('filter_empType');
-	$filter_status = app('request')->input('filter_status');  
-	
-	if($filter_gender != null){
-	    $gender = (app('request')->input('filter_gender') == 0) ? "male": "female";
-	}
-	if($filter_empType != null){
-	    $emptype = (app('request')->input('filter_empType') == 0) ? "probationary" : "regular"; 
-	}
+<div class="zp-filters">
+	<div class="row">
+		<div class="col-12 col-md-6">
+			<form method="get">
+				<div class="form-row">
+					<div class="form-group col-12 col-md-8">
+				        <div class="input-group">
+				            <input type="search" name="search" class="form-control" value="{{ (!empty($search)) ? $search : '' }}" placeholder="Search for Employee">
+				            <div class="input-group-append">
+				                <button type="submit" class="btn btn-success mr-2">Search</button>
+				                <a href="{{ route('hr.employees') }}" class="btn btn-info text-white">Clear</a>
+				            </div>
+				        </div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="col-12 col-md-6 text-right">
+			<!--- PRINT --->
+			<div class="form-group">
+				<button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PRINT <span class="caret"></span>
+				</button>
+				@php 
+					$filter_age = app('request')->input('filter_age');
+					$filter_gender = app('request')->input('filter_gender');
+					$filter_empType = app('request')->input('filter_empType');
+					$filter_status = app('request')->input('filter_status');  
+					
+					if($filter_gender != null){
+					    $gender = (app('request')->input('filter_gender') == 0) ? "male": "female";
+					}
+					if($filter_empType != null){
+					    $emptype = (app('request')->input('filter_empType') == 0) ? "probationary" : "regular"; 
+					}
 
-	if($filter_age != null && $filter_gender != null && $filter_empType != null && $filter_status != null ){
-	    $fileName = 'employee-'.$gender.'-'.$emptype.'-'.$filter_age.'-'.ucwords($filter_status);
-	}elseif($filter_age != null && $filter_gender != null && $filter_empType != null ){
-	     $fileName = 'employee-'.$gender.'-'.$filter_age.'-'.ucwords($filter_status);
-	}elseif($filter_age != null && $filter_gender != null && $filter_status != null ){
-	     $fileName = 'employee-'.$gender.'-'.$filter_age.'-'.ucwords($filter_status);
-	}elseif($filter_age != null && $filter_empType != null && $filter_status != null ){
-	     $fileName = 'employee-'.$filter_age.'-'.$emptype.'-'.ucwords($filter_status);
-	}elseif($filter_gender != null && $filter_empType != null && $filter_status != null ){
-	     $fileName = 'employee-'.$gender.'-'.$emptype.'-'.ucwords($filter_status);
-	}elseif($filter_gender != null && $filter_empType != null){
-	     $fileName = 'employee-'.$gender.'-'.$emptype; 
-	}elseif($filter_gender != null && $filter_status != null){
-	     $fileName = 'employee-'.$gender.'-'.ucwords($filter_status);
-	}elseif($filter_age != null && $filter_gender != null){
-	     $fileName = 'employee-'.$gender.'-'.$filter_age; 
-	}elseif($filter_age != null && $filter_empType != null){
-	     $fileName = 'employee-'.$filter_age.'-'.$emptype; 
-	}elseif($filter_age != null && $filter_status != null){
-	     $fileName = 'employee-'.$filter_age.'-'.ucwords($filter_status);
-	}elseif($filter_age != null){
-	     $fileName = 'employee-'.$filter_age;
-	}elseif($filter_gender != null){
-	     $fileName = 'employee-'.$gender; 
-	}elseif($filter_empType != null){
-	     $fileName = 'employee-'.$emptype; 
-	}elseif($filter_status != null){
-	     $fileName = 'employee-'.ucwords($filter_status);
-	}elseif(@$request->search != null){
-	     $fileName = 'employee-'.@$request->search; 
-	}else{
-	    $fileName ='employee';
-	}
-	    
-	@endphp
-	
-	<div id="printbtndiv" class="dropdown-menu print_dropdown">
-		<a href="#" class="btnPrint dropdown-item"><i class="fas fa-print text-secondary"></i> PRINT</a>
-		<a href="{{ asset('storage/uploaded/print/employees/'.$fileName.'.csv')}}" class="dropdown-item" download="{{ $fileName.'.csv'}}" target="_blank"><i class="fas fa-file-csv text-secondary"></i> CSV</a>
+					if($filter_age != null && $filter_gender != null && $filter_empType != null && $filter_status != null ){
+					    $fileName = 'employee-'.$gender.'-'.$emptype.'-'.$filter_age.'-'.ucwords($filter_status);
+					}elseif($filter_age != null && $filter_gender != null && $filter_empType != null ){
+					     $fileName = 'employee-'.$gender.'-'.$filter_age.'-'.ucwords($filter_status);
+					}elseif($filter_age != null && $filter_gender != null && $filter_status != null ){
+					     $fileName = 'employee-'.$gender.'-'.$filter_age.'-'.ucwords($filter_status);
+					}elseif($filter_age != null && $filter_empType != null && $filter_status != null ){
+					     $fileName = 'employee-'.$filter_age.'-'.$emptype.'-'.ucwords($filter_status);
+					}elseif($filter_gender != null && $filter_empType != null && $filter_status != null ){
+					     $fileName = 'employee-'.$gender.'-'.$emptype.'-'.ucwords($filter_status);
+					}elseif($filter_gender != null && $filter_empType != null){
+					     $fileName = 'employee-'.$gender.'-'.$emptype; 
+					}elseif($filter_gender != null && $filter_status != null){
+					     $fileName = 'employee-'.$gender.'-'.ucwords($filter_status);
+					}elseif($filter_age != null && $filter_gender != null){
+					     $fileName = 'employee-'.$gender.'-'.$filter_age; 
+					}elseif($filter_age != null && $filter_empType != null){
+					     $fileName = 'employee-'.$filter_age.'-'.$emptype; 
+					}elseif($filter_age != null && $filter_status != null){
+					     $fileName = 'employee-'.$filter_age.'-'.ucwords($filter_status);
+					}elseif($filter_age != null){
+					     $fileName = 'employee-'.$filter_age;
+					}elseif($filter_gender != null){
+					     $fileName = 'employee-'.$gender; 
+					}elseif($filter_empType != null){
+					     $fileName = 'employee-'.$emptype; 
+					}elseif($filter_status != null){
+					     $fileName = 'employee-'.ucwords($filter_status);
+					}elseif(@$request->search != null){
+					     $fileName = 'employee-'.@$request->search; 
+					}else{
+					    $fileName ='employee';
+					} 
+				@endphp
+				
+				<div id="printbtndiv" class="dropdown-menu print_dropdown">
+					<a href="#" class="btnPrint dropdown-item"><i class="fas fa-print text-secondary"></i> PRINT</a>
+					<a href="{{ asset('storage/uploaded/print/employees/'.$fileName.'.csv')}}" class="dropdown-item" download="{{ $fileName.'.csv'}}" target="_blank"><i class="fas fa-file-csv text-secondary"></i> CSV</a>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 
-<form method="get">
-	<div class="form-row">
-		<div class="form-group col-md-4">
-			<input type="search" name="search" class="form-control" value="{{ (!empty($search)) ? $search : '' }}" placeholder="Search for Employee">
-		</div>
-		<div class="form-group col-md-1 d-inline-flex">
-			<button type="submit" class="btn btn-success mr-2">Search</button>
-			<a href="{{ route('hr.employees') }}" class="btn btn-info text-white">Clear</a>
-		</div>
-		
-	</div>
-</form>
 <span id="showFilter" class="text-secondary font-weight-bold mb-3 d-inline-block" style="cursor: pointer;">Advanced filter <i class="fas fa-user-cog"></i></span>
 <form id="advncfilter" method="get" class="{{ (@$filter_gender == null && @$filter_both == null && @$filter_all == null && @$filter_g_a == null && @$filter_g_s == null && @$filter_g_t_s == null && @$filter_g_a_s == null && @$filter_super == null && @$filter_empType == null && @$filter_e_a == null && @$filter_t_s == null && @$filter_t_a_s == null && @$filter_status == null && @$filter_age == null && @$filter_s_a == null) ? 'd-none' : '' }}">
 	<div class="form-row mb-2">
@@ -252,6 +260,7 @@
 
 <div class="card mb-3">
 	<div class="card-body">
+		<div id="empCount"  class="zp-countable"></div>
 		<div class="table-responsive">
 			<table id="empTable" class="table table-hover">
 				<thead class="thead-dark">
@@ -260,7 +269,6 @@
 					<th width="20%">Department - Position</th>
 				</thead>
 				<tbody>
-					<div id="empCount" class="text-right"></div>
 					@forelse ($employees as $employee)
 						@if(@$filter_search != null)
 							<tr id="empRow">
@@ -378,7 +386,7 @@
 
 		var countTR = $("#prntEmpCount tbody #prntEmpRow").length;
 		$("#empCount").html('');
-		$("#empCount").append('<span class="d-inline-block mb-2">'+ countTR +' Items</span>');
+		$("#empCount").append('<p class="count_items"><span class="zp-tct">Total Items: </span>'+ countTR +' <span  class="zp-ct"> Items</span></p>');
 
 		$('.btnPrint').printPage({ 
 			attr: "href",
@@ -390,4 +398,7 @@
 
 </script>
 
+			{{-- <div class="col-12 col-md-6 count_items">
+				<p><span class="zp-tct">Total Items: </span> {{ $deps->count() }} <span  class="zp-ct"> Items</span></p>
+			</div> --}}
 @endsection
