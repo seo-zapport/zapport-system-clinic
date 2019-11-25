@@ -405,11 +405,4 @@
 	});
 
 </script>
-<<<<<<< HEAD
-
-			{{-- <div class="col-12 col-md-6 count_items">
-				<p><span class="zp-tct">Total Items: </span> {{ $deps->count() }} <span  class="zp-ct"> Items</span></p>
-			</div> --}}
-=======
->>>>>>> 21f26d170b8aff7771586c44591dcb9f05d34e51
 @endsection
