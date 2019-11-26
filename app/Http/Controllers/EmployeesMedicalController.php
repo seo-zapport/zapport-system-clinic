@@ -265,19 +265,25 @@ class EmployeesmedicalController extends Controller
                 $diagnosis = Diagnosis::where('diagnosis', $request->search)->first();
 
                 if ($diagnosis != null) {
+                    $printsearch = $empMed->where('diagnosis_id', $diagnosis->id)->get();
                     $search = $empMed->where('diagnosis_id', $diagnosis->id)->paginate(10);
                 }
 
+                $printsearch = $empMed->get();    
                 $search = $empMed->paginate(10);
                 $search->appends(['search' => $request->search]);
                 $result = $request->search;
 
             }else{
+                $printsearch = $empMed->get();
                 $search = $empMed->paginate(10);
             }
 
             $gens = Generic::orderBy('gname', 'asc')->get();
             $meds = Medicine::get();
+
+            $this->printEmpMedinfo($employee, $printsearch);
+
             return view('medical.employeesMedical.employeeInfo', compact('employee', 'gens', 'meds', 'search', 'result'));
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();
@@ -467,6 +473,17 @@ class EmployeesmedicalController extends Controller
         }
         $datamedrec = view('medical.employeesMedical.printmedrecord',compact('employee','employeesmedical','empMeds'))->render();
         File::put(public_path('/storage/uploaded/print/medrecord/emp-med-record.html'),$datamedrec); 
+
+    }
+
+    public function printEmpMedinfo($employee, $printsearch){
+
+        $relPath = 'storage/uploaded/print/medrecord/';
+        if (!file_exists($relPath)) {
+            mkdir($relPath, 777, true);
+        }
+        $datamedrec = view('medical.employeesMedical.printemployeeInfo',compact('employee','printsearch','result'))->render();
+        File::put(public_path('/storage/uploaded/print/medrecord/emp-med-info.html'),$datamedrec); 
 
     }
 }

@@ -18,7 +18,7 @@
 				@if (@$employee->profile_img != null)
 					<div class="employee_wrap mb-0">
 						<div class="panel employee-photo rounded">
-							<img src="{{ asset('storage/uploaded/'.@$employee->profile_img) }}" alt="{{ @$employee->profile_img }}" class="img-fluid rounded" onerror="javascript:this.src='{{url( '/images/default.png' )}}'" >
+							<img src="{{ asset('storage/uploaded/'.@$employee->profile_img) }}" alt="{{ @$employee->profile_img }}" class="img-fluid rounded"  onerror="javascript:this.src='{{ asset('/images/default.png' )}}'">
 						</div>
 					</div>
 				@endif
@@ -95,6 +95,7 @@
 			@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
 				<div class="col-md-5 text-right">
 					<div class="form-group">
+						<button class="btn btn-success text-white btnPrint">Print</button>
 						<button class="btn btn-info text-white" data-toggle="modal" data-target="#exampleModalCenter">New</button>
 					</div>
 				</div>
@@ -253,6 +254,12 @@
 @section('scripts')
 <script type="application/javascript">
 jQuery(document).ready(function($) {
+
+	$('.btnPrint').printPage({ 
+		attr: "href",
+		url: "{{ asset('storage/uploaded/print/medrecord/emp-med-info.html') }}",
+		message:"Your document is being created",
+	});
 
 	$("#preEmpForm").on('submit', function(e) {
 		e.preventDefault();

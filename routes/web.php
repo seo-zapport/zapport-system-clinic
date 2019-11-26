@@ -172,4 +172,6 @@ Route::group(['prefix' => 'medical'], function(){
 	Route::put('employees/{employee}/employeesmedical/{employeesmedical}', 'EmployeesMedicalController@update')->name('medical.update');
 	Route::get('download/{file_name}', 'EmployeesMedicalController@download')->name('download');
 	Route::get('employees/printMedicalRecord', 'EmployeesMedicalController@printMedicalRecord');
+	Route::get('employees/printEmpMedinfo', 'EmployeesMedicalController@printEmpMedinfo');
+	
 });

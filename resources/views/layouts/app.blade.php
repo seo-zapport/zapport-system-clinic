@@ -80,7 +80,7 @@
     <script src="{{ asset('js/backend.js') }}"></script>
     <script src="{{ asset('/js/tinymce/tinymce.js') }}"></script>
     <script src="{{ asset('/js/tinymce/tinymce.jquery.js') }}"></script>
-   @if ( Request::is('hr/employees') || request()->route()->getName() == 'hr.emp.show' || Request::is('inventory/medicine') || Request::is('inventory/medicine/*') || request()->route()->getName() == 'medical.show')
+   @if ( Request::is('hr/employees') || request()->route()->getName() == 'hr.emp.show' || Request::is('inventory/medicine') || Request::is('inventory/medicine/*') || request()->route()->getName() == 'medical.show' || request()->route()->getName() == 'medical.employeeInfo')
     <script src="{{ asset('/js/jquery.printPage.js') }}" type="text/javascript" defer></script>
    @endif      
     @yield('scripts')
