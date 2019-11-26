@@ -31,7 +31,10 @@ class PostController extends Controller
                          ->paginate(10);
             $posts->appends(['search' => $request->search]);
             $search = $request->search;
-            return view('posts.index', compact('posts', 'search'));
+
+            $class = ( request()->is('posts*') ) ?'admin-post' : '';//**add Class in the body*/
+            
+            return view('posts.index', compact('class', 'posts', 'search'));
         }else{
             return back();
         }
@@ -47,7 +50,10 @@ class PostController extends Controller
         if (Gate::check('isAdmin') || Gate::check('isHr') || Gate::check('isDoctor') || Gate::allows('isNurse')) {
             $tags = Tag::get();
             $employees = Media::where('file_name', '!=', NULL)->where('user_id', auth()->user()->id)->get();
-            return view('posts.create', compact('employees', 'tags'));
+
+            $class = ( request()->is('posts*') ) ?'admin-post' : '';//**add Class in the body*/
+
+            return view('posts.create', compact('class','employees', 'tags'));
         }else{
             return back();
         }
@@ -103,7 +109,10 @@ class PostController extends Controller
     public function show(Post $post)
     {
         $this->authorize('view', $post);
-        return view('posts.show', compact('post'));
+        
+        $class = ( request()->is('posts*') ) ?'admin-post' : '';//**add Class in the body*/
+        
+        return view('posts.show', compact('class','post'));
     }
 
     /**
@@ -125,7 +134,10 @@ class PostController extends Controller
                 $postTags;
             }
             $uniqueTag =  Tag::whereNotIn('id', $arr)->get();
-            return view('posts.edit', compact('post', 'employees', 'tags', 'postTags', 'uniqueTag'));
+        
+            $class = ( request()->is('posts*') ) ?'admin-post' : '';//**add Class in the body*/
+            
+            return view('posts.edit', compact('class', 'post', 'employees', 'tags', 'postTags', 'uniqueTag'));
         }else{
             return back();
         }

@@ -24,7 +24,10 @@ class TagController extends Controller
     {
         $tags = Tag::orderBy('id', 'desc')->paginate(10);
         $count = Tag::get();
-        return view('posts.category.index', compact('tags', 'count'));
+
+        $class = ( request()->is('category*') ) ?'admin-category' : '';//**add Class in the body*/
+
+        return view('posts.category.index', compact('class','tags', 'count'));
     }
 
     /**

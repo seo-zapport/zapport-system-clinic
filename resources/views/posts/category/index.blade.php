@@ -11,8 +11,10 @@
 		<div class="form-group">
 			<a class="btn btn-info text-white" href="#" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus"></i>Add Category</a>
 		</div>
-		<div class="text-right mb-3">
-			<span class="d-inline-block">{{ $count->count() }} items</span>
+		<div class="row zp-countable">
+			<div class="col-12 count_items">
+				<p><span class="zp-tct">Total Items: </span> {{ $count->count() }} <span  class="zp-ct"> Items</span></p>
+			</div>
 		</div>
 		<div class="table-responsive">
 			<table class="table table-hover">

@@ -8,30 +8,19 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title
-    @if(Gate::check('isHr')) 
-        {{ "id=hrNotifTitle" }} 
-    @elseif(Gate::check('isDoctor')) 
-        {{ "id=doctorNotifTitle" }} 
-    @elseif(Gate::allows('isNurse')) 
-        {{ "id=nurseNotifTitle" }} 
-    @elseif(Gate::allows('isAdmin')) 
-        {{ "id=adminNotifTitle" }} 
+    @if(Gate::check('isHr'))
+        {{ "id=hrNotifTitle" }}
+    @elseif(Gate::check('isDoctor'))
+        {{ "id=doctorNotifTitle" }}
+    @elseif(Gate::allows('isNurse'))
+        {{ "id=nurseNotifTitle" }}
+    @elseif(Gate::allows('isAdmin'))
+        {{ "id=adminNotifTitle" }}
     @endif
     >
         {{ config('app.name', 'Laravel') }} 
         @yield('title')
     </title>
-
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="{{ asset('js/backend.js') }}" defer></script>
-    <script src="{{ asset('/js/tinymce/tinymce.js') }}"></script>
-    <script src="{{ asset('/js/tinymce/tinymce.jquery.js') }}"></script>
-  
-   @if ( Request::is('hr/employees') || request()->route()->getName() == 'hr.emp.show' || Request::is('inventory/medicine') || Request::is('inventory/medicine/*') || request()->route()->getName() == 'medical.show')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
-    <script src="{{ asset('/js/jquery.printPage.js') }}" type="text/javascript" defer></script>
-   @endif  
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -43,7 +32,7 @@
     <link href="{{ asset('css/backend.css') }}" rel="stylesheet">
     @include('layouts.classes')
 </head>
-<body class="@yield('body-class')">
+<body class="{{ ( ! empty($class) ) ? $class : '' }}">
     <div id="zapWrap" class="sticky-menu">
         @guest
             @yield('content')
@@ -87,10 +76,17 @@
             </div>
         @endguest
     </div>
+    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/backend.js') }}"></script>
+    <script src="{{ asset('/js/tinymce/tinymce.js') }}"></script>
+    <script src="{{ asset('/js/tinymce/tinymce.jquery.js') }}"></script>
+   @if ( Request::is('hr/employees') || request()->route()->getName() == 'hr.emp.show' || Request::is('inventory/medicine') || Request::is('inventory/medicine/*') || request()->route()->getName() == 'medical.show')
+    <script src="{{ asset('/js/jquery.printPage.js') }}" type="text/javascript" defer></script>
+   @endif      
+    @yield('scripts')
+    <script id="__bs_script__">//<![CDATA[
+        document.write("<script async src='http://HOST:3000/browser-sync/browser-sync-client.js?v=2.26.3'><\/script>".replace("HOST", location.hostname));
+    //]]>
+    </script>
 </body>
-
-<script id="__bs_script__">//<![CDATA[
-    document.write("<script async src='http://HOST:3000/browser-sync/browser-sync-client.js?v=2.26.3'><\/script>".replace("HOST", location.hostname));
-//]]>
-</script>
 </html>

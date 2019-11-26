@@ -24,7 +24,10 @@ class DepartmentController extends Controller
         if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
             $deps = Department::orderBy('id', 'desc')->paginate(10);
             $depsCount = Department::get();
-            return view('hr.department.index', compact('deps', 'depsCount'));
+
+            $class = ( request()->is('hr/department*') ) ?'admin-hr-department' : '';//**add Class in the body*/
+
+            return view('hr.department.index', compact('class', 'deps', 'depsCount'));
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();
             return back()->with('message', 'You\'re not employee!');
@@ -41,7 +44,10 @@ class DepartmentController extends Controller
     public function create()
     {
         if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
-            return view('hr.department.create');
+
+            $class = ( request()->is('hr/department*') ) ?'admin-hr-department' : '';//**add Class in the body*/
+            
+            return view('hr.department.create', compact('class'));
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();
             return back()->with('message', 'You\'re not employee!');
@@ -79,7 +85,10 @@ class DepartmentController extends Controller
     public function show(Department $department)
     {
         if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
-            return view('hr.department.show', compact('department'));
+
+            $class = ( request()->is('hr/department*') ) ?'admin-hr-department' : '';//**add Class in the body*/
+            
+            return view('hr.department.show', compact('class','department'));
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();
             return back()->with('message', 'You\'re not employee!');

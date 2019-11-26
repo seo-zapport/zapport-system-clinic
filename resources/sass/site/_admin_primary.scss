@@ -95,6 +95,21 @@
 	background-color: rgba(54, 197, 187, 0.8);
 }
 
+/**color*/
+.zp-2a9{
+	color: $clr-2a9;
+}
+
+/**countable*/
+.zp-countable{
+	margin-bottom: 10px;
+	span,p{
+		// display: block;
+		line-height: 1.5;
+		margin-bottom: 5px;
+	}
+}
+
 /**notes*/
 .zp-notes {
     border: 1px solid transparent;
@@ -158,17 +173,6 @@
 	}
 	p {
 	    margin-bottom: 4px;
-	}
-}
-
-
-/**dashboard*/
-.admin-dashboard{
-	#v-pills-tab{
-		background-color: #fff;
-		border: 1px solid rgba(0, 0, 0, 0.125);
-		border-radius: 0.075em;
-		padding: 10px;
 	}
 }
 
@@ -925,9 +929,4 @@
 		position: absolute;
 	    width: 96%;
 	}
-}
-
-/**print*/
-.print_dropdown{
-	left: -28px !important;
 }

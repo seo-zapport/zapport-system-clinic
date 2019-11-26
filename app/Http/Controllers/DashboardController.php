@@ -112,7 +112,9 @@ class DashboardController extends Controller
             $meds = Medicine::get();
         }
 
-        return view('admin.dashboard', compact('empMeds', 'emps', 'notSeen', 'employee', 'gens', 'meds', 'search', 'result', 'emps2', 'noPreEmpMeds'));
+        $class = ( request()->is('dashboard*') ) ?'admin-dashboard' : '';//**add Class in the body*/
+
+        return view('admin.dashboard', compact('class','empMeds', 'emps', 'notSeen', 'employee', 'gens', 'meds', 'search', 'result', 'emps2', 'noPreEmpMeds'));
     }
 
     /**
@@ -193,9 +195,16 @@ class DashboardController extends Controller
 
     public function notification(Request $request, NotificationRepository $notification)
     {
-        if ($request->ajax()) {
-            $notifications = $notification->getNotificationList();
-            return response()->json($notifications);
+        if (Gate::allows('isAdmin') || Gate::allows('isHr') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
+            if ($request->ajax()) {
+                $notifications = $notification->getNotificationList();
+                return response()->json($notifications);
+            }
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
+        }else{
+           return back();
         }
     }
 

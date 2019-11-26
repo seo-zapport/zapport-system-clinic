@@ -26,7 +26,10 @@ class MediaController extends Controller
     {
         if (Gate::check('isAdmin') || Gate::check('isHr') || Gate::check('isDoctor') || Gate::allows('isNurse')) {
             $medias = Media::where('user_id', auth()->user()->id)->get();
-            return view('posts.medias.index', compact('medias'));
+
+            $class = ( request()->is('media*') ) ?'admin-media' : ''; //**add Class in the body*/
+
+            return view('posts.medias.index', compact('class','medias'));
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();
             return back()->with('message', 'You\'re not employee!');

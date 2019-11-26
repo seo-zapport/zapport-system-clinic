@@ -7,18 +7,20 @@
 @endsection
 @section('dash-content')
 
-<div class="row">
+<div class="row zp-filters">
 	<div class="col-12 col-md-6">
 		<form id="diagnosis_suggetions" method="get" autocomplete="off">
 			<div class="form-row">
-				<div class="form-group col-md-4">
-					<input type="search" name="search" class="form-control" value="{{ (!empty($search)) ? $search : '' }}" placeholder="Search for Generic Name">
-					<div id="suggestions_list" class="autocomplete-items" style="position: absolute; width: 97%"></div>
-				</div>
-				<div class="form-group col-md-1 d-inline-flex">
-					<button type="submit" class="btn btn-success mr-2">Search</button>
-					<a href="{{ route('medicine') }}" class="btn btn-info text-white">Clear</a>
-				</div>
+		        <div class="form-group col-12 col-md-8">
+			        <div class="input-group">
+			            <input type="search" name="search" class="form-control" value="{{ (!empty($search)) ? $search : '' }}" placeholder="Search for Generic Name">
+			            <div id="suggestions_list" class="autocomplete-items" style="position: absolute; width: 97%"></div>
+			            <div class="input-group-append">
+			                <button type="submit" class="btn btn-success mr-2">Search</button>
+							<a href="{{ route('medicine') }}" class="btn btn-info text-white">Clear</a>
+			            </div>
+			        </div>
+		        </div>
 			</div>
 		</form>	
 	</div>
@@ -43,9 +45,9 @@
 
 <div class="card mb-3">
 	<div class="card-body">
-		<div class="d-flex mb-3">
-			<div class="col-12 col-md-6"><span class="text-primary">Total number of Medicines: {{ $total_meds }}</span></div>
-			<div id="medTotal" class="col-12 col-md-6"></div>
+		<div class="row zp-countable">
+			<div class="col-12 col-md-6"><p class="text-primary">Total number of Medicines: <span>{{ $total_meds }}</span></p></div>
+			<div id="medTotal" class="col-12 col-md-6 zp-countable"></div>
 		</div>
 		<div class="table-responsive">
 			<table id="MedTable" class="table table-hover">
@@ -140,17 +142,20 @@
 	</div>
 </div>
 
+@endsection
+
+@section('scripts')
 <script type="application/javascript">
 
 	jQuery(document).ready(function($){
 		
-		jQuery(window).on('hashchange', function(e){
+		$(window).on('hashchange', function(e){
 		    history.replaceState ("", document.title, e.originalEvent.oldURL);
 		});
 
 		var countTR = $("#MedTable tbody #MedRow").length;
 		$("#medTotal").html('');
-		$("#medTotal").append('<span>'+ countTR +' items</span>');
+		$("#medTotal").append('<p class="count_items"><span class="zp-tct">Total Items: </span>'+ countTR +' <span  class="zp-ct"> Items</span></p>');
 
 		 $('.btnPrint').printPage({
 		  url: "{{ asset('storage/uploaded/print/inventory/inventory_medicine.html') }}",
@@ -160,5 +165,4 @@
 	});
 
 </script>
-
 @endsection

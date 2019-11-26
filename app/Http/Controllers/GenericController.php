@@ -27,7 +27,10 @@ class GenericController extends Controller
             $gens = Generic::orderBy('gname', 'asc')->paginate(10);
             $gensCount = Generic::orderBy('gname', 'asc')->get();
             $brands = Medbrand::get();
-            return view('inventory.genericname.index', compact('gens', 'brands', 'gensCount'));
+
+            $class = ( request()->is('inventory/medicine/generic*') ) ?'admin-inventory admin-med-generic' : '';//**add Class in the body*/
+
+            return view('inventory.genericname.index', compact('class', 'gens', 'brands', 'gensCount'));
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();
             return back()->with('message', 'You\'re not employee!');
@@ -81,7 +84,9 @@ class GenericController extends Controller
 
             $allBrands = $unique->values()->all();
 
-            return view('inventory.genericname.show', compact('generic', 'allBrands'));
+            $class = ( request()->is('inventory/medicine/generic*') ) ?'admin-inventory admin-med-generic' : '';//**add Class in the body*/
+
+            return view('inventory.genericname.show', compact('class','generic', 'allBrands'));
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();
             return back()->with('message', 'You\'re not employee!');

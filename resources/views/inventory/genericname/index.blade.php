@@ -15,11 +15,13 @@
 
 <div class="card mb-3">
 	<div class="card-body">
-		<div class="d-flex mb-3">
+		<div class="row zp-countable">
 			<div class="col-12 col-md-6">
-				<span class="text-primary">Total number of Generics: {{ $gensCount->count() }}</span>
+				<p class="text-primary">Total number of Generics: <span>{{ $gensCount->count() }}</span></p>
 			</div>
-			<div class="col-12 col-md-6 count_items"><span>{{ $gens->count() }} items</span></div>
+			<div class="col-12 col-md-6 count_items">
+				<p><span class="zp-tct">Total Items: </span> {{ $gens->count() }} <span  class="zp-ct"> Items</span></p>
+			</div>
 		</div>
 		<div class="table-responsive">
 			<table class="table table-hover">

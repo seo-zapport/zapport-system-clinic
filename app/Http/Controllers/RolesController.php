@@ -24,7 +24,10 @@ class RolesController extends Controller
     {
         if (Gate::allows('isAdmin')) {
             $roles = Role::get();
-            return view('admin.roles.index', compact('roles'));
+
+            $class = ( request()->is('dashboard/roles*') ) ?'admin-roles list-roles' : '';//**add Class in the body*/
+
+            return view('admin.roles.index', compact('class','roles'));
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();
             return back()->with('message', 'You\'re not employee!');
@@ -74,7 +77,10 @@ class RolesController extends Controller
      */
     public function show(Role $role)
     {
-        return view('admin.roles.show', compact('role'));
+
+        $class = ( request()->is('dashboard/roles*') ) ?'admin-roles show-roles' : '';//**add Class in the body*/
+
+        return view('admin.roles.show', compact('class','role'));
     }
 
     /**

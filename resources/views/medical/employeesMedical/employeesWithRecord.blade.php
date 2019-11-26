@@ -7,27 +7,41 @@
 @endsection
 @section('dash-content')
 
-<a href="{{ route('medical.fullReport') }}" class="btn btn-outline-info float-right" target="_blank">Full Report</a>
-
-<form method="get">
-	<div class="form-row">
-		<div class="form-group col-md-4">
-			<input type="search" name="search" class="form-control" value="{{ (!empty($search)) ? $search : '' }}" placeholder="Search for Employee ID | Name of Employee">
+<div class="zp-filters">
+	<div class="row">
+		<div class="col-12 col-md-6">
+			<form method="get">
+				<div class="form-row">
+					<div class="form-group col-12 col-md-8">
+				        <div class="input-group">
+				            <input type="search" name="search" class="form-control" value="{{ (!empty($search)) ? $search : '' }}" placeholder="Search for Employee ID | Name of Employee">
+				            <div class="input-group-append">
+				                <button type="submit" class="btn btn-success mr-2">Search</button>
+				                <a href="{{ route('medical.empsRecords') }}" class="btn btn-info text-white">Clear</a>
+				            </div>
+				        </div>
+					</div>
+				</div>
+			</form>	
 		</div>
-		<div class="form-group col-md-1 d-inline-flex">
-			<button type="submit" class="btn btn-success mr-2">Search</button>
-			<a href="{{ route('medical.empsRecords') }}" class="btn btn-info text-white">Clear</a>
-		</div>
+		<div class="col-12 col-md-6 text-right">
+			<a href="{{ route('medical.fullReport') }}" class="btn btn-outline-info mb-3" target="_blank">Full Report</a>
+		</div>		
 	</div>
-</form>
+
+</div>
+
+
 
 <div class="card mb-3">
 	<div class="card-body" id="medical_employee_list">
-		<div class="d-flex mb-3">
+		<div class="row zp-countable">
 			<div class="col-12 col-md-6">
-				<span class="text-primary">Total number of Employee: {{ $totalEmps->count() }}</span>
+				<p class="text-primary">Total number of Employee: <span>{{ $totalEmps->count() }}</span></p>
 			</div>
-			<div class="col-12 col-md-6 count_items"><span>{{ $emps->count() }} items</span></div>
+			<div class="col-12 col-md-6 count_items">
+				<p><span class="zp-tct">Total Items: </span> {{ $emps->count() }} <span  class="zp-ct"> Items</span></p>
+			</div>
 		</div>
 		<div class="table-responsive">
 			<table class="table table-hover">

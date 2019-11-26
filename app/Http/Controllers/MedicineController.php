@@ -62,7 +62,9 @@ class MedicineController extends Controller
                 $total_meds = $countMeds->count();
             }
 
-            return view('inventory.medicine.index', compact('meds', 'gens', 'search', 'total_meds'));
+            $class = ( request()->is('inventory/medicine*') ) ?'admin-inventory admin-medicine' : '';//**add Class in the body*/
+
+            return view('inventory.medicine.index', compact('class', 'meds', 'gens', 'search', 'total_meds'));
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();
             return back()->with('message', 'You\'re not employee!');
@@ -232,7 +234,9 @@ class MedicineController extends Controller
 
         $this->PrintMedCSV($medlogs,'logsinput',$medbrand->bname, $generic->gname); 
 
-        return view('inventory.medicine.medicine_history', compact('medbrand', 'generic', 'empsMeds', 'arr', 'meds', 'inputDate', 'expDate', 'search_name', 'search_date', 'countMeds', 'dates'));
+        $class = ( request()->is('inventory/medicine*') ) ?'admin-inventory admin-medicine' : '';//**add Class in the body*/
+
+        return view('inventory.medicine.medicine_history', compact('class', 'medbrand', 'generic', 'empsMeds', 'arr', 'meds', 'inputDate', 'expDate', 'search_name', 'search_date', 'countMeds', 'dates'));
     }
 
     /**
@@ -330,7 +334,9 @@ class MedicineController extends Controller
 
             $this->PrintMedCSV($printlogs,'viewlogs',$medbrand->bname, $generic->gname); 
     
-            return view('inventory.medicine.logs', compact('logs', 'medbrand', 'generic', 'log1', 'search', 'loglist', 'logsearch'));
+            $class = ( request()->is('inventory/medicine*') ) ?'admin-inventory admin-medicine' : '';//**add Class in the body*/
+
+            return view('inventory.medicine.logs', compact('class','logs', 'medbrand', 'generic', 'log1', 'search', 'loglist', 'logsearch'));
         
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();
