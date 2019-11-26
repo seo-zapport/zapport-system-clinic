@@ -3,7 +3,7 @@
 @section('reg_emp', 'active')
 {{-- @section('dash-title', 'Add Employee') --}}
 @section('heading-title')
-	<i class="fas fa-user-plus text-secondary"></i> Add Employee
+	<i class="fas fa-user-plus text-secondary"></i> @if (strstr(url()->current(), 'create') == 'create') Add @else Edit @endif Employee
 @endsection
 @section('dash-content')
 
