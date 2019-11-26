@@ -6549,6 +6549,24 @@ figure {
   margin-bottom: 5px;
 }
 
+/**filter*/
+
+.zp-filter-clear {
+  color: red !important;
+  cursor: pointer;
+  font-size: 16px;
+  position: absolute;
+  top: 5px;
+  right: 155px;
+  z-index: 3;
+}
+
+/**print*/
+
+.print-col {
+  text-align: center;
+}
+
 /**notes*/
 
 .zp-notes {
@@ -6645,7 +6663,7 @@ figure {
 }
 
 .employee_wrap {
-  width: 185px;
+  width: 155px;
   margin-bottom: 25px;
   margin-left: auto;
   margin-right: auto;
@@ -6680,7 +6698,7 @@ figure {
   display: inline-block;
   margin-bottom: 10px;
   border-radius: 999999px;
-  min-height: 185px;
+  min-height: 155px;
 }
 
 .panel.employee-photo img {
@@ -7546,9 +7564,19 @@ label.lbl_upload:focus {
   .container-lg-w12 {
     max-width: 1200px;
   }
+
+  /**Profile-employee*/
+
+  .employee_wrap {
+    width: 185px;
+  }
+
+  .panel.employee-photo {
+    min-height: 185px;
+  }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 769px) {
   /**admin-navbar*/
 
   .navbar-expand-md .zp-navbar-show {
@@ -7607,6 +7635,10 @@ label.lbl_upload:focus {
 
   .print_dropdown {
     left: -28px !important;
+  }
+
+  .print-col {
+    text-align: right;
   }
 }
 
@@ -7671,6 +7703,20 @@ label.lbl_upload:focus {
   .sticky-menu #zapAdminMenuWrap {
     height: 100%;
     overflow-y: scroll;
+  }
+
+  /**Profile-employee*/
+
+  .employee_wrap {
+    width: 135px;
+  }
+
+  .panel.employee-photo {
+    min-height: 100%;
+  }
+
+  .med-name {
+    text-align: center;
   }
 }
 
