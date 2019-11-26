@@ -110,6 +110,22 @@
 	}
 }
 
+/**filter*/
+.zp-filter-clear{
+    color: red !important;
+    cursor: pointer;
+    font-size: 16px;
+    position: absolute;
+    top: 5px;
+    right: 155px;
+    z-index: 3;
+}
+
+/**print*/
+.print-col{
+	text-align: center;
+}
+
 /**notes*/
 .zp-notes {
     border: 1px solid transparent;
@@ -188,7 +204,7 @@
 }
 
 .employee_wrap{
-	width: 185px;
+	width: 155px;
 	margin-bottom: 25px;
 	margin-left: auto;
 	margin-right: auto;
@@ -224,7 +240,7 @@
 	    display: inline-block;
 	    margin-bottom: 10px;
 	    border-radius: 999999px;
-	    min-height: 185px;
+	    min-height: 155px;
 	    img{
 	    	border-radius: 999999px;
 	    	background-color: #dedede;

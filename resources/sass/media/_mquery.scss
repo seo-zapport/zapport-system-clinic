@@ -1,7 +1,17 @@
 @media (min-width: 1200px){
 	.container-lg-w12{max-width: 1200px;}
+
+	/**Profile-employee*/
+	.employee_wrap{
+		width: 185px;
+	}
+	.panel{
+		&.employee-photo {
+	    	min-height: 185px;
+		}
+	}
 }
-@media (min-width: 768px){
+@media (min-width: 769px){
 	
 	/**admin-navbar*/
     .navbar-expand-md .zp-navbar-show {
@@ -54,6 +64,9 @@
 	/**print*/
 	.print_dropdown{
 		left: -28px !important;
+	}
+	.print-col{
+		text-align: right;
 	}
 }
 
@@ -111,6 +124,20 @@
 	.sticky-menu #zapAdminMenuWrap{
 		height: 100%;
 		overflow-y: scroll;
+	}
+
+	/**Profile-employee*/
+	.employee_wrap{
+		width: 135px;
+	}
+	.panel{
+		&.employee-photo {
+	    	min-height: 100%;
+		}
+	}
+
+	.med-name{
+		text-align: center;
 	}
 }
 @media only screen and (max-width: 480px){

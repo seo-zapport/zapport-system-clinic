@@ -15,24 +15,26 @@
 	<h1 class="zp-text">Brand Name: <strong class="zp-color-6b">{{ ucwords($medbrand->bname) }}</strong></h1>
 	<h3 class="zp-text zp-text-16">Generic Name: {{ ucwords($generic->gname) }}</h3>
 </div>
-<form id="filter_med_history" method="get">
+<form id="filter_med_history" method="get" class="zp-filters">
 	<div class="form-row">
-		<div class="form-group col-md-2">
+		<div class="form-group col-md-3">
 			<input type="search" name="search_name" class="form-control" value="{{ (@$search_name != null) ? $search_name : '' }}" placeholder="Search for Names">
 		</div>
-		<div class="form-group col-md-2">
-			<select name="search_date" id="search_date" class="form-control">
-				<option selected disabled="true">Search for Date</option>
-				@foreach ($dates as $date)
-					<option {{ (@$search_date == $date->medical_date) ? 'selected' : '' }} value="{{ $date->medical_date }}">{{ Carbon\carbon::parse($date->medical_date)->format('M d, Y') }}</option>
-				@endforeach
-			</select>
-			<span id="med_history_search_date" class="d-none text-muted font-weight-bold" style="cursor: pointer">Clear</span>
-		</div>
-		<div class="form-group col-md-2">
-			<button class="btn btn-success">Search</button>
-			<a href="{{ route('medicine.show', ['medbrand' => $medbrand->bname, 'generic' => $generic->gname, 'inputDate' => $inputDate, 'expDate' => 
-					$expDate]) }}" class="btn btn-info text-white">Clear</a>
+		<div class="form-group col-md-3">
+			<div class="input-group">
+				<select name="search_date" id="search_date" class="form-control">
+					<option selected disabled="true">Search for Date</option>
+					@foreach ($dates as $date)
+						<option {{ (@$search_date == $date->medical_date) ? 'selected' : '' }} value="{{ $date->medical_date }}">{{ Carbon\carbon::parse($date->medical_date)->format('M d, Y') }}</option>
+					@endforeach
+				</select>
+				<span id="med_history_search_date" class="d-none text-muted font-weight-bold  zp-filter-clear">x</span>
+				<div class="input-group-append">
+					<button class="btn btn-success mr-2">Search</button>
+					<a href="{{ route('medicine.show', ['medbrand' => $medbrand->bname, 'generic' => $generic->gname, 'inputDate' => $inputDate, 'expDate' => 
+							$expDate]) }}" class="btn btn-info text-white">Clear</a>
+				</div>			
+			</div>
 		</div>
 		<div class="form-group col-md-6 text-right">
 			<button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PRINT <span class="caret"></span>

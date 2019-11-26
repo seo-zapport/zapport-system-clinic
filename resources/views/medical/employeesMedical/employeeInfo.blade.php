@@ -14,7 +14,7 @@
 <div class="card mb-3">
 	<div class="card-body">
 		<div class="row">
-			<div class="col-2">
+			<div class="col-12 col-md-4 col-lg-3">
 				@if (@$employee->profile_img != null)
 					<div class="employee_wrap mb-0">
 						<div class="panel employee-photo rounded">
@@ -23,13 +23,13 @@
 					</div>
 				@endif
 			</div>
-			<div class="col-10">
+			<div class="col-12 col-md-8 col-lg-9">
 				<div class="row mb-3">
-					<div class="col-6">
+					<div class="col-12 col-md-6">
 						<p class="med-name">{{ ucwords($employee->last_name . " " . $employee->first_name . " " . $employee->middle_name) }}</p>
 					</div>
-					<div class="col-6">
-						<div class="btn-group float-right" role="group">
+					<div class="col-12 col-md-6 print-col">
+						<div class="btn-group print-group" role="group">
 							<button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								Pre-employment Medical
 							</button>
@@ -57,19 +57,19 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-3">
+					<div class="col-12 col-md-4 col-lg-3">
 						<p class="mb-2"><span class="text-dark font-weight-bold">Department</span>: {{ strtoupper($employee->departments->department) }}</p>
 						<p class="mb-2"><span class="text-dark font-weight-bold">Position</span>: {{ ucwords($employee->positions->position) }}</p>
 					</div>
-					<div class="col-3">
+					<div class="col-12 col-md-4 col-lg-3">
 						<p class="mb-2"><span class="text-dark font-weight-bold">Gender</span>: {{ (@$employee->gender == 0) ? "Male" : "Female" }}</p>
 						<p class="mb-2"><span class="text-dark font-weight-bold">Age</span>: {{ @$employee->age }}</p>
 					</div>
-					<div class="col-3">
+					<div class="col-12 col-md-4 col-lg-3">
 						<p class="mb-2"><span class="text-dark font-weight-bold">Birthday</span>: {{ @$employee->birthday->format('M d, Y') }}</p>
 						<p class="mb-2"><span class="text-dark font-weight-bold">Birth Place</span>: {{ ucwords(@$employee->birth_place) }}</p>
 					</div>
-					<div class="col-3">
+					<div class="col-12 col-md-4 col-lg-3">
 						<p class="mb-2"><span class="text-dark font-weight-bold">Contact</span>: {{ "+63" . @$employee->contact }}</p>
 					</div>
 				</div>
@@ -77,59 +77,64 @@
 		</div>
 		<hr>
 		<br>
-		<div class="row">
+		<div class="row zp-filters">
 			<div class="col-md-7">
 				<form id="searchDiagnosis" method="get" autocomplete="off">
 					<div class="form-row">
-						<div class="form-group col-md-4 autocomplete">
-							<input type="search" name="search" class="form-control" value="{{ (!empty($result)) ? $result : '' }}" placeholder="Search for Diagnosis">
-							<div id="searchDiagnosis_list" class="autocomplete-items"></div>
-						</div>
-						<div class="form-group col-md-1 d-inline-flex">
-							<button type="submit" class="btn btn-success mr-2">Search</button>
-							<a href="{{ route('medical.employeeInfo', ['employee' => $employee->emp_id]) }}" class="btn btn-info text-white">Clear</a>
+						<div class="form-group col-md-6 autocomplete">
+							<div class="input-group">
+								<input type="search" name="search" class="form-control" value="{{ (!empty($result)) ? $result : '' }}" placeholder="Search for Diagnosis">
+								<div id="searchDiagnosis_list" class="autocomplete-items"></div>
+								<div class="input-group-append">
+									<button type="submit" class="btn btn-success mr-2">Search</button>
+									<a href="{{ route('medical.employeeInfo', ['employee' => $employee->emp_id]) }}" class="btn btn-info text-white">Clear</a>
+								</div>
+							</div>
 						</div>
 					</div>
 				</form>
 			</div>
 			@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
-				<div class="col-md-5 text-right">
-					<div class="form-group">
+				<div class="col-md-5">
+					<div class="form-group text-right">
 						<button class="btn btn-info text-white" data-toggle="modal" data-target="#exampleModalCenter">New</button>
 					</div>
 				</div>
 			@endif
 		</div>
 
-		<table class="table table-hover">
-			<thead class="thead-dark">
-				<th>No.</th>
-				<th>Diagnosis</th>
-				<th>Notes</th>
-				<th>Date and Time</th>
-				<th>Remarks</th>
-			</thead>
-			<tbody>
-				@php
-					$i = 1;
-				@endphp
-				@forelse ($search as $medsHistory)
-					<tr>
-						<td>{{ $i++ }}</td>
-						<td>{{ ucwords($medsHistory->diagnoses->diagnosis) }}
-							<div class="row-actions"><a href="{{ route('medical.show', ['employee' => $employee->emp_id, 'employeesmedical' => $medsHistory->id]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i> View</a></div>
-						</td>
-						<td>{{ Str::words($medsHistory->note, 15) }}</td>
-						<td>{{ $medsHistory->created_at->format('M d, Y - h:i a') }}</td>
-						<td>{{ ($medsHistory->remarks == 'followUp') ? 'Follow up' : 'Done' }}</td>
-					</tr>
-					@empty
+		<div class="table-responsive">
+			<table class="table table-hover">
+				<thead class="thead-dark">
+					<th>No.</th>
+					<th>Diagnosis</th>
+					<th>Notes</th>
+					<th>Date and Time</th>
+					<th>Remarks</th>
+				</thead>
+				<tbody>
+					@php
+						$i = 1;
+					@endphp
+					@forelse ($search as $medsHistory)
 						<tr>
-							<td colspan="6" class="text-center">No Records Found!</td>
+							<td>{{ $i++ }}</td>
+							<td>{{ ucwords($medsHistory->diagnoses->diagnosis) }}
+								<div class="row-actions"><a href="{{ route('medical.show', ['employee' => $employee->emp_id, 'employeesmedical' => $medsHistory->id]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i> View</a></div>
+							</td>
+							<td>{{ Str::words($medsHistory->note, 15) }}</td>
+							<td>{{ $medsHistory->created_at->format('M d, Y - h:i a') }}</td>
+							<td>{{ ($medsHistory->remarks == 'followUp') ? 'Follow up' : 'Done' }}</td>
 						</tr>
-				@endforelse
-			</tbody>
-		</table>		
+						@empty
+							<tr>
+								<td colspan="6" class="text-center">No Records Found!</td>
+							</tr>
+					@endforelse
+				</tbody>
+			</table>				
+		</div>
+	
 	</div>
 </div>
 <div class="pagination-wrap">{{ $search->links() }}</div>

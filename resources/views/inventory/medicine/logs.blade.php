@@ -16,68 +16,73 @@
 	<h3 class="zp-text zp-text-16">Generic Name: {{ ucwords($generic->gname) }}</h3>
 </div>
 <form id="meds_log" method="get">
-	<div class="form-row">
-		<div class="form-group col-md-4 mb-0">
-			<select name="search" id="search" class="form-control">
-				<option selected disabled='true'>Filter Date</option>
-				@if (isset($_GET['expired']) && @$search == null)
-					@forelse ($logs as $log2)
-						<option {{ (@$search == $log2->formatted_at) ? 'selected' : '' }} value="{{ $log2->formatted_at }}">{{ Carbon\carbon::parse($log2->formatted_at)->format('M d, Y') }}</option>
-						@empty
-							<option>No Records!</option>
-					@endforelse
-				@elseif (!empty(@$search) && isset($_GET['expired']))
-					@forelse ($logsearch as $log2)
-						<option {{ (@$search == $log2->formatted_at) ? 'selected' : '' }} value="{{ $log2->formatted_at }}">{{ Carbon\carbon::parse($log2->formatted_at)->format('M d, Y') }}</option>
-						@empty
-							<option>No Records!</option>
-					@endforelse
-				@else
-					@forelse ($loglist->unique('formatted_at') as $log2)
-						<option {{ (@$search == $log2->formatted_at) ? 'selected' : '' }} value="{{ $log2->formatted_at }}">{{ Carbon\carbon::parse($log2->formatted_at)->format('M d, Y') }}</option>
-						@empty
-							<option>No Records!</option>
-					@endforelse
-				@endif
-			</select>
-			<span id="med_log_search_date" class="d-none text-muted font-weight-bold" style="cursor: pointer">Clear</span>
+	<div class="row zp-filters mb-3">
+		<div class="col-12 col-md-6">
+			<div class="form-row">
+				<div class="form-group col-md-8 mb-0 position-relative">
+					<div class="input-group">
+						<select name="search" id="search" class="form-control">
+							<option selected disabled='true'>Filter Date</option>
+							@if (isset($_GET['expired']) && @$search == null)
+								@forelse ($logs as $log2)
+									<option {{ (@$search == $log2->formatted_at) ? 'selected' : '' }} value="{{ $log2->formatted_at }}">{{ Carbon\carbon::parse($log2->formatted_at)->format('M d, Y') }}</option>
+									@empty
+										<option>No Records!</option>
+								@endforelse
+							@elseif (!empty(@$search) && isset($_GET['expired']))
+								@forelse ($logsearch as $log2)
+									<option {{ (@$search == $log2->formatted_at) ? 'selected' : '' }} value="{{ $log2->formatted_at }}">{{ Carbon\carbon::parse($log2->formatted_at)->format('M d, Y') }}</option>
+									@empty
+										<option>No Records!</option>
+								@endforelse
+							@else
+								@forelse ($loglist->unique('formatted_at') as $log2)
+									<option {{ (@$search == $log2->formatted_at) ? 'selected' : '' }} value="{{ $log2->formatted_at }}">{{ Carbon\carbon::parse($log2->formatted_at)->format('M d, Y') }}</option>
+									@empty
+										<option>No Records!</option>
+								@endforelse
+							@endif
+						</select>
+						<span id="med_log_search_date" class="d-none font-weight-bold zp-filter-clear" style="cursor: pointer">x</span>
+						<div class="input-group-append">
+							<button type="submit" class="btn btn-success mr-2">Search</button>
+							<a href="{{ route('medicine.log', ['medbrand' => $medbrand->bname, 'generic' => $generic->gname]) }}" class="btn btn-info text-white">Clear</a>
+						</div>
+					</div>
+				</div>
+				<div class="form-group col-12 col-md-4 mb-0 mt-2">
+					<label class="form-check-label" for="exampleCheck1"> 
+					<input type="checkbox" {{ (isset($_GET['expired'])) ? 'checked' : '' }} id="exampleCheck1" name="expired" onclick="this.form.submit()"> Filter Expired Medicines</label>
+				</div>
+			</div>
 		</div>
-		<div class="form-group col-md-2 mb-0">
-			<button type="submit" class="btn btn-success mr-2">Search</button>
-			<a href="{{ route('medicine.log', ['medbrand' => $medbrand->bname, 'generic' => $generic->gname]) }}" class="btn btn-info text-white">Clear</a>
-		</div>
-		<div class="form-check col-12 col-md-4 mb-0" style="margin-top: 5px">
-			<input type="checkbox" class="form-check-input" {{ (isset($_GET['expired'])) ? 'checked' : '' }} id="exampleCheck1" name="expired" onclick="this.form.submit()">
-			<label class="form-check-label" for="exampleCheck1">Filter Expired Medicines</label>
-		</div>		
+		<div class="col-12 col-md-6">
+			<div class="form-check">
+				<div class="text-right">
+					<!--- PRINT --->
+					<button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PRINT <span class="caret"></span>
+					</button>
+					@php 
+						$fileName = 'inventory_medicine';
+					@endphp
+					<ul class="dropdown-menu print_dropdown">
+						<a class="btnPrint dropdown-item" href="#"><i class="fas fa-print text-secondary"></i> PRINT All</a>
+						@if(app('request')->input('expired') != 'on')
+						<a class="btnPrintlog dropdown-item" href="#"><i class="fas fa-print text-secondary"></i> PRINT Available</a>
+						<a class="btnPrintexpire dropdown-item" href="#"><i class="fas fa-print text-secondary"></i> PRINT Expired</a>
+						@endif
+						<a href="{{ asset('storage/uploaded/print/inventory/'.@$fileName.'.csv')}}" class="dropdown-item" download="{{ @$fileName.'.csv'}}" target="_blank"><i class="fas fa-file-csv text-secondary"></i> CSV All</a></li>
+						@if(app('request')->input('expired') != 'on')
+						<a href="{{ asset('storage/uploaded/print/inventory/'.@$fileName.'_log.csv')}}" class="dropdown-item" download="{{ @$fileName.'_log.csv'}}" target="_blank"><i class="fas fa-file-csv text-secondary"></i> CSV Available</a></li>
+						<a href="{{ asset('storage/uploaded/print/inventory/'.@$fileName.'_expired.csv')}}" class="dropdown-item" download="{{ @$fileName.'_expired.csv'}}" target="_blank"><i class="fas fa-file-csv text-secondary"></i> CSV Expired</a></li>
+						@endif
+					</ul>
 
-		<div class="form-check col-12 col-md-2 mb-0">
-			<div class="text-right">
-				<!--- PRINT --->
-				<button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PRINT <span class="caret"></span>
-				</button>
-				@php 
-					$fileName = 'inventory_medicine';
-				@endphp
-				<ul class="dropdown-menu print_dropdown">
-					<a class="btnPrint dropdown-item" href="#"><i class="fas fa-print text-secondary"></i> PRINT All</a>
-					@if(app('request')->input('expired') != 'on')
-					<a class="btnPrintlog dropdown-item" href="#"><i class="fas fa-print text-secondary"></i> PRINT Available</a>
-					<a class="btnPrintexpire dropdown-item" href="#"><i class="fas fa-print text-secondary"></i> PRINT Expired</a>
-					@endif
-					<a href="{{ asset('storage/uploaded/print/inventory/'.@$fileName.'.csv')}}" class="dropdown-item" download="{{ @$fileName.'.csv'}}" target="_blank"><i class="fas fa-file-csv text-secondary"></i> CSV All</a></li>
-					@if(app('request')->input('expired') != 'on')
-					<a href="{{ asset('storage/uploaded/print/inventory/'.@$fileName.'_log.csv')}}" class="dropdown-item" download="{{ @$fileName.'_log.csv'}}" target="_blank"><i class="fas fa-file-csv text-secondary"></i> CSV Available</a></li>
-					<a href="{{ asset('storage/uploaded/print/inventory/'.@$fileName.'_expired.csv')}}" class="dropdown-item" download="{{ @$fileName.'_expired.csv'}}" target="_blank"><i class="fas fa-file-csv text-secondary"></i> CSV Expired</a></li>
-					@endif
-				</ul>
-
+				</div>
 			</div>
 		</div>
 	</div>
-
 </form>
-<br>
 <div class="card mb-3">
 	<div class="card-body">
 		<div id="medTotal" class="mb-3"></div>

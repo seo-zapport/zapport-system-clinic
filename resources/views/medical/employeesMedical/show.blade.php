@@ -11,10 +11,10 @@
 	<i class="fas fa-arrow-left"></i>
 </a>
 @endsection
-<div class="card mb-5">
+<div class="card mb-3">
 	<div class="card-body">
 		<div class="row">
-			<div class="col-2">
+			<div class="col-12 col-md-4 col-lg-3">
 				@if (@$employee->profile_img != null)
 					<div class="employee_wrap mb-0">
 						<div class="panel employee-photo rounded">
@@ -24,13 +24,13 @@
 						
 				@endif
 			</div>
-			<div class="col-10">
+			<div class="col-12 col-md-8 col-lg-9">
 				<div class="row mb-3">
-					<div class="col-6">
+					<div class="col-12 col-md-6">
 						<p class="med-name">{{ ucwords($employee->last_name . " " . $employee->first_name . " " . $employee->middle_name) }}</p>
 					</div>
-					<div class="col-6">
-						<div class="btn-group float-right" role="group">
+					<div class="col-12 col-md-6 print-col">
+						<div class="btn-group print-group" role="group">
 							<button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								Pre-employment Medical
 							</button>
@@ -58,19 +58,19 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-3">
+					<div class="col-12 col-md-4 col-lg-3">
 						<p class="mb-2"><span class="text-dark font-weight-bold">Department</span>: {{ strtoupper($employee->departments->department) }}</p>
 						<p class="mb-2"><span class="text-dark font-weight-bold">Position</span>: {{ ucwords($employee->positions->position) }}</p>
 					</div>
-					<div class="col-3">
+					<div class="col-12 col-md-4 col-lg-3">
 						<p class="mb-2"><span class="text-dark font-weight-bold">Gender</span>: {{ (@$employee->gender == 0) ? "Male" : "Female" }}</p>
 						<p class="mb-2"><span class="text-dark font-weight-bold">Age</span>: {{ @$employee->age }}</p>
 					</div>
-					<div class="col-3">
+					<div class="col-12 col-md-4 col-lg-3">
 						<p class="mb-2"><span class="text-dark font-weight-bold">Birthday</span>: {{ @$employee->birthday->format('M d, Y') }}</p>
 						<p class="mb-2"><span class="text-dark font-weight-bold">Birth Place</span>: {{ ucwords(@$employee->birth_place) }}</p>
 					</div>
-					<div class="col-3">
+					<div class="col-12 col-md-4 col-lg-3">
 						<p class="mb-2"><span class="text-dark font-weight-bold">Contact</span>: {{ "+63" . @$employee->contact }}</p>
 					</div>
 				</div>
