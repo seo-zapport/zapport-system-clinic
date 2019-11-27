@@ -14,7 +14,7 @@
 
 </head>
 <body>
-<div id="printable">
+<div id="container">
 	<div class="text-center">	
 		<img src="{{url( '/images/logo.png' )}}" alt="Zapport" style="display: block; margin:auto; width: 200px">
 		<div style="margin-top: 20px; margin-bottom: 20px;">
@@ -29,7 +29,7 @@
 			<div class="col-3">
 				@if (@$employee->profile_img != null)
 					<div class="employee_wrap mb-0">
-						<div class="panel employee-photo rounded">
+						<div class="panel employee-photo" >
 							<img src="{{ asset('storage/uploaded/'.@$employee->profile_img) }}" alt="{{ @$employee->profile_img }}" class="img-fluid rounded" onerror="javascript:this.src='{{ asset('/images/default.png' )}}'" >
 						</div>
 					</div>
@@ -37,11 +37,8 @@
 			</div>
 			<div class="col-9">
 				<div class="row mb-3">
-					<div class="col-6">
-						<p class="med-name">{{ ucwords($employee->last_name . " " . $employee->first_name . " " . $employee->middle_name) }}</p>
-					</div>
-					<div class="col-6">
-
+					<div class="col-6 col-md-6">
+						<p style="color: #00988d;font-size: 18px;font-weight: 600;line-height: 1.5;">{{ ucwords($employee->last_name . " " . $employee->first_name . " " . $employee->middle_name) }}</p>
 					</div>
 				</div>
 				<div class="row">

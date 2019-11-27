@@ -95,14 +95,10 @@
 				</form>
 			</div>
 			@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
-<<<<<<< HEAD
-				<div class="col-md-5 text-right">
-					<div class="form-group">
-						<button class="btn btn-success text-white btnPrint">Print</button>
-=======
+
 				<div class="col-md-5">
 					<div class="form-group text-right">
->>>>>>> 3c48324ed2b14995c1fa33f92a17990f98bf9f5c
+						<button class="btn btn-success text-white btnPrint">Print</button>
 						<button class="btn btn-info text-white" data-toggle="modal" data-target="#exampleModalCenter">New</button>
 					</div>
 				</div>
