@@ -43,7 +43,7 @@
 								@endforelse
 							@endif
 						</select>
-						<span id="med_log_search_date" class="d-none font-weight-bold zp-filter-clear" style="cursor: pointer">x</span>
+						<span id="med_log_search_date" class="d-none font-weight-bold zp-filter-clear">x</span>
 						<div class="input-group-append">
 							<button type="submit" class="btn btn-success mr-2">Search</button>
 							<a href="{{ route('medicine.log', ['medbrand' => $medbrand->bname, 'generic' => $generic->gname]) }}" class="btn btn-info text-white">Clear</a>
