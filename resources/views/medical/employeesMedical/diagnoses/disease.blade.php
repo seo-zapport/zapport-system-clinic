@@ -15,12 +15,22 @@
 				<thead class="thead-dark">
 					<th>Diseases</th>
 					<th>No. of Diagnoses</th>
+					<th>Action</th>
 				</thead>
 				<tbody>
 					@foreach ($diseases as $disease)
 						<tr>
 							<td>{{ $disease->disease }}</td>
 							<td>{{ count($disease->diagnoses) }}</td>
+							<td>
+								<form method="post" action="{{ route('diseases.destroy', ['disease'=>$disease->id]) }}" class="d-inline-block">
+					        		@csrf
+					        		@method('DELETE')
+									<button class="btn btn-link text-danger"  onclick="return confirm('Are you sure you want to delete {{ ucfirst($disease->disease) }} ?')" data-id="{{ $disease->disease }}">
+										<i class="fas fa-trash-alt"></i> Delete
+									</button>
+					        	</form>
+							</td>
 						</tr>
 					@endforeach
 				</tbody>
@@ -29,6 +39,11 @@
 	</div>
 </div>
 @include('layouts.errors')
+@if (session('disease_error'))
+	<div class="alert alert-danger alert-posts">
+		{{ session('disease_error') }}
+	</div>
+@endif
 
 <!-- Modal For Body Parts -->
 <div class="modal fade" id="add-parts" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

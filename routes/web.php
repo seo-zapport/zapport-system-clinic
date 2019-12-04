@@ -160,11 +160,13 @@ Route::group(['prefix' => 'medical'], function(){
 	// BodyParts
 	Route::get('bodypart', 'BodypartController@index')->name('bodyparts.index');
 	Route::post('bodypart', 'BodypartController@store')->name('bodyparts.store');
+	Route::delete('bodypart/{bodypart}', 'BodypartController@destroy')->name('bodyparts.destroy');
 	// Route::get('employees/bodypart/{bodypart}', 'BodypartController@fetchBodyparts')->name('bodyparts.fetch');
 
 	// Disease
 	Route::get('disease', 'DiseaseController@index')->name('diseases.index');
 	Route::post('disease', 'DiseaseController@store')->name('diseases.store');
+	Route::delete('disease/{disease}', 'DiseaseController@destroy')->name('diseases.destroy');
 	Route::get('employees/disease/{disease}', 'DiseaseController@fetchBodyparts')->name('diseases.fetch');
 
 	// diagnosis

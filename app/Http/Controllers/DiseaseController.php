@@ -113,6 +113,21 @@ class DiseaseController extends Controller
      */
     public function destroy(Disease $disease)
     {
-        //
+        if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
+            if (count($disease->diagnoses) > 0) {
+                return back()->with('disease_error', 'You cannot delete a Disease with Diagnosis');
+            }else{
+                $disease->delete();
+                return back();
+            }
+        }elseif (Gate::allows('isBanned')) {
+
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
+
+        }else{
+
+            return back();
+        }
     }
 }

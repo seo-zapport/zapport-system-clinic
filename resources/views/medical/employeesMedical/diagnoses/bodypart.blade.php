@@ -15,12 +15,22 @@
 				<thead class="thead-dark">
 					<th>Body Part</th>
 					<th>No. of Diseases</th>
+					<th>Action</th>
 				</thead>
 				<tbody>
 					@foreach ($bparts as $bpart)
 						<tr>
 							<td>{{ $bpart->bodypart }}</td>
 							<td>{{ count($bpart->diseases) }}</td>
+							<td>
+								<form method="post" action="{{ route('bodyparts.destroy', ['bodypart'=>$bpart->id]) }}" class="d-inline-block">
+					        		@csrf
+					        		@method('DELETE')
+									<button class="btn btn-link text-danger"  onclick="return confirm('Are you sure you want to delete {{ ucfirst($bpart->bodypart) }} ?')" data-id="{{ $bpart->bodypart }}">
+										<i class="fas fa-trash-alt"></i> Delete
+									</button>
+					        	</form>
+							</td>
 						</tr>
 					@endforeach
 				</tbody>
@@ -29,6 +39,11 @@
 	</div>
 </div>
 @include('layouts.errors')
+@if (session('bpart_error'))
+	<div class="alert alert-danger alert-posts">
+		{{ session('bpart_error') }}
+	</div>
+@endif
 
 <!-- Modal For Body Parts -->
 <div class="modal fade" id="add-parts" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

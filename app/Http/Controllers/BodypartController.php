@@ -110,7 +110,22 @@ class BodypartController extends Controller
      */
     public function destroy(Bodypart $bodypart)
     {
-        //
+        if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
+            if (count($bodypart->diseases) > 0) {
+                return back()->with('bpart_error', 'You cannot delete a Body part with disease');
+            }else{
+                $bodypart->delete();
+                return back();
+            }
+        }elseif (Gate::allows('isBanned')) {
+
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
+
+        }else{
+
+            return back();
+        }
     }
 
     public function fetchBodyparts(Request $request, $bodypart)
