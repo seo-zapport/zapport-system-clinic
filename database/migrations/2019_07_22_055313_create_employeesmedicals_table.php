@@ -13,10 +13,26 @@ class CreateEmployeesmedicalsTable extends Migration
      */
     public function up()
     {
+        Schema::create('bodyparts', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('bodypart');
+        });
+
+        Schema::create('diseases', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('disease');
+            $table->unsignedBigInteger('bodyparts_id');
+
+            $table->foreign('bodyparts_id')->references('id')->on('bodyparts')->onDelete('cascade');
+        
+        });
 
         Schema::create('diagnoses', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->text('diagnosis');
+            $table->unsignedBigInteger('disease_id');
+
+            $table->foreign('disease_id')->references('id')->on('diseases')->onDelete('cascade');
 
         });
 

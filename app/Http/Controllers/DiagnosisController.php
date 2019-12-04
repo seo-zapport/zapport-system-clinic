@@ -94,7 +94,7 @@ class DiagnosisController extends Controller
             $data = Diagnosis::where('diagnosis', 'like', '%'.$request->diagnosis.'%')->take(6)->get();
             $output = '';
             if (count($data) > 0) {
-                $output = '<ul class="list-group" style="display: block; position: relative; z-index: 1">';
+                $output = '<ul id="diag" class="list-group" style="display: block; position: relative; z-index: 1">';
                 foreach ($data as $row) {
                     $output .= '<li class="list-group-item list-group-item-action">'.$row->diagnosis.'</li>';
                 }

@@ -80,7 +80,9 @@
 		<div id="diagnosis">
 			<div class="row my-3">
 				<div class="col-12 col-md-8">
-					<h2 class="text-secondary zp-text-22">Diagnosis: <span class="text-dark">{{ ucwords($employeesmedical->diagnoses->diagnosis) }}</span></h2>
+					<h2 class="text-secondary zp-text-16">Body Part: <span class="text-dark">{{ ucwords($employeesmedical->diagnoses->diseases->bodypart->bodypart) }}</span></h2>
+					<h2 class="text-secondary zp-text-16">Disease: <span class="text-dark">{{ ucwords($employeesmedical->diagnoses->diseases->disease) }}</span></h2>
+					<h2 class="text-secondary zp-text-16">Diagnosis: <span class="text-dark">{{ ucwords($employeesmedical->diagnoses->diagnosis) }}</span></h2>
 				</div>
 				@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
 				<div class="col-12 col-md-4 text-right">

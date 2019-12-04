@@ -155,23 +155,42 @@ Route::group(['prefix' => 'medical'], function(){
 	Route::get('employees/full_report', 'EmployeesMedicalController@fullReport')->name('medical.fullReport');
 	Route::get('employees', 'EmployeesMedicalController@listofEmployee')->name('medical.listsofemployees');
 	Route::get('employees/{employee}', 'EmployeesMedicalController@employeeinfo')->name('medical.employeeInfo');
+	Route::get('employees/{employee}/form', 'EmployeesmedicalController@medicalForm')->name('medical.form');
+
+	// BodyParts
+	Route::get('bodypart', 'BodypartController@index')->name('bodyparts.index');
+	Route::post('bodypart', 'BodypartController@store')->name('bodyparts.store');
+	// Route::get('employees/bodypart/{bodypart}', 'BodypartController@fetchBodyparts')->name('bodyparts.fetch');
+
+	// Disease
+	Route::get('disease', 'DiseaseController@index')->name('diseases.index');
+	Route::post('disease', 'DiseaseController@store')->name('diseases.store');
+	Route::get('employees/disease/{disease}', 'DiseaseController@fetchBodyparts')->name('diseases.fetch');
+
 	// diagnosis
 	Route::get('employees/diagnosis/{diagnosis}', 'DiagnosisController@fetchDiagnosis')->name('diagnosis.fetch');
+
 	// 
 	// Pre Employment
 	Route::post('employees/{employee}/pre_employee', 'PreemploymentController@store')->name('medical.pre_emp');
 	Route::get('pre_employment/{pre_emp}', 'PreemploymentController@download')->name('pre_emp.download');
 	Route::delete('pre_employment/{preemployment}', 'PreemploymentController@destroy')->name('pre_emp.delete');
-	// 
+	// getBrand
 	Route::get('employees/gen/{id}', 'EmployeesMedicalController@getMedBrand')->name('getBrand');
 	Route::post('employees/{employee}', 'EmployeesMedicalController@store')->name('medical.store');
+	// getGenBrd
 	Route::get('employees/generic_id/{generic_id}/brand_id/{brand_id}', 'EmployeesMedicalController@getMedGenBrd')->name('getGenBrd');
 	Route::get('employees/{employee}/employeesmedical/{employeesmedical}', 'EmployeesMedicalController@show')->name('medical.show');
+	// getMedGenBrdUpdate
 	Route::get('employees/{employee}/employeesmedical/{employeesmedical}/generic_id/{generic_id}/brand_id/{brand_id}', 'EmployeesMedicalController@getMedGenBrdUpdate')->name('getMedGenBrdUpdate');
+
 	Route::post('employees/{employee}/employeesmedical/{employeesmedical}', 'EmployeesMedicalController@storeFollowup')->name('medical.storeFollowup');
 	Route::put('employees/{employee}/employeesmedical/{employeesmedical}', 'EmployeesMedicalController@update')->name('medical.update');
 	Route::get('download/{file_name}', 'EmployeesMedicalController@download')->name('download');
 	Route::get('employees/printMedicalRecord', 'EmployeesMedicalController@printMedicalRecord');
 	Route::get('employees/printEmpMedinfo', 'EmployeesMedicalController@printEmpMedinfo');
+
+	// Fetch Disease
+	Route::get('bodypart/{bodypart}', 'EmployeesMedicalController@getDisease')->name('bodyparts.getDisease');
 	
 });

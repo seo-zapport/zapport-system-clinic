@@ -2,20 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Mednote;
-use App\Generic;
-use App\Employee;
-use App\Medicine;
+use File;
+use App\Disease;
+use App\Bodypart;
 use App\Diagnosis;
+use App\Employee;
 use App\Employeesmedical;
+use App\EmployeesmedicalMedicineUser;
+use App\Generic;
+use App\Http\Requests\EmployeesmedicalRequest;
+use App\Medicine;
+use App\Mednote;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-use App\EmployeesmedicalMedicineUser;
-use App\Http\Requests\EmployeesmedicalRequest;
-
-use File;
 
 class EmployeesmedicalController extends Controller
 {
@@ -41,7 +42,7 @@ class EmployeesmedicalController extends Controller
      */
     public function create()
     {
-        //
+        // 
     }
 
     /**
@@ -56,12 +57,16 @@ class EmployeesmedicalController extends Controller
 
             $this->validate($request, $request->rules(), $request->messages());
 
+            // Find Diagnosis
             $findDiagnosis = Diagnosis::where('diagnosis', $request->input('diagnosis'))->first();
             if ($findDiagnosis != null) {
                 $diagnosis = $findDiagnosis->id;
             }else{
-                $insrtDiagnosis = Diagnosis::create(['diagnosis' => $request->diagnosis]);
-                $diagnosis = $insrtDiagnosis->id;
+                $newDiagnosis               =   new Diagnosis;
+                $newDiagnosis->disease_id   =   $request->disease_id;
+                $newDiagnosis->diagnosis    =   $request->diagnosis;
+                $newDiagnosis->save();
+                $diagnosis = $newDiagnosis->id;
             }
 
             if ($request->generic_id != null && $request->brand_id != null && $request->quantity != null) {
@@ -282,9 +287,12 @@ class EmployeesmedicalController extends Controller
             $gens = Generic::orderBy('gname', 'asc')->get();
             $meds = Medicine::get();
 
+            $bparts = Bodypart::get();
+            $diseases = Disease::get();
+
             $this->printEmpMedinfo($employee, $printsearch);
 
-            return view('medical.employeesMedical.employeeInfo', compact('employee', 'gens', 'meds', 'search', 'result'));
+            return view('medical.employeesMedical.employeeInfo', compact('employee', 'gens', 'meds', 'search', 'result', 'bparts', 'diseases'));
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();
             return back()->with('message', 'You\'re not employee!');
@@ -448,14 +456,21 @@ class EmployeesmedicalController extends Controller
     {
         if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse') || Gate::allows('isHr')) {
             $emps = Employeesmedical::join('diagnoses', 'diagnoses.id', 'employeesmedicals.diagnosis_id')
+                                    ->join('diseases', 'diseases.id', 'diagnoses.disease_id')
+                                    ->join('bodyparts', 'bodyparts.id', 'diseases.bodypart_id')
                                     ->join('employees', 'employees.id', 'employeesmedicals.employee_id')
-                                    ->select('employeesmedicals.id', 'employees.gender', 'diagnosis', 'employeesmedicals.created_at', \DB::raw('TIMESTAMPDIFF(YEAR,birthday,NOW()) as age'))
-                                    ->orderBy('employeesmedicals.created_at', 'desc')
+                                    ->select('employeesmedicals.id', 'employees.gender', 'diagnosis', 'employeesmedicals.created_at', \DB::raw('TIMESTAMPDIFF(YEAR,birthday,NOW()) as age'), 'diseases.disease', 'bodyparts.bodypart')
+                                    ->orderBy('age', 'desc')
                                     ->get()
                                     ->groupBy(function($date) {
                                         return Carbon::parse($date->created_at)->format('Y');
                                       });
 
+            // $emps = Employeesmedical::get()
+            //                         ->groupBy(function($date) {
+            //                             return Carbon::parse($date->created_at)->format('Y');
+            //                           });
+            // dd($emps);
             return view('medical.employeesMedical.fullReport', compact('diagnoses', 'arr', 'arr_count', 'emps'));
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();
@@ -485,5 +500,20 @@ class EmployeesmedicalController extends Controller
         $datamedrec = view('medical.employeesMedical.printemployeeInfo',compact('employee','printsearch','result'))->render();
         File::put(public_path('/storage/uploaded/print/medrecord/emp-med-info.html'),$datamedrec); 
 
+    }
+
+    public function medicalForm(Employee $employee)
+    {
+        $gens = Generic::orderBy('gname', 'asc')->get();
+        $meds = Medicine::get();
+        $bparts = Bodypart::get();
+        return view('medical.employeesMedical.medicalform', compact('employee', 'gens', 'meds', 'bparts'));
+    }
+
+    public function getDisease(Bodypart $bodypart)
+    {
+        $data = array();
+        $data['disease'] = $bodypart->diseases->pluck('disease', 'id');
+        return json_encode($data);
     }
 }

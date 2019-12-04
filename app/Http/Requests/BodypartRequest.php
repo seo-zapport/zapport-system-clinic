@@ -1,11 +1,10 @@
 <?php
 
 namespace App\Http\Requests;
-
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Http\FormRequest;
 
-class EmployeesmedicalRequest extends FormRequest
+class BodypartRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -29,11 +28,7 @@ class EmployeesmedicalRequest extends FormRequest
     public function rules()
     {
         return [
-            'diagnosis'     =>  ['required'],
-            'note'          =>  ['required'],
-            'status'        =>  ['required'],
-            'remarks'       =>  ['required'],
-            'disease_id'    =>  ['required'],
+            'bodypart'  =>  'required|unique:bodyparts'
         ];
     }
 
@@ -45,11 +40,7 @@ class EmployeesmedicalRequest extends FormRequest
     public function messages()
     {
         return [
-            'diagnosis.required'    =>  'Diagnosis Field is required!',
-            'note.required'         =>  'Note field is required!',
-            'status.required'       =>  'Status field is required!',
-            'remarks.required'      =>  'Remarks is required!',
-            'disease_id.required'   =>  'Disease field is required!'
+            'bodypart.required'  =>  'Body Part is required!'
         ];
     }
 }

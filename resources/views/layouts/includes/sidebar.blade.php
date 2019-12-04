@@ -122,6 +122,8 @@
                     <li class="nav-item"><a href="{{ route('brandname') }}" class="nav-link @yield('brandname')"><i class="fas fa-file-prescription"></i><span class="collapse-label"> Brand Name</span></a></li>
                     <li class="nav-item"><a href="{{ route('medicine') }}" class="nav-link @yield('medicine')"><i class="fas fa-pills"></i> <span class="collapse-label">Medicines</span></a></li>                    
                 </ul>
+                <li class="nav-item"><a href="{{ route('bodyparts.index') }}" class="nav-link @yield('bodypartindex')"><i class="fas fa-list"></i><span class="collapse-label">Body Parts</span></a></li>
+                <li class="nav-item"><a href="{{ route('diseases.index') }}" class="nav-link @yield('diseaseindex')"><i class="fas fa-list"></i><span class="collapse-label">Diseases</span></a></li>
                 <li class="nav-item"><a href="{{ route('medical.listsofemployees') }}" class="nav-link @yield('employeesMedical')"><i class="fas fa-list"></i><span class="collapse-label">List of Employees</span></a></li>
                 <li class="nav-item"><a href="{{ route('medical.empsRecords') }}" class="nav-link @yield('employeesWithRecord')"><i class="fas fa-list"></i><span class="collapse-label">Employees with Record</span></a></li>
             </ul>

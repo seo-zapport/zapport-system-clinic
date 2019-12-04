@@ -10,4 +10,9 @@ class Diagnosis extends Model
     {
     	return $this->hasMany(Employeesmedical::class);
     }
+
+    public function diseases()
+    {
+    	return $this->belongsTo(Disease::class, 'disease_id');
+    }
 }

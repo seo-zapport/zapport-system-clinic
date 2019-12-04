@@ -3,7 +3,7 @@
 @section('employeesMedical', 'active')
 {{-- @section('dash-title', ucwords($employee->last_name) . '\'s information') --}}
 @section('heading-title')
-	<i class="fas fa-list text-secondary"></i> {{ ucwords($employee->last_name) . '\'s information' }}
+	<i class="fas fa-list text-secondary"></i> {{ 'Medical form for ' . ucwords($employee->last_name) }}
 @endsection
 @section('dash-content')
 @section('back')
@@ -28,33 +28,6 @@
 					<div class="col-12 col-md-6">
 						<p class="med-name">{{ ucwords($employee->last_name . " " . $employee->first_name . " " . $employee->middle_name) }}</p>
 					</div>
-					<div class="col-12 col-md-6 print-col">
-						<div class="btn-group print-group" role="group">
-							<button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								Pre-employment Medical
-							</button>
-							<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-								@if (@$employee->preemployment == null)
-									@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
-										<a class="dropdown-item" href="#" data-toggle="modal" data-target="#pre-emp">Add</a>
-									@else
-										<a class="dropdown-item" href="#" onclick="return confirm('Access denied! Only Doctor or Nurse can add an Item')">Add</a>
-									@endif
-								@else
-									@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
-										<form method="POST" action="{{ route('pre_emp.delete', ['pre_emp.delete' => @$employee->preemployment->id]) }}">
-											@csrf
-											@method('DELETE')
-											<button class="dropdown-item"  onclick="return confirm('Are you sure you want to delete {{ @$employee->preemployment->pre_employment_med }} File?')" data-id="{{ @$employee->preemployment->id }}">
-												Remove
-											</button>
-										</form>
-									@endif
-										<a class="dropdown-item" href="{{ route('pre_emp.download', ['pre_emp' => @$employee->preemployment->pre_employment_med]) }}" download> View</a>
-								@endif
-							</div>
-						</div>
-					</div>
 				</div>
 				<div class="row">
 					<div class="col-12 col-md-4 col-lg-3">
@@ -77,198 +50,144 @@
 		</div>
 		<hr>
 		<br>
-		<div class="row zp-filters">
-			<div class="col-md-7">
-				<form id="searchDiagnosis" method="get" autocomplete="off">
-					<div class="form-row">
-						<div class="form-group col-md-6 autocomplete">
-							<div class="input-group">
-								<input type="search" name="search" class="form-control" value="{{ (!empty($result)) ? $result : '' }}" placeholder="Search for Diagnosis">
-								<div id="searchDiagnosis_list" class="autocomplete-items"></div>
-								<div class="input-group-append">
-									<button type="submit" class="btn btn-success mr-2">Search</button>
-									<a href="{{ route('medical.employeeInfo', ['employee' => $employee->emp_id]) }}" class="btn btn-info text-white">Clear</a>
+
+		<form onsubmit="return test(this)" id="myform" method="post" action="{{ route('medical.store', ['employee' => $employee->emp_id]) }}" enctype="multipart/form-data" autocomplete="off">
+			@csrf
+			<div class="row">
+				<div class="col-md-8">
+					<div class="card">
+						<div class="card-header">Medical Form</div>
+						<div class="card-body">
+								<input type="hidden" name="employee_id" value="{{ $employee->id }}">
+								<div class="form-group">
+								<label for="status">Status of Patient</label>
+								<select name="status" id="status" class="form-control" required>
+										<option selected="true" disabled="disabled" value=""> Select Stats </option>
+										<option value="walkin">Walk-in</option>
+								</select>
 								</div>
-							</div>
+								<div class="form-group">
+									<label for="diagnosis">Diagnosis</label>
+									<input type="text" name="diagnosis" class="form-control" placeholder="Diagnosis" required>
+									<div id="diagnosis_list" class="autocomplete-items"></div>
+								</div>
+								<div class="form-group">
+									<p class="mb-1">Attachment</p>
+									<label for="diagnosis" class="lbl_upload">Select a attachment</label>
+									<div class="uploader_wrap">
+										<input type="file" name="attachment" id="diagnosis" class="form-control-file file-upload">
+									</div>
+								</div>
+								<div class="form-group">
+									<label for="note">Note:</label>
+									<textarea name="note" id="note" cols="10" rows="5" class="form-control" placeholder="Doctor's note" required></textarea>
+								</div>
+
+								<div class="form-group">
+									<a id="addMedicine" class="btn btn-success text-white mb-2"><i class="fa fa-plus"></i> Medicine</a>
+								</div>
+
+								<div id="meds" class="form-row">
+									<div class="form-group col-5">
+									<label for="generic_id">Generic Name</label>
+									<select name="generic_id[0][0]" id="generic_id" class="form-control">
+										<option selected="true" disabled="disabled" value=""> Select Generic Name </option>
+										@forelse ($gens as $gen)
+											<option value="{{ $gen->id }}">{{ $gen->gname }}</option>
+											@empty
+											empty
+										@endforelse
+									</select>
+									<span id="select_generic" class="d-none text-muted font-weight-bold" style="cursor: pointer">Clear</span>
+									</div>
+									<div class="form-group col-4">
+									<label for="brand_id">Brand Name</label>
+									<select name="brand_id[0][0]" id="brand_id" class="form-control">
+											<option selected="true" disabled="disabled"> Select Medicine </option>
+									</select>
+									</div>
+									<div class="form-group col-3">
+									<label for="quantity">Quantity</label>
+									<input type="number" name="quantity[0][0]" class="form-control" min="1" placeholder="Quantity">
+									</div>
+								</div>
+
+								<div class="form-group">
+									<label for="remarks">Remarks</label>
+									<select name="remarks" id="remarks" class="form-control" required>
+										<option selected="true" disabled="disabled" value=""> Choose Remarks </option>
+										<option value="followUp">Follow up</option>
+										<option value="done">Done</option>
+									</select>
+								</div>
+
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+									<button id="sbmt" type="submit" class="btn btn-primary" onclick="test()">Save changes</button>
+									{{-- <button onclick="test()">test</button> --}}
+								</div>
 						</div>
 					</div>
-				</form>
-			</div>
-			@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
+				</div>
+				<div class="col-4">
+					<div class="card">
+						<div class="card-header">Body Parts</div>
+						<div class="card-body">
+							<a class="btn btn-info btn-block" data-toggle="modal" data-target="#add-parts">Add Body Parts</a><hr>
+							<div class="form-group">
+								<select name="bodypart_id" id="bodypart_id" class="form-control">
+									<option value="" disabled="" selected="">Select Body Parts</option>
+									@foreach ($bparts as $bpart)
+										<option value="{{ $bpart->id }}">{{ ucfirst($bpart->bodypart) }}</option>
+									@endforeach
+								</select>
+							</div>
+							<div class="form-group"></div>
+						</div>
+					</div>
 
-				<div class="col-md-5">
-					<div class="form-group text-right">
-						<button class="btn btn-success text-white btnPrint">Print</button>
-						<button class="btn btn-info text-white" data-toggle="modal" data-target="#exampleModalCenter">New</button>
-						{{-- <a class="btn btn-success" href="{{ route('medical.form', ['employee'=>$employee->emp_id]) }}">Form</a> --}}
+					<br>
+
+					<div class="card">
+						<div class="card-header">Disease</div>
+						<div class="card-body">
+							<a class="btn btn-info btn-block">Add Disease</a><hr>
+							<select name="" id="" class="form-control">
+								<option value="" disabled="" selected="">Select Disease</option>
+							</select>
+						</div>
 					</div>
 				</div>
-			@endif
-		</div>
+			</div>
+		</form>
 
-		<div class="table-responsive">
-			<table class="table table-hover">
-				<thead class="thead-dark">
-					<th>No.</th>
-					<th>Diagnosis</th>
-					<th>Notes</th>
-					<th>Date and Time</th>
-					<th>Remarks</th>
-				</thead>
-				<tbody>
-					@php
-						$i = 1;
-					@endphp
-					@forelse ($search as $medsHistory)
-						<tr>
-							<td>{{ $i++ }}</td>
-							<td>{{ ucwords($medsHistory->diagnoses->diagnosis) }}
-								<div class="row-actions"><a href="{{ route('medical.show', ['employee' => $employee->emp_id, 'employeesmedical' => $medsHistory->id]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i> View</a></div>
-							</td>
-							<td>{{ Str::words($medsHistory->note, 15) }}</td>
-							<td>{{ $medsHistory->created_at->format('M d, Y - h:i a') }}</td>
-							<td>{{ ($medsHistory->remarks == 'followUp') ? 'Follow up' : 'Done' }}</td>
-						</tr>
-						@empty
-							<tr>
-								<td colspan="6" class="text-center">No Records Found!</td>
-							</tr>
-					@endforelse
-				</tbody>
-			</table>				
-		</div> 
-	
 	</div>
 </div>
-<div class="pagination-wrap">{{ $search->links() }}</div>
 @include('layouts.errors')
-<!-- Modal Add -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-	<div class="modal-dialog  modal-lg modal-dialog-centered" role="document">
+
+<!-- Modal For Body Parts -->
+<div class="modal fade" id="add-parts" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLongTitle">Add New Record</h5>
+				<h5 class="modal-title" id="exampleModalLongTitle">Add New Body Part</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
 			<div class="modal-body">
-				<form onsubmit="return test(this)" id="myform" method="post" action="{{ route('medical.store', ['employee' => $employee->emp_id]) }}" enctype="multipart/form-data" autocomplete="off">
+				<form id="bParts-form" method="post">
 					@csrf
-					<input type="hidden" name="employee_id" value="{{ $employee->id }}">
 					<div class="form-group">
-					<label for="status">Status of Patient</label>
-					<select name="status" id="status" class="form-control" required>
-							<option selected="true" disabled="disabled" value=""> Select Stats </option>
-							<option value="walkin">Walk-in</option>
-					</select>
+						<label for="bodypart">Body Part</label>
+						<input type="text" class="form-control" name="bodypart" placeholder="Add Body Part">
 					</div>
-					<div class="form-row">
-						<div class="form-group col-md-4">
-							<label for="bodypart_id">Body Part</label>
-							<select name="bodypart_id" id="bodypart_id" class="form-control">
-								<option value="" disabled selected>Select Body Part</option>
-								@foreach ($bparts as $bpart)
-									@if (count($bpart->diseases) > 0)
-										<option value="{{ $bpart->id }}">{{ ucfirst($bpart->bodypart) }}</option>
-									@endif
-								@endforeach
-							</select>
-						</div>
-						<div class="form-group col-md-8">
-							<label for="disease_id">Disease</label>
-							<select name="disease_id" id="disease_id" class="form-control">
-								<option value="" selected disabled>Select Diseases</option>
-							</select>
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="diagnosis">Diagnosis</label>
-						<input type="text" name="diagnosis" class="form-control" placeholder="Diagnosis" required>
-						<div id="diagnosis_list" class="autocomplete-items"></div>
-					</div>
-					<div class="form-group">
-						<p class="mb-1">Attachment</p>
-						<label for="diagnosis" class="lbl_upload">Select a attachment</label>
-						<div class="uploader_wrap">
-							<input type="file" name="attachment" id="diagnosis" class="form-control-file file-upload">
-						</div>
-					</div>
-					<div class="form-group">
-						<label for="note">Note:</label>
-						<textarea name="note" id="note" cols="10" rows="5" class="form-control" placeholder="Doctor's note" required></textarea>
-					</div>
-
-					<div class="form-group">
-						<a id="addMedicine" class="btn btn-success text-white mb-2"><i class="fa fa-plus"></i> Medicine</a>
-					</div>
-
-					<div id="meds" class="form-row">
-						<div class="form-group col-5">
-						<label for="generic_id">Generic Name</label>
-						<select name="generic_id[0][0]" id="generic_id" class="form-control">
-								<option selected="true" disabled="disabled" value=""> Select Generic Name </option>
-								@forelse ($gens as $gen)
-									<option value="{{ $gen->id }}">{{ $gen->gname }}</option>
-									@empty
-									empty
-								@endforelse
-						</select>
-						<span id="select_generic" class="d-none text-muted font-weight-bold" style="cursor: pointer">Clear</span>
-						</div>
-						<div class="form-group col-4">
-						<label for="brand_id">Brand Name</label>
-						<select name="brand_id[0][0]" id="brand_id" class="form-control">
-								<option selected="true" disabled="disabled"> Select Medicine </option>
-						</select>
-						</div>
-						<div class="form-group col-3">
-						<label for="quantity">Quantity</label>
-						<input type="number" name="quantity[0][0]" class="form-control" min="1" placeholder="Quantity">
-						</div>
-					</div>
-
-					<div class="form-group">
-						<label for="remarks">Remarks</label>
-						<select name="remarks" id="remarks" class="form-control" required>
-							<option selected="true" disabled="disabled" value=""> Choose Remarks </option>
-							<option value="followUp">Follow up</option>
-							<option value="done">Done</option>
-						</select>
-					</div>
-
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-						<button id="sbmt" type="submit" class="btn btn-primary" onclick="test()">Save changes</button>
-						{{-- <button onclick="test()">test</button> --}}
+						<button type="submit" class="btn btn-primary">Save changes</button>
 					</div>
 				</form>
 			</div>
-		</div>
-	</div>
-</div>
-
-<div id="test"></div>
-
-<!-- Modal -->
-<div class="modal fade" id="pre-emp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">Pre Employement Medical</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<form id="preEmpForm" method="post" enctype="multipart/form-data">
-				<div class="modal-body">
-					<input type="file" name="pre_employment_med" class="form-control-file file-upload" required>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-					<button type="submit" class="btn btn-primary">Save changes</button>
-				</div>
-			</form>
 		</div>
 	</div>
 </div>
@@ -279,24 +198,29 @@
 <script type="application/javascript">
 jQuery(document).ready(function($) {
 
-	// Fetch Disease_____________________________________________________________________________________________________________________________
-	$("#myform select[name='bodypart_id']").on('change', function(e){
-		e.preventDefault();
+
+    // Search input bodyparts_______________________________________________________________________________________________________________________
+    $("input[name='bodypart']").on('keyup', function(){
+    	var query = $(this).val();
+    	$.ajax({
+    		url: "/medical/employees/bodypart/"+query+"",
+    		type: "GET",
+    		data:{'bodypart':query},
+    		success:function(response){
+    			$('#bodyParts_list').html(response);
+    		}
+    	});
+    });
+
+	$(document).on('click', '#myform #bpart li', function(){
+	    var value = $(this).text();
+	    $("input[name='bodypart']").val(value);
+	    $('#bodyParts_list').html("");
+	});
+
+	$("input[name='bodypart']").on('change', function(){
 		var bodypart = $(this).val();
-		var dis = $("#myform select[name='disease_id']");
-		$.ajax({
-			type: 'GET',
-			url: '/medical/bodypart/' + bodypart,
-			data: {bodypart:bodypart},
-			dataType: 'json',
-			success: function(response){
-				dis.empty();
-				$.each(response.disease, function(key, value){
-					console.log(key + ' ' + value);
-					dis.append('<option value="'+ key +'">'+ value +'</option>');
-				});
-			}
-		});
+		console.log(bodypart);
 	});
 
 
@@ -342,13 +266,34 @@ jQuery(document).ready(function($) {
 
 	//__________________________________________________________________________________________________________________________________________________ 
 
-
-
-	$('.btnPrint').printPage({ 
-		attr: "href",
-		url: "{{ asset('storage/uploaded/print/medrecord/emp-med-info.html') }}",
-		message:"Your document is being created",
+	$("#bParts-form").on('submit', function(e){
+		e.preventDefault();
+		var bodypart = $('#bParts-form input[name="bodypart"]').val();
+       $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+        });
+        $.ajax({
+        	type: 'POST',
+        	url: '{{ route('bodyparts.store') }}',
+        	data: {bodypart:bodypart},
+        	dataType: 'json',
+        	success: function(response){
+        		console.log(response);
+        		$('#bParts-form input[name="bodypart"]').val('');
+        		$('#add-parts').modal('hide');
+        		$('#bodypart_id').append('<option class="text-capitalize" value='+response.id+' selected>'+response.bodypart+'</option>')
+        	},
+        	error: function(response){
+        		console.log(response);
+        	}
+        });
 	});
+
+	//__________________________________________________________________________________________________________________________________________________ 
+
+
 
 	$("#preEmpForm").on('submit', function(e) {
 		e.preventDefault();
@@ -444,7 +389,7 @@ jQuery(document).ready(function($) {
 
 				    	var bID = $(this).find(':selected').attr('value')
 				    	console.log('brand_id '+bID);
-				    	var myUrl3 = 'generic_id/'+gID+'/brand_id/'+bID+'';
+				    	var myUrl3 = '/medical/employees/generic_id/'+gID+'/brand_id/'+bID+'';
 
 				       if(bID)
 				       {
@@ -478,7 +423,7 @@ jQuery(document).ready(function($) {
 
 			    	var bID = $(this).find(':selected').attr('value')
 			    	// console.log('brand_id '+bID);
-			    	var myUrl3 = 'generic_id/'+gID+'/brand_id/'+bID+'';
+			    	var myUrl3 = '/medical/employees/generic_id/'+gID+'/brand_id/'+bID+'';
 
 			       if(bID)
 			       {
@@ -590,7 +535,7 @@ jQuery(document).ready(function($) {
 		    // console.log('brand_id '+bid);
 
 		    	var bID = jQuery(this).val();
-		    	var myUrl2 = 'generic_id/'+gid+'/brand_id/'+bID+'';
+		    	var myUrl2 = '/medical/employees/generic_id/'+gid+'/brand_id/'+bID+'/';
 
 		       if(bID)
 		       {
@@ -626,7 +571,7 @@ jQuery(document).ready(function($) {
 	    // console.log('brand_id '+bid);
 
 	    	var bID = jQuery(this).val();
-	    	var myUrl2 = 'generic_id/'+gid+'/brand_id/'+bID+'';
+	    	var myUrl2 = '/medical/employees/generic_id/'+gid+'/brand_id/'+bID+'/';
 
 	       if(bID)
 	       {
