@@ -170,7 +170,7 @@
 								<option value="" disabled selected>Select Body Part</option>
 								@foreach ($bparts as $bpart)
 									@if (count($bpart->diseases) > 0)
-										<option value="{{ $bpart->id }}">{{ ucfirst($bpart->bodypart) }}</option>
+										<option value="{{ $bpart->bodypart_slug }}">{{ ucfirst($bpart->bodypart) }}</option>
 									@endif
 								@endforeach
 							</select>
@@ -286,7 +286,7 @@ jQuery(document).ready(function($) {
 		var dis = $("#myform select[name='disease_id']");
 		$.ajax({
 			type: 'GET',
-			url: '/medical/bodypart/' + bodypart,
+			url: '/medical/fetch/' + bodypart,
 			data: {bodypart:bodypart},
 			dataType: 'json',
 			success: function(response){

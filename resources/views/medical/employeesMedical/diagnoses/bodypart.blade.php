@@ -3,7 +3,7 @@
 @section('bodypartindex', 'active')
 {{-- @section('dash-title', ucwords($employee->last_name) . '\'s information') --}}
 @section('heading-title')
-	<i class="fas fa-list text-secondary"></i> {{ 'Medical form for' }}
+	<i class="fas fa-list text-secondary"></i> {{ 'Body Part' }}
 @endsection
 @section('dash-content')
 
@@ -23,7 +23,8 @@
 							<td>{{ $bpart->bodypart }}</td>
 							<td>{{ count($bpart->diseases) }}</td>
 							<td>
-								<form method="post" action="{{ route('bodyparts.destroy', ['bodypart'=>$bpart->id]) }}" class="d-inline-block">
+								<a href="{{ route('bodyparts.show', ['bodypart'=>$bpart->bodypart_slug]) }}">View</a>
+								<form method="post" action="{{ route('bodyparts.destroy', ['bodypart'=>$bpart->bodypart_slug]) }}" class="d-inline-block">
 					        		@csrf
 					        		@method('DELETE')
 									<button class="btn btn-link text-danger"  onclick="return confirm('Are you sure you want to delete {{ ucfirst($bpart->bodypart) }} ?')" data-id="{{ $bpart->bodypart }}">
@@ -36,6 +37,7 @@
 				</tbody>
 			</table>
 		</div>
+		{{ $bparts->links() }}
 	</div>
 </div>
 @include('layouts.errors')
@@ -60,7 +62,7 @@
 					@csrf
 					<div class="form-group">
 						<label for="bodypart">Body Part</label>
-						<input type="text" class="form-control" name="bodypart" placeholder="Add Body Part">
+						<input type="text" class="form-control" name="bodypart" placeholder="Add Body Part" required>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

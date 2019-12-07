@@ -18,6 +18,6 @@ class Generic extends Model
 
     public function getRouteKeyName()
     {
-        return 'gname';
+        return 'gname_slug';
     }
 }

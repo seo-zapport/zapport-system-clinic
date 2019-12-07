@@ -16,6 +16,7 @@ class CreateGenericsTable extends Migration
         Schema::create('generics', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('gname');
+            $table->string('gname_slug');
         });
     }
 

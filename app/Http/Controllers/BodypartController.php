@@ -23,7 +23,7 @@ class BodypartController extends Controller
     {
         if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
 
-            $bparts = Bodypart::get();
+            $bparts = Bodypart::paginate(10);
             return view('medical.employeesMedical.diagnoses.bodypart', compact('bparts'));
             
         }elseif (Gate::allows('isBanned')) {
@@ -58,6 +58,8 @@ class BodypartController extends Controller
         if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
         
             $atts = $this->validate($request, $request->rules(), $request->messages());
+            $replaced = str_replace(' ', '-', $request->bodypart);
+            $atts['bodypart_slug'] = strtolower($replaced);
             $id = Bodypart::create($atts);
             $atts['id'] = $id->id;
             return back();
@@ -81,7 +83,17 @@ class BodypartController extends Controller
      */
     public function show(Bodypart $bodypart)
     {
-        //
+        if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
+            return view('medical.employeesMedical.diagnoses.bodypart_show', compact('bodypart'));
+        }elseif (Gate::allows('isBanned')) {
+
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
+
+        }else{
+
+            return back();
+        }
     }
 
     /**

@@ -31,8 +31,8 @@
 						<tr>
 							<td>{{ strtoupper($dep->department) }}
 								<div class="row-actions">
-									<a href="{{ route('hr.dep.showDep', ['department' => $dep->department]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a>
-									<form method="post" action="{{ route('hr.dep.deleteDep', ['department' => $dep->department]) }}" class="d-inline-block">
+									<a href="{{ route('hr.dep.showDep', ['department' => $dep->department_slug]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a>
+									<form method="post" action="{{ route('hr.dep.deleteDep', ['department' => $dep->department_slug]) }}" class="d-inline-block">
 						        		@csrf
 						        		@method('DELETE')
 										<button class="btn btn-link text-danger"  onclick="return confirm('Are you sure you want to delete {{ ucfirst($dep->department) }} Department?')" data-id="{{ $dep->department }}">

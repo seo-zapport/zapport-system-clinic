@@ -46,7 +46,7 @@
 						<span id="med_log_search_date" class="d-none font-weight-bold zp-filter-clear">x</span>
 						<div class="input-group-append">
 							<button type="submit" class="btn btn-success mr-2">Search</button>
-							<a href="{{ route('medicine.log', ['medbrand' => $medbrand->bname, 'generic' => $generic->gname]) }}" class="btn btn-info text-white">Clear</a>
+							<a href="{{ route('medicine.log', ['medbrand' => $medbrand->bname_slug, 'generic' => $generic->gname_slug]) }}" class="btn btn-info text-white">Clear</a>
 						</div>
 					</div>
 				</div>
@@ -109,7 +109,7 @@
 							<td class="{{ ($log->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">
 								{{ ucwords($log->user->employee->last_name) }} {{ ucwords($log->user->employee->first_name) }}
 								<div class="row-actions">
-									<a href="{{ route('medicine.show', ['medbrand' => $log->bname, 'generic' => $log->gname, 'inputDate' => $log->orig, 'expDate' => 
+									<a href="{{ route('medicine.show', ['medbrand' => $log->bname_slug, 'generic' => $log->gname_slug, 'inputDate' => $log->orig, 'expDate' => 
 									$log->expiration_date]) }}" class="show-edit btn btn-link {{ ($log->expiration_date <= NOW()) ? ' text-white' : 'text-secondary' }}"><i class="far fa-eye"></i> View</a>
 								</div>
 							</td>

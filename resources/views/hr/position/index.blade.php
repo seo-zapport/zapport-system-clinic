@@ -34,9 +34,9 @@
 								<td>
 									{{ strtoupper($position->position) }}
 									<div class="row-actions">
-										<a href="{{ route('hr.pos.show', ['position' => $position->position, 'department' => $department->department]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a>
+										<a href="{{ route('hr.pos.show', ['position' => $position->position_slug, 'department' => $department->department_slug]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a>
 										<small class="text-muted">|</small>
-							        	<form method="post" action="{{ route('hr.pos.deletePos', ['position' => $position->position]) }}" class="d-inline-block">
+							        	<form method="post" action="{{ route('hr.pos.deletePos', ['position' => $position->position_slug]) }}" class="d-inline-block">
 							        		@csrf
 							        		@method('DELETE')
 												<button class="btn btn-link text-danger" onclick="return confirm('Are you sure you want to delete {{ ucfirst($position->position) }} Position?')" data-id="{{ $position->postion }}">

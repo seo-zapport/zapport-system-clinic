@@ -158,15 +158,16 @@ Route::group(['prefix' => 'medical'], function(){
 	Route::get('employees/{employee}/form', 'EmployeesmedicalController@medicalForm')->name('medical.form');
 
 	// BodyParts
-	Route::get('bodypart', 'BodypartController@index')->name('bodyparts.index');
-	Route::post('bodypart', 'BodypartController@store')->name('bodyparts.store');
-	Route::delete('bodypart/{bodypart}', 'BodypartController@destroy')->name('bodyparts.destroy');
+	Route::get('bodyparts', 'BodypartController@index')->name('bodyparts.index');
+	Route::post('bodyparts', 'BodypartController@store')->name('bodyparts.store');
+	Route::get('bodyparts/{bodypart}', 'BodypartController@show')->name('bodyparts.show');
+	Route::delete('bodyparts/{bodypart}', 'BodypartController@destroy')->name('bodyparts.destroy');
 	// Route::get('employees/bodypart/{bodypart}', 'BodypartController@fetchBodyparts')->name('bodyparts.fetch');
 
 	// Disease
-	Route::get('disease', 'DiseaseController@index')->name('diseases.index');
-	Route::post('disease', 'DiseaseController@store')->name('diseases.store');
-	Route::delete('disease/{disease}', 'DiseaseController@destroy')->name('diseases.destroy');
+	Route::post('diseases', 'DiseaseController@store')->name('diseases.store');
+	Route::get('diseases/{disease}', 'DiseaseController@show')->name('diseases.show');
+	Route::delete('diseases/{disease}', 'DiseaseController@destroy')->name('diseases.destroy');
 	Route::get('employees/disease/{disease}', 'DiseaseController@fetchBodyparts')->name('diseases.fetch');
 
 	// diagnosis
@@ -193,6 +194,6 @@ Route::group(['prefix' => 'medical'], function(){
 	Route::get('employees/printEmpMedinfo', 'EmployeesMedicalController@printEmpMedinfo');
 
 	// Fetch Disease
-	Route::get('bodypart/{bodypart}', 'EmployeesMedicalController@getDisease')->name('bodyparts.getDisease');
+	Route::get('fetch/{bodypart}', 'EmployeesMedicalController@getDisease')->name('bodyparts.getDisease');
 	
 });
