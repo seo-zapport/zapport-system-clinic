@@ -23,7 +23,7 @@ class CreateEmployeesmedicalsTable extends Migration
             $table->string('disease');
             $table->unsignedBigInteger('bodyparts_id');
 
-            $table->foreign('bodyparts_id')->references('id')->on('bodyparts')->onDelete('cascade');
+            $table->foreign('bodypart_id')->references('id')->on('bodyparts')->onDelete('cascade');
         
         });
 
