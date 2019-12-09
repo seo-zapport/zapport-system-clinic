@@ -227,10 +227,16 @@
 					@csrf
 					<div class="form-group">
 						<p class="mb-1">Attachments</p>
-						<label for="diagnosis_show" class="lbl_upload">Attachments</label>
+						<div class="input-group mb-3">
+							<div class="custom-file">
+								<input type="file" name="attachment" id="diagnosis_show" class="custom-file-input form-control-file file-upload">
+								<label for="diagnosis" class="custom-file-label">Choose file</label>
+							</div>
+						</div>
+						{{-- <label for="diagnosis_show" class="lbl_upload">Attachments</label>
 						<div class="uploader_wrap">
 							<input type="file" name="attachment" id="diagnosis_show" class="form-control-file file-upload">
-						</div>
+						</div> --}}
 					</div>
 					<div class="form-group">
 						<label for="followup_note">Note:</label>
@@ -242,7 +248,7 @@
 					</div>
 
 					<div id="meds" class="form-row">
-						<div class="form-group col-5">
+						<div class="form-group col-4">
 						<label for="generic_id">Generic Name</label>
 						<select name="generic_id[0][0]" id="generic_id" class="form-control">
 								<option selected="true" disabled="disabled" value=""> Select Generic Name </option>
@@ -260,7 +266,7 @@
 								<option selected="true" disabled="disabled"> Select Medicine </option>
 						</select>
 						</div>
-						<div class="form-group col-3">
+						<div class="form-group col-4">
 						<label for="quantity">Quantity</label>
 						<input type="number" name="quantity[0][0]" class="form-control" min="1" placeholder="Quantity">
 						</div>
@@ -378,7 +384,7 @@ jQuery(document).ready(function($) {
     var o = $('#editMedicine').length;
     // Children
     $("#addMedicine").click(function(event) {
-      $('<div id="medicineField" class="col-12 my-1 form-inline"><select name="generic_id['+i+']['+i+']" id="generic_id" class="form-control col-md-4" required><option selected="true" disabled="disabled"> Select Generic Name </option>@foreach ($gens as $gen)<option value="{{ $gen->id }}">{{ $gen->gname }}</option>@endforeach</select><select name="brand_id['+i+']['+i+']" id="brand_id" class="form-control col-md-4  ml-2 mr-2" required><option selected="true" disabled="disabled"> Select Medicine </option></select><input type="number" name="quantity['+i+']['+i+']" min="1" class="form-control col-md-3 mr-2" placeholder="Quantity">  <a id="removeChildren" class="btn btn-danger text-white"><i class="fa fa-times"></i></a></div>').appendTo('#meds');
+      $('<div id="medicineField" class="col-12 form-row medicine-field"><div class="mb-2 col-md-4"><select name="generic_id['+i+']['+i+']" id="generic_id" class="form-control" required><option selected="true" disabled="disabled"> Select Generic Name </option>@foreach ($gens as $gen)<option value="{{ $gen->id }}">{{ $gen->gname }}</option>@endforeach</select></div><div class="mb-2 col-md-4"><select name="brand_id['+i+']['+i+']" id="brand_id" class="form-control" required><option selected="true" disabled="disabled"> Select Medicine </option></select></div><div class="mb-2 col-md-4"><input type="number" name="quantity['+i+']['+i+']" min="1" class="form-control" placeholder="Quantity"></div><a id="removeChildren" class="btn text-danger text-white position-absolute remove-actions" style="right: -16px;top: 0px;"><i class="fa fa-times"></i></a></div>').appendTo('#meds');
 
     var gid = $('select[name="generic_id['+i+']['+i+']"]');
     var brand = $('select[name="brand_id['+i+']['+i+']"]');
@@ -669,7 +675,13 @@ jQuery(document).ready(function($) {
 				return false;
 		    }
 		}
-    };
+		};
+				//Upload update
+		document.querySelector('.form-control-file').addEventListener('change',function(e){
+			var fileName = document.getElementById("diagnosis_show").files[0].name;
+			var nextSibling = e.target.nextElementSibling;
+			nextSibling.innerText = fileName;
+		});
 
 </script>
 @endsection

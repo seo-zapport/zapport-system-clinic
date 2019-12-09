@@ -947,3 +947,17 @@
 	    width: 96%;
 	}
 }
+
+/**remove*/
+.remove-actions{
+	display: none;
+	cursor: pointer;
+}
+#medicineField,
+.medicine-field{
+	&:hover{
+		.remove-actions{
+			display: block;
+		}
+	}
+}
