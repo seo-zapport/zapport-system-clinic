@@ -6,16 +6,17 @@
 	<i class="fas fa-list text-secondary"></i> {{ ucfirst($bodypart->bodypart) }}
 @endsection
 @section('dash-content')
+<div class="row zp-filters">
+	<div class="col-12 text-right form-group"><a class="btn btn-info text-white" data-toggle="modal" data-target="#add-parts"><i class="fa fa-plus"></i> Add Disease</a></div>
+</div>
 
 <div class="card mb-3">
 	<div class="card-body">
-		<a class="btn btn-info" data-toggle="modal" data-target="#add-parts">Add Disease</a><hr>
 		<div class="table-responsive">
 			<table class="table table-hover">
 				<thead class="thead-dark">
 					<th>Disease</th>
-					<th>No. of Diagnoses</th>
-					<th>Action</th>
+					<th width="10%" class="text-center">No. of Diagnoses</th>
 				</thead>
 				<tbody>
 					@php
@@ -23,23 +24,25 @@
 					@endphp
 					@foreach ($collection as $disease)
 						<tr>
-							<td>{{ ucfirst($disease->disease) }}</td>
-							<td>{{ count($disease->diagnoses) }}</td>
 							<td>
-								<form method="post" action="{{ route('diseases.destroy', ['disease'=>$disease->disease_slug]) }}" class="d-inline-block">
-					        		@csrf
-					        		@method('DELETE')
-									<button class="btn btn-link text-danger"  onclick="return confirm('Are you sure you want to delete {{ ucfirst($disease->disease) }} ?')" data-id="{{ $disease->disease }}">
-										<i class="fas fa-trash-alt"></i> Delete
-									</button>
-					        	</form>
+								{{ ucfirst($disease->disease) }}
+								<div class="row-actions">
+									<form method="post" action="{{ route('diseases.destroy', ['disease'=>$disease->disease_slug]) }}" class="d-inline-block">
+												@csrf
+												@method('DELETE')
+										<button class="btn btn-link text-danger"  onclick="return confirm('Are you sure you want to delete {{ ucfirst($disease->disease) }} ?')" data-id="{{ $disease->disease }}">
+											<i class="fas fa-trash-alt"></i> Delete
+										</button>
+											</form>									
+								</div>
 							</td>
+							<td class="text-center">{{ count($disease->diagnoses) }}</td>
 						</tr>
 					@endforeach
 				</tbody>
 			</table>
 		</div>
-		{{ $collection->links() }}
+		<div class="pagination-wrap">{{ $collection->links() }}</div>
 	</div>
 </div>
 @include('layouts.errors')

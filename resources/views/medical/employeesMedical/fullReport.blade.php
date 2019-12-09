@@ -38,7 +38,31 @@
     	.wrap p > span {
 		    font-size: 16px;
 		    color: #089c9c;
-		}
+			}
+			.border-top-transparent{
+				border-top-color: transparent;
+			}
+			.branch-list{
+				position: relative;
+			}
+			.branch-list:before{
+				background: #e4e4e4;
+				content: '';
+				display: block;
+				height: 100%;
+				position: absolute;
+				left: -15px;
+				bottom: -22px;
+				width: 1px;
+			}
+			.branch-list.branch-list-child:before{
+				//font-family: 'fontAwesome';
+				//content:'\f069';
+				bottom: 0;
+				color:red;
+				height: 90%;
+				left: 25px;
+			}
     </style>
 </head>
 <body>
@@ -76,72 +100,80 @@
 							{{-- <h3 class="text-secondary">{{ $key }}</h3> --}}
 							@foreach ($emp->unique('bodypart') as $filter)
 								<ul class="mb-4 p-0">
-									<li>
-										<h3 class="h4">{{ ucfirst($filter->bodypart) }}</h3>
+									<li class="branch-list">
+										{{-- <h3 class="h4">{{ ucfirst($filter->bodypart) }}</h3> dito --}}
+										<a class="btn btn-link" data-toggle="collapse" href="#diagnosis_{{ $filter->id }}" role="button" aria-expanded="false" aria-controls="diagnosis_{{ $filter->id }}">{{ ucfirst($filter->bodypart) }}</a>
 										@foreach ($emp->unique('disease') as $disease)
-											<ul style="list-style: none;">
+											<ul >
 												@if ($emp->where('disease', $disease->disease)->where('bodypart', $filter->bodypart)->count() > 0)
-													<li>
-														<h4 class="h5">{{ strtoupper($disease->disease) }}</h4>
-														<table class="table custom-bg">
-															<thead>
-																<th>Gender</th>
-																<th>Age</th>
-																<th>No. of Cases per Age & Gender</th>
-															</thead>
-															<tbody>
-																@foreach ($emp->unique('age') as $age)
-																	<tr>
-																	@if ($emp->where('gender', 0)->where('disease', $disease->disease)->where('bodypart', $filter->bodypart)->where('age', $age->age)->count() > 0)
-																		<td>
-																			Male
-																		</td>
-																		<td>
-																			{{ $age->age }}
-																		</td>
-																		<td>
-																			{{ $emp->where('gender', 0)->where('disease', $disease->disease)->where('bodypart', $filter->bodypart)->where('age', $age->age)->count() }}
-																		</td>
-																	@endif
-																	</tr>
-																	<tr>
-																	@if ($emp->where('gender', 1)->where('disease', $disease->disease)->where('bodypart', $filter->bodypart)->where('age', $age->age)->count() > 0)
-																		<td>
-																			Female
-																		</td>
-																		<td>
-																			{{ $age->age }}
-																		</td>
-																		<td>
-																			{{ $emp->where('gender', 1)->where('disease', $disease->disease)->where('bodypart', $filter->bodypart)->where('age', $age->age)->count() }}
-																		</td>
-																	@endif
-																	</tr>
-																@endforeach
-															</tbody>
-															<tfoot>
-																<tr>
-																	<td>Total of Male: {{ $emp->where('gender', 0)->where('disease', $disease->disease)->where('bodypart', $filter->bodypart)->count() }}</td>
-																	<td>Total of Female: {{ $emp->where('gender', 1)->where('disease', $disease->disease)->where('bodypart', $filter->bodypart)->count() }}</td>
-																	<td>Total No. of Cases: {{ $emp->where('disease', $disease->disease)->where('bodypart', $filter->bodypart)->count() }}</td>
-																</tr>
-																<tr>
-																	<td colspan="3">
-																		<b>List of Diagnosis:</b>
-																		<ul>
-																			@php
-																				$colletion = $emp->where('bodypart', $filter->bodypart)->where('disease', $disease->disease);
-																			@endphp
-																			@foreach ($colletion->unique('diagnosis') as $result)
-																				<li>
-																					{{ ucfirst($result->diagnosis) }}
-																				</li>
+													<li class="collapse multi-collapse" id="diagnosis_{{ $filter->id }}">
+														{{-- <h4 class="h5">{{ strtoupper($disease->disease) }}</h4> --}}
+														<a class="btn btn-link" data-toggle="collapse" href="#disease_{{ $disease->id }}" role="button" aria-expanded="false" aria-controls="disease_{{ $disease->id }}">{{ strtoupper($disease->disease) }}</a>
+														<div class="collapse multi-collapse" id="disease_{{ $disease->id }}">
+															<div class="card border-top-transparent mb-3">
+																<div class="card-body p-0 table-responsive">
+																	<table class="table table-striped mb-0">
+																		<thead>
+																			<th>Gender</th>
+																			<th>Age</th>
+																			<th>No. of Cases per Age & Gender</th>
+																		</thead>
+																		<tbody>
+																			@foreach ($emp->unique('age') as $age)
+																				<tr>
+																				@if ($emp->where('gender', 0)->where('disease', $disease->disease)->where('bodypart', $filter->bodypart)->where('age', $age->age)->count() > 0)
+																					<td>
+																						Male
+																					</td>
+																					<td>
+																						{{ $age->age }}
+																					</td>
+																					<td>
+																						{{ $emp->where('gender', 0)->where('disease', $disease->disease)->where('bodypart', $filter->bodypart)->where('age', $age->age)->count() }}
+																					</td>
+																				@endif
+																				</tr>
+																				<tr>
+																				@if ($emp->where('gender', 1)->where('disease', $disease->disease)->where('bodypart', $filter->bodypart)->where('age', $age->age)->count() > 0)
+																					<td>
+																						Female
+																					</td>
+																					<td>
+																						{{ $age->age }}
+																					</td>
+																					<td>
+																						{{ $emp->where('gender', 1)->where('disease', $disease->disease)->where('bodypart', $filter->bodypart)->where('age', $age->age)->count() }}
+																					</td>
+																				@endif
+																				</tr>
 																			@endforeach
-																		</ul>
-																	</td>
-																</tr>
-															</tfoot>
-														</table>
+																		</tbody>
+																		<tfoot>
+																			<tr>
+																				<td>Total of Male: {{ $emp->where('gender', 0)->where('disease', $disease->disease)->where('bodypart', $filter->bodypart)->count() }}</td>
+																				<td>Total of Female: {{ $emp->where('gender', 1)->where('disease', $disease->disease)->where('bodypart', $filter->bodypart)->count() }}</td>
+																				<td>Total No. of Cases: {{ $emp->where('disease', $disease->disease)->where('bodypart', $filter->bodypart)->count() }}</td>
+																			</tr>
+																			<tr>
+																				<td colspan="3">
+																					<b>List of Diagnosis:</b>
+																					<ul>
+																						@php
+																							$colletion = $emp->where('bodypart', $filter->bodypart)->where('disease', $disease->disease);
+																						@endphp
+																						@foreach ($colletion->unique('diagnosis') as $result)
+																							<li>
+																								{{ ucfirst($result->diagnosis) }}
+																							</li>
+																						@endforeach
+																					</ul>
+																				</td>
+																			</tr>
+																		</tfoot>
+																	</table>
+																</div>
+															</div>
+														</div>
 													</li>
 												@endif
 											</ul>
@@ -156,6 +188,7 @@
 		</div>
 	</div>
 
+	<script src="{{ asset('js/app.js') }}"></script>
 	<script type="application/javascript">
 	function printPage()
 	{
