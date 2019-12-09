@@ -20,7 +20,7 @@
 				<tbody>
 					@foreach ($bparts as $bpart)
 						<tr>
-							<td>{{ $bpart->bodypart }}</td>
+							<td>{{ ucfirst($bpart->bodypart) }}</td>
 							<td>{{ count($bpart->diseases) }}</td>
 							<td>
 								<a href="{{ route('bodyparts.show', ['bodypart'=>$bpart->bodypart_slug]) }}">View</a>
