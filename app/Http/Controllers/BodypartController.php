@@ -81,7 +81,7 @@ class BodypartController extends Controller
      */
     public function show(Bodypart $bodypart)
     {
-        //
+        dd('dsadasdasdas');
     }
 
     /**

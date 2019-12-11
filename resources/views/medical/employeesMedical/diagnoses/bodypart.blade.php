@@ -23,6 +23,7 @@
 							<td>{{ $bpart->bodypart }}</td>
 							<td>{{ count($bpart->diseases) }}</td>
 							<td>
+								<a href="{{ route('bodyparts.show', ['bodyparts'=>$bpart->id]) }}">dsadas</a>
 								<form method="post" action="{{ route('bodyparts.destroy', ['bodypart'=>$bpart->id]) }}" class="d-inline-block">
 					        		@csrf
 					        		@method('DELETE')

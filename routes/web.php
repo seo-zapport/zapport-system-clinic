@@ -160,6 +160,7 @@ Route::group(['prefix' => 'medical'], function(){
 	// BodyParts
 	Route::get('bodypart', 'BodypartController@index')->name('bodyparts.index');
 	Route::post('bodypart', 'BodypartController@store')->name('bodyparts.store');
+	Route::get('bodyparts/{bodypart}', 'BodypartController@show')->name('bodyparts.show');
 	Route::delete('bodypart/{bodypart}', 'BodypartController@destroy')->name('bodyparts.destroy');
 	// Route::get('employees/bodypart/{bodypart}', 'BodypartController@fetchBodyparts')->name('bodyparts.fetch');
 
