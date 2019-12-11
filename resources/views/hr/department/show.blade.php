@@ -21,7 +21,11 @@
 							{{ strtoupper($position->position) }}
 							<div class="row-actions"><a href="{{ route('hr.pos.show', ['position' => $position->position_slug, 'department' => $department->department_slug]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a></div>
 						</td>
+<<<<<<< HEAD
 						<td class="text-center">{{ $position->employee->count() }}</td>
+=======
+						<td >{{ $department->employee->where('position_id', $position->id)->count() }}</td>
+>>>>>>> e4ab65b29e1136e9d9d481be97c657f3c02e2b04
 					</tr>
 					@endforeach
 				</tbody>
