@@ -21,19 +21,6 @@
 				<tbody>
 					@foreach ($bparts as $bpart)
 						<tr>
-<<<<<<< HEAD
-							<td>{{ $bpart->bodypart }}</td>
-							<td>{{ count($bpart->diseases) }}</td>
-							<td>
-								<a href="{{ route('bodyparts.show', ['bodyparts'=>$bpart->id]) }}">dsadas</a>
-								<form method="post" action="{{ route('bodyparts.destroy', ['bodypart'=>$bpart->id]) }}" class="d-inline-block">
-					        		@csrf
-					        		@method('DELETE')
-									<button class="btn btn-link text-danger"  onclick="return confirm('Are you sure you want to delete {{ ucfirst($bpart->bodypart) }} ?')" data-id="{{ $bpart->bodypart }}">
-										<i class="fas fa-trash-alt"></i> Delete
-									</button>
-					        	</form>
-=======
 							<td>{{ $bpart->bodypart }}
 								<div class="row-actions">
 									<a href="{{ route('bodyparts.show', ['bodypart'=>$bpart->bodypart_slug]) }}" class="btn-link text-secondary"><i class="far fa-eye"></i> View</a> |
@@ -45,7 +32,6 @@
 										</button>
 											</form>
 								</div>
->>>>>>> 317c7a1a80c2ad91262e1df3c531beb093284876
 							</td>
 							<td class="text-center">{{ count($bpart->diseases) }}</td>
 						</tr>

@@ -83,9 +83,6 @@ class BodypartController extends Controller
      */
     public function show(Bodypart $bodypart)
     {
-<<<<<<< HEAD
-        dd('dsadasdasdas');
-=======
         if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
             return view('medical.employeesMedical.diagnoses.bodypart_show', compact('bodypart'));
         }elseif (Gate::allows('isBanned')) {
@@ -97,7 +94,6 @@ class BodypartController extends Controller
 
             return back();
         }
->>>>>>> 317c7a1a80c2ad91262e1df3c531beb093284876
     }
 
     /**

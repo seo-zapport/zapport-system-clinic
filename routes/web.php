@@ -158,17 +158,10 @@ Route::group(['prefix' => 'medical'], function(){
 	Route::get('employees/{employee}/form', 'EmployeesmedicalController@medicalForm')->name('medical.form');
 
 	// BodyParts
-<<<<<<< HEAD
-	Route::get('bodypart', 'BodypartController@index')->name('bodyparts.index');
-	Route::post('bodypart', 'BodypartController@store')->name('bodyparts.store');
-	Route::get('bodyparts/{bodypart}', 'BodypartController@show')->name('bodyparts.show');
-	Route::delete('bodypart/{bodypart}', 'BodypartController@destroy')->name('bodyparts.destroy');
-=======
 	Route::get('bodyparts', 'BodypartController@index')->name('bodyparts.index');
 	Route::post('bodyparts', 'BodypartController@store')->name('bodyparts.store');
 	Route::get('bodyparts/{bodypart}', 'BodypartController@show')->name('bodyparts.show');
 	Route::delete('bodyparts/{bodypart}', 'BodypartController@destroy')->name('bodyparts.destroy');
->>>>>>> 317c7a1a80c2ad91262e1df3c531beb093284876
 	// Route::get('employees/bodypart/{bodypart}', 'BodypartController@fetchBodyparts')->name('bodyparts.fetch');
 
 	// Disease

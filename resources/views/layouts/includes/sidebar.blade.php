@@ -100,28 +100,43 @@
         {{-- For ADMIN, HR, DOCTOR, NURSE --}}
         @if (Gate::check('isAdmin') || Gate::check('isHr') || Gate::check('isDoctor') || Gate::allows('isNurse'))
         @if (!empty(auth()->user()->employee))
-        @if ( Request::is('medical') || Request::is('medical/*') || Request::is('inventory') || Request::is('inventory/*') )
+        @if ( Request::is('medical') || Request::is('medical/*')  )
            @php  
                $ariaexpand = "true";
                $showactive = "show";
                $collap = "";
            @endphp
         @else
-         @php  
-            $ariaexpand = "false";
-            $showactive = "";
-            $collap = "collapsed";
-        @endphp
+            @php  
+                $ariaexpand = "false";
+                $showactive = "";
+                $collap = "collapsed";
+            @endphp
         @endif
+        @if ( Request::is('inventory') || Request::is('inventory/*')  )
+            @php  
+                $ariaexpandinv = "true";
+                $showactiveinv = "show";
+                $collapinv = "";
+            @endphp
+        @else
+            @php  
+                $ariaexpandinv = "false";
+                $showactiveinv = "";
+                $collapinv = "collapsed";
+            @endphp
+        @endif
+        <li class="nav-item">
+            <a href="#inventory" data-toggle="collapse" aria-expanded="{{ $ariaexpandinv }}" class="nav-link dropdown-toggle {{$collapinv}}"><i class="fas fa-warehouse"></i> <span class="collapse-label">Inventory</span></a>
+            <ul class="zp-dropdown nav collapse {{ $showactiveinv }}" id="inventory">
+                <li class="nav-item"><a href="{{ route('genericname') }}" class="nav-link @yield('genericname')"><i class="fas fa-tablets"></i><span class="collapse-label"> Generic Name</span></a></li>
+                <li class="nav-item"><a href="{{ route('brandname') }}" class="nav-link @yield('brandname')"><i class="fas fa-file-prescription"></i><span class="collapse-label"> Brand Name</span></a></li>
+                <li class="nav-item"><a href="{{ route('medicine') }}" class="nav-link @yield('medicine')"><i class="fas fa-pills"></i> <span class="collapse-label">Medicines</span></a></li>                    
+            </ul>
+        </li>
         <li class="nav-item">
             <a href="#clinic" data-toggle="collapse" aria-expanded="{{ $ariaexpand }}" class="nav-link dropdown-toggle {{$collap}}"><i class="fas fa-clinic-medical"></i> <span class="collapse-label">Clinic</span></a>
             <ul class="zp-dropdown nav collapse {{ $showactive }}" id="clinic">
-                <a href="#inventory" data-toggle="collapse" aria-expanded="{{ $ariaexpand }}" class="nav-link dropdown-toggle {{$collap}} zp-sublink-dropdown"><i class="fas fa-warehouse"></i> <span class="collapse-label">Inventory</span></a>
-                <ul class="zp-sub-dropdown nav collapse {{ $showactive }}" id="inventory">
-                    <li class="nav-item"><a href="{{ route('genericname') }}" class="nav-link @yield('genericname')"><i class="fas fa-tablets"></i><span class="collapse-label"> Generic Name</span></a></li>
-                    <li class="nav-item"><a href="{{ route('brandname') }}" class="nav-link @yield('brandname')"><i class="fas fa-file-prescription"></i><span class="collapse-label"> Brand Name</span></a></li>
-                    <li class="nav-item"><a href="{{ route('medicine') }}" class="nav-link @yield('medicine')"><i class="fas fa-pills"></i> <span class="collapse-label">Medicines</span></a></li>                    
-                </ul>
                 <li class="nav-item"><a href="{{ route('bodyparts.index') }}" class="nav-link @yield('bodypartindex')"><i class="fas fa-list"></i><span class="collapse-label">Body Parts</span></a></li>
                 <li class="nav-item"><a href="{{ route('medical.listsofemployees') }}" class="nav-link @yield('employeesMedical')"><i class="fas fa-list"></i><span class="collapse-label">List of Employees</span></a></li>
                 <li class="nav-item"><a href="{{ route('medical.empsRecords') }}" class="nav-link @yield('employeesWithRecord')"><i class="fas fa-list"></i><span class="collapse-label">Employees with Record</span></a></li>
