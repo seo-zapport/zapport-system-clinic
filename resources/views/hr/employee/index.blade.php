@@ -92,7 +92,7 @@
 <span id="showFilter" class="text-secondary font-weight-bold mb-3 d-inline-block" style="cursor: pointer;">Advanced filter <i class="fas fa-user-cog"></i></span>
 <form id="advncfilter" method="get" class="{{ (@$filter_gender == null && @$filter_both == null && @$filter_all == null && @$filter_g_a == null && @$filter_g_s == null && @$filter_g_t_s == null && @$filter_g_a_s == null && @$filter_super == null && @$filter_empType == null && @$filter_e_a == null && @$filter_t_s == null && @$filter_t_a_s == null && @$filter_status == null && @$filter_age == null && @$filter_s_a == null) ? 'd-none' : '' }}">
 	<div class="form-row mb-2">
-		<div class="form-group col-md-2">
+		<div class="form-group col-md-2 position-relative">
 			<select name="filter_gender" id="gender" class="form-control">
 				<option selected="true" disabled="True" value="">Filter by Gender:</option>
 				<option {{ 
@@ -122,9 +122,9 @@
 					? 'selected' : '' 
 				}} value="1">Female</option>
 			</select>
-			<span id="clear_gender" class="d-none text-muted font-weight-bold" style="cursor: pointer">Clear</span>
+			<span id="clear_gender" class="d-none font-weight-bold zp-filter-clear" ><i class="fas fa-times"></i></span>
 		</div>
-		<div class="form-group col-md-2">
+		<div class="form-group col-md-2 position-relative">
 			<select name="filter_empType" id="typeOfEmp" class="form-control">
 				<option selected="true" disabled="True" value="">Filter by Employee Type:</option>
 				<option {{ 
@@ -153,9 +153,9 @@
 					? 'selected' : '' 
 				}} value="1">Regular Employees</option>
 			</select>
-			<span id="clear_type" class="d-none text-muted font-weight-bold" style="cursor: pointer">Clear</span>
+			<span id="clear_type" class="d-none font-weight-bold zp-filter-clear"><i class="fas fa-times"></i></span>
 		</div>
-		<div class="form-group col-md-2">
+		<div class="form-group col-md-2 position-relative">
 			<select name="filter_age" id="age" class="form-control">
 				<option selected="true" disabled="True" value="">Filter by Age:</option>
 				@foreach ($emp_age->unique('age') as $ea)
@@ -174,9 +174,9 @@
 					}} value="{{ $ea->age }}">{{ $ea->age }}</option>
 				@endforeach
 			</select>
-			<span id="clear_age" class="d-none text-muted font-weight-bold" style="cursor: pointer">Clear</span>
+			<span id="clear_age" class="d-none font-weight-bold zp-filter-clear"><i class="fas fa-times"></i></span>
 		</div>
-		<div class="form-group col-md-2">
+		<div class="form-group col-md-2 position-relative">
 			<select name="filter_status" id="civil_status" class="form-control">
 				<option value="" selected disabled="">Filter by Civil Status:</option>
 				<option {{ 
@@ -249,7 +249,7 @@
 					? 'Selected' : '' 
 				}} value="separated">Separated</option>
 			</select>
-			<span id="clear_status" class="d-none text-muted font-weight-bold" style="cursor: pointer">Clear</span>
+			<span id="clear_status" class="d-none font-weight-bold zp-filter-clear"><i class="fas fa-times"></i></span>
 		</div>
 		<div class="form-group col-md-1 d-inline-flex">
 			<button type="submit" class="btn btn-success mr-2">Filter</button>

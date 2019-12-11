@@ -6552,13 +6552,21 @@ figure {
 /**filter*/
 
 .zp-filter-clear {
-  color: red !important;
+  color: #ffbcbc !important;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 12px;
   position: absolute;
-  top: 5px;
-  right: 155px;
+  top: 10px;
+  right: 23px;
+  transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -webkit-transition: all 0.5s ease;
   z-index: 3;
+}
+
+.zp-filter-clear:hover,
+.zp-filter-clear:focus {
+  color: #ff6060 !important;
 }
 
 /**print*/
@@ -6653,12 +6661,14 @@ figure {
 /**Employee*/
 
 .admin-department .panel,
-.admin-profile .panel {
+.admin-profile .panel,
+.admin-hr-employees .panel {
   border-color: #e2e2e2;
 }
 
 .admin-department .employee_wraps,
-.admin-profile .employee_wraps {
+.admin-profile .employee_wraps,
+.admin-hr-employees .employee_wraps {
   border-top: 2px solid #53cac1;
 }
 

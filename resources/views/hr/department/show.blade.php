@@ -12,7 +12,7 @@
 			<table class="table table-hover">
 				<thead class="thead-dark">
 					<th>Position</th>
-					<th width="10%">No. of Employees</th>
+					<th width="10%" class="text-center">No. of Employees</th>
 				</thead>
 				<tbody>
 					@foreach ($department->positions as $position)
@@ -21,7 +21,7 @@
 							{{ strtoupper($position->position) }}
 							<div class="row-actions"><a href="{{ route('hr.pos.show', ['position' => $position->position_slug, 'department' => $department->department_slug]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a></div>
 						</td>
-						<td >{{ $position->employee->count() }}</td>
+						<td class="text-center">{{ $position->employee->count() }}</td>
 					</tr>
 					@endforeach
 				</tbody>

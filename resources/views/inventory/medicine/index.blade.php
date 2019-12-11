@@ -53,7 +53,7 @@
 			<table id="MedTable" class="table table-hover">
 				<thead class="thead-dark">
 					<th>Generic Name</th>
-					<th>Brand Name</th>
+					<th width="25%">Brand Name</th>
 					<th width="10%" class="text-center">Remaining Quantity</th>
 				</thead>
 				<tbody>

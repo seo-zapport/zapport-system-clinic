@@ -46,7 +46,7 @@
 		<div class="table-responsive">
 			<table class="table table-hover">
 				<thead class="thead-dark">
-					<th width="10%">Employee ID</th>
+					<th width="8%">Employee ID</th>
 					<th>Name</th>
 					<th width="20%">Department - Positon</th>
 				</thead>
