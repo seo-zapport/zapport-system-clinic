@@ -296,8 +296,8 @@ class MedicineController extends Controller
             $rawlogs = Medicine::join('generics', 'generics.id', '=', 'medicines.generic_id')
                             ->join('medbrands', 'medbrands.id', '=', 'medicines.brand_id')
                             ->join('users', 'users.id', '=', 'medicines.user_id')
-                            ->select('bname', 'gname', 'expiration_date', 'user_id', \DB::raw('DATE_FORMAT(medicines.created_at, "%Y-%m-%d") as formatted_at'), 'medicines.created_at as orig', 'generic_id', 'brand_id', \DB::raw('COUNT(expiration_date) as expCount'))
-                            ->groupBy('bname', 'gname', 'expiration_date', 'user_id', 'medicines.created_at', 'generic_id', 'brand_id')
+                            ->select('bname', 'bname_slug', 'gname', 'gname_slug', 'expiration_date', 'user_id', \DB::raw('DATE_FORMAT(medicines.created_at, "%Y-%m-%d") as formatted_at'), 'medicines.created_at as orig', 'generic_id', 'brand_id', \DB::raw('COUNT(expiration_date) as expCount'))
+                            ->groupBy('bname', 'bname_slug', 'gname', 'gname_slug', 'expiration_date', 'user_id', 'medicines.created_at', 'generic_id', 'brand_id')
                             ->distinct('expiration_date', 'medicines.created_at')
                             ->where('brand_id', $medbrand->id)
                             ->where('generic_id', $generic->id);
@@ -335,6 +335,8 @@ class MedicineController extends Controller
             $this->PrintMedCSV($printlogs,'viewlogs',$medbrand->bname, $generic->gname); 
     
             $class = ( request()->is('inventory/medicine*') ) ?'admin-inventory admin-medicine' : '';//**add Class in the body*/
+
+            // dd($logs);
 
             return view('inventory.medicine.logs', compact('class','logs', 'medbrand', 'generic', 'log1', 'search', 'loglist', 'logsearch'));
         

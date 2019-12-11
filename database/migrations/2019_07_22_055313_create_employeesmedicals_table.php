@@ -16,14 +16,16 @@ class CreateEmployeesmedicalsTable extends Migration
         Schema::create('bodyparts', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('bodypart');
+            $table->string('bodypart_slug');
         });
 
         Schema::create('diseases', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('disease');
-            $table->unsignedBigInteger('bodyparts_id');
+            $table->string('disease_slug');
+            $table->unsignedBigInteger('bodypart_id');
 
-            $table->foreign('bodyparts_id')->references('id')->on('bodyparts')->onDelete('cascade');
+            $table->foreign('bodypart_id')->references('id')->on('bodyparts')->onDelete('cascade');
         
         });
 

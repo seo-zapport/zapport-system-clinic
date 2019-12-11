@@ -15,6 +15,6 @@ class Department extends Model
 
     public function getRouteKeyName()
     {
-    	return 'department';
+    	return 'department_slug';
     }
 }

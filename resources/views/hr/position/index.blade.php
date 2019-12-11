@@ -6,12 +6,11 @@
 	<i class="fas fa-tasks text-secondary"></i> Position
 @endsection
 @section('dash-content')
-
+<div class="form-group text-right">
+	<a class="btn btn-info text-white" href="#" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus"></i> Add Position</a>
+</div>
 <div class="card mb-3">
 	<div class="card-body">
-		<div class="form-group">
-			<a class="btn btn-info text-white" href="#" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus"></i> Add Position</a>
-		</div>
 		<div class="row zp-countable">
 			<div class="col-12 col-md-6">
 				<p class="text-primary">Total number of Positions: <span>{{ $positionsCount->count() }}</span></p>
@@ -24,8 +23,8 @@
 			<table class="table table-hover">
 				<thead class="thead-dark">
 					<th>Position</th>
-					<th width="20%">Department</th>
-					<th width="10%">No. of Employees</th>
+					<th width="10%" class="text-center">Department</th>
+					<th width="10%" class="text-center">No. of Employees</th>
 				</thead>
 				<tbody>
 					@forelse ($positions as $position)
@@ -34,9 +33,9 @@
 								<td>
 									{{ strtoupper($position->position) }}
 									<div class="row-actions">
-										<a href="{{ route('hr.pos.show', ['position' => $position->position, 'department' => $department->department]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a>
+										<a href="{{ route('hr.pos.show', ['position' => $position->position_slug, 'department' => $department->department_slug]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a>
 										<small class="text-muted">|</small>
-							        	<form method="post" action="{{ route('hr.pos.deletePos', ['position' => $position->position]) }}" class="d-inline-block">
+							        	<form method="post" action="{{ route('hr.pos.deletePos', ['position' => $position->position_slug]) }}" class="d-inline-block">
 							        		@csrf
 							        		@method('DELETE')
 												<button class="btn btn-link text-danger" onclick="return confirm('Are you sure you want to delete {{ ucfirst($position->position) }} Position?')" data-id="{{ $position->postion }}">
@@ -45,10 +44,10 @@
 							        	</form>	
 									</div>
 								</td>
-				        		<td>
-				        			{{ strtoupper($department->department) }}
-				        		</td>
-								<td>
+								<td class="text-center">
+									{{ strtoupper($department->department) }}
+								</td>
+								<td class="text-center">
 									{{ $employees->where('department_id', $department->id)->where('position_id', $position->id)->count() }}
 								</td>
 							</tr>

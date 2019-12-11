@@ -22,19 +22,7 @@ class DiseaseController extends Controller
      */
     public function index()
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
-            $bparts = Bodypart::get();
-            $diseases = Disease::get();
-            return view('medical.employeesMedical.diagnoses.disease', compact('bparts', 'diseases'));
-        }elseif (Gate::allows('isBanned')) {
-
-            Auth::logout();
-            return back()->with('message', 'You\'re not employee!');
-
-        }else{
-
-            return back();
-        }
+        // 
     }
 
     /**
@@ -58,8 +46,10 @@ class DiseaseController extends Controller
         if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
             
             $atts = $this->validate($request, $request->rules(), $request->messages());
+            $replaced = str_replace(' ', '-', $request->disease);
             $newDisease                 = new Disease;
             $newDisease->bodypart_id    = $request->bodypart_id;
+            $newDisease->disease_slug   = strtolower($replaced);
             $newDisease->disease        = $request->disease;
             $newDisease->save();
 
@@ -84,7 +74,7 @@ class DiseaseController extends Controller
      */
     public function show(Disease $disease)
     {
-        //
+        // 
     }
 
     /**

@@ -14,7 +14,7 @@
 		  @endif
 		  @if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
 		  	<a class="nav-link" id="v-follow-up-tab" data-toggle="pill" href="#v-follow-up" role="tab" aria-controls="v-follow-up" aria-selected="false"><i class="fas fa-notes-medical"></i> For Follow up</a>
-		  	<a class="nav-link" id="v-inc-preEmp-tab" data-toggle="pill" href="#v-inc-preEmp" role="tab" aria-controls="v-inc-preEmp" aria-selected="false">Pre-employement Medical</a>
+		  	<a class="nav-link" id="v-inc-preEmp-tab" data-toggle="pill" href="#v-inc-preEmp" role="tab" aria-controls="v-inc-preEmp" aria-selected="false"><i class="fas fa-user"></i> Pre-employement Medical</a>
 		  @endif
 		  @if (Gate::check('isAdmin') || Gate::check('isHr'))
 		  	<a class="nav-link" id="v-inc-requirements-tab" data-toggle="pill" href="#v-inc-requirements" role="tab" aria-controls="v-inc-requirements" aria-selected="false"><i class="fas fa-book-medical"></i> Employees with incomplete requirements</a>

@@ -16,9 +16,9 @@
 		<div class="table-responsive">
 			<table class="table">
 				<thead class="thead-dark">
-					<th>No.</th>
+					<th width="5%">No.</th>
 					<th>User Name</th>
-					<th>User Email</th>
+					<th width="25%">User Email</th>
 				</thead>
 				@php
 					$i = 1;

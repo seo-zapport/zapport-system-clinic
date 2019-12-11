@@ -35,9 +35,9 @@
 		<div class="table-responsive">
 			<table class="table table-hover">
 				<thead class="thead-dark">
-					<th width="10%">ID No.</th>
+					<th width="5%">ID No.</th>
 					<th>Name</th>
-					<th width="25%" class="">Department - Positon</th>
+					<th width="25%">Department - Positon</th>
 				</thead>
 				<tbody>
 					@forelse(@$emps as $emp)

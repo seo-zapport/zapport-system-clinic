@@ -16,6 +16,6 @@ class Position extends Model
 
     public function getRouteKeyName()
     {
-    	return 'position';
+    	return 'position_slug';
     }
 }

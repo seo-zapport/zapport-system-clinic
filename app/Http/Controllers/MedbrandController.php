@@ -66,6 +66,9 @@ class MedbrandController extends Controller
             if (!empty($check)) {
                 $data = $check;
             }else{
+                $replaced = str_replace("'", '', $request->bname);
+                $replaced2 = str_replace(' ', '-', $replaced);
+                $atts['bname_slug'] = strtolower($replaced2);
                 $data = Medbrand::create($atts);
             }
 
@@ -133,8 +136,11 @@ class MedbrandController extends Controller
             $atts = $request->validate([
                     'bname' => ['required', 'unique:medbrands,bname,'.$medbrand->id],
                 ]);
+            $replaced = str_replace("'", '', $request->bname);
+            $replaced2 = str_replace(' ', '-', $replaced);
+            $atts['bname_slug'] = strtolower($replaced2);
             $medbrand->update($atts);
-            return redirect()->route('brandname.update', ['medbrand' => $medbrand->bname]);
+            return redirect()->route('brandname.update', ['medbrand' => $medbrand->bname_slug]);
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();
             return back()->with('message', 'You\'re not employee!');

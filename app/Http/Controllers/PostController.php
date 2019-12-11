@@ -74,9 +74,9 @@ class PostController extends Controller
             $replaced = str_replace(' ', '-', $request->title);
             if (count($srch ) > 0) {
                 $count = count($srch)+1;
-                $atts['slug'] = $replaced.'-'.$count;
+                $atts['slug'] = strtolower($replaced).'-'.$count;
             }else{
-                $atts['slug'] = $replaced;
+                $atts['slug'] = strtolower($replaced);
             }
             auth()->user()->published(
                 new Post($atts)

@@ -30,7 +30,7 @@ class DiseaseRequest extends FormRequest
     {
         return [
             'bodypart_id'   =>  'required',
-            'disease'   =>  'required|unique:diseases'
+            'disease'   =>  'required|unique:diseases',
         ];
     }
 
@@ -43,7 +43,7 @@ class DiseaseRequest extends FormRequest
     {
         return [
             'bodypart_id.required'   =>  'Bod part is required',
-            'disease.required'   =>  'Disease field is required'
+            'disease.required'   =>  'Disease field is required',
         ];
     }
 }

@@ -17,6 +17,7 @@ class CreatePositionsTable extends Migration
             $table->bigIncrements('id');
             // $table->unsignedBigInteger('employee_id');
             $table->string('position');
+            $table->string('position_slug');
             $table->timestamps();
 
             // $table->foreign('employee_id')->references('id')->on('employees')->onDelte('cascade');

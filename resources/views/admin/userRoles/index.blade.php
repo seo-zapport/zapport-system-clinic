@@ -6,33 +6,35 @@
 	<i class="fas fa-user-cog text-secondary"></i> User Roles
 @endsection
 @section('dash-content')
-
-<form method="get">
-	<div class="form-row">
-		<div class="form-group col-md-4">
-			<input type="search" name="search" class="form-control" value="{{ (!empty($search)) ? $search : '' }}" placeholder="Search for User Name">
-		</div>
-		<div class="form-group col-md-1 d-inline-flex">
-			<button type="submit" class="btn btn-success mr-2">Search</button>
-			<a href="{{ route('dashboard.userRoles') }}" class="btn btn-info text-white">Clear</a>
-		</div>
+<div class="row">
+	<div class="col-12 col-md-6">
+		<form method="get">
+			<div class="form-row">
+				<div class="form-group input-group col-12 col-md-8">
+					<input type="search" name="search" class="form-control" value="{{ (!empty($search)) ? $search : '' }}" placeholder="Search for User Name">
+					<div class="input-group-append">
+						<button type="submit" class="btn btn-success mr-2">Search</button>
+						<a href="{{ route('dashboard.userRoles') }}" class="btn btn-info text-white">Clear</a>
+					</div>					
+				</div>
+			</div>
+		</form>	
 	</div>
-</form>
-
-<div class="card">
-	<div class="card-body">
-
-		<div class="form-group">
+	<div class="col-12 col-md-6">
+		<div class="form-group text-right">
 			<a class="btn btn-info text-white" href="#" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus"></i> Add Role Users</a>
-		</div>
-
+		</div>		
+	</div>
+</div>
+<div class="card mb-3">
+	<div class="card-body">
 		<div class="table-responsive">
 			<table class="table table-hover user-roles">
 				<thead class="thead-dark">
 					<tr>
-						<th width="8%">ID</th>
+						<th width="5%">ID</th>
 						<th>Username</th>
-						<th width="30%">Email</th>
+						<th width="25%">Email</th>
 						<th width="10%">Role</th>
 					</tr>
 				</thead>

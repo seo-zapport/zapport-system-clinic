@@ -6,11 +6,11 @@
 	<i class="fas fa-cogs text-secondary"></i> Roles
 @endsection
 @section('dash-content')
-<div class="card">
+<div class="form-group text-right">
+	<a class="btn btn-info text-white" href="#" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus"></i> Add Roles</a>
+</div>
+<div class="card mb-3">
 	<div class="card-body">
-		<div class="form-group">
-			<a class="btn btn-info text-white" href="#" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus"></i> Add Roles</a>
-		</div>
 		<div class="table-responsive">
 			<table class="table table-hover">
 				<thead class="thead-dark">

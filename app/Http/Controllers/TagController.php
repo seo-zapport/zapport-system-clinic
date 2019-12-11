@@ -51,6 +51,8 @@ class TagController extends Controller
         if (Gate::check('isAdmin') || Gate::check('isHr') || Gate::check('isDoctor') || Gate::allows('isNurse')) {
             if ($request->ajax()) {
                 $atts = $request->validated();
+                $replaced = str_replace(' ', '-', $request->tag_name);
+                $atts['tag_slug'] = strtolower($replaced);
                 $lastid = Tag::create($atts);
                 $atts['id'] = $lastid->id;
                 return response()->json($atts);
@@ -95,6 +97,8 @@ class TagController extends Controller
             $atts = $request->validate([
                 'tag_name' => ['required', 'unique:tags,tag_name,'.$tag->id],
             ]);
+            $replaced = str_replace(' ', '-', $request->tag_name);
+            $atts['tag_slug'] = strtolower($replaced);
             $tag->update($atts);
             return back();
         }else{
@@ -153,6 +157,8 @@ class TagController extends Controller
             $atts = $request->validate([
                         'tag_name' => ['required', 'unique:tags'],
                     ]);
+            $replaced = str_replace(' ', '-', $request->tag_name);
+            $atts['tag_slug'] = strtolower($replaced);
             Tag::create($atts);
             return back();
         }else{

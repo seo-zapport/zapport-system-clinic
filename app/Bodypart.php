@@ -10,4 +10,9 @@ class Bodypart extends Model
     {
     	return $this->hasMany(Disease::class);
     }
+
+    public function getRouteKeyName()
+    {
+    	return 'bodypart_slug';
+    }
 }

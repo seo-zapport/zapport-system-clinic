@@ -6,11 +6,12 @@
 	<i class="fas fa-building text-secondary"></i> Department
 @endsection
 @section('dash-content')
+<div class="form-group text-right">
+	<a class="btn btn-info text-white" href="#" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus"></i> Add Department</a>
+</div>
 <div class="card mb-5">
 	<div class="card-body">
-		<div class="form-group">
-			<a class="btn btn-info text-white" href="#" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus"></i> Add Department</a>
-		</div>
+
 		<div class="row zp-countable">
 			<div class="col-12 col-md-6">
 				<p class="text-primary"><span>Total number of Departments:</span> {{ $depsCount->count() }}</p>
@@ -23,7 +24,7 @@
 			<table class="table table-hover">
 				<thead class="thead-dark">
 					<th>Department</th>
-					<th width="20%">No. of Positions</th>
+					<th width="10%" class="text-center">No. of Positions</th>
 					<th width="10%" class="text-center">No. of Employees</th>
 				</thead>
 				<tbody>
@@ -31,8 +32,8 @@
 						<tr>
 							<td>{{ strtoupper($dep->department) }}
 								<div class="row-actions">
-									<a href="{{ route('hr.dep.showDep', ['department' => $dep->department]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a>
-									<form method="post" action="{{ route('hr.dep.deleteDep', ['department' => $dep->department]) }}" class="d-inline-block">
+									<a href="{{ route('hr.dep.showDep', ['department' => $dep->department_slug]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a> | 
+									<form method="post" action="{{ route('hr.dep.deleteDep', ['department' => $dep->department_slug]) }}" class="d-inline-block">
 						        		@csrf
 						        		@method('DELETE')
 										<button class="btn btn-link text-danger"  onclick="return confirm('Are you sure you want to delete {{ ucfirst($dep->department) }} Department?')" data-id="{{ $dep->department }}">
@@ -41,7 +42,7 @@
 						        	</form>
 						        </div>
 						    </td>
-							<td>{{ $dep->positions->count() }}</td>
+							<td class="text-center">{{ $dep->positions->count() }}</td>
 							<td class="text-center">{{ $dep->employee->count() }}</td>
 						</tr>
 						@empty

@@ -18,6 +18,6 @@ class Medbrand extends Model
 
     public function getRouteKeyName()
     {
-        return 'bname';
+        return 'bname_slug';
     }
 }

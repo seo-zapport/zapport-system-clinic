@@ -15,4 +15,9 @@ class Disease extends Model
     {
     	return $this->hasMany(Diagnosis::class);
     }
+
+    public function getRouteKeyName()
+    {
+        return 'disease_slug';
+    }
 }

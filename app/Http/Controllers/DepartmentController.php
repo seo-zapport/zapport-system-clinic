@@ -66,6 +66,8 @@ class DepartmentController extends Controller
     {
         if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
             $atts = $this->validate($request, $request->rules(), $request->messages());
+            $replaced = str_replace(' ', '-', $request->department);
+            $atts['department_slug'] = strtolower($replaced);
             Department::create($atts);
             return back();
         }elseif (Gate::allows('isBanned')) {

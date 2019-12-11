@@ -8,7 +8,7 @@
 @section('dash-content')
 
 @if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
-	<div class="form-group">
+	<div class="form-group text-right">
 		<a class="btn btn-info text-white" href="#" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus"></i> Add Brand</a>
 	</div>
 @endif
@@ -35,10 +35,10 @@
 							<td>
 				        		{{ ucwords($brand->bname) }}
 								<div class="row-actions">
-									<a href="{{ route('brandname.show', ['medbrand' => $brand->bname]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i>View</a>
+									<a href="{{ route('brandname.show', ['medbrand' => $brand->bname_slug]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i> View</a>
 									@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
 									<small class="text-muted">|</small>
-						        	<form method="post" action="{{ route('brandname.delete', ['medbrand' => $brand->bname]) }}" class="d-inline">
+						        	<form method="post" action="{{ route('brandname.delete', ['medbrand' => $brand->bname_slug]) }}" class="d-inline">
 						        		@csrf
 						        		@method('DELETE')
 										<button class="btn btn-link text-danger"   onclick="return confirm('Are you sure you want to delete {{ ucfirst($brand->bname) }} Brand?')" data-id="{{ $brand->bname }}">

@@ -55,7 +55,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<form method="post" action="{{ route('brandname.update', ['medbrand' => $medbrand->bname]) }}">
+				<form method="post" action="{{ route('brandname.update', ['medbrand' => $medbrand->bname_slug]) }}">
 					@csrf
 					@method('PUT')
 					<div class="form-group">

@@ -53,7 +53,7 @@
 			<table id="MedTable" class="table table-hover">
 				<thead class="thead-dark">
 					<th>Generic Name</th>
-					<th>Brand Name</th>
+					<th width="25%">Brand Name</th>
 					<th width="10%" class="text-center">Remaining Quantity</th>
 				</thead>
 				<tbody>
@@ -64,7 +64,7 @@
 							<td>{{ ucfirst($med->generic->gname) }}
 								<div class="row-actions">
 									{{-- {{ $med->qty_stock }} --}}
-									<a href="{{ route('medicine.log', ['medbrand' => $med->medBrand->bname, 'generic' => $med->generic->gname]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i> View</a>
+									<a href="{{ route('medicine.log', ['medbrand' => $med->medBrand->bname_slug, 'generic' => $med->generic->gname_slug]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i> View</a>
 								</div>
 							</td>
 							<td>{{ ucwords($med->medBrand->bname) }}</td>

@@ -8,7 +8,7 @@
 @section('dash-content')
 
 @if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
-	<div class="form-group">
+	<div class="form-group text-right">
 		<a class="btn btn-info text-white" href="#" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus"></i> Add New</a>
 	</div>
 @endif
@@ -35,10 +35,10 @@
 							<td>
 				        		{{ ucwords($gen->gname) }}
 								<div class="row-actions">
-									<a href="{{ route('genericname.show', ['generic' => $gen->gname]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i>View</a>
+									<a href="{{ route('genericname.show', ['generic' => $gen->gname_slug]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i> View</a>
 									@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
 									<small class="text-muted">|</small>
-						        	<form method="post" action="{{ route('genericname.delete', ['generic' => $gen->gname]) }}" class="d-inline">
+						        	<form method="post" action="{{ route('genericname.delete', ['generic' => $gen->gname_slug]) }}" class="d-inline">
 						        		@csrf
 						        		@method('DELETE')
 										<button class="btn btn-link text-danger"  onclick="return confirm('Are you sure you want to delete {{ ucfirst($gen->gname) }} Generic Name?')" data-id="{{ $gen->gname }}">

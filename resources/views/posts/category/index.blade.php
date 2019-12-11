@@ -5,12 +5,12 @@
 	<i class="fas fa-book"></i> Category
 @endsection
 @section('dash-content')
-
+<div class="form-group text-right">
+	<a class="btn btn-info text-white" href="#" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus"></i>Add Category</a>
+</div>
 <div class="card mb-3">
 	<div class="card-body">
-		<div class="form-group">
-			<a class="btn btn-info text-white" href="#" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus"></i>Add Category</a>
-		</div>
+
 		<div class="row zp-countable">
 			<div class="col-12 count_items">
 				<p><span class="zp-tct">Total Items: </span> {{ $count->count() }} <span  class="zp-ct"> Items</span></p>
@@ -29,8 +29,8 @@
 								{{ $tag->tag_name }}
 
 								<div class="row-actions">
-									<span id="{{ $tag->tag_name }}" class="show-edit btn btn-link text-secondary"><i class="far fa-edit"></i> Quick Edit</span> <span class="text-muted">|</span>
-									<form method="post" action="{{ route('destroy.tag', ['tag' => $tag->tag_name]) }}"  class="d-inline-block">
+									<span id="{{ $tag->tag_slug }}" class="show-edit btn btn-link text-secondary"><i class="far fa-edit"></i> Quick Edit</span> <span class="text-muted">|</span>
+									<form method="post" action="{{ route('destroy.tag', ['tag' => $tag->tag_slug]) }}"  class="d-inline-block">
 										@csrf
 										@method('DELETE')
 										<button class="btn btn-link text-danger" onclick="return confirm('Are you sure you want to delete {{ ucfirst($tag->tag_name) }} Tag?')" data-id="{{ $tag->tag_name }}">
@@ -43,10 +43,10 @@
 								{{ $tag->posts->count() }}
 							</td>
 						</tr>
-						<tr class="inline-edit-row form-hide form-hidden-{{ $tag->tag_name }}">
+						<tr class="inline-edit-row form-hide form-hidden-{{ $tag->tag_slug }}">
 							<td colspan="3" >
 								<fieldset class="inline-edit-col w-100">
-									<form method="post" action="{{ route('update.tag', ['tag' => $tag->tag_name]) }}">
+									<form method="post" action="{{ route('update.tag', ['tag' => $tag->tag_slug]) }}">
 										@csrf
 										@method('PUT')
 										<p class="text-muted">QUICK EDIT</p>

@@ -16,9 +16,9 @@
 		<div class="table-responsive">
 			<table class="table table-hover">
 				<thead class="thead-dark">
-					<th width="8%">No.</th>
-					<th>Employee ID</th>
+					<th width="5%">No.</th>
 					<th>Employee Name</th>
+					<th width="8%">Employee ID</th>
 				</thead>
 				<tbody>
 					@php
@@ -27,12 +27,12 @@
 					@forelse ($employees as $empPos)
 						<tr>
 							<td>{{ $i }}</td>
-							<td>{{ $empPos->emp_id }}
+							<td>{{ ucwords($empPos->last_name) }} {{ ucwords($empPos->first_name) }} {{ ucwords($empPos->middle_name) }}
 								<div class="row-actions">
 									<a href="{{ route('hr.emp.show', ['employee' => $empPos->emp_id]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a>
 								</div>
 							</td>
-							<td>{{ ucwords($empPos->last_name) }} {{ ucwords($empPos->first_name) }} {{ ucwords($empPos->middle_name) }}</td>
+							<td>{{ $empPos->emp_id }}</td>
 						</tr>
 					@php
 						$i++;

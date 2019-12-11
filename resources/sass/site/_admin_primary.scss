@@ -112,13 +112,20 @@
 
 /**filter*/
 .zp-filter-clear{
-    color: red !important;
+    color: #ffbcbc !important;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 12px;
     position: absolute;
-    top: 5px;
-    right: 155px;
-    z-index: 3;
+    top: 10px;
+		// right: 155px;
+		right: 23px;
+		transition: all 0.5s ease;
+		-moz-transition: all 0.5s ease;
+		-webkit-transition: all 0.5s ease;
+		z-index: 3;
+		&:hover,&:focus{
+			color: #ff6060 !important;
+		}
 }
 
 /**print*/
@@ -194,7 +201,8 @@
 
 /**Employee*/
 .admin-department,
-.admin-profile{
+.admin-profile,
+.admin-hr-employees{
 	.panel{
 		border-color: #e2e2e2;
 	}
@@ -945,5 +953,19 @@
 	.autocomplete-items{
 		position: absolute;
 	    width: 96%;
+	}
+}
+
+/**remove*/
+.remove-actions{
+	display: none;
+	cursor: pointer;
+}
+#medicineField,
+.medicine-field{
+	&:hover{
+		.remove-actions{
+			display: block;
+		}
 	}
 }
