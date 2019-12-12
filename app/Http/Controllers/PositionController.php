@@ -26,6 +26,15 @@ class PositionController extends Controller
     public function index()
     {
         if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
+
+            $deps = Department::get();
+            $arr = [];
+            foreach ($deps as $dep) {
+                foreach ($dep->positions as $pos) {
+                    $arr[] = $pos;
+                }
+            }
+
             $positions = Position::orderBy('id', 'desc')->paginate(10);
             $positionsCount = Position::get();
             $departments = Department::orderBy('department', 'asc')->get();
@@ -33,7 +42,7 @@ class PositionController extends Controller
 
             $class = ( request()->is('hr/position*') ) ?'admin-hr-position' : '';//**add Class in the body*/
 
-            return view('hr.position.index', compact('class', 'positions', 'departments', 'employees', 'positionsCount'));
+            return view('hr.position.index', compact('class', 'positions', 'departments', 'employees', 'positionsCount', 'arr'));
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();
             return back()->with('message', 'You\'re not employee!');

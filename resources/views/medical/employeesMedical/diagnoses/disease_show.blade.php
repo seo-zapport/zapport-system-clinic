@@ -16,7 +16,7 @@
 					<th width="10%" class="text-center">No. of Cases</th>
 				</thead>
 				<tbody>
-					@foreach ($disease->diagnoses as $diagnosis)
+					@forelse ($disease->diagnoses as $diagnosis)
 						<tr>
 							<td>
 								{{ ucfirst($diagnosis->diagnosis) }}
@@ -40,7 +40,13 @@
 								</fieldset>
 							</td>
 						</tr>
-					@endforeach
+						@empty
+						<tr>
+							<td colspan="2" class="text-center">
+								0 Result Found!
+							</td>
+						</tr>
+					@endforelse
 				</tbody>
 			</table>
 		</div>

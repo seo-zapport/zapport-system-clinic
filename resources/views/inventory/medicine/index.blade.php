@@ -14,7 +14,7 @@
 		        <div class="form-group col-12 col-md-8">
 			        <div class="input-group">
 			            <input type="search" name="search" class="form-control" value="{{ (!empty($search)) ? $search : '' }}" placeholder="Search for Generic Name">
-			            <div id="suggestions_list" class="autocomplete-items" style="position: absolute; width: 97%"></div>
+			            <div id="suggestions_list" class="autocomplete-items" style="position: absolute; width: 75%; padding-right: 10px; margin-top: 37px;"></div>
 			            <div class="input-group-append">
 			                <button type="submit" class="btn btn-success mr-2">Search</button>
 							<a href="{{ route('medicine') }}" class="btn btn-info text-white">Clear</a>

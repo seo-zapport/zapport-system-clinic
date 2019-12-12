@@ -184,7 +184,7 @@
 					</div>
 					<div class="form-group">
 						<label for="diagnosis">Diagnosis</label>
-						<input type="text" name="diagnosis" class="form-control" placeholder="Diagnosis" required>
+						<input type="text" name="diagnosis" class="form-control" placeholder="Diagnosis" required pattern="[a-zA-Z0-9\s]+" title="Special Characters are not allowed!">
 						<div id="diagnosis_list" class="autocomplete-items"></div>
 					</div>
 					<div class="form-group">

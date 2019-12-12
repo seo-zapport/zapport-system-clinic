@@ -13,10 +13,10 @@
 	<div class="card-body">
 		<div class="row zp-countable">
 			<div class="col-12 col-md-6">
-				<p class="text-primary">Total number of Positions: <span>{{ $positionsCount->count() }}</span></p>
+				<p class="text-primary">Total number of Positions: <span>{{ count($arr) }}</span></p>
 			</div>
 			<div class="col-12 col-md-6 count_items">
-				<p><span class="zp-tct">Total Items: </span> {{ $positions->count() }} <span  class="zp-ct"> Items</span></p>
+				<p><span id="totitems" class="zp-ct"> Items</span></p>
 			</div>
 		</div>
 		<div class="table-responsive">
@@ -29,7 +29,7 @@
 				<tbody>
 					@forelse ($positions as $position)
 			        	@foreach ($position->departments as $department)
-							<tr>
+							<tr id="rowCount">
 								<td>
 									{{ strtoupper($position->position) }}
 									<div class="row-actions">
@@ -73,7 +73,6 @@
 </div>
 <div class="pagination-wrap">{{ $positions->links() }}</div>
 
-
 <!-- Modal Add -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
@@ -98,7 +97,7 @@
 					</div>
 					<div class="form-group">
 						<label for="position">Position</label>
-						<input type="text" name="position" class="form-control" placeholder="Add Position" value="{{ old('position') }}" required>
+						<input type="text" name="position" class="form-control" placeholder="Add Position" value="{{ old('position') }}" required pattern="[a-zA-Z0-9\s]+" title="Special Characters are not allowed!">
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -110,4 +109,13 @@
 	</div>
 </div>
 
+@endsection
+
+@section('scripts')
+<script type="application/javascript">
+	jQuery(document).ready(function($) {
+		var count = $("table #rowCount").length;
+		$("#totitems").prepend(count);
+	});
+</script>
 @endsection

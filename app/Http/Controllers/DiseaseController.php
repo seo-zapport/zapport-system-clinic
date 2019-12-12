@@ -46,7 +46,7 @@ class DiseaseController extends Controller
         if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
             
             $atts = $this->validate($request, $request->rules(), $request->messages());
-            $rep = str_replace(['(', ')'], '', $request->disease);
+            $rep = str_replace(['(', ')', "'"], '', $request->disease);
             $replaced = str_replace([' ', '/'], '-', $rep);
             $newDisease                 = new Disease;
             $newDisease->bodypart_id    = $request->bodypart_id;
@@ -110,7 +110,7 @@ class DiseaseController extends Controller
                 'bodypart_id'   =>  'required',
                 'disease'   =>  'required|unique:diseases,disease,'.$disease->id,
             ]);
-            $rep = str_replace(['(', ')'], '', $request->disease);
+            $rep = str_replace(['(', ')', "'"], '', $request->disease);
             $replaced = str_replace([' ', '/'], '-', $rep);
             $atts['disease_slug'] = strtolower($replaced);
             $disease->update($atts);

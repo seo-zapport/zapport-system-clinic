@@ -59,7 +59,7 @@ class GenericController extends Controller
     {
         if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
             $atts = $this->validate($request, $request->rules(), $request->messages());
-            $replaced = str_replace(["'", "(", ")"], '', $request->gname);
+            $replaced = str_replace(["'", "(", ")", "/"], '', $request->gname);
             $replaced2 = str_replace(' ', '-', $replaced);
             $atts['gname_slug'] = strtolower($replaced2);
             Generic::create($atts);

@@ -44,7 +44,7 @@
 										@method('PUT')
 										<p class="text-muted">QUICK EDIT</p>
 										<span>Category</span>
-										<input type="text" name="bodypart" value="{{ $bpart->bodypart }}" class="form-control" required>
+										<input type="text" name="bodypart" value="{{ $bpart->bodypart }}" class="form-control" required pattern="[a-zA-Z0-9\s()-/]+" title="Special Characters are not allowed!">
 									</form>
 								</fieldset>
 							</td>
@@ -78,7 +78,7 @@
 					@csrf
 					<div class="form-group">
 						<label for="bodypart">Body Part</label>
-						<input type="text" class="form-control" name="bodypart" placeholder="Add Body Part" required>
+						<input type="text" class="form-control" name="bodypart" placeholder="Add Body Part" required pattern="[a-zA-Z0-9\s()-/]+" title="Special Characters are not allowed!">
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
