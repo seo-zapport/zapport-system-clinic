@@ -71,7 +71,9 @@ class PostController extends Controller
             $atts = $request->validated();
             $atts = $request->except('tag_id');
             $srch = Post::where('title', $request->title)->get();
-            $replaced = str_replace(' ', '-', $request->title);
+            $array = ['%', '^', '*', '/', "'", "-", "_", "@"];
+            $rep = str_replace($array, '', $request->title);
+            $replaced = str_replace(' ', '-', $rep);
             if (count($srch ) > 0) {
                 $count = count($srch)+1;
                 $atts['slug'] = strtolower($replaced).'-'.$count;
@@ -158,6 +160,21 @@ class PostController extends Controller
             'description'  =>  'required',
         ]);
         $atts = $request->except(['tag_id', 'tag_old']);
+        $srch = Post::where('title', $request->title)->get();
+        $array = ['%', '^', '*', '/', "'", "-", "_", "@"];
+        $rep = str_replace($array, '', $request->title);
+        $replaced = str_replace(' ', '-', $rep);
+
+        if ( count($srch ) == 1) {
+            $count = count($srch)+1;
+            $atts['slug'] = strtolower($replaced).'-'.$count;
+        }elseif ( count($srch) > 1 ){
+            $count2 = count($srch);
+            $atts['slug'] = strtolower($replaced).'-'.$count2;
+        }else{
+            $atts['slug'] = strtolower($replaced);
+        }
+
         $post->update($atts);
 
         $tagID = $request->input('tag_id');

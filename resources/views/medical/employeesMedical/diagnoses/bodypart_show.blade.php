@@ -27,16 +27,32 @@
 							<td>
 								{{ ucfirst($disease->disease) }}
 								<div class="row-actions">
+									<span id="{{ $disease->disease_slug }}" class="show-edit btn btn-link text-secondary"><i class="far fa-edit"></i> Quick Edit</span> <span class="text-muted">|</span>
+									<a href="{{ route('diseases.show', ['disease'=>$disease->disease_slug]) }}" class="btn-link text-secondary"><i class="far fa-eye"></i> View |</a> 
 									<form method="post" action="{{ route('diseases.destroy', ['disease'=>$disease->disease_slug]) }}" class="d-inline-block">
-												@csrf
-												@method('DELETE')
+										@csrf
+										@method('DELETE')
 										<button class="btn btn-link text-danger"  onclick="return confirm('Are you sure you want to delete {{ ucfirst($disease->disease) }} ?')" data-id="{{ $disease->disease }}">
 											<i class="fas fa-trash-alt"></i> Delete
 										</button>
-											</form>									
+									</form>									
 								</div>
 							</td>
-							<td class="text-center">{{ count($disease->diagnoses) }}</td>
+							<td class="text-center">{{ $disease->diagnoses->count() }}</td>
+						</tr>
+						<tr class="inline-edit-row form-hide form-hidden-{{ $disease->disease_slug }}">
+							<td colspan="3" >
+								<fieldset class="inline-edit-col w-100">
+									<form method="post" action="{{ route('diseases.update', ['disease'=>$disease->disease_slug]) }}">
+										@csrf
+										@method('PUT')
+										<p class="text-muted">QUICK EDIT</p>
+										<span>Category</span>
+										<input type="hidden" name="bodypart_id" value="{{ $bodypart->id }}">
+										<input type="text" name="disease" value="{{ $disease->disease }}" class="form-control" required>
+									</form>
+								</fieldset>
+							</td>
 						</tr>
 					@endforeach
 				</tbody>

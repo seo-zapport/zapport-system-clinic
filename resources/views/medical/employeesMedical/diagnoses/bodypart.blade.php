@@ -21,9 +21,10 @@
 				<tbody>
 					@foreach ($bparts as $bpart)
 						<tr>
-							<td>{{ $bpart->bodypart }}
+							<td>{{ ucfirst($bpart->bodypart) }}
 								<div class="row-actions">
-									<a href="{{ route('bodyparts.show', ['bodypart'=>$bpart->bodypart_slug]) }}" class="btn-link text-secondary"><i class="far fa-eye"></i> View</a> |
+									<span id="{{ $bpart->bodypart_slug }}" class="show-edit btn btn-link text-secondary"><i class="far fa-edit"></i> Quick Edit</span> <span class="text-muted">|</span>
+									<a href="{{ route('bodyparts.show', ['bodypart'=>$bpart->bodypart_slug]) }}" class="btn-link text-secondary"><i class="far fa-eye"></i> View |</a> 
 									<form method="post" action="{{ route('bodyparts.destroy', ['bodypart'=>$bpart->bodypart_slug]) }}" class="d-inline-block">
 												@csrf
 												@method('DELETE')
@@ -34,6 +35,19 @@
 								</div>
 							</td>
 							<td class="text-center">{{ count($bpart->diseases) }}</td>
+						</tr>
+						<tr class="inline-edit-row form-hide form-hidden-{{ $bpart->bodypart_slug }}">
+							<td colspan="3" >
+								<fieldset class="inline-edit-col w-100">
+									<form method="post" action="{{ route('bodyparts.update', ['bodypart'=>$bpart->bodypart_slug]) }}">
+										@csrf
+										@method('PUT')
+										<p class="text-muted">QUICK EDIT</p>
+										<span>Category</span>
+										<input type="text" name="bodypart" value="{{ $bpart->bodypart }}" class="form-control" required>
+									</form>
+								</fieldset>
+							</td>
 						</tr>
 					@endforeach
 				</tbody>

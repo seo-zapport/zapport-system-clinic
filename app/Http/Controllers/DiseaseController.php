@@ -46,7 +46,8 @@ class DiseaseController extends Controller
         if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
             
             $atts = $this->validate($request, $request->rules(), $request->messages());
-            $replaced = str_replace(' ', '-', $request->disease);
+            $rep = str_replace(['(', ')'], '', $request->disease);
+            $replaced = str_replace([' ', '/'], '-', $rep);
             $newDisease                 = new Disease;
             $newDisease->bodypart_id    = $request->bodypart_id;
             $newDisease->disease_slug   = strtolower($replaced);
@@ -74,7 +75,14 @@ class DiseaseController extends Controller
      */
     public function show(Disease $disease)
     {
-        // 
+        if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
+            return view('medical.employeesMedical.diagnoses.disease_show', compact('disease'));
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
+        }else{
+            return back();
+        }
     }
 
     /**
@@ -97,7 +105,25 @@ class DiseaseController extends Controller
      */
     public function update(Request $request, Disease $disease)
     {
-        //
+        if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
+            $atts = $request->validate([
+                'bodypart_id'   =>  'required',
+                'disease'   =>  'required|unique:diseases,disease,'.$disease->id,
+            ]);
+            $rep = str_replace(['(', ')'], '', $request->disease);
+            $replaced = str_replace([' ', '/'], '-', $rep);
+            $atts['disease_slug'] = strtolower($replaced);
+            $disease->update($atts);
+            return back();
+        }elseif (Gate::allows('isBanned')) {
+
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
+
+        }else{
+
+            return back();
+        }
     }
 
     /**

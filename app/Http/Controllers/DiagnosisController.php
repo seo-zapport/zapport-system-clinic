@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Diagnosis;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class DiagnosisController extends Controller
 {
@@ -74,7 +75,22 @@ class DiagnosisController extends Controller
      */
     public function update(Request $request, Diagnosis $diagnosis)
     {
-        //
+        if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
+            $atts = $request->validate([
+                'disease_id'    =>  'required',
+                'diagnosis'       =>  'required|unique:diagnoses,diagnosis,'.$diagnosis->id
+            ]);
+            $diagnosis->update($atts);
+            return back();
+        }elseif (Gate::allows('isBanned')) {
+
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
+
+        }else{
+
+            return back();
+        }
     }
 
     /**

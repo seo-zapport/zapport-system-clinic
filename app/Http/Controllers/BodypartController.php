@@ -58,7 +58,8 @@ class BodypartController extends Controller
         if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
         
             $atts = $this->validate($request, $request->rules(), $request->messages());
-            $replaced = str_replace(' ', '-', $request->bodypart);
+            $rep = str_replace(['(', ')'], '', $request->bodypart);
+            $replaced = str_replace([' ', '/'], '-', $rep);
             $atts['bodypart_slug'] = strtolower($replaced);
             $id = Bodypart::create($atts);
             $atts['id'] = $id->id;
@@ -116,7 +117,24 @@ class BodypartController extends Controller
      */
     public function update(Request $request, Bodypart $bodypart)
     {
-        //
+        if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
+            $atts = $request->validate([
+                'bodypart'  =>  'required|unique:bodyparts,bodypart,'.$bodypart->id
+            ]);
+            $rep = str_replace(['(', ')'], '', $request->bodypart);
+            $replaced = str_replace([' ', '/'], '-', $rep);
+            $atts['bodypart_slug'] = strtolower($replaced);
+            $bodypart->update($atts);
+            return back();
+        }elseif (Gate::allows('isBanned')) {
+
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
+
+        }else{
+
+            return back();
+        }
     }
 
     /**
