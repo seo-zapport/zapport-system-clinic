@@ -66,7 +66,7 @@ class MedbrandController extends Controller
             if (!empty($check)) {
                 $data = $check;
             }else{
-                $replaced = str_replace("'", '', $request->bname);
+                $replaced = str_replace(["'", "(", ")"], '', $request->bname);
                 $replaced2 = str_replace(' ', '-', $replaced);
                 $atts['bname_slug'] = strtolower($replaced2);
                 $data = Medbrand::create($atts);
