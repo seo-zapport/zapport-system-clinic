@@ -25,15 +25,21 @@
 	</div>
 	<div class="container">
 		<div class="row">
-			<div class="col-12 col-md-12">
+			<div class="col-6 col-md-6">
 				<p class="mb-2"><span class="text-dark font-weight-bold">Name</span>: {{ ucwords($employee->last_name . ", " . $employee->first_name . " " . $employee->middle_name) }} </p> 
 			</div>
-			<div class="col-12 col-md-12">
+			<div class="col-6 col-md-6">
 				<p class="mb-2"><span class="text-dark font-weight-bold">Department - Position</span>: {{ strtoupper($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</p>
 			</div>
 		</div>
 		<div class="row">
 			<div style="border-bottom: 1px solid black; margin-bottom: 5px;"></div>
+			<div class="col-6 col-md-6">
+					<p class="mb-2"><span class="text-dark font-weight-bold">Body Part</span>: {{ ucwords($employeesmedical->diagnoses->diseases->bodypart->bodypart) }}</p>
+			</div>
+			<div class="col-6 col-md-6">
+					<p class="mb-2"><span class="text-dark font-weight-bold">Disease</span>: {{ ucwords($employeesmedical->diagnoses->diseases->disease) }}</p>
+			</div>
 			<div class="col-12 col-md-12">
 					<p class="mb-2"><span class="text-dark font-weight-bold">Diagnosis</span>: {{ ucwords($employeesmedical->diagnoses->diagnosis) }}</p>
 			</div>
