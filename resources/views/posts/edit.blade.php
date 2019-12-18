@@ -19,14 +19,20 @@
 			<hr>
 			<a href="#" class="btn btn-info text-white btn-block mb-2" href="#" data-toggle="modal" data-target="#tagModal">Add Category</a>
 		</div>
-		<div>
-			<input type="hidden" name="tag_old" value="{{ $postTags->id }}">
+		<div class="mb-1">
+			@foreach ($uniqueTag as $tag)
+				<input type="checkbox"  name="tag_id[]" class="zp-chkbox" id="tag_id_{{ $tag->id }}" value="{{ $tag->id }}" {{ ($tag->id != null) ? 'checked' : '' }}>
+				<label class="form-check-label" for="tag_id_{{ $tag->id }}">{{ $tag->tag_name }}</label>
+			@endforeach
+			{{-- 
+			Lumang Code
+				<input type="hidden" name="tag_old" value="{{ $postTags->id }}">
 			<select multiple name="tag_id[]" id="tag_id" class="form-control">
-				{{-- <option selected="true" disabled="disabled" value=""> Select Generic Name </option> --}}
+				<option selected="true" disabled="disabled" value=""> Select Generic Name </option>
 				@foreach ($uniqueTag as $tag)
 					<option value="{{ $tag->id }}">{{ $tag->tag_name }}</option>
 				@endforeach
-			</select>
+			</select>  --}}
 		</div>
 		<hr>
 
@@ -58,9 +64,10 @@
 			<p><strong>Important</strong></p>
 			<hr>
 		</div>
-		<div class="form-check">
-			<input type="checkbox" {{ ($post->important != null) ? 'checked' : '' }} name="important" value="{{ $post->important }}" class="form-check-input">Check for Important posts
-		</div>						
+		<div class="mb-1">
+			<input type="checkbox" id="zpImportant" {{ ($post->important != null) ? 'checked' : '' }} name="important" value="{{ $post->important }}" class="zp-chkbox">
+			<label for="zpImportant">Check for Important posts</label>
+		</div>				
 	</div>
 </div>
 @endsection

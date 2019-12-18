@@ -10,9 +10,9 @@
                     <div class="login-logo text-center">
                         <img src="{{ asset('images/logo.png') }}" alt="">
                     </div>
-                    <div class="slogan">
+                    {{--  <div class="slogan">
                         Curabitur, Tempus, Lectus
-                    </div>
+                    </div>  --}}
                 </div>
                 <div class="login-form">
                     <form method="POST" action="{{ route('login') }}">
