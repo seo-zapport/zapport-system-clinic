@@ -42,14 +42,27 @@
 							<a href="#" class="btn btn-info text-white btn-block mb-2" href="#" data-toggle="modal" data-target="#tagModal">Add Category</a>
 						</div>
 						<div>
-							<select multiple name="tag_id[]" id="tag_id" class="form-control" required oninvalid="this.setCustomValidity('Please Select Category')" oninput="setCustomValidity('')">
+							@forelse ($tags as $tag)
+								<div class="mb-1">
+									<input type="checkbox"  name="tag_id[]" class="zp-chkbox" id="tag_id_{{ $tag->id }}">
+									<label class="form-check-label" for="tag_id_{{ $tag->id }}">{{ $tag->tag_name }}</label>
+								</div>
+							@empty
+								<div class="mb-1">
+									<input type="checkbox"  name="tag_id[]" class="zp-chkbox" id="tag_id_0">
+									<label class="form-check-label" for="tag_id_0">Empty</label>
+								</div>
+							@endforelse
+							{{--
+								Lumang Code
+								<select multiple name="tag_id[]" id="tag_id" class="form-control" required oninvalid="this.setCustomValidity('Please Select Category')" oninput="setCustomValidity('')">
 								<option value="" selected="true" disabled="disabled"> Select Category </option>
 								@forelse ($tags as $tag)
 									<option value="{{ $tag->id }}">{{ $tag->tag_name }}</option>
 								@empty
 									<option disabled="disabled" value=""> Empty </option>
 								@endforelse
-							</select>
+							</select>  --}}
 						</div>						
 					</div>
 				</div>
@@ -72,10 +85,21 @@
 								</div>						
 							</div>
 						</div>
+<<<<<<< HEAD
 					@else
 						@yield('importantEdit')
 					@endif
 					<br>
+=======
+						<div class="mb-1">
+							<input type="checkbox" id="zpImportant" name="important" value="1" class="zp-chkbox">
+							<label for="zpImportant">Check for Important posts</label>
+						</div>						
+					</div>
+				</div>
+				@else
+					@yield('importantEdit')
+>>>>>>> 313579927dcc2147f2b8f32d592bd4bca783562f
 				@endif
 
 				{{-- Featured Image --}}
@@ -193,25 +217,15 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<div class="card">
-					<div class="card-body">
-						<div class="header-title">
-							<p><strong>Categories</strong></p>
-							<hr>
-						</div>
-						<div>
-							<form id="tagForm" method="post">
-								@csrf
-								<input type="text" name="tag" class="form-control" placeholder="Add New Category" required autocomplete="off" pattern="[a-zA-Z0-9\s]+" title="Special Characters are not allowed!">
-								<small id="errorlogTag" class="text-muted mt-2"></small>
-							<hr>
-							<div class="form-group text-center">
-								<button class="btn btn-info text-white btn-block" type="submit">Add Category</button>
-							</div>	
-							</form>
-						</div>						
-					</div>
-				</div>
+					<form id="tagForm" method="post">
+						@csrf
+						<input type="text" name="tag" class="form-control" placeholder="Add New Category" required autocomplete="off" pattern="[a-zA-Z0-9\s]+" title="Special Characters are not allowed!">
+						<small id="errorlogTag" class="text-muted mt-2"></small>
+					<hr>
+					<div class="form-group text-center">
+						<button class="btn btn-info text-white btn-block" type="submit">Add Category</button>
+					</div>	
+					</form>
 			</div>
 		</div>
 	</div>

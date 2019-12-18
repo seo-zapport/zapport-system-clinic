@@ -100,6 +100,67 @@
 	color: $clr-2a9;
 }
 
+/**checkbox*/
+.zp-chkbox {
+    position: absolute;
+		opacity: 0;
+	& + label {
+		position: relative;
+		cursor: pointer;
+		padding: 0;
+		display: block;
+		padding: 3px 2px;
+	}
+	& + label:before {
+		content: '';
+		margin-right: 10px;
+		margin-left: 4px;
+		display: inline-block;
+		vertical-align: text-top;
+		width: 17px;
+		height: 17px;
+		background: $clr-e8;
+		border: 1px solid $clr-e0;
+		border-radius: 3px;
+		margin-top: 2px;
+	}
+	&:focus + label:before {
+		box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.12);
+	}
+	&:checked + label:before {
+		background: $clr-3b8;
+	}
+	&:disabled + label {
+		color: $clr-b8;
+		cursor: auto;
+	}
+	&:disabled + label:before {
+		box-shadow: none;
+		background:$clr-d;
+	}
+	&:checked + label:after {
+		content: '';
+		position: absolute;
+		left: 9px;
+		top: 13px;
+		background: $color_white;
+		width: 3px;
+		height: 3px;
+		box-shadow: 
+		2px 0 0 $color_white,
+		4px 0 0 $color_white,
+		4px -2px 0 $color_white,
+		4px -4px 0 $color_white,
+		4px -6px 0 $color_white,
+		4px -8px 0 $color_white;
+		transform: rotate(45deg);
+	}
+	&:checked ~ label {
+		background: $admin-persian-green;
+		color: $color_white;
+	}
+}
+
 /**countable*/
 .zp-countable{
 	margin-bottom: 10px;
