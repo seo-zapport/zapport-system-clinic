@@ -193,6 +193,8 @@ class PostController extends Controller
             }
         }
 
+        // dd($request->tag_id);
+
         $post->update($atts);
 
         $tagID = $request->input('tag_id');

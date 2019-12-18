@@ -41,10 +41,10 @@
 							<hr>
 							<a href="#" class="btn btn-info text-white btn-block mb-2" href="#" data-toggle="modal" data-target="#tagModal">Add Category</a>
 						</div>
-						<div>
+						<div id="category_lists">
 							@forelse ($tags as $tag)
 								<div class="mb-1">
-									<input type="checkbox"  name="tag_id[]" class="zp-chkbox" id="tag_id_{{ $tag->id }}">
+									<input type="checkbox"  name="tag_id[]" value="{{ $tag->id }}" class="zp-chkbox" id="tag_id_{{ $tag->id }}">
 									<label class="form-check-label" for="tag_id_{{ $tag->id }}">{{ $tag->tag_name }}</label>
 								</div>
 							@empty
@@ -382,7 +382,8 @@
 	        	success: function(response){
 	        		$('#tagForm')[0].reset();
 	        		$("#tagModal").modal('hide');
-	        		$('select[name="tag_id[]"]').append('<option selected="true" value="'+ response.id +'">'+ response.tag_name +'</option>');
+	        		$("#category_lists").append('<div class="mb-1"><input type="checkbox"  name="tag_id[]" value="'+response.id+'" class="zp-chkbox" id="tag_id_'+response.id+'"><label class="form-check-label" for="tag_id_'+response.id+'">'+response.tag_name+'</label></div>')
+	        		// $('select[name="tag_id[]"]').append('<option selected="true" value="'+ response.id +'">'+ response.tag_name +'</option>');
 	        	},
 	        	error: function(response){
 	        		document.getElementById("errorlogTag").innerHTML = '';
@@ -617,7 +618,8 @@
 	       		console.log(response)
 	       		if (response.ajaxres == 'success') {
 		       		$('#cont-'+response.id).remove();
-		       		$('select[name="tag_id[]"]').append('<option value="'+ response.id +'">'+ response.tag_name +'</option>');
+		       		$("#category_lists_edit").append('<div class="mb-1"><input type="checkbox"  name="tag_id[]" value="'+response.id+'" class="zp-chkbox" id="tag_id_'+response.id+'"><label class="form-check-label" for="tag_id_'+response.id+'">'+response.tag_name+'</label></div>')
+		       		// $('select[name="tag_id[]"]').append('<option value="'+ response.id +'">'+ response.tag_name +'</option>');
 	       		}else{
 	       			$('#errorTag').append('<div class="alert alert-danger">'+response.lt+'</div>')
 	       		}

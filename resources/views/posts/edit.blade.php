@@ -19,20 +19,14 @@
 			<hr>
 			<a href="#" class="btn btn-info text-white btn-block mb-2" href="#" data-toggle="modal" data-target="#tagModal">Add Category</a>
 		</div>
-		<div class="mb-1">
-			@foreach ($uniqueTag as $tag)
-				<input type="checkbox"  name="tag_id[]" class="zp-chkbox" id="tag_id_{{ $tag->id }}" value="{{ $tag->id }}" {{ ($tag->id != null) ? 'checked' : '' }}>
-				<label class="form-check-label" for="tag_id_{{ $tag->id }}">{{ $tag->tag_name }}</label>
-			@endforeach
-			{{-- 
-			Lumang Code
+		<div id="category_lists_edit">
+			<div class="mb-1">
 				<input type="hidden" name="tag_old" value="{{ $postTags->id }}">
-			<select multiple name="tag_id[]" id="tag_id" class="form-control">
-				<option selected="true" disabled="disabled" value=""> Select Generic Name </option>
 				@foreach ($uniqueTag as $tag)
-					<option value="{{ $tag->id }}">{{ $tag->tag_name }}</option>
+					<input type="checkbox"  name="tag_id[]" class="zp-chkbox" id="tag_id_{{ $tag->id }}" value="{{ $tag->id }}">
+					<label class="form-check-label" for="tag_id_{{ $tag->id }}">{{ $tag->tag_name }}</label>
 				@endforeach
-			</select>  --}}
+			</div>
 		</div>
 		<hr>
 
