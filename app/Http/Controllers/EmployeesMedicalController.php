@@ -109,7 +109,7 @@ class EmployeesmedicalController extends Controller
                 $newRecord->employee_id     = $request->employee_id;
                 $newRecord->diagnosis_id    = $diagnosis;
                 $newRecord->note            = $request->note;
-                $newRecord->status          = $request->status;
+                $newRecord->status          = "walkin";
                 $newRecord->remarks         = $request->remarks;
                 $newRecord->attachment      = $filename;
                 $newRecord->seen            = (Gate::check('isDoctor')) ? 1 : 0;
@@ -123,7 +123,7 @@ class EmployeesmedicalController extends Controller
             $newRecord->employee_id     = $request->employee_id;
             $newRecord->diagnosis_id    = $diagnosis;
             $newRecord->note            = $request->note;
-            $newRecord->status          = $request->status;
+            $newRecord->status          = "walkin";
             $newRecord->remarks         = $request->remarks;
             $newRecord->attachment      = $filename;
             $newRecord->seen            = (Gate::check('isDoctor')) ? 1 : 0;

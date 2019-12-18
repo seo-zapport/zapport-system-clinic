@@ -97,7 +97,7 @@
 					</div>
 					<div class="form-group">
 						<label for="position">Position</label>
-						<input type="text" name="position" class="form-control" placeholder="Add Position" value="{{ old('position') }}" required pattern="[a-zA-Z0-9\s]+" title="Special Characters are not allowed!">
+						<input type="text" name="position" class="form-control" placeholder="Add Position" value="{{ old('position') }}" required autocomplete="off" pattern="[a-zA-Z0-9\s]+" title="Special Characters are not allowed!">
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

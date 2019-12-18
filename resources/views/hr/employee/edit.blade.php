@@ -157,11 +157,12 @@
 		$arr = unserialize($employee->children);
 	@endphp
 	<a id="editChildren" class="btn btn-success text-white mb-2"><i class="fa fa-plus"></i> Add more children</a>
-	
 	<div id="children" class="form-row">
+	@if ($employee->children != null)
 		@php
 		$e = 0;
 		foreach ($arr as $child) {
+			if ($child[0] != null && $child[1] != null){
 		@endphp
 			<div id="childrenField" class="col-12 form-row editchildren">
 				<div class="form-group col-md-4">
@@ -189,7 +190,9 @@
 			</div>
 		@php
 		$e++;
+			}
 		}
 		@endphp
+	@endif
 	</div>
 @endsection

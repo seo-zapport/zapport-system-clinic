@@ -425,10 +425,13 @@ class EmployeeController extends Controller
             $arr = array(request('experience'));
             $works  = serialize($arr[0]);
 
-            if ($request->children[0][0] == null) {
+            // dd($request->children);
+
+            if ($request->children == null) {
                 $arr1 = $request->children[0];
-                $a = array_push($arr1, null);
-                $childrens = serialize(array($arr1));
+                // dd($arr1);
+                // $a = array_push($arr1, null);
+                $childrens = null;
 
             }else{
                 $arr1 = array(request('children'));

@@ -27,7 +27,6 @@
 						<tr>
 							<td>
 								{{ $tag->tag_name }}
-
 								<div class="row-actions">
 									<span id="{{ $tag->tag_slug }}" class="show-edit btn btn-link text-secondary"><i class="far fa-edit"></i> Quick Edit</span> <span class="text-muted">|</span>
 									<form method="post" action="{{ route('destroy.tag', ['tag' => $tag->tag_slug]) }}"  class="d-inline-block">
@@ -51,7 +50,7 @@
 										@method('PUT')
 										<p class="text-muted">QUICK EDIT</p>
 										<span>Category</span>
-										<input type="text" name="tag_name" value="{{ $tag->tag_name }}" class="form-control" required>
+										<input type="text" name="tag_name" value="{{ $tag->tag_name }}" class="form-control" required autocomplete="off" pattern="[a-zA-Z0-9\s]+" title="Special Characters are not allowed!">
 									</form>
 								</fieldset>
 							</td>
@@ -92,7 +91,7 @@
 				<form method="post" action="{{ route('store.tag') }}">
 					@csrf
 					<div class="form-group">
-						<input type="text" name="tag_name" class="form-control" placeholder="Category Name" required>
+						<input type="text" name="tag_name" class="form-control" placeholder="Category Name" required autocomplete="off" pattern="[a-zA-Z0-9\s]+" title="Special Characters are not allowed!">
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

@@ -136,6 +136,8 @@ class TagController extends Controller
         if (Gate::check('isAdmin') || Gate::check('isHr') || Gate::check('isDoctor') || Gate::allows('isNurse')) {
             if ($request->ajax()) {
                 $atts = $request->validated();
+                $replaced = str_replace(' ', '-', $request->tag_name);
+                $atts['tag_slug'] = strtolower($replaced);
                 $lastid = Tag::create($atts);
                 $atts['id'] = $lastid->id;
                 return response()->json($atts);

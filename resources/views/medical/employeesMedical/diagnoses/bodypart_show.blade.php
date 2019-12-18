@@ -49,7 +49,7 @@
 										<p class="text-muted">QUICK EDIT</p>
 										<span>Category</span>
 										<input type="hidden" name="bodypart_id" value="{{ $bodypart->id }}">
-										<input type="text" name="disease" value="{{ $disease->disease }}" class="form-control" required pattern="[a-zA-Z0-9\s()-/]+" title="Special Characters are not allowed!">
+										<input type="text" name="disease" value="{{ $disease->disease }}" class="form-control" required autocomplete="off" pattern="[a-zA-Z0-9\s()-/]+" title="Special Characters are not allowed!">
 									</form>
 								</fieldset>
 							</td>
@@ -90,7 +90,7 @@
 					<div class="form-group">
 						<label for="disease">Disease</label>
 						<input type="hidden" name="bodypart_id" value="{{ $bodypart->id }}">
-						<input type="text" class="form-control" name="disease" placeholder="Add Disease" required pattern="[a-zA-Z0-9\s()-/]+" title="Special Characters are not allowed!">
+						<input type="text" class="form-control" name="disease" placeholder="Add Disease" required autocomplete="off" pattern="[a-zA-Z0-9\s()-/']+" title="Special Characters are not allowed!">
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

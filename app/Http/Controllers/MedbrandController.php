@@ -66,9 +66,10 @@ class MedbrandController extends Controller
             if (!empty($check)) {
                 $data = $check;
             }else{
-                $replaced = str_replace(["'", "(", ")", "/"], '', $request->bname);
-                $replaced2 = str_replace(' ', '-', $replaced);
-                $atts['bname_slug'] = strtolower($replaced2);
+                $rep = str_replace([" & ", " / ", "-", " - "], '-', $request->bname);
+                $rep2 = str_replace(['( ', ' )', "'", "(", ")", " ( ", " ) "], "", $rep);
+                $replaced = str_replace([' ', '/'], '-', $rep2);
+                $atts['bname_slug'] = strtolower($replaced);
                 $data = Medbrand::create($atts);
             }
 
@@ -136,9 +137,10 @@ class MedbrandController extends Controller
             $atts = $request->validate([
                     'bname' => ['required', 'unique:medbrands,bname,'.$medbrand->id],
                 ]);
-            $replaced = str_replace("'", '', $request->bname);
-            $replaced2 = str_replace(' ', '-', $replaced);
-            $atts['bname_slug'] = strtolower($replaced2);
+            $rep = str_replace([" & ", " / ", "-", " - "], '-', $request->bname);
+            $rep2 = str_replace(['( ', ' )', "'", "(", ")", " ( ", " ) "], "", $rep);
+            $replaced = str_replace([' ', '/'], '-', $rep2);
+            $atts['bname_slug'] = strtolower($replaced);
             $medbrand->update($atts);
             return redirect()->route('brandname.update', ['medbrand' => $medbrand->bname_slug]);
         }elseif (Gate::allows('isBanned')) {

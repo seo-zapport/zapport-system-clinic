@@ -19,19 +19,19 @@
 					<th width="10%" class="text-center">No. of Diseases</th>
 				</thead>
 				<tbody>
-					@foreach ($bparts as $bpart)
+					@forelse ($bparts as $bpart)
 						<tr>
 							<td>{{ ucfirst($bpart->bodypart) }}
 								<div class="row-actions">
 									<span id="{{ $bpart->bodypart_slug }}" class="show-edit btn btn-link text-secondary"><i class="far fa-edit"></i> Quick Edit</span> <span class="text-muted">|</span>
 									<a href="{{ route('bodyparts.show', ['bodypart'=>$bpart->bodypart_slug]) }}" class="btn-link text-secondary"><i class="far fa-eye"></i> View |</a> 
 									<form method="post" action="{{ route('bodyparts.destroy', ['bodypart'=>$bpart->bodypart_slug]) }}" class="d-inline-block">
-												@csrf
-												@method('DELETE')
+										@csrf
+										@method('DELETE')
 										<button class="btn btn-link text-danger"  onclick="return confirm('Are you sure you want to delete {{ ucfirst($bpart->bodypart) }} ?')" data-id="{{ $bpart->bodypart }}">
 											<i class="fas fa-trash-alt"></i> Delete
 										</button>
-											</form>
+									</form>
 								</div>
 							</td>
 							<td class="text-center">{{ count($bpart->diseases) }}</td>
@@ -44,12 +44,16 @@
 										@method('PUT')
 										<p class="text-muted">QUICK EDIT</p>
 										<span>Category</span>
-										<input type="text" name="bodypart" value="{{ $bpart->bodypart }}" class="form-control" required pattern="[a-zA-Z0-9\s()-/]+" title="Special Characters are not allowed!">
+										<input type="text" name="bodypart" value="{{ $bpart->bodypart }}" class="form-control" required autocomplete="off" pattern="[a-zA-Z0-9\s()-/]+" title="Special Characters are not allowed!">
 									</form>
 								</fieldset>
 							</td>
 						</tr>
-					@endforeach
+						@empty
+							<tr>
+								<td colspan="2" class="text-center">0 Result Found!</td>
+							</tr>
+					@endforelse
 				</tbody>
 			</table>
 		</div>
@@ -78,7 +82,7 @@
 					@csrf
 					<div class="form-group">
 						<label for="bodypart">Body Part</label>
-						<input type="text" class="form-control" name="bodypart" placeholder="Add Body Part" required pattern="[a-zA-Z0-9\s()-/]+" title="Special Characters are not allowed!">
+						<input type="text" class="form-control" name="bodypart" placeholder="Add Body Part" required autocomplete="off" pattern="[a-zA-Z0-9\s()-/]+" title="Special Characters are not allowed!">
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

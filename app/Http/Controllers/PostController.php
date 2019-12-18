@@ -71,7 +71,7 @@ class PostController extends Controller
             $atts = $request->validated();
             $atts = $request->except('tag_id');
             $srch = Post::where('title', $request->title)->get();
-            $array = ['%', '^', '*', '/', "'", "-", "_", "@"];
+            $array = ['%', '^', '*', '/', "'", "-", "_", "@", "&"];
             $rep = str_replace($array, '', $request->title);
             $replaced = str_replace(' ', '-', $rep);
             if (count($srch ) > 0) {

@@ -96,7 +96,7 @@ jQuery(document).ready(function($){
     });
     // Children
     $("body").on("click", "#removeChildren", function(event){
-      if (i > 1 || e > 1) {
+      if (i > 1 || e >= 0) {
         $(this).parents("#childrenField").remove();
         i--;
         e--;
@@ -713,5 +713,7 @@ jQuery(document).ready(function($){
       }
     }
   });
+
+  // Disable button
 
 });

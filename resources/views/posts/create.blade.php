@@ -5,7 +5,6 @@
 	<i class="fas fa-book text-secondary"></i> Add New Post
 @endsection
 @section('dash-content')
-{{-- {{ phpinfo() }} --}}
 	<form method="post" action="@yield('postAction', route('post.store'))" enctype="multipart/form-data">
 		@csrf
 		@yield('postMethod')
@@ -13,7 +12,7 @@
 			<div class="col-12 col-md-9">
 				<div class="form-group posts-title">
 					<label for="title"><strong>Title</strong></label>
-					<input type="text" name="title" class="form-control" value="@yield('postEdit', old('title'))" placeholder="Enter Post Title Here!" required>
+					<input type="text" name="title" class="form-control" value="@yield('postEdit', old('title'))" placeholder="Enter Post Title Here!" required autocomplete="off" pattern="[a-zA-Z0-9\s]+" title="Special Characters are not allowed!">
 				</div>
 				<div class="form-group posts-description">
 					<label for="description"><strong>Post Content</strong></label>
@@ -80,30 +79,6 @@
 			</div>
 		</div>
 	</form>
-
-{{-- 	@if (strstr(url()->current(), 'create'))
-	<div class="col-12 offset-md-1 col-md-2">
-		<div class="card">
-			<div class="card-body">
-				<div class="header-title">
-					<p><strong>Tags</strong></p>
-					<hr>
-				</div>
-				<div>
-					<form id="tagForm" method="post" action="{{ route('add.tag') }}">
-						@csrf
-						<input type="text" name="tag" class="form-control" placeholder="Add New Tags">
-						<small id="errorlogTag" class="text-muted mt-2"></small>
-					<hr>
-					<div class="form-group text-center">
-						<button class="btn btn-info text-white btn-block" type="submit">Add Tag</button>
-					</div>	
-					</form>
-				</div>						
-			</div>
-		</div>
-	</div>
-	@endif --}}
 
 @include('layouts.errors')
 
@@ -206,7 +181,7 @@
 						<div>
 							<form id="tagForm" method="post">
 								@csrf
-								<input type="text" name="tag" class="form-control" placeholder="Add New Category">
+								<input type="text" name="tag" class="form-control" placeholder="Add New Category" required autocomplete="off" pattern="[a-zA-Z0-9\s]+" title="Special Characters are not allowed!">
 								<small id="errorlogTag" class="text-muted mt-2"></small>
 							<hr>
 							<div class="form-group text-center">
@@ -370,6 +345,7 @@
 				var url = '/posts/edit/tag';
 			}
 			var tag = $('input[name="tag"]').val();
+			console.log(url);
 	       $.ajaxSetup({
 	            headers: {
 	                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

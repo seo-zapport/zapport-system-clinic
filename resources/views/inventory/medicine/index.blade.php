@@ -106,7 +106,6 @@
 			<div class="modal-body">
 				<form id="addMds" method="post" action="{{ route('medicine.add') }}">
 					@csrf
-
 					<div class="form-group">
 						<label for="generic_id">Generic Name</label>
 						<select name="generic_id" id="generic_id" class="form-control" required>

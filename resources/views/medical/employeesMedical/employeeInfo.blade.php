@@ -156,13 +156,13 @@
 				<form onsubmit="return test(this)" id="myform" method="post" action="{{ route('medical.store', ['employee' => $employee->emp_id]) }}" enctype="multipart/form-data" autocomplete="off">
 					@csrf
 					<input type="hidden" name="employee_id" value="{{ $employee->id }}">
-					<div class="form-group">
+{{-- 					<div class="form-group">
 					<label for="status">Status of Patient</label>
 					<select name="status" id="status" class="form-control" required>
 							<option selected="true" disabled="disabled" value=""> Select Stats </option>
 							<option value="walkin">Walk-in</option>
 					</select>
-					</div>
+					</div> --}}
 					<div class="form-row">
 						<div class="form-group col-md-4">
 							<label for="bodypart_id">Body Part</label>

@@ -81,7 +81,7 @@
 					@csrf
 					<div class="form-group">
 						<label for="department">Department</label>
-						<input type="text" name="department" class="form-control" placeholder="Department Name" value="{{ old('department') }}" required pattern="[a-zA-Z0-9\s]+" title="Special Characters are not allowed!">
+						<input type="text" name="department" class="form-control" placeholder="Department Name" value="{{ old('department') }}" required autocomplete="off" pattern="[a-zA-Z0-9\s]+" title="Special Characters are not allowed!">
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

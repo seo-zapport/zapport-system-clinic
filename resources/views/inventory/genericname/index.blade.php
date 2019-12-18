@@ -82,7 +82,7 @@
 					@csrf
 					<div class="form-group">
 						<label for="gname">Generic Name</label>
-						<input type="text" name="gname" class="form-control" placeholder="Generic Name" value="{{ old('gname') }}" required pattern="[a-zA-Z0-9\s()-/]+" title="Special Characters are not allowed!">
+						<input type="text" name="gname" class="form-control" placeholder="Generic Name" value="{{ old('gname') }}" required autocomplete="off" pattern="[a-zA-Z0-9\s()/]+" title="Special Characters are not allowed!">
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

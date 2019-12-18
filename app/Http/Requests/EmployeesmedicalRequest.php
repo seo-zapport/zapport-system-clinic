@@ -31,7 +31,6 @@ class EmployeesmedicalRequest extends FormRequest
         return [
             'diagnosis'     =>  ['required'],
             'note'          =>  ['required'],
-            'status'        =>  ['required'],
             'remarks'       =>  ['required'],
             'disease_id'    =>  ['required'],
         ];
@@ -47,7 +46,6 @@ class EmployeesmedicalRequest extends FormRequest
         return [
             'diagnosis.required'    =>  'Diagnosis Field is required!',
             'note.required'         =>  'Note field is required!',
-            'status.required'       =>  'Status field is required!',
             'remarks.required'      =>  'Remarks is required!',
             'disease_id.required'   =>  'Disease field is required!'
         ];

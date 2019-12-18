@@ -60,7 +60,7 @@
 					@method('PUT')
 					<div class="form-group">
 						<label for="bname">Brand Name</label>
-						<input type="text" name="bname" class="form-control" placeholder="Add Brand" value="{{ $medbrand->bname }}" required>
+						<input type="text" name="bname" class="form-control" placeholder="Add Brand" value="{{ $medbrand->bname }}" required autocomplete="off" pattern="[a-zA-Z0-9\s()/]+" title="Special Characters are not allowed!">
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

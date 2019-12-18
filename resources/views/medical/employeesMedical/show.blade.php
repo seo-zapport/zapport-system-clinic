@@ -347,6 +347,13 @@
 <script type="application/javascript">
 jQuery(document).ready(function($) {
 
+	$("#myform-show").on("submit", function(e){
+		console.log("submited");
+		var btn = $("#sbmt");
+		btn.prop('disabled', true);
+		setTimeout(function(){btn.prop('disabled', false); }, 3000);
+	});
+
 	$('.btnPrint').printPage({ 
 		attr: "href",
 		url: "{{ asset('storage/uploaded/print/medrecord/emp-med-record.html') }}",
