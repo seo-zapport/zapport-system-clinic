@@ -175,14 +175,22 @@ class PostController extends Controller
         $rep = str_replace($array, '', $request->title);
         $replaced = str_replace(' ', '-', $rep);
 
-        if ( count($srch ) == 1) {
-            $count = count($srch)+1;
-            $atts['slug'] = strtolower($replaced).'-'.$count;
-        }elseif ( count($srch) > 1 ){
-            $count2 = count($srch);
-            $atts['slug'] = strtolower($replaced).'-'.$count2;
+        if ($post->title == $request->title) {
+            $atts['slug'] = $post->slug;
         }else{
-            $atts['slug'] = strtolower($replaced);
+            if ( count($srch ) > 0) {
+                $count = count($srch)+1;
+                $lwr = strtolower($replaced).'-'.$count;
+                $fnd = Post::where('slug', $lwr)->get();
+                if (count($fnd) > 0) {
+                    $counted = $count + count($fnd);
+                    $atts['slug'] = strtolower($replaced).'-'.$counted;
+                }else{
+                    $atts['slug'] = strtolower($replaced).'-'.$count;
+                }
+            }else{
+                $atts['slug'] = strtolower($replaced);
+            }
         }
 
         $post->update($atts);

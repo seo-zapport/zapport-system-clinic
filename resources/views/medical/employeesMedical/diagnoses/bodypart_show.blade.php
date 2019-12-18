@@ -6,9 +6,12 @@
 	<i class="fas fa-list text-secondary"></i> {{ ucfirst($bodypart->bodypart) }}
 @endsection
 @section('dash-content')
-<div class="row zp-filters">
-	<div class="col-12 text-right form-group"><a class="btn btn-info text-white" data-toggle="modal" data-target="#add-parts"><i class="fa fa-plus"></i> Add Disease</a></div>
-</div>
+
+@if (Gate::check('isAdmin') || Gate::check('isNurse') || Gate::check('isDoctor'))
+	<div class="row zp-filters">
+		<div class="col-12 text-right form-group"><a class="btn btn-info text-white" data-toggle="modal" data-target="#add-parts"><i class="fa fa-plus"></i> Add Disease</a></div>
+	</div>
+@endif
 
 <div class="card mb-3">
 	<div class="card-body">
@@ -27,15 +30,19 @@
 							<td>
 								{{ ucfirst($disease->disease) }}
 								<div class="row-actions">
-									<span id="{{ $disease->disease_slug }}" class="show-edit btn btn-link text-secondary"><i class="far fa-edit"></i> Quick Edit</span> <span class="text-muted">|</span>
-									<a href="{{ route('diseases.show', ['disease'=>$disease->disease_slug]) }}" class="btn-link text-secondary"><i class="far fa-eye"></i> View |</a> 
-									<form method="post" action="{{ route('diseases.destroy', ['disease'=>$disease->disease_slug]) }}" class="d-inline-block">
-										@csrf
-										@method('DELETE')
-										<button class="btn btn-link text-danger"  onclick="return confirm('Are you sure you want to delete {{ ucfirst($disease->disease) }} ?')" data-id="{{ $disease->disease }}">
-											<i class="fas fa-trash-alt"></i> Delete
-										</button>
-									</form>									
+									@if (Gate::check('isAdmin') || Gate::check('isNurse') || Gate::check('isDoctor'))
+										<span id="{{ $disease->disease_slug }}" class="show-edit btn btn-link text-secondary"><i class="far fa-edit"></i> Quick Edit</span> <span class="text-muted">|</span>
+									@endif
+									<a href="{{ route('diseases.show', ['disease'=>$disease->disease_slug]) }}" class="btn-link text-secondary"><i class="far fa-eye"></i> View |</a>
+									@if (Gate::check('isAdmin') || Gate::check('isNurse') || Gate::check('isDoctor'))
+										<form method="post" action="{{ route('diseases.destroy', ['disease'=>$disease->disease_slug]) }}" class="d-inline-block">
+											@csrf
+											@method('DELETE')
+											<button class="btn btn-link text-danger"  onclick="return confirm('Are you sure you want to delete {{ ucfirst($disease->disease) }} ?')" data-id="{{ $disease->disease }}">
+												<i class="fas fa-trash-alt"></i> Delete
+											</button>
+										</form>									
+									@endif
 								</div>
 							</td>
 							<td class="text-center">{{ $disease->diagnoses->count() }}</td>

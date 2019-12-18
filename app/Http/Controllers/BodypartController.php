@@ -21,7 +21,7 @@ class BodypartController extends Controller
      */
     public function index()
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse') || Gate::allows('isHr')) {
 
             $bparts = Bodypart::paginate(10);
             return view('medical.employeesMedical.diagnoses.bodypart', compact('bparts'));
@@ -85,7 +85,7 @@ class BodypartController extends Controller
      */
     public function show(Bodypart $bodypart)
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse') || Gate::allows('isHr')) {
             return view('medical.employeesMedical.diagnoses.bodypart_show', compact('bodypart'));
         }elseif (Gate::allows('isBanned')) {
 

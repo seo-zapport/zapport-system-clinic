@@ -43,7 +43,7 @@ class DiseaseController extends Controller
      */
     public function store(DiseaseRequest $request)
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse') || Gate::allows('isHr')) {
             
             $atts = $this->validate($request, $request->rules(), $request->messages());
             $rep = str_replace([" & ", " / ", "-", " - "], '-', $request->disease);
@@ -76,7 +76,7 @@ class DiseaseController extends Controller
      */
     public function show(Disease $disease)
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse') || Gate::allows('isHr')) {
             return view('medical.employeesMedical.diagnoses.disease_show', compact('disease'));
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();

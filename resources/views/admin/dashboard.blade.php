@@ -151,7 +151,11 @@
 										<tr id="inc">
 											<td>{{ $emp->emp_id }}</td>
 											<td>{{ $emp->last_name }} {{ $emp->first_name }} {{ $emp->middle_name }}
-												<div class="row-actions"><a href="{{ route('hr.emp.show', ['employee' => $emp->emp_id]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a></div></td>
+												<div class="row-actions">
+													{{-- <a href="{{ route('hr.emp.show', ['employee' => $emp->emp_id]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a> --}}
+													<button class="btn btn-link text-secondary" data-toggle="modal" data-target="#id-{{ $emp->emp_id }}">New</button>
+												</div>
+											</td>
 											<td>{{ $emp->departments->department }} - {{ $emp->positions->position }}</td>
 										</tr>
 										@empty
@@ -267,6 +271,30 @@
 			</div>
 		</div>
 	@endif
+
+@if (Gate::check('isAdmin') || Gate::check('isHr'))
+@foreach (@$emps as $emp)
+<!-- Modal Add -->
+<div class="modal fade" id="id-{{ $emp->emp_id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog  modal-lg modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLongTitle">{{ $emp->last_name }} {{ $emp->first_name }}'s Incomplete Requirements</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				{!! ($emp->tin_no == null) ? "<p>TIN NUMBER</p>" : '' !!}
+				{!! ($emp->sss_no == null) ? "<p>SSS NUMBER</p>" : '' !!}
+				{!! ($emp->philhealth_no == null) ? "<p>PHIL HEALTH NUMBER</p>" : '' !!}
+				{!! ($emp->hdmf_no == null) ? "<p>PAG IBIG NUMBER</p>" : '' !!}
+			</div>
+		</div>
+	</div>
+</div>
+@endforeach
+@endif
 
 @endsection
 

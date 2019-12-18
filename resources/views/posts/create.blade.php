@@ -59,22 +59,24 @@
 				<br>
 
 				{{-- Important --}}
-				@if (strstr(url()->current(), 'create'))
-				<div class="card">
-					<div class="card-body">
-						<div class="header-title">
-							<p><strong>Important</strong></p>
-							<hr>
+				@if (Gate::check('isAdmin') || Gate::check('isHr'))
+					@if (strstr(url()->current(), 'create'))
+						<div class="card">
+							<div class="card-body">
+								<div class="header-title">
+									<p><strong>Important</strong></p>
+									<hr>
+								</div>
+								<div class="form-check">
+									<input type="checkbox" name="important" value="1" class="form-check-input">Check for Important posts
+								</div>						
+							</div>
 						</div>
-						<div class="form-check">
-							<input type="checkbox" name="important" value="1" class="form-check-input">Check for Important posts
-						</div>						
-					</div>
-				</div>
-				@else
-					@yield('importantEdit')
+					@else
+						@yield('importantEdit')
+					@endif
+					<br>
 				@endif
-				<br>
 
 				{{-- Featured Image --}}
 				@if (strstr(url()->current(), 'create'))
