@@ -50,6 +50,21 @@
 	</div>
 </div>
 @endsection
+
+@section('importantEdit')
+<div class="card">
+	<div class="card-body">
+		<div class="header-title">
+			<p><strong>Important</strong></p>
+			<hr>
+		</div>
+		<div class="form-check">
+			<input type="checkbox" {{ ($post->important != null) ? 'checked' : '' }} name="important" value="{{ $post->important }}" class="form-check-input">Check for Important posts
+		</div>						
+	</div>
+</div>
+@endsection
+
 @section('ftEdit')
 <div class="card">
 	<div class="card-body">

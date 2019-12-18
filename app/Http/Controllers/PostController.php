@@ -69,7 +69,12 @@ class PostController extends Controller
     {
         if (Gate::check('isAdmin') || Gate::check('isHr') || Gate::check('isDoctor') || Gate::allows('isNurse')) {
             $atts = $request->validated();
-            $atts = $request->except('tag_id');
+            $atts = $request->except(['tag_id', 'important']);
+            if ($request->important != null) {
+                $atts['important'] = 1;
+            }else{
+                $atts['important'] = 0;
+            }
             $srch = Post::where('title', $request->title)->get();
             $array = ['%', '^', '*', '/', "'", "-", "_", "@", "&"];
             $rep = str_replace($array, '', $request->title);
@@ -159,7 +164,12 @@ class PostController extends Controller
             'title'        =>  'required',
             'description'  =>  'required',
         ]);
-        $atts = $request->except(['tag_id', 'tag_old']);
+        $atts = $request->except(['tag_id', 'tag_old', 'important']);
+        if ($request->important != null) {
+            $atts['important'] = 1;
+        }else{
+            $atts['important'] = 0;
+        }
         $srch = Post::where('title', $request->title)->get();
         $array = ['%', '^', '*', '/', "'", "-", "_", "@"];
         $rep = str_replace($array, '', $request->title);
