@@ -72,25 +72,13 @@
 				<br>
 
 				{{-- Important --}}
-				@if (Gate::check('isAdmin') || Gate::check('isHr'))
-					@if (strstr(url()->current(), 'create'))
-						<div class="card">
-							<div class="card-body">
-								<div class="header-title">
-									<p><strong>Important</strong></p>
-									<hr>
-								</div>
-								<div class="form-check">
-									<input type="checkbox" name="important" value="1" class="form-check-input">Check for Important posts
-								</div>						
-							</div>
+				@if (strstr(url()->current(), 'create'))
+				<div class="card">
+					<div class="card-body">
+						<div class="header-title">
+							<p><strong>Important</strong></p>
+							<hr>
 						</div>
-<<<<<<< HEAD
-					@else
-						@yield('importantEdit')
-					@endif
-					<br>
-=======
 						<div class="mb-1">
 							<input type="checkbox" id="zpImportant" name="important" value="1" class="zp-chkbox">
 							<label for="zpImportant">Check for Important posts</label>
@@ -99,8 +87,8 @@
 				</div>
 				@else
 					@yield('importantEdit')
->>>>>>> 313579927dcc2147f2b8f32d592bd4bca783562f
 				@endif
+				<br>
 
 				{{-- Featured Image --}}
 				@if (strstr(url()->current(), 'create'))
