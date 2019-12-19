@@ -100,6 +100,12 @@
 	color: $clr-2a9;
 }
 
+/**apperance*/
+.apperance-none{
+	-webkit-appearance: none;
+	appearance: none;	
+}
+
 /**checkbox*/
 .zp-chkbox {
     position: absolute;
@@ -172,6 +178,12 @@
 }
 
 /**filter*/
+.admin-hr-employees{
+	.zp-filter-clear{
+		top: 9px;
+    right: 11px;		
+	}
+}
 .zp-filter-clear{
     color: #ffbcbc !important;
     cursor: pointer;

@@ -9,7 +9,6 @@
 @section('dash-content')
 
 {{-- <a href="{{ route('print.emp') }}" class="btn btn-outline-info float-right" target="_blank">Print</a> --}}
-
 <div class="zp-filters">
 	<div class="row">
 		<div class="col-12 col-md-6">
@@ -402,7 +401,32 @@
 		$("#prntEmpRslt").html('');
 		$("#prntEmpRslt").append('<p class="font-weight-bold" style="font-family: arial; font-size: 10px; color: #212529;">Total number of employees: '+ countTR2 +'</p>');
 
+		/**for-addition-of-class-apperance*/
+		zpApperanceClass('gender');
+		zpApperanceClass('typeOfEmp');
+		zpApperanceClass('age');
+		zpApperanceClass('civil_status');
+		
+		/**for-remove-of-class-added*/
+		zpRemoveClass('gender','gender');
+		zpRemoveClass('type','typeOfEmp');
+		zpRemoveClass('age','age');
+		zpRemoveClass('status','civil_status');
 	});
+
+	/**adding-of-class*/
+	const zpApperanceClass = (param) => {
+		jQuery('#' + param).on('change', function(){
+			$(this).addClass('apperance-none');
+		});
+	}
+	
+	/**Remover-of-class*/
+	const zpRemoveClass = (param1,param2) => {
+		jQuery('#clear_' + param1).on('click', function(){
+			$('#' + param2).removeClass('apperance-none');
+		});
+	}
 
 </script>
 @endsection

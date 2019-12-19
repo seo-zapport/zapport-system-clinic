@@ -188,18 +188,33 @@
 /**Collapsed*/
 .folded{
 	#zapAdminMenuBg,#zapAdminMenuWrap{
-		width: 78px;
+		width: 50px;
+	}
+	#Notifs {
+		font-size: 10px;
+		height: 17px;
+		width: 17px;
+		display: block;
+		position: absolute;
+		top: 3px;
+		left: 25px;
 	}
 	#zapAdminMenuWrap{
 		.nav{
-			width: 78px;
+			width: 50px;
+			.dropdown-toggle::after {
+				display: inline;
+				position: absolute;
+				bottom: 0;
+				left: 31%;
+			}
 		}
 		.zap-user-info{
-			padding: 10px 6px;
+			padding: 10px 0px;
 		}
 		.zap-image{
 			margin-right: 0;
-			margin-left: 12px;
+			margin-left: 7px;
 			width: 38px;
 		}
 		.zap-info-wrap{
@@ -210,8 +225,9 @@
 		}
 	}
 	#zapContent, #zapFooter{
-		margin-left: 78px;
+		margin-left: 50px;
 	}
+
 }
 
 /**dashboard-sidebar*/
