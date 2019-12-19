@@ -7,7 +7,7 @@
 @endsection
 @section('dash-content')
 
-<form id="empForm" enctype="multipart/form-data" method="post" action="@yield('action', route('hr.emp.addEmp'))">
+<form id="empForm" enctype="multipart/form-data" method="post" action="@yield('action', route('hr.emp.addEmp'))" autocomplete="off">
 	<div class="row">
 		@csrf
 		@yield('editMethod')
@@ -190,7 +190,7 @@
 					<div class="form-row">
 						<div class="form-group col-md-3">
 							<label for="birthday">Birthday</label>
-							<input type="date" name="birthday" value="@yield('editBday', old('birthday'))" class="form-control" required oninvalid="this.setCustomValidity('Please Enter Birthday')" oninput="setCustomValidity('')">
+							<input id="birthday" type="text" name="birthday" value="@yield('editBday', old('birthday'))" class="form-control" required oninvalid="this.setCustomValidity('Please Enter Birthday')" oninput="setCustomValidity('')" placeholder="Enter Birthdate">
 						</div>
 						<div class="form-group col-md-6">
 							<label for="birth_place">Birth Place</label>
@@ -380,6 +380,34 @@
 @section('scripts')
 <script type="application/javascript">
 	jQuery(document).ready(function($) {
+
+	    $("#birthday").datepicker({
+	    	// dateFormat: "dd-M-yy",
+	        onSelect: function(value, ui) {
+	            var current = new Date().getTime(), 
+	                dateSelect = new Date(value).getTime();
+	                age = current - dateSelect;
+	                ageGet = Math.floor(age / 1000 / 60 / 60 / 24 / 365.25); // age / ms / sec / min / hour / days in a year
+	            if(ageGet < 17){
+	                less_than_18(ageGet);
+	            }else{
+	                greater_than_18(ageGet);
+	            }
+	        },
+	        yearRange: '1900:+0d',//base year:current year
+	        changeMonth: true,
+	        changeYear: true,
+	        defaultDate: '-18yr',
+	    }).attr("readonly", "readonly"); //prevent manual changes
+
+
+	    function less_than_18(theAge){
+	        alert("Failed! your age is less than 18. Age: "+theAge);
+	        $("#birthday").val('');
+	    }
+	    function greater_than_18(theAge){
+	        alert("Done! your age is greater or equal to 18. Age: "+theAge);
+	    }
 
 		$('#empForm').on('keyup keypress', function(e) {
 			// Prevent Enter to save data

@@ -25,6 +25,8 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.css" rel="stylesheet">
     {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.css"> --}}
 
     <!-- Styles -->
@@ -80,6 +82,8 @@
     <script src="{{ asset('js/backend.js') }}"></script>
     <script src="{{ asset('/js/tinymce/tinymce.js') }}"></script>
     <script src="{{ asset('/js/tinymce/tinymce.jquery.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js"></script>
+    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js" crossorigin="anonymous"></script>
    @if ( Request::is('hr/employees') || request()->route()->getName() == 'hr.emp.show' || Request::is('inventory/medicine') || Request::is('inventory/medicine/*') || request()->route()->getName() == 'medical.show' || request()->route()->getName() == 'medical.employeeInfo')
     <script src="{{ asset('/js/jquery.printPage.js') }}" type="text/javascript" defer></script>
    @endif      
