@@ -109,7 +109,7 @@
 				@endif
 				@if (count($employeesmedical->medNote) > 0)
 					<li class="nav-item">
-						<a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">Follow up checkup</a>
+						<a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">List of Follow up checkups</a>
 					</li>
 				@endif
 			</ul>
@@ -333,7 +333,7 @@
 					<input type="file" name="pre_employment_med" class="form-control-file file-upload" required>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button id="preEmpShow" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 					<button type="submit" class="btn btn-primary">Save changes</button>
 				</div>
 			</form>
@@ -383,6 +383,11 @@ jQuery(document).ready(function($) {
 				location.reload();
 			}
         });
+	});
+
+	$("#preEmpForm2 #preEmpShow").on("click", function(e){
+		e.preventDefault();
+		$("input[name='pre_employment_med']").val("");
 	});
 
     // Children
@@ -466,7 +471,17 @@ jQuery(document).ready(function($) {
 		                qty.attr('max', data);
 		                qty.prop('required',true);
 		                qty.prop('placeholder','Remaining stocks '+data);
-
+		                qty.on({
+		                	invalid: function(e){
+		                		e.target.setCustomValidity("");
+		                		if (!e.target.validity.valid){
+		                			e.target.setCustomValidity("No remaining stocks");
+		                		}
+		                	},
+	                		input: function(e){
+	                			e.target.setCustomValidity("");
+	                		}
+		                });
 		             }
 		          });
 		       }
@@ -498,7 +513,17 @@ jQuery(document).ready(function($) {
 	                qty.attr('max', data);
 	                qty.prop('required',true);
 	                qty.prop('placeholder','Remaining stocks '+data);
-
+	                qty.on({
+	                	invalid: function(e){
+	                		e.target.setCustomValidity("");
+	                		if (!e.target.validity.valid){
+	                			e.target.setCustomValidity("No remaining stocks");
+	                		}
+	                	},
+                		input: function(e){
+                			e.target.setCustomValidity("");
+                		}
+	                });
 	             }
 	          });
 	       }
@@ -611,7 +636,17 @@ jQuery(document).ready(function($) {
 		                qty.attr('max', data);
 		                qty.prop('required',true);
 		                qty.prop('placeholder','Remaining stocks '+data);
-
+		                qty.on({
+		                	invalid: function(e){
+		                		e.target.setCustomValidity("");
+		                		if (!e.target.validity.valid){
+		                			e.target.setCustomValidity("No remaining stocks");
+		                		}
+		                	},
+	                		input: function(e){
+	                			e.target.setCustomValidity("");
+	                		}
+		                });
 		             }
 		          });
 		       }
@@ -646,7 +681,17 @@ jQuery(document).ready(function($) {
 	                qty.attr('max', data);
 	                qty.prop('required',true);
 	                qty.prop('placeholder', 'Remaining stocks '+data);
-
+	                qty.on({
+	                	invalid: function(e){
+	                		e.target.setCustomValidity("");
+	                		if (!e.target.validity.valid){
+	                			e.target.setCustomValidity("No remaining stocks");
+	                		}
+	                	},
+                		input: function(e){
+                			e.target.setCustomValidity("");
+                		}
+	                });
 	             }
 	          });
 	       }

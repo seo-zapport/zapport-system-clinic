@@ -271,7 +271,7 @@
 					<input type="file" name="pre_employment_med" class="form-control-file file-upload" required>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button id="preEmpClosed" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 					<button type="submit" class="btn btn-primary">Save changes</button>
 				</div>
 			</form>
@@ -304,7 +304,6 @@ jQuery(document).ready(function($) {
 			}
 		});
 	});
-
 
     // Search input diagnosis_______________________________________________________________________________________________________________________
 
@@ -381,6 +380,11 @@ jQuery(document).ready(function($) {
         });
 	});
 
+	$("#preEmpForm #preEmpClosed").on("click", function(e){
+		e.preventDefault();
+		$("input[name='pre_employment_med']").val('');
+	});
+
    $('#myform').on('submit', function(e){
 		var btn = $('#sbmt');
 		btn.prop('disabled', true);
@@ -388,11 +392,9 @@ jQuery(document).ready(function($) {
     });
 
 
-    // Children
     var i = $('#addMedicine').length;
     var e = $(this).find('.editmedicine').length;
     var o = $('#editMedicine').length;
-    // Children
     $("#addMedicine").click(function(event) {
     	$('<div id="medicineField" class="col-12 form-row"><div class="mb-2 col-md-4"><select name="generic_id['+i+']['+i+']" id="generic_id" class="form-control" required><option selected="true" disabled="disabled"> Select Generic Name </option>@foreach ($gens as $gen)<option value="{{ $gen->id }}">{{ $gen->gname }}</option>@endforeach</select></div><div class="mb-2 col-md-4"><select name="brand_id['+i+']['+i+']" id="brand_id" class="form-control" required><option selected="true" disabled="disabled"> Select Medicine </option></select></div><div class="mb-2 col-md-4"><input type="number" name="quantity['+i+']['+i+']" min="1" class="form-control" placeholder="Quantity"></div><a id="removeChildren" class="btn text-danger text-white position-absolute remove-actions" style="right: -16px;top: 0px;"><i class="fa fa-times"></i></a></div>').appendTo('#meds');
     
@@ -413,14 +415,12 @@ jQuery(document).ready(function($) {
 
 	       if(generic_id)
 	       {
-	          // console.log(myUrl + generic_id);
 	          jQuery.ajax({
 	             url : myUrl + generic_id,
 	             type : "GET",
 	             dataType : "json",
 	             success:function(data)
 	             {
-	             	// console.log(data);
 	                brand.empty();
 	                qty.val('');
 	                jQuery.each(data.brand_id, function(key,value){
@@ -428,7 +428,6 @@ jQuery(document).ready(function($) {
 	                });
 	                qty.attr('max', data.id);
 	                qty.prop('required',true);
-	                // qty.prop('placeholder','Remaining stocks '+data);
 	                var brand_id = brand.find(':selected').attr('value');
 	                getData2(gid, brand, qty);
 	             }
@@ -442,8 +441,6 @@ jQuery(document).ready(function($) {
 
 			function getData2(gid, bid, qty){
 
-			 	// console.log(bid.find(':selected').attr('value'))
-
 				bid.on('change',function(){
 					var changed = true;
 				    var gID = gid.find(':selected').attr('value');
@@ -454,20 +451,27 @@ jQuery(document).ready(function($) {
 
 				       if(bID)
 				       {
-				          // console.log(myUrl3);
 				          jQuery.ajax({
 				             url : myUrl3,
 				             type : "GET",
 				             dataType : "json",
 				             success:function(data)
 				             {
-				             	// gID.empty();
-				             	// console.log(data);
 				             	qty.val('');
 				                qty.attr('max', data);
 				                qty.prop('required',true);
 				                qty.prop('placeholder','Remaining stocks '+data);
-
+				                qty.on({
+				                	invalid: function(e){
+				                		e.target.setCustomValidity("");
+				                		if (!e.target.validity.valid){
+				                			e.target.setCustomValidity("No remaining stocks");
+				                		}
+				                	},
+			                		input: function(e){
+			                			e.target.setCustomValidity("");
+			                		}
+				                });
 				             }
 				          });
 				       }
@@ -483,24 +487,30 @@ jQuery(document).ready(function($) {
 			    var gID = gid.find(':selected').attr('value');
 
 			    	var bID = $(this).find(':selected').attr('value')
-			    	// console.log('brand_id '+bID);
 			    	var myUrl3 = 'generic_id/'+gID+'/brand_id/'+bID+'';
 
 			       if(bID)
 			       {
-			          // console.log(myUrl3);
 			          jQuery.ajax({
 			             url : myUrl3,
 			             type : "GET",
 			             dataType : "json",
 			             success:function(data)
 			             {
-			             	// gid.empty();
-			             	// console.log(data);
 			                qty.attr('max', data);
 			                qty.prop('required',true);
 			                qty.prop('placeholder','Remaining stocks '+data);
-
+			                qty.on({
+			                	invalid: function(e){
+			                		e.target.setCustomValidity("");
+			                		if (!e.target.validity.valid){
+			                			e.target.setCustomValidity("No remaining stocks");
+			                		}
+			                	},
+		                		input: function(e){
+		                			e.target.setCustomValidity("");
+		                		}
+			                });
 			             }
 			          });
 			       }
@@ -551,14 +561,12 @@ jQuery(document).ready(function($) {
 
        if(generic_id)
        {
-          // console.log(myUrl + generic_id);
           jQuery.ajax({
              url : myUrl + generic_id,
              type : "GET",
              dataType : "json",
              success:function(data)
              {
-             	// console.log(data);           	
 
                 brand.empty();
                 qty.val('');
@@ -566,12 +574,8 @@ jQuery(document).ready(function($) {
 						brand.append('<option value="'+ key +'">'+ value +'</option>');
         	   
                 });
-
                 qty.attr('max', data.id);
                 qty.prop('required',true);
-                // qty.prop('placeholder','Remaining stocks '+data);
-
-                // console.log(data.id);
                 var brand_id = brand.find(':selected').attr('value');
                 getData(brand_id);
 
@@ -593,27 +597,33 @@ jQuery(document).ready(function($) {
 			var changed = true;
 		    var gid = $('select[name="generic_id[0][0]"] option:selected').attr('value');
 		    var bid = $('select[name="brand_id[0][0]"] option:selected').attr('value');
-		    // console.log('brand_id '+bid);
 
 		    	var bID = jQuery(this).val();
 		    	var myUrl2 = 'generic_id/'+gid+'/brand_id/'+bID+'';
 
 		       if(bID)
 		       {
-		          // console.log(myUrl2);
 		          jQuery.ajax({
 		             url : myUrl2,
 		             type : "GET",
 		             dataType : "json",
 		             success:function(data)
 		             {
-		             	// gid.empty();
-		             	// console.log(data);
 		             	qty.val('');
 		                qty.attr('max', data);
 		                qty.prop('required',true);
 		                qty.prop('placeholder','Remaining stocks '+data);
-
+		                qty.on({
+		                	invalid: function(e){
+		                		e.target.setCustomValidity("");
+		                		if (!e.target.validity.valid){
+		                			e.target.setCustomValidity("No remaining stocks");
+		                		}
+		                	},
+	                		input: function(e){
+	                			e.target.setCustomValidity("");
+	                		}
+		                });
 		             }
 		          });
 		       }
@@ -629,27 +639,33 @@ jQuery(document).ready(function($) {
 	    
 	    var gid = $('select[name="generic_id[0][0]"] option:selected').attr('value');
 	    var bid = $('select[name="brand_id[0][0]"] option:selected').attr('value');
-	    // console.log('brand_id '+bid);
-
 	    	var bID = jQuery(this).val();
 	    	var myUrl2 = 'generic_id/'+gid+'/brand_id/'+bID+'';
 
 	       if(bID)
 	       {
-	          // console.log(myUrl2);
 	          jQuery.ajax({
 	             url : myUrl2,
 	             type : "GET",
 	             dataType : "json",
 	             success:function(data)
 	             {
-	             	// gid.empty();
-	             	// console.log(data);
 	             	qty.val('');
+	             	console.log(data);
 	                qty.attr('max', data);
 	                qty.prop('required',true);
 	                qty.prop('placeholder', 'Remaining stocks '+data);
-
+	                qty.on({
+	                	invalid: function(e){
+	                		e.target.setCustomValidity("");
+	                		if (!e.target.validity.valid){
+	                			e.target.setCustomValidity("No remaining stocks");
+	                		}
+	                	},
+                		input: function(e){
+                			e.target.setCustomValidity("");
+                		}
+	                });
 	             }
 	          });
 	       }
@@ -673,8 +689,6 @@ jQuery(document).ready(function($) {
 		var brdArr = $('select#brand_id').map(function(){
 		              return this.value
 		    }).get()
-		// console.log('Generic '+genArr+' '+'Brand '+brdArr);
-
 		var newArray = genArr.map((e, i) => e + brdArr[i]);
 
 		var arr = newArray.sort(); 
