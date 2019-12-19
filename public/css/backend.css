@@ -6168,20 +6168,37 @@ figure {
 
 .folded #zapAdminMenuBg,
 .folded #zapAdminMenuWrap {
-  width: 78px;
+  width: 50px;
+}
+
+.folded #Notifs {
+  font-size: 10px;
+  height: 17px;
+  width: 17px;
+  display: block;
+  position: absolute;
+  top: 3px;
+  left: 25px;
 }
 
 .folded #zapAdminMenuWrap .nav {
-  width: 78px;
+  width: 50px;
+}
+
+.folded #zapAdminMenuWrap .nav .dropdown-toggle::after {
+  display: inline;
+  position: absolute;
+  bottom: 0;
+  left: 31%;
 }
 
 .folded #zapAdminMenuWrap .zap-user-info {
-  padding: 10px 6px;
+  padding: 10px 0px;
 }
 
 .folded #zapAdminMenuWrap .zap-image {
   margin-right: 0;
-  margin-left: 12px;
+  margin-left: 7px;
   width: 38px;
 }
 
@@ -6195,7 +6212,7 @@ figure {
 
 .folded #zapContent,
 .folded #zapFooter {
-  margin-left: 78px;
+  margin-left: 50px;
 }
 
 /**dashboard-sidebar*/
@@ -6537,6 +6554,14 @@ figure {
   color: #2ab3a9;
 }
 
+/**apperance*/
+
+.apperance-none {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+       appearance: none;
+}
+
 /**checkbox*/
 
 .zp-chkbox {
@@ -6614,6 +6639,11 @@ figure {
 }
 
 /**filter*/
+
+.admin-hr-employees .zp-filter-clear {
+  top: 9px;
+  right: 11px;
+}
 
 .zp-filter-clear {
   color: #ffbcbc !important;
