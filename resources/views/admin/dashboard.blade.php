@@ -153,7 +153,7 @@
 											<td>{{ $emp->last_name }} {{ $emp->first_name }} {{ $emp->middle_name }}
 												<div class="row-actions">
 													{{-- <a href="{{ route('hr.emp.show', ['employee' => $emp->emp_id]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a> --}}
-													<button class="btn btn-link text-secondary" data-toggle="modal" data-target="#id-{{ $emp->emp_id }}">New</button>
+													<button class="btn btn-link text-secondary" data-toggle="modal" data-target="#id-{{ $emp->emp_id }}">View</button>
 												</div>
 											</td>
 											<td>{{ $emp->departments->department }} - {{ $emp->positions->position }}</td>

@@ -88,13 +88,13 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<form method="post" action="{{ route('store.tag') }}">
+				<form id="cat-cat-form" method="post" action="{{ route('store.tag') }}">
 					@csrf
 					<div class="form-group">
 						<input type="text" name="tag_name" class="form-control" placeholder="Category Name" required autocomplete="off" pattern="[a-zA-Z0-9\s]+" title="Special Characters are not allowed!">
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button id="cat-add" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 						<button type="submit" class="btn btn-primary">Save changes</button>
 					</div>
 				</form>
@@ -103,6 +103,16 @@
 	</div>
 </div>
 
+@endsection
 
-{{-- {{ $posts->links() }} --}}
+@section('scripts')
+<script type="application/javascript">
+	jQuery(document).ready(function($) {
+		$("#cat-cat-form #cat-add").on("click", function(e){
+			e.preventDefault();
+			console.log('clicked');
+			$("input[name='tag_name']").val('');
+		});
+	});
+</script>
 @endsection
