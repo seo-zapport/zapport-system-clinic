@@ -43,7 +43,7 @@ class DiseaseController extends Controller
      */
     public function store(DiseaseRequest $request)
     {
-        if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse') || Gate::allows('isHr')) {
+        if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
             
             $atts = $this->validate($request, $request->rules(), $request->messages());
             $rep = str_replace([" & ", " / ", "-", " - "], '-', $request->disease);

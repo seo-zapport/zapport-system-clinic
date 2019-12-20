@@ -12,7 +12,7 @@
 		<div class="form-row">
 			<div class="form-group col-12 col-md-8 col-lg-4">
 		        <div class="input-group">
-		            <input type="search" name="search" class="form-control" value="{{ (!empty($search)) ? $search : '' }}" placeholder="Search for Employee ID or Name of Employee">
+		            <input type="search" name="search" class="form-control" value="{{ (!empty($search)) ? $search : '' }}" placeholder="Search for Employee ID or Name of Employee" autocomplete="off">
 		            <div class="input-group-append">
 		                <button type="submit" class="btn btn-success mr-2">Search</button>
 		                <a href="{{ route('medical.listsofemployees') }}" class="btn btn-info text-white">Clear</a>

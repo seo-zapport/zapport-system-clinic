@@ -79,7 +79,7 @@
 @endsection
 
 @section('editGender')
-	<div class="form-group col-md-3">
+	<div class="form-group col-md-2">
 		<label for="birth_place">Gender</label>
 		<select name="gender" id="gender" class="form-control">
 			<option value="{{ $employee->gender }}">{{ ($employee->gender == 0) ? "Male" : "Female" }}</option>

@@ -188,9 +188,9 @@
 					<h5 class="text-muted"><i class="fas fa-user"></i> Personal Data</h5>
 					<hr>
 					<div class="form-row">
-						<div class="form-group col-md-3">
-							<label for="birthday">Birthday</label>
-							<input id="birthday" type="text" name="birthday" value="@yield('editBday', old('birthday'))" class="form-control" required oninvalid="this.setCustomValidity('Please Enter Birthday')" oninput="setCustomValidity('')" placeholder="Enter Birthdate">
+						<div class="form-group col-md-4">
+							<label for="birthday">Birthday <span id="bday-label" class="d-none text-danger font-weight-bolder">18 years old above is required</span> </label>
+							<input id="birthday" type="text" name="birthday" value="@yield('editBday', old('birthday'))" class="form-control" required oninvalid="this.setCustomValidity('Please Enter Birthday')" oninput="setCustomValidity('')" placeholder="Birthday">
 						</div>
 						<div class="form-group col-md-6">
 							<label for="birth_place">Birth Place</label>
@@ -199,7 +199,7 @@
 
 						@if (strstr(url()->current(), 'create') == 'create')
 
-							<div class="form-group col-md-3">
+							<div class="form-group col-md-2">
 								<label for="birth_place">Gender</label>
 								<select name="gender" id="gender" class="form-control" required oninvalid="this.setCustomValidity('Please Select Gender')" oninput="setCustomValidity('')">
 									<option value="" selected disabled="">Gender</option>
@@ -382,7 +382,7 @@
 	jQuery(document).ready(function($) {
 
 	    $("#birthday").datepicker({
-	    	// dateFormat: "dd-M-yy",
+	    	dateFormat: "yy-mm-dd",
 	        onSelect: function(value, ui) {
 	            var current = new Date().getTime(), 
 	                dateSelect = new Date(value).getTime();
@@ -402,11 +402,16 @@
 
 
 	    function less_than_18(theAge){
-	        alert("Failed! your age is less than 18. Age: "+theAge);
+	        // alert("Failed! your age is less than 18. Age: "+theAge);
 	        $("#birthday").val('');
+	        $("#birthday").addClass('border border-danger');
+	        $("#bday-label").removeClass('d-none');
+	        // $("#birthday").focus();
 	    }
 	    function greater_than_18(theAge){
-	        alert("Done! your age is greater or equal to 18. Age: "+theAge);
+	        // alert("Done! your age is greater or equal to 18. Age: "+theAge);
+	        $("#birthday").removeClass('border border-danger');
+	        $("#bday-label").addClass('d-none');
 	    }
 
 		$('#empForm').on('keyup keypress', function(e) {
