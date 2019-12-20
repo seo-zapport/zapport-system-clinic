@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm mb-4 top-navbar">
+<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm mb-4 top-navbar fixed-top">
     <div class="container-fluid">
         <button class="zp-navbar-show " type="button" data-target="#navbarSidebarHideShow" aria-controls="navbarSidebarHideShow" aria-expanded="false" aria-label="{{ __('Hide/Show navigation') }}">
             <span class="navbar-toggler-icon"></span>
@@ -26,7 +26,7 @@
                         <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                     </li>
                 @else
-                    <li class="nav-item">
+                    {{--  <li class="nav-item">
                         <a class="nav-link" href="{{ route('logout') }}"
                            onclick="event.preventDefault();
                                          document.getElementById('logout-form').submit();">
@@ -35,8 +35,8 @@
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
                         </form>
-                    </li>
-                    {{-- <li class="nav-item dropdown">
+                    </li>  --}}
+                    <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             {{ Auth::user()->name }} <span class="caret"></span>
                         </a>
@@ -45,14 +45,14 @@
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();
                                              document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
+                                {{ __('Logout') }} <i class="fas fa-sign-out-alt"></i>
                             </a>
 
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                 @csrf
                             </form>
                         </div>
-                    </li> --}}
+                    </li>
                 @endguest
             </ul>
         </div>

@@ -210,7 +210,7 @@
 					</div>
 
 					<div id="meds" class="form-row">
-						<div class="form-group col-4">
+						<div class="form-group col-4 position-relative">
 							<label for="generic_id">Generic Name</label>
 							<select name="generic_id[0][0]" id="generic_id" class="form-control">
 									<option selected="true" disabled="disabled" value=""> Select Generic Name </option>
@@ -220,7 +220,7 @@
 										empty
 									@endforelse
 							</select>
-							<span id="select_generic" class="d-none text-muted font-weight-bold" style="cursor: pointer">Clear</span>
+							<span id="select_generic" class="d-none font-weight-bold zp-filter-clear">x</span>
 						</div>
 						<div class="form-group col-4">
 							<label for="brand_id">Brand Name</label>

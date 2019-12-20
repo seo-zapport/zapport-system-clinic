@@ -21,6 +21,7 @@
 #zapAdminMenuWrap{
 	position: relative;
 	float: left;
+	margin-top: -80px;
 	z-index: 1000;
 
 	.nav{
@@ -224,7 +225,7 @@
 			display: none;
 		}
 	}
-	#zapContent, #zapFooter{
+	.navbar.fixed-top,#zapContent, #zapFooter{
 		margin-left: 50px;
 	}
 

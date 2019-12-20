@@ -1,4 +1,4 @@
-#zapContent,#zapFooter{
+.navbar.fixed-top,#zapContent,#zapFooter{
 	margin-left: 240px;
 }
 #zapContent{
@@ -7,7 +7,7 @@
 		padding-left: 20px;
 	}
 	.wrap{
-		margin: 10px 20px 0 2px;
+		margin: 80px 20px 0 2px;
 	}
 }
 /**Default*/
@@ -182,6 +182,12 @@
 	.zp-filter-clear{
 		top: 9px;
     right: 11px;		
+	}
+}
+.admin-medical-emp{
+	.zp-filter-clear{
+		top: 37px;
+    font-size: 14px;		
 	}
 }
 .zp-filter-clear{

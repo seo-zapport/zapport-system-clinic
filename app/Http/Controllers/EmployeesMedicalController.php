@@ -180,7 +180,9 @@ class EmployeesmedicalController extends Controller
 
             $this->printMedicalRecord($employee, $employeesmedical, $empMeds);
 
-            return view('medical.employeesMedical.show', compact('employee', 'employeesmedical', 'empMeds', 'gens', 'meds'));
+            $class = ( request()->is('medical/employees/*') ) ?'admin-medical-emp' : '';//**add Class in the body*/
+
+            return view('medical.employeesMedical.show', compact('employee', 'employeesmedical', 'empMeds', 'gens', 'meds', 'class'));
 
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();
@@ -292,7 +294,9 @@ class EmployeesmedicalController extends Controller
 
             $this->printEmpMedinfo($employee, $printsearch);
 
-            return view('medical.employeesMedical.employeeInfo', compact('employee', 'gens', 'meds', 'search', 'result', 'bparts', 'diseases'));
+             $class = ( request()->is('medical/employees/*') ) ?'admin-medical-emp' : '';//**add Class in the body*/
+
+            return view('medical.employeesMedical.employeeInfo', compact('employee', 'gens', 'meds', 'search', 'result', 'bparts', 'diseases', 'class'));
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();
             return back()->with('message', 'You\'re not employee!');

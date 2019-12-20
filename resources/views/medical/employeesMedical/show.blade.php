@@ -77,135 +77,160 @@
 			</div>
 		</div>
 		<hr>
-		<div id="diagnosis">
-			<div class="row my-3">
-				<div class="col-12 col-md-8">
-					<h2 class="text-secondary zp-text-16">Body Part: <span class="text-dark">{{ ucwords($employeesmedical->diagnoses->diseases->bodypart->bodypart) }}</span></h2>
-					<h2 class="text-secondary zp-text-16">Disease: <span class="text-dark">{{ ucwords($employeesmedical->diagnoses->diseases->disease) }}</span></h2>
-					<h2 class="text-secondary zp-text-16">Diagnosis: <span class="text-dark">{{ ucwords($employeesmedical->diagnoses->diagnosis) }}</span></h2>
-				</div>
-				@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
-				<div class="col-12 col-md-4 text-right">
-					@if ($employeesmedical->remarks == 'followUp')
-						<button class="btn btn-success text-white" data-toggle="modal" data-target="#exampleModalCenter">Add Notes</button>
-					@endif
-					
-					<button class="btn btn-info text-white" data-toggle="modal" data-target="#exampleModalCenter2">Edit Remarks</button>
-					@if ($employeesmedical->remarks != 'followUp')
-					<button class="btn btn-success text-white btnPrint">Print</button>
-					@endif
-				</div>
-				@endif
-			</div>
+		<div id="diagnosis" class="row">
+			<div class="col-12 col-md-10 m-auto px-0 py-3">
+				<div class="row">
+					<div id="sideInfo" class="col-md-3">
+						<div class="list-group m-auto">
+							<h2 class="text-secondary zp-text-16 list-group-item">Body Part: <span class="text-dark">{{ ucwords($employeesmedical->diagnoses->diseases->bodypart->bodypart) }}</span></h2>
+							<h2 class="text-secondary zp-text-16 list-group-item">Disease: <span class="text-dark">{{ ucwords($employeesmedical->diagnoses->diseases->disease) }}</span></h2>
+							<h2 class="text-secondary zp-text-16 list-group-item">Diagnosis: <span class="text-dark">{{ ucwords($employeesmedical->diagnoses->diagnosis) }}</span></h2>
+							<div class="list-group-item">
+								@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
+									@if ($employeesmedical->remarks == 'followUp')
+										<button class="btn btn-success text-white btn-block" data-toggle="modal" data-target="#exampleModalCenter">Add Notes</button>
+									@endif
 
-			<ul class="nav nav-pills my-4 mx-0" id="pills-tab" role="tablist">
-				<li class="nav-item">
-					<a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Doctor's Note</a>
-				</li>
-				@if (count($employeesmedical->medicines) > 0)
-					<li class="nav-item">
-						<a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Medicines</a>
-					</li>
-				@endif
-				@if (count($employeesmedical->medNote) > 0)
-					<li class="nav-item">
-						<a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact" role="tab" aria-controls="pills-contact" aria-selected="false">List of Follow up checkups</a>
-					</li>
-				@endif
-			</ul>
-			<div class="tab-content" id="pills-tabContent">
-				<div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-					<div class="table-responsive">
-						<table class="table">
-							<thead class="thead-dark">
-								<tr>
-									<th width="38%">Doctor's Note</th>
-									<th>Attachment</th>
-									<th>Attendant</th>
-									<th width="5%">Remarks</th>
-									<th>Date</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td width="38%">{{ ucfirst($employeesmedical->note) }}</td>
-									<td>
-										@if ($employeesmedical->attachment != null)
-											<a class="btn-dl" href="{{ route('download', ['file_name' => $employeesmedical->attachment]) }}" download>
-												{{ $employeesmedical->attachment }}
-											</a>
-										@else
-											<span class="text-muted">None</span>
-										@endif
-									</td>
-									<td class="w-15">{{ ucwords($employeesmedical->user->employee->first_name) }} {{ ucwords($employeesmedical->user->employee->middle_name) }} {{ ucwords($employeesmedical->user->employee->last_name) }}</td>
-									<td width="5%" class="w-15">{{ ($employeesmedical->remarks == 'followUp') ? 'Follow up' : 'Done' }}</td>
-									<td class="text-muted w-15">{{ $employeesmedical->created_at->format('M d, Y - h:i a') }}</td>
-								</tr>
-							</tbody>
-						</table>
+									<button class="btn btn-info text-white btn-block" data-toggle="modal" data-target="#exampleModalCenter2">Edit Remarks</button>
+									@if ($employeesmedical->remarks != 'followUp')
+									<button class="btn btn-success text-white btnPrint">Print</button>
+									@endif
+								@endif
+							</div>
+						</div>
+
 					</div>
-				</div>
-				<div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-					<div class="table-responsive">
-						<table class="table">
-							<thead class="thead-dark">
-								<tr>
-									<th>Generic Name</th>
-									<th>Brand Name</th>
-									<th class="text-center">Quantity</th>
-									<th>Given by</th>
-									<th>Date</th>
-								</tr>
-							</thead>
-							<tbody>
-								@foreach ($empMeds as $meds)
-									<tr>
-										<td><span class="text-dark">{{ ucwords($meds->generic->gname) }}</span></td>
-										<td><span class="text-dark">{{ ucwords($meds->medBrand->bname) }}</span></td>
-										<td class="w-10 text-center"><span class="text-dark">{{ $meds->pivot->quantity }}</span></td>
-										<td class="text-muted w-15">
-											@foreach ($meds->users as $att)
-											<span class="text-dark">{{  ucwords($att->employee->first_name) }} {{ ucwords($att->employee->middle_name) }} {{ ucwords($att->employee->last_name) }}</span>
-											@endforeach
-										</td>
-										<td class="text-muted w-15"><span class="text-dark">{{ $meds->pivot->created_at->format('M d, Y - h:i a') }}</span></td>
-									</tr>
-								@endforeach
-							</tbody>
-						</table>
-					</div>
-				</div>
-				@if (count($employeesmedical->medNote) > 0)
-					<div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-lsabelledby="pills-contact-tab">
-						<div class="table-responsive">
-							<table class="table">
-								<thead class="thead-dark">
-									<tr>
-										<th>Findings</th>
-										<th>Attachment</th>
-										<th>Date</th>
-									</tr>
-								</thead>
-								<tbody>
-									@foreach ($employeesmedical->medNote as $followups)
-										<tr>
-											<td>{{ ucfirst($followups->followup_note) }}</td>
-											<td>
-												@if ($followups->attachment != null)
+					<div id="DiagInfo" class="col-12 col-md-9">
+						<div class="form-group form-row">
+							<div class="col-12 col-md-6">
+								<p class="mb-0"><strong>Remarks:</strong> {{ ($employeesmedical->remarks == 'followUp') ? 'Follow up' : 'Done' }}</p>
+							</div>
+							<div class="col-12 col-md-6">
+								<p class="mb-0 text-right"><strong>Date:</strong> {{ $employeesmedical->created_at->format('M d, Y - h:i a') }}</p>
+							</div>
+						</div>
+						<div class="form-group">
+							<p><strong>Attachment:</strong>
+								@if ($employeesmedical->attachment != null)
+									<a class="btn-dl" href="{{ route('download', ['file_name' => $employeesmedical->attachment]) }}" download>
+										{{ $employeesmedical->attachment }}
+									</a>
+								@else
+									<span class="text-muted">None</span>
+								@endif
+							</p>
+						</div>
+						<div class="form-group">
+							<p><strong>Notes:</strong></p>
+							<div class="doctors-note form-control">
+								{{ ucfirst($employeesmedical->note) }}
+							</div>
+						</div>
+						<div class="form-group">
+							<p><strong>Medicine</strong></p>
+						</div>
+						<div class="form-group form-row">
+							@foreach ($empMeds as $meds)
+								<div class="col-12 col-md-3">
+									<div class="med-wrap ">
+										<div class="med-head med-info">
+											<i class="fas fa-tablets"></i>
+											<div class="med-info">
+												<h2 class="brand">{{ ucwords($meds->medBrand->bname) }}</h2>
+												<h3 class="generic">{{ ucwords($meds->generic->gname) }}</h3>
+												<div class="quantity">
+													<span id="quantity-text">QTY</span>
+													<span id="quantity-num">{{ $meds->pivot->quantity }}</span>
+												</div>
+											</div>
+										</div>
+										<div class="med-body">
+											<p class="mb-0"><strong>Given : </strong>
+												@foreach ($meds->users as $att)
+												{{  ucwords($att->employee->first_name) }} {{ ucwords($att->employee->middle_name) }} {{ ucwords($att->employee->last_name) }}
+												@endforeach
+										</p>
+											<p class="mb-0"><strong>Date : </strong>{{ $meds->pivot->created_at->format('M d, Y - h:i a') }}</p>
+										</div>
+									</div>
+								</div>
+							@endforeach
+						</div>
+						@if (count($employeesmedical->medNote) > 0)
+							<div class="form-group">
+								<p><strong>List of attachment</strong></p>
+							</div>
+							<div class="accordion med-list-findings" id="findings">
+								@foreach ($employeesmedical->medNote as $followups)
+									<div class="card">
+										<div class="card-header" id="heading_{{ $followups->id }}">
+											<h2 class="mb-0">
+												<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse_{{ $followups->id }}" aria-expanded="true" aria-controls="collapse_{{ $followups->id }}">
+													Findings {{ $followups->id }}
+												</button>
+											</h2>
+										</div>
+
+										<div id="collapse_{{ $followups->id }}" class="collapse" aria-labelledby="heading_{{ $followups->id }}" data-parent="#findings">
+											<div class="card-body">
+												<p class="form-group"><strong>Attachments : </strong> @if ($followups->attachment != null)
 													<a class="btn-dl" href="{{ route('download', ['file_name' => $followups->attachment]) }}" download>{{ $followups->attachment }}</a>
 												@else
 													<span class="text-muted">None</span>
-												@endif
-											</td>
-											<td  class="text-muted w-15">{{ $followups->created_at->format('M d, Y - h:i a') }}</td>
-										</tr>
-									@endforeach
-								</tbody>
-							</table>
-						</div>
+												@endif</p>
+												<div class="form-group">
+														<p><strong>Notes : </strong></p>
+														<div class="doctors-note form-control">
+																{{ ucfirst($followups->followup_note) }}
+														</div>
+												</div>
+												<div class="form-group">
+													<p><strong>Medicine </strong></p>
+												</div>
+												<div class="form-row form-group">
+													<div class="col-12 col-md-4">
+														<div class="med-wrap med-side d-flex flex-direction-row">
+															<div class="side-item align-items-center d-flex justify-content-center">
+																<div class="quantity">
+																	<span id="quantity-text">QTY</span><span id="quantity-num">1</span></div>
+																</div>
+																<div class="med-body">
+																	<h2 class="brand">BIOFLU</h2>
+																	<h3 class="generic">Paracetamol</h3>
+																	<p class="mb-1">By:
+																		@foreach ($meds->users as $att)
+																		{{  ucwords($att->employee->first_name) }} {{ ucwords($att->employee->middle_name) }} {{ ucwords($att->employee->last_name) }}
+																		@endforeach
+																	</p>
+																	<p class="mb-1">Date: {{ $followups->created_at->format('M d, Y - h:i a') }}</p>
+																	<i class="fas fa-tablets"></i>
+																</div>
+														</div>
+													</div>													
+												</div>
+
+											</div>
+										</div>
+									</div>
+									{{--  <div class="card">
+										<div class="card-header" id="headingTwo">
+											<h2 class="mb-0">
+												<button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+													Collapsible Group Item #2
+												</button>
+											</h2>
+										</div>
+										<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+											<div class="card-body">
+												Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably havent heard of them accusamus labore sustainable VHS.
+											</div>
+										</div>
+									</div>  --}}
+								@endforeach
+							</div>
+						@endif
 					</div>
-				@endif
+				</div>
 			</div>
 		</div>	
 	</div>
@@ -258,7 +283,7 @@
 									empty
 								@endforelse
 						</select>
-						<span id="select_generic_show" class="d-none text-muted font-weight-bold" style="cursor: pointer">Clear</span>
+						<span id="select_generic_show" class="d-none text-muted zp-filter-clear" ><i class="fas fa-times"></i></span>
 						</div>
 						<div class="form-group col-4">
 						<label for="brand_id">Brand Name</label>

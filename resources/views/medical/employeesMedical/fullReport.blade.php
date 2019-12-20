@@ -193,14 +193,42 @@
 	function printPage()
 	{
 	    var myDropDown = document.getElementById('printThatText');
-	    var annualFilter = document.getElementById('annualFilter');
+			var annualFilter = document.getElementById('annualFilter');
+
+			/**add-class*/
+			collapseClass('.multi-collapse','show');
+
 	    myDropDown.style.display = "none";
 	    annualFilter.style.display = "none";
 	    window.print();
 	    myDropDown.style.display = "block";
-	    annualFilter.style.display = "block";
-	    return true;
+			annualFilter.style.display = "block";
+			
+			
+			return true;
+			
 	}
+
+	/**function-for-adding-class*/
+	const collapseClass = (selector, classAdded) => {		
+		/**adding-class-show*/
+		let addCollapseClass = document.querySelectorAll(selector);
+		
+		/**checking-if-class-is-available*/
+		if(addCollapseClass){
+			/**Loop*/
+			for(let i = 0; i < addCollapseClass.length; i++){
+				/**Add-Class-Show*/
+				addCollapseClass[i].classList.add(classAdded);
+			}
+		}
+
+		/**jQuery-Method-adding-class*/
+		{{-- $(selector).addClass(classAdded);  --}}
+	}
+
+
+
 	jQuery(document).ready(function($){
 		var yearNow = new Date().getFullYear();
 		$("#year-"+yearNow+"").removeClass('d-none');

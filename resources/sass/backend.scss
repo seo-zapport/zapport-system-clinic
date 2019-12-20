@@ -25,62 +25,16 @@
 @import "navigation/admin_sidebar";
 
 /**
- * Primary admin
+ * Login
  *----------------------*/
-#zapWrap{
-	height: auto;
-	min-height: 100%;
-	width: 100%;
-	position: relative;
-}
 @import "site/login";
-@import "site/admin_primary";
 
 /**
- * Section: Media
+ * Primary admin
  *----------------------*/
-@import "site/admin_media";
-
+@import "site/primary";
 
 /**
  * Media Query
  *----------------------*/
 @import "media/mquery";
-
-
-// .user-roles{
-// 	td{
-// 		.role-user{
-// 			display: inline-flex;
-// 			position: relative;
-// 			.show-edit{
-// 				cursor: pointer;
-// 				margin-right: 5px;
-// 				margin-left: 5px;
-// 			}
-// 			.form-hide{
-// 				display: none;
-// 			}
-// 			form{
-// 				margin-right: 5px;
-// 			    position: absolute;
-// 			    left: 72px;
-// 			}
-// 		}
-// 	}
-// }
-// .zap-sidebar{
-//     position: fixed;
-//     width: 290px;
-//     z-index: 999;
-//     background: #005b69;
-//     height: 100%;
-//     top: calc(100px - 45px);
-//     box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
-//     float:left;
-// }
-// .zap-wrap{
-//     margin-left: 290px;
-//     padding-left: 20px;
-//     height: 100%;
-// }

@@ -68,15 +68,29 @@
 	.print-col{
 		text-align: right;
 	}
+	
+	#sideInfo{
+		.list-group{
+			width: 250px;
+		}
+	}
 }
 
 @media (max-width: 768px) {
 	#zapAdminMenuBg, #zapAdminMenuWrap{
 		width: 100%;
 	}
-	#zapContent, #zapFooter{
+	.navbar.fixed-top,
+	#zapContent,#zapFoote{
 		margin-left: 0;
 	}
+	.folded{
+		.navbar.fixed-top,
+		#zapContent,#zapFooter{
+			margin-left: 0;
+		}
+	}
+
 	#zapContent{
 		/**wrapper*/
 		.primary-site{
