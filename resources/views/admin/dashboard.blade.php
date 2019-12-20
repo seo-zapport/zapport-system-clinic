@@ -48,7 +48,7 @@
 												</td>
 												<td>{{ $seen->created_at->format('M d, Y - h:i a') }}</td>
 												<td>{{ ucwords($seen->diagnoses->diagnosis) }}</td>
-												<td>{{ Str::words($seen->note, 10) }}</td>
+												<td>{{ Str::words(ucfirst($seen->note), 10) }}</td>
 												<td>{{ ($seen->remarks == 'followUp') ? 'Follow up' : 'Done' }}</td>
 											</tr>
 											@empty
@@ -90,7 +90,7 @@
 												</td>
 												<td>{{ $empMed->created_at->format('M d, Y - h:i a') }}</td>
 												<td>{{ ucwords($empMed->diagnoses->diagnosis) }}</td>
-												<td>{{ Str::words($empMed->note, 10) }}</td>
+												<td>{{ Str::words(ucfirst($empMed->note), 10) }}</td>
 												<td>{{ ($empMed->remarks == 'followUp') ? 'Follow up' : 'Done' }}</td>
 											</tr>
 											@empty
@@ -119,9 +119,9 @@
 									@forelse (@$noPreEmpMeds as $emp)
 										<tr id="incPre">
 											<td>{{ $emp->emp_id }}</td>
-											<td>{{ $emp->last_name }} {{ $emp->first_name }} {{ $emp->middle_name }}
+											<td>{{ ucfirst($emp->last_name) }} {{ ucfirst($emp->first_name) }} {{ ucfirst($emp->middle_name) }}
 												<div class="row-actions"><a href="{{ route('medical.employeeInfo', ['employee' => $emp->emp_id]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a></div></td>
-											<td>{{ $emp->departments->department }} - {{ $emp->positions->position }}</td>
+											<td>{{ strtoupper($emp->departments->department) }} - {{ strtoupper($emp->positions->position) }}</td>
 										</tr>
 										@empty
 											<tr>
@@ -150,13 +150,13 @@
 									@forelse (@$emps as $emp)
 										<tr id="inc">
 											<td>{{ $emp->emp_id }}</td>
-											<td>{{ $emp->last_name }} {{ $emp->first_name }} {{ $emp->middle_name }}
+											<td>{{ ucfirst($emp->last_name) }} {{ ucfirst($emp->first_name) }} {{ ucfirst($emp->middle_name) }}
 												<div class="row-actions">
 													{{-- <a href="{{ route('hr.emp.show', ['employee' => $emp->emp_id]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a> --}}
-													<button class="btn btn-link text-secondary" data-toggle="modal" data-target="#id-{{ $emp->emp_id }}">New</button>
+													<button class="btn btn-link text-secondary" data-toggle="modal" data-target="#id-{{ $emp->emp_id }}">View</button>
 												</div>
 											</td>
-											<td>{{ $emp->departments->department }} - {{ $emp->positions->position }}</td>
+											<td>{{ strtoupper($emp->departments->department) }} - {{ strtoupper($emp->positions->position) }}</td>
 										</tr>
 										@empty
 											<tr>
@@ -191,9 +191,9 @@
 									@if ($month > 5 || $year >= 1)
 										<tr id="forReg">
 											<td>{{ $emp->emp_id }}</td>
-											<td>{{ $emp->last_name }} {{ $emp->first_name }} {{ $emp->middle_name }}
+											<td>{{ ucfirst($emp->last_name) }} {{ ucfirst($emp->first_name) }} {{ ucfirst($emp->middle_name) }}
 												<div class="row-actions"><a href="{{ route('hr.emp.show', ['employee' => $emp->emp_id]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a></div></td>
-											<td>{{ $emp->departments->department }} - {{ $emp->positions->position }}</td>
+											<td>{{ strtoupper($emp->departments->department) }} - {{ strtoupper($emp->positions->position) }}</td>
 										</tr>
 									@endif
 										@empty

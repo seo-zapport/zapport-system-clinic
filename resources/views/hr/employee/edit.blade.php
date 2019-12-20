@@ -79,7 +79,7 @@
 @endsection
 
 @section('editGender')
-	<div class="form-group col-md-3">
+	<div class="form-group col-md-2">
 		<label for="birth_place">Gender</label>
 		<select name="gender" id="gender" class="form-control">
 			<option value="{{ $employee->gender }}">{{ ($employee->gender == 0) ? "Male" : "Female" }}</option>
@@ -185,7 +185,7 @@
 				</div>
 				<div class="form-group col-md-2">
 					<label class="mr-2 d-block">Action</label>
-					<a id="removeChildren" class="btn btn-danger text-white btn-block"><i class="fa fa-times"></i> Remove Child</a>
+					<a id="removeChildren" class="btn btn-danger text-white btn-block"><i class="fa fa-times"></i> Remove</a>
 				</div>
 			</div>
 		@php

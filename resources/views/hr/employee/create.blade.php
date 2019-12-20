@@ -7,7 +7,7 @@
 @endsection
 @section('dash-content')
 
-<form id="empForm" enctype="multipart/form-data" method="post" action="@yield('action', route('hr.emp.addEmp'))">
+<form id="empForm" enctype="multipart/form-data" method="post" action="@yield('action', route('hr.emp.addEmp'))" autocomplete="off">
 	<div class="row">
 		@csrf
 		@yield('editMethod')
@@ -103,8 +103,8 @@
 						</div>
 
 						<div class="form-group col-md-2">
-							<label for="contact">Contact</label>
-							<input type="number" name="contact" value="@yield('editContact', old('contact'))" class="form-control" placeholder="Contact Number" required oninvalid="this.setCustomValidity('Please Enter Contact Number')" oninput="setCustomValidity('')">
+							<label for="contact">Contact <i id="contactinfo" class="fas fa-info text-info" data-toggle="tooltip" data-placement="top" title="Number pattern ( 9503648391 )"></i> </label>
+							<input type="tel" name="contact" value="@yield('editContact', old('contact'))" class="form-control" placeholder="+63 ( 9503648391 )" required oninvalid="this.setCustomValidity('Please Enter a Valid Contact Number')" oninput="setCustomValidity('')" pattern="[1-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]">
 						</div>
 					</div>
 
@@ -188,9 +188,9 @@
 					<h5 class="text-muted"><i class="fas fa-user"></i> Personal Data</h5>
 					<hr>
 					<div class="form-row">
-						<div class="form-group col-md-3">
-							<label for="birthday">Birthday</label>
-							<input type="date" name="birthday" value="@yield('editBday', old('birthday'))" class="form-control" required oninvalid="this.setCustomValidity('Please Enter Birthday')" oninput="setCustomValidity('')">
+						<div class="form-group col-md-4">
+							<label for="birthday">Birthday <span id="bday-label" class="d-none text-danger font-weight-bolder">18 years old above is required</span> </label>
+							<input id="birthday" type="text" name="birthday" value="@yield('editBday', old('birthday'))" class="form-control" required oninvalid="this.setCustomValidity('Please Enter Birthday')" oninput="setCustomValidity('')" placeholder="Birthday">
 						</div>
 						<div class="form-group col-md-6">
 							<label for="birth_place">Birth Place</label>
@@ -199,7 +199,7 @@
 
 						@if (strstr(url()->current(), 'create') == 'create')
 
-							<div class="form-group col-md-3">
+							<div class="form-group col-md-2">
 								<label for="birth_place">Gender</label>
 								<select name="gender" id="gender" class="form-control" required oninvalid="this.setCustomValidity('Please Select Gender')" oninput="setCustomValidity('')">
 									<option value="" selected disabled="">Gender</option>
@@ -345,21 +345,21 @@
 					<div class="form-row">
 						<div class="form-group col-md-6">
 							<label for="tin_no">TIN Number</label>
-							<input type="number" name="tin_no" value="@yield('editTin', old('tin_no'))" class="form-control" placeholder="TIN Number">
+							<input type="tel" name="tin_no" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" maxlength="9" value="@yield('editTin', old('tin_no'))" class="form-control" placeholder="TIN Number" oninvalid="this.setCustomValidity('Please Enter a valid TIN Number')" oninput="setCustomValidity('')">
 						</div>
 						<div class="form-group col-md-6">
 							<label for="sss_no">SSS Number</label>
-							<input type="number" name="sss_no" value="@yield('editSSS', old('sss_no'))" class="form-control" placeholder="SSS Number">
+							<input type="tel" name="sss_no" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" maxlength="10" value="@yield('editSSS', old('sss_no'))" class="form-control" placeholder="SSS Number" oninvalid="this.setCustomValidity('Please Enter a valid SSS Number')" oninput="setCustomValidity('')">
 						</div>
 					</div>
 					<div class="form-row">
 						<div class="form-group col-md-6">
 							<label for="philhealth_no">Philhealth Number</label>
-							<input type="number" name="philhealth_no" value="@yield('editPhilhealth', old('philhealth_no'))" class="form-control" placeholder="Philhealth Number">
+							<input type="tel" name="philhealth_no" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" maxlength="12" value="@yield('editPhilhealth', old('philhealth_no'))" class="form-control" placeholder="Philhealth Number" oninvalid="this.setCustomValidity('Please Enter a valid Philhealth Number')" oninput="setCustomValidity('')">
 						</div>
 						<div class="form-group col-md-6">
 							<label for="hdmf_no">HDMF Number</label>
-							<input type="number" name="hdmf_no" value="@yield('editHdmf', old('hdmf_no'))" class="form-control" placeholder="HDMF Number">
+							<input type="tel" name="hdmf_no" pattern="[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]" maxlength="12" value="@yield('editHdmf', old('hdmf_no'))" class="form-control" placeholder="HDMF Number" oninvalid="this.setCustomValidity('Please Enter a valid HDMF Number')" oninput="setCustomValidity('')">
 						</div>
 					</div>
 					<hr>
@@ -380,6 +380,90 @@
 @section('scripts')
 <script type="application/javascript">
 	jQuery(document).ready(function($) {
+
+	    $("#birthday").datepicker({
+	    	dateFormat: "yy-mm-dd",
+	        onSelect: function(value, ui) {
+	            var current = new Date().getTime(), 
+	                dateSelect = new Date(value).getTime();
+	                age = current - dateSelect;
+	                ageGet = Math.floor(age / 1000 / 60 / 60 / 24 / 365.25); // age / ms / sec / min / hour / days in a year
+	            if(ageGet < 17){
+	                less_than_18(ageGet);
+	            }else{
+	                greater_than_18(ageGet);
+	            }
+	        },
+	        yearRange: '1900:+0d',//base year:current year
+	        changeMonth: true,
+	        changeYear: true,
+	        defaultDate: '-18yr',
+	    }).attr("readonly", "readonly"); //prevent manual changes
+
+
+	    function less_than_18(theAge){
+	        // alert("Failed! your age is less than 18. Age: "+theAge);
+	        $("#birthday").val('');
+	        $("#birthday").addClass('border border-danger');
+	        $("#bday-label").removeClass('d-none');
+	        // $("#birthday").focus();
+	    }
+	    function greater_than_18(theAge){
+	        // alert("Done! your age is greater or equal to 18. Age: "+theAge);
+	        $("#birthday").removeClass('border border-danger');
+	        $("#bday-label").addClass('d-none');
+	    }
+
+		$('#empForm').on('keyup keypress', function(e) {
+			// Prevent Enter to save data
+			var keyCode = e.keyCode || e.which;
+			if (keyCode === 13) { 
+				e.preventDefault();
+				return false;
+			}
+		});
+
+		// Tin Number Max 9 numbers only
+		$('input[name="tin_no"][max]:not([max=""])').on('input', function(ev) {
+			var $this = $(this);
+			var maxlength = $this.attr('max').length;
+			var value = $this.val();
+			if (value && value.length >= maxlength) {
+				$this.val(value.substr(0, maxlength));
+			}
+		});
+
+		// SSS Number Max 10 numbers only
+		$('input[name="sss_no"][max]:not([max=""])').on('input', function(ev) {
+			var $this = $(this);
+			var maxlength = $this.attr('max').length;
+			var value = $this.val();
+			if (value && value.length >= maxlength) {
+				$this.val(value.substr(0, maxlength));
+			}
+		});
+
+		// Philhealth Number Max 12 numbers only
+		$('input[name="philhealth_no"][max]:not([max=""])').on('input', function(ev) {
+			var $this = $(this);
+			var maxlength = $this.attr('max').length;
+			var value = $this.val();
+			if (value && value.length >= maxlength) {
+				$this.val(value.substr(0, maxlength));
+			}
+		});
+
+		// HDMF Number Max 12 numbers only
+		$('input[name="hdmf_no"][max]:not([max=""])').on('input', function(ev) {
+			var $this = $(this);
+			var maxlength = $this.attr('max').length;
+			var value = $this.val();
+			if (value && value.length >= maxlength) {
+				$this.val(value.substr(0, maxlength));
+			}
+		});
+
+
 		$("#empForm input[name='emp_id']").on('change', function(){
 			var empID = $(this).val();
 			var url = 'create/EmpID/';
@@ -426,6 +510,9 @@
 		   $(".file-upload").get(0).click();
 		   console.log($(".file-upload").get(0));
 		});
+
+		// Tool Tips
+		$("#contactinfo").tooltip();
 	});
 
 // $(document).ready(function() {});

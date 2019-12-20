@@ -615,12 +615,11 @@
 	       		"_method": 'DELETE'
 	       	},
 	       	success:function(response){
-	       		console.log(response)
 	       		if (response.ajaxres == 'success') {
 		       		$('#cont-'+response.id).remove();
 		       		$("#category_lists_edit").append('<div class="mb-1"><input type="checkbox"  name="tag_id[]" value="'+response.id+'" class="zp-chkbox" id="tag_id_'+response.id+'"><label class="form-check-label" for="tag_id_'+response.id+'">'+response.tag_name+'</label></div>')
-		       		// $('select[name="tag_id[]"]').append('<option value="'+ response.id +'">'+ response.tag_name +'</option>');
 	       		}else{
+	       			document.getElementById('errorTag').innerHTML = '';
 	       			$('#errorTag').append('<div class="alert alert-danger">'+response.lt+'</div>')
 	       		}
 	       	}

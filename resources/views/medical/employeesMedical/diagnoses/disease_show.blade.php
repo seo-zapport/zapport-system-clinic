@@ -20,9 +20,11 @@
 						<tr>
 							<td>
 								{{ ucfirst($diagnosis->diagnosis) }}
-								<div class="row-actions">
-									<span id="diagnosisID-{{ $diagnosis->id }}" class="show-edit btn btn-link text-secondary"><i class="far fa-edit"></i> Quick Edit</span>
-								</div>
+								@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
+									<div class="row-actions">
+										<span id="diagnosisID-{{ $diagnosis->id }}" class="show-edit btn btn-link text-secondary"><i class="far fa-edit"></i> Quick Edit</span>
+									</div>
+								@endif
 							</td>
 							<td class="text-center">{{ $diagnosis->employeesMedicals->count() }}</td>
 						</tr>
