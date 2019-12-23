@@ -77,11 +77,11 @@
 			</div>
 		</div>
 		<hr>
-		<div id="diagnosis" class="row">
+		<div id="diagnosis" class="row zpr-row">
 			<div class="col-12 col-md-10 m-auto px-0 py-3">
 				<div class="row">
-					<div id="sideInfo" class="col-md-3">
-						<div class="list-group m-auto">
+					<div id="sideInfo" class="col-12 col-lg-4 mb-3">
+						<div id="sideList" class="list-group m-auto">
 							<h2 class="text-secondary zp-text-16 list-group-item">Body Part: <span class="text-dark">{{ ucwords($employeesmedical->diagnoses->diseases->bodypart->bodypart) }}</span></h2>
 							<h2 class="text-secondary zp-text-16 list-group-item">Disease: <span class="text-dark">{{ ucwords($employeesmedical->diagnoses->diseases->disease) }}</span></h2>
 							<h2 class="text-secondary zp-text-16 list-group-item">Diagnosis: <span class="text-dark">{{ ucwords($employeesmedical->diagnoses->diagnosis) }}</span></h2>
@@ -100,13 +100,13 @@
 						</div>
 
 					</div>
-					<div id="DiagInfo" class="col-12 col-md-9">
+					<div id="DiagInfo" class="col-12 col-lg-8">
 						<div class="form-group form-row">
 							<div class="col-12 col-md-6">
 								<p class="mb-0"><strong>Remarks:</strong> {{ ($employeesmedical->remarks == 'followUp') ? 'Follow up' : 'Done' }}</p>
 							</div>
 							<div class="col-12 col-md-6">
-								<p class="mb-0 text-right"><strong>Date:</strong> {{ $employeesmedical->created_at->format('M d, Y - h:i a') }}</p>
+								<p class="mb-0 text-right zpwm-text-left"><strong>Date:</strong> {{ $employeesmedical->created_at->format('M d, Y - h:i a') }}</p>
 							</div>
 						</div>
 						<div class="form-group">
@@ -131,7 +131,7 @@
 						</div>
 						<div class="form-group form-row">
 							@foreach ($empMeds as $meds)
-								<div class="col-12 col-md-3">
+								<div class="col-12 col-md-6 col-lg-3">
 									<div class="med-wrap ">
 										<div class="med-head med-info">
 											<i class="fas fa-tablets"></i>
@@ -188,7 +188,7 @@
 													<p><strong>Medicine </strong></p>
 												</div>
 												<div class="form-row form-group">
-													<div class="col-12 col-md-4">
+													<div class="col-12 col-md-6 col-lg-4">
 														<div class="med-wrap med-side d-flex flex-direction-row">
 															<div class="side-item align-items-center d-flex justify-content-center">
 																<div class="quantity">
@@ -355,7 +355,12 @@
 			</div>
 			<form id="preEmpForm2" method="post" enctype="multipart/form-data">
 				<div class="modal-body">
-					<input type="file" name="pre_employment_med" class="form-control-file file-upload" required>
+					<div class="input-group">
+						<div class="custom-file">
+							<input type="file" id="pre_employment_med" name="pre_employment_med" class="form-control-file file-upload" required>
+							<label for="pre_employment_med" class="custom-file-label">Choose file</label>
+						</div>
+					</div>
 				</div>
 				<div class="modal-footer">
 					<button id="preEmpShow" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -575,8 +580,16 @@ jQuery(document).ready(function($) {
         i--;
         e--;
       }
-    });
+		});
 
+		$(window).on('load resize',function(){
+			let viewWidth = $(window).width();
+			if(viewWidth >= 1024 ){
+				$(document).on('scroll', function(){
+					$('#sideList').stop(true,true).animate({top:$(this).scrollTop()},100,"linear");
+				});
+			}
+		});
 });
 
     var brand = $('select[name="brand_id[0][0]"]');

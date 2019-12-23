@@ -96,4 +96,15 @@
   .generic {
     font-size: 16px;
   }
+  p{
+    font-size: 13px;
+  }
+}
+
+/**side-info*/
+#sideInfo{
+  .list-group-item {
+    border:none;
+    background-color: rgba(0, 71, 66, 0.05);
+  }
 }

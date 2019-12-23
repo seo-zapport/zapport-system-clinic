@@ -11,6 +11,18 @@
 		}
 	}
 }
+@media (min-width: 1024px){
+	#sideInfo{
+		.list-group{
+			width: 250px !important;
+		}
+		#sideList{
+			position: absolute;
+			left: 0;
+			right: 0;
+		}
+	}
+}
 @media (min-width: 769px){
 	
 	/**admin-navbar*/
@@ -71,12 +83,19 @@
 	
 	#sideInfo{
 		.list-group{
-			width: 250px;
+			width: 100%;
 		}
 	}
 }
 
 @media (max-width: 768px) {
+	/**default*/
+	.zpwm-text-left{text-align: left !important;}
+	.zpwm-text-center{text-align: center !important;}
+	.zpwm-text-right{text-align: right !important;}
+	.zpr-row{margin-right: auto;margin-left: auto;}
+
+
 	#zapAdminMenuBg, #zapAdminMenuWrap{
 		width: 100%;
 	}

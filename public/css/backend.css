@@ -7717,6 +7717,17 @@ figure {
   font-size: 16px;
 }
 
+.med-side p {
+  font-size: 13px;
+}
+
+/**side-info*/
+
+#sideInfo .list-group-item {
+  border: none;
+  background-color: rgba(0, 71, 66, 0.05);
+}
+
 /**
  * Section: Media
  *----------------------*/
@@ -7831,6 +7842,18 @@ label.lbl_upload:focus {
   }
 }
 
+@media (min-width: 1024px) {
+  #sideInfo .list-group {
+    width: 250px !important;
+  }
+
+  #sideInfo #sideList {
+    position: absolute;
+    left: 0;
+    right: 0;
+  }
+}
+
 @media (min-width: 769px) {
   /**admin-navbar*/
 
@@ -7897,11 +7920,30 @@ label.lbl_upload:focus {
   }
 
   #sideInfo .list-group {
-    width: 250px;
+    width: 100%;
   }
 }
 
 @media (max-width: 768px) {
+  /**default*/
+
+  .zpwm-text-left {
+    text-align: left !important;
+  }
+
+  .zpwm-text-center {
+    text-align: center !important;
+  }
+
+  .zpwm-text-right {
+    text-align: right !important;
+  }
+
+  .zpr-row {
+    margin-right: auto;
+    margin-left: auto;
+  }
+
   #zapAdminMenuBg,
   #zapAdminMenuWrap {
     width: 100%;
