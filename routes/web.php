@@ -40,6 +40,13 @@ Route::group(['prefix'	=>	'dashboard'], function(){
 
 });
 
+Route::group(['prefix'	=>	'admin'], function(){
+
+	// Inventory Monitoring
+	Route::get('inventory-monitoring', 'MedicineController@inventoryMonitoring')->name('admin.inventory');
+
+});
+
 Route::group(['prefix'	=>	'posts'], function(){
 
 	Route::get('', 'PostController@index')->name('post.index');

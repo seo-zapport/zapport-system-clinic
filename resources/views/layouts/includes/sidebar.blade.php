@@ -146,6 +146,7 @@
         @endif
         {{-- For Admin --}}
         @if(Gate::check('isAdmin'))
+            <li class="nav-item"><a href="{{ route('admin.inventory') }}" class="nav-link @yield('inventory_monitoring')"><i class="fas fa-user-edit"></i> <span class="collapse-label">Inventory Monitoring</span></a></li>
             <li class="nav-item"><a href="{{ route('register') }}" class="nav-link @yield('register')"><i class="fas fa-user-edit"></i> <span class="collapse-label">Register User</span></a></li>
             <li class="nav-item"><a href="{{ route('password.request') }}" class="nav-link @yield('reset_pwd')"><i class="fas fa-user-edit"></i> <span class="collapse-label">Reset Password</span></a></li>
             <li class="nav-item"><a href="{{ route('dashboard.userRoles') }}" class="nav-link @yield('userRoles')"><i class="fas fa-user-cog"></i> <span class="collapse-label">User Roles</span></a></li>

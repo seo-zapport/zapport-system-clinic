@@ -40,6 +40,7 @@ class CreateEmployeesmedicalsTable extends Migration
 
         Schema::create('employeesmedicals', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('med_num');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('employee_id');
             $table->unsignedBigInteger('diagnosis_id');

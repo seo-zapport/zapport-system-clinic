@@ -82,6 +82,7 @@
 				<div class="row">
 					<div id="sideInfo" class="col-12 col-lg-4 mb-3">
 						<div id="sideList" class="list-group m-auto">
+							<h2 class="text-secondary zp-text-16 list-group-item">Medical Number: <span class="text-dark">{{ $employeesmedical->med_num }}</span></h2>
 							<h2 class="text-secondary zp-text-16 list-group-item">Body Part: <span class="text-dark">{{ ucwords($employeesmedical->diagnoses->diseases->bodypart->bodypart) }}</span></h2>
 							<h2 class="text-secondary zp-text-16 list-group-item">Disease: <span class="text-dark">{{ ucwords($employeesmedical->diagnoses->diseases->disease) }}</span></h2>
 							<h2 class="text-secondary zp-text-16 list-group-item">Diagnosis: <span class="text-dark">{{ ucwords($employeesmedical->diagnoses->diagnosis) }}</span></h2>
@@ -126,9 +127,51 @@
 								{{ ucfirst($employeesmedical->note) }}
 							</div>
 						</div>
+
+						@if (count($employeesmedical->medNote) > 0)
+							<div class="form-group">
+								<p><strong>List of Followup Checkups</strong></p>
+							</div>
+							<div class="accordion med-list-findings mb-3" id="findings">
+								@php
+									$i = 1;
+								@endphp
+								@foreach ($employeesmedical->medNote as $followups)
+									<div class="card">
+										<div class="card-header" id="heading_{{ $followups->id }}">
+											<h2 class="mb-0">
+												<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse_{{ $followups->id }}" aria-expanded="true" aria-controls="collapse_{{ $followups->id }}">
+													Followup Checkup {{ $i++ }}
+												</button>
+											</h2>
+										</div>
+
+										<div id="collapse_{{ $followups->id }}" class="collapse" aria-labelledby="heading_{{ $followups->id }}" data-parent="#findings">
+											<div class="card-body">
+												<p class="form-group"><strong>Attachments : </strong> 
+												@if ($followups->attachment != null)
+													<a class="btn-dl" href="{{ route('download', ['file_name' => $followups->attachment]) }}" download>{{ $followups->attachment }}</a>
+												@else
+													<span class="text-muted">None</span>
+												@endif</p>
+												<div class="form-group">
+													<p><strong>Notes : </strong></p>
+													<div class="doctors-note form-control">
+															{{ ucfirst($followups->followup_note) }}
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								@endforeach
+							</div>
+						@endif
+
+						@if (count($employeesmedical->medicines))
 						<div class="form-group">
 							<p><strong>Medicine</strong></p>
 						</div>
+						@endif
 						<div class="form-group form-row">
 							@foreach ($empMeds as $meds)
 								<div class="col-12 col-md-6 col-lg-3">
@@ -145,7 +188,7 @@
 											</div>
 										</div>
 										<div class="med-body">
-											<p class="mb-0"><strong>Given : </strong>
+											<p class="mb-0"><strong>Given by : </strong>
 												@foreach ($meds->users as $att)
 												{{  ucwords($att->employee->first_name) }} {{ ucwords($att->employee->middle_name) }} {{ ucwords($att->employee->last_name) }}
 												@endforeach
@@ -156,79 +199,6 @@
 								</div>
 							@endforeach
 						</div>
-						@if (count($employeesmedical->medNote) > 0)
-							<div class="form-group">
-								<p><strong>List of attachment</strong></p>
-							</div>
-							<div class="accordion med-list-findings" id="findings">
-								@foreach ($employeesmedical->medNote as $followups)
-									<div class="card">
-										<div class="card-header" id="heading_{{ $followups->id }}">
-											<h2 class="mb-0">
-												<button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse_{{ $followups->id }}" aria-expanded="true" aria-controls="collapse_{{ $followups->id }}">
-													Findings {{ $followups->id }}
-												</button>
-											</h2>
-										</div>
-
-										<div id="collapse_{{ $followups->id }}" class="collapse" aria-labelledby="heading_{{ $followups->id }}" data-parent="#findings">
-											<div class="card-body">
-												<p class="form-group"><strong>Attachments : </strong> @if ($followups->attachment != null)
-													<a class="btn-dl" href="{{ route('download', ['file_name' => $followups->attachment]) }}" download>{{ $followups->attachment }}</a>
-												@else
-													<span class="text-muted">None</span>
-												@endif</p>
-												<div class="form-group">
-														<p><strong>Notes : </strong></p>
-														<div class="doctors-note form-control">
-																{{ ucfirst($followups->followup_note) }}
-														</div>
-												</div>
-												<div class="form-group">
-													<p><strong>Medicine </strong></p>
-												</div>
-												<div class="form-row form-group">
-													<div class="col-12 col-md-6 col-lg-4">
-														<div class="med-wrap med-side d-flex flex-direction-row">
-															<div class="side-item align-items-center d-flex justify-content-center">
-																<div class="quantity">
-																	<span id="quantity-text">QTY</span><span id="quantity-num">1</span></div>
-																</div>
-																<div class="med-body">
-																	<h2 class="brand">BIOFLU</h2>
-																	<h3 class="generic">Paracetamol</h3>
-																	<p class="mb-1">By:
-																		@foreach ($meds->users as $att)
-																		{{  ucwords($att->employee->first_name) }} {{ ucwords($att->employee->middle_name) }} {{ ucwords($att->employee->last_name) }}
-																		@endforeach
-																	</p>
-																	<p class="mb-1">Date: {{ $followups->created_at->format('M d, Y - h:i a') }}</p>
-																	<i class="fas fa-tablets"></i>
-																</div>
-														</div>
-													</div>													
-												</div>
-
-											</div>
-										</div>
-									</div>
-									{{--  <div class="card">
-										<div class="card-header" id="headingTwo">
-											<h2 class="mb-0">
-												<button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-													Collapsible Group Item #2
-												</button>
-											</h2>
-										</div>
-										<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-											<div class="card-body">
-												Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably havent heard of them accusamus labore sustainable VHS.
-											</div>
-										</div>
-									</div>  --}}
-								@endforeach
-							</div>
-						@endif
 					</div>
 				</div>
 			</div>
@@ -248,7 +218,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<form onsubmit="return test(this)" id="myform-show" method="post" action="{{ route('medical.storeFollowup', ['employee' => $employee->emp_id, 'employeesmedical' => $employeesmedical->id]) }}" enctype="multipart/form-data">
+				<form onsubmit="return test(this)" id="myform-show" method="post" action="{{ route('medical.storeFollowup', ['employee' => $employee->emp_id, 'employeesmedical' => $employeesmedical->med_num]) }}" enctype="multipart/form-data">
 					@csrf
 					<div class="form-group">
 						<p class="mb-1">Attachments</p>
@@ -319,7 +289,7 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				<form method="post" action="{{ route('medical.update', ['employee' => $employee->emp_id, 'employeesmedical' =>$employeesmedical->id]) }}">
+				<form method="post" action="{{ route('medical.update', ['employee' => $employee->emp_id, 'employeesmedical' =>$employeesmedical->med_num]) }}">
 					@csrf
 					@method('PUT')
 					<input type="hidden" name="employee_id" value="{{ $employee->id }}">
