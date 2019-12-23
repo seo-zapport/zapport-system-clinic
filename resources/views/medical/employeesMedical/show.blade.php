@@ -85,8 +85,8 @@
 							<h2 class="text-secondary zp-text-16 list-group-item">Body Part: <span class="text-dark">{{ ucwords($employeesmedical->diagnoses->diseases->bodypart->bodypart) }}</span></h2>
 							<h2 class="text-secondary zp-text-16 list-group-item">Disease: <span class="text-dark">{{ ucwords($employeesmedical->diagnoses->diseases->disease) }}</span></h2>
 							<h2 class="text-secondary zp-text-16 list-group-item">Diagnosis: <span class="text-dark">{{ ucwords($employeesmedical->diagnoses->diagnosis) }}</span></h2>
-							<div class="list-group-item">
-								@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
+							@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
+								<div class="list-group-item">
 									@if ($employeesmedical->remarks == 'followUp')
 										<button class="btn btn-success text-white btn-block" data-toggle="modal" data-target="#exampleModalCenter">Add Notes</button>
 									@endif
@@ -95,8 +95,8 @@
 									@if ($employeesmedical->remarks != 'followUp')
 									<button class="btn btn-success text-white btnPrint">Print</button>
 									@endif
-								@endif
-							</div>
+								</div>
+							@endif
 						</div>
 
 					</div>
