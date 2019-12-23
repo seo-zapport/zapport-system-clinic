@@ -40,4 +40,9 @@ class Employeesmedical extends Model
     {
         return $this->belongsTo(Diagnosis::class, 'diagnosis_id');
     }
+
+    public function getRouteKeyName()
+    {
+        return 'med_num';
+    }
 }

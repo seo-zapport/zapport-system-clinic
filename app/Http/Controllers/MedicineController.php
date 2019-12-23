@@ -401,4 +401,14 @@ class MedicineController extends Controller
         File::put(public_path('/storage/uploaded/print/inventory/'.$fileName.'.csv'),$datameds);   
         File::put(public_path('/storage/uploaded/print/inventory/'.$fileName.'.html'),$datamedsprint);   
     }
+
+    public function inventoryMonitoring()
+    {
+        $meds = Medicine::select('brand_id', 'generic_id', 'expiration_date', 'created_at', 'qty_stock', 'user_id')
+                        ->groupBy('brand_id', 'generic_id', 'expiration_date', 'created_at', 'qty_stock', 'user_id')
+                        ->distinct('expiration_date')
+                        ->orderBy('updated_at', 'desc')
+                        ->paginate(10);
+        return view('admin.inventory.index', compact('meds'));
+    }
 }

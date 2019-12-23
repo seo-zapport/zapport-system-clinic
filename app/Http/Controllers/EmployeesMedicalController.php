@@ -57,6 +57,13 @@ class EmployeesmedicalController extends Controller
 
             $this->validate($request, $request->rules(), $request->messages());
 
+            if (Employeesmedical::orderBy('id', 'desc')->first() != null) {
+                $getID = Employeesmedical::orderBy('id', 'desc')->first();
+                $lastID = str_pad($getID->id+1, 6, '0', STR_PAD_LEFT);
+            }else{
+                $lastID = str_pad(1, 6, '0', STR_PAD_LEFT);
+            }
+
             // Find Diagnosis
             $findDiagnosis = Diagnosis::where('diagnosis', $request->input('diagnosis'))->first();
             if ($findDiagnosis != null) {
@@ -113,6 +120,7 @@ class EmployeesmedicalController extends Controller
                 $newRecord->remarks         = $request->remarks;
                 $newRecord->attachment      = $filename;
                 $newRecord->seen            = (Gate::check('isDoctor')) ? 1 : 0;
+                $newRecord->med_num         = $lastID;
                 $newRecord->save();
 
                 return back();
@@ -127,6 +135,7 @@ class EmployeesmedicalController extends Controller
             $newRecord->remarks         = $request->remarks;
             $newRecord->attachment      = $filename;
             $newRecord->seen            = (Gate::check('isDoctor')) ? 1 : 0;
+            $newRecord->med_num         = $lastID;
             $newRecord->save();
             $data = $newRecord->id;
 

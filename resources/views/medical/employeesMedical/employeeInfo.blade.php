@@ -109,21 +109,19 @@
 		<div class="table-responsive">
 			<table class="table table-hover">
 				<thead class="thead-dark">
-					<th>No.</th>
+					<th>Medical Number</th>
 					<th>Diagnosis</th>
 					<th>Notes</th>
 					<th>Date and Time</th>
 					<th>Remarks</th>
 				</thead>
 				<tbody>
-					@php
-						$i = 1;
-					@endphp
 					@forelse ($search as $medsHistory)
 						<tr>
-							<td>{{ $i++ }}</td>
+							<td>{{ $medsHistory->med_num }}
+								<div class="row-actions"><a href="{{ route('medical.show', ['employee' => $employee->emp_id, 'employeesmedical' => $medsHistory->med_num]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i> View</a></div>
+							</td>
 							<td>{{ ucwords($medsHistory->diagnoses->diagnosis) }}
-								<div class="row-actions"><a href="{{ route('medical.show', ['employee' => $employee->emp_id, 'employeesmedical' => $medsHistory->id]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i> View</a></div>
 							</td>
 							<td>{{ Str::words($medsHistory->note, 15) }}</td>
 							<td>{{ $medsHistory->created_at->format('M d, Y - h:i a') }}</td>
