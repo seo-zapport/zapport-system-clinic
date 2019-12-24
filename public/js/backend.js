@@ -45,9 +45,10 @@ jQuery(document).ready(function($){
     jQuery('select[name="generic_id"]').on('change',function(){
        var generic_id = jQuery(this).val();
        // var myUrl = 'medicine/gen/';
-       var url   = window.location.href;
        var hostname = window.location.hostname;
-       if (url ===  "http://"+hostname+"/inventory/medicine") {
+       var url   = window.location.pathname;
+
+       if ("http://"+hostname+""+url ===  "http://"+hostname+"/inventory/medicine") {
          var myUrl = 'medicine/gen/';
        }else {
           var myUrl = "http://"+hostname+"/medical/employees/gen/";

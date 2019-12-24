@@ -63,8 +63,9 @@
 						<tr id="MedRow">
 							<td>{{ ucfirst($med->generic->gname) }}
 								<div class="row-actions">
-									{{-- {{ $med->qty_stock }} --}}
-									<a href="{{ route('medicine.log', ['medbrand' => $med->medBrand->bname_slug, 'generic' => $med->generic->gname_slug]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i> View</a>
+									<a href="{{ route('medicine.log', ['medbrand' => $med->medBrand->bname_slug, 'generic' => $med->generic->gname_slug]) }}" class="show-edit btn btn-link text-secondary">
+										<i class="far fa-eye"></i>View
+									</a>
 								</div>
 							</td>
 							<td>{{ ucwords($med->medBrand->bname) }}</td>
@@ -85,7 +86,6 @@
 		</div>
 	</div>
 </div>
-
 
 @if ($meds != null)
 	<div class="pagination-wrap">{{ $meds->links() }}</div>
@@ -111,7 +111,9 @@
 						<select name="generic_id" id="generic_id" class="form-control" required>
 							<option selected="true" disabled="disabled" value=""> Select Generic name </option>
 							@foreach ($gens as $gen)
-								<option value="{{ $gen->id }}">{{ $gen->gname }}</option>
+								@if ($gen->medbrand->count() > 0)
+									<option value="{{ $gen->id }}">{{ $gen->gname }}</option>
+								@endif
 							@endforeach
 						</select>
 					</div>

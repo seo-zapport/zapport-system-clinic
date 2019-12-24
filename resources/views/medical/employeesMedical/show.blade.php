@@ -27,7 +27,7 @@
 			<div class="col-12 col-md-8 col-lg-10">
 				<div class="row mb-3">
 					<div class="col-12 col-md-6">
-						<p class="med-name">{{ ucwords($employee->last_name . " " . $employee->first_name . " " . $employee->middle_name) }}</p>
+						<p class="med-name">{{ ucwords($employee->last_name . ", " . $employee->first_name . " " . $employee->middle_name) }}</p>
 					</div>
 					<div class="col-12 col-md-6 print-col">
 						<div class="btn-group print-group" role="group">
@@ -148,6 +148,7 @@
 
 										<div id="collapse_{{ $followups->id }}" class="collapse" aria-labelledby="heading_{{ $followups->id }}" data-parent="#findings">
 											<div class="card-body">
+												<small>{{ $followups->created_at->format('M d, Y - h:i a') }}</small>
 												<p class="form-group"><strong>Attachments : </strong> 
 												@if ($followups->attachment != null)
 													<a class="btn-dl" href="{{ route('download', ['file_name' => $followups->attachment]) }}" download>{{ $followups->attachment }}</a>
@@ -248,7 +249,9 @@
 						<select name="generic_id[0][0]" id="generic_id" class="form-control">
 								<option selected="true" disabled="disabled" value=""> Select Generic Name </option>
 								@forelse ($gens as $gen)
-									<option value="{{ $gen->id }}">{{ $gen->gname }}</option>
+									@if ($gen->medbrand->count() > 0)
+										<option value="{{ $gen->id }}">{{ $gen->gname }}</option>
+									@endif
 									@empty
 									empty
 								@endforelse

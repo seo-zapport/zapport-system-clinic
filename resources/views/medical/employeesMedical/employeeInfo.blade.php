@@ -99,7 +99,9 @@
 
 				<div class="col-md-5">
 					<div class="form-group text-right">
-						<button class="btn btn-success text-white btnPrint">Print</button>
+						@if ($search->count() > 0)
+							<button class="btn btn-success text-white btnPrint">Print</button>
+						@endif
 						<button class="btn btn-info text-white" data-toggle="modal" data-target="#exampleModalCenter">New</button>
 						{{-- <a class="btn btn-success" href="{{ route('medical.form', ['employee'=>$employee->emp_id]) }}">Form</a> --}}
 					</div>
@@ -214,7 +216,9 @@
 							<select name="generic_id[0][0]" id="generic_id" class="form-control">
 									<option selected="true" disabled="disabled" value=""> Select Generic Name </option>
 									@forelse ($gens as $gen)
-										<option value="{{ $gen->id }}">{{ $gen->gname }}</option>
+										@if ($gen->medbrand->count() > 0)
+											<option value="{{ $gen->id }}">{{ $gen->gname }}</option>
+										@endif
 										@empty
 										empty
 									@endforelse
