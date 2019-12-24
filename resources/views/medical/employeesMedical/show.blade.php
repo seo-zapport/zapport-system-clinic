@@ -95,7 +95,7 @@
 
 									<button class="btn btn-info text-white btn-block" data-toggle="modal" data-target="#exampleModalCenter2">Edit Remarks</button>
 									@if ($employeesmedical->remarks != 'followUp')
-									<button class="btn btn-success text-white btnPrint">Print</button>
+									<button class="btn btn-success btn-block text-white btnPrint">Print</button>
 									@endif
 								</div>
 							@endif
@@ -328,7 +328,7 @@
 					<div class="input-group">
 						<div class="custom-file">
 							<input type="file" id="pre_employment_med" name="pre_employment_med" class="form-control-file file-upload" required>
-							<label for="pre_employment_med" class="custom-file-label">Choose file</label>
+							<label id="preemplabel" for="pre_employment_med" class="custom-file-label">Choose file</label>
 						</div>
 					</div>
 				</div>
@@ -385,8 +385,15 @@ jQuery(document).ready(function($) {
         });
 	});
 
+	$("#preEmpForm2").on('change', function(e){
+		e.preventDefault();
+		var file = e.target.files[0].name;
+		document.getElementById("preemplabel").innerHTML = file;
+	});
+
 	$("#preEmpForm2 #preEmpShow").on("click", function(e){
 		e.preventDefault();
+		document.getElementById("preemplabel").innerHTML = 'Choose file';
 		$("input[name='pre_employment_med']").val("");
 	});
 

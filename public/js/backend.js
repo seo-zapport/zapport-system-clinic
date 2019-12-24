@@ -203,17 +203,17 @@ jQuery(document).ready(function($){
 
       // Spouse if location == create_________________________________________________________________________________
 
-      $("#empForm input[name='spouse_name'], input[name='date_of_marriage']").on('change', function(){
-        var spouse = $("#empForm input[name='spouse_name']").val();
-        var date_of_marriage = $("#empForm input[name='date_of_marriage']").val();
-        if (spouse == '' && date_of_marriage == '') {
-          $("#empForm input[name='spouse_name']").prop('required', false);
-          $("#empForm input[name='date_of_marriage']").prop('required', false);
-        }else{
-          $("#empForm input[name='spouse_name']").prop('required', true);
-          $("#empForm input[name='date_of_marriage']").prop('required', true);
-        }
-      });
+      // $("#empForm input[name='spouse_name'], input[name='date_of_marriage']").on('change', function(){
+      //   var spouse = $("#empForm input[name='spouse_name']").val();
+      //   var date_of_marriage = $("#empForm input[name='date_of_marriage']").val();
+      //   if (spouse == '' && date_of_marriage == '') {
+      //     $("#empForm input[name='spouse_name']").prop('required', false);
+      //     $("#empForm input[name='date_of_marriage']").prop('required', false);
+      //   }else{
+      //     $("#empForm input[name='spouse_name']").prop('required', true);
+      //     $("#empForm input[name='date_of_marriage']").prop('required', true);
+      //   }
+      // });
 
     }else{
 
@@ -259,8 +259,8 @@ jQuery(document).ready(function($){
         var spouse = $("#empForm input[name='spouse_name']").val();
         var date_of_marriage = $("#empForm input[name='date_of_marriage']").val();
         if (spouse == '' && date_of_marriage == '') {
-          $("#empForm input[name='spouse_name']").prop('required', false);
-          $("#empForm input[name='date_of_marriage']").prop('required', false);
+          $("#empForm input[name='spouse_name']").prop('required', true);
+          $("#empForm input[name='date_of_marriage']").prop('required', true);
         }else{
           $("#empForm input[name='spouse_name']").prop('required', true);
           $("#empForm input[name='date_of_marriage']").prop('required', true);

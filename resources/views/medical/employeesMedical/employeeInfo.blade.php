@@ -192,7 +192,7 @@
 						<div class="input-group mb-3">
 							<div class="custom-file">
 								<input type="file" name="attachment" id="diagnosis" class="custom-file-input form-control-file file-upload">
-								<label for="diagnosis" class="custom-file-label">Choose file</label>
+								<label for="attachment" class="custom-file-label">Choose file</label>
 							</div>
 						</div>
 						{{-- <div class="uploader_wrap">
@@ -270,7 +270,7 @@
 					<div class="input-group">
 						<div class="custom-file">
 							<input type="file" id="pre_employment_med" name="pre_employment_med" class="form-control-file file-upload" required>
-							<label for="pre_employment_med" class="custom-file-label">Choose file</label>
+							<label id="preemplabel" for="pre_employment_med" class="custom-file-label">Choose file</label>
 						</div>
 					</div>
 				</div>
@@ -359,6 +359,12 @@ jQuery(document).ready(function($) {
 		message:"Your document is being created",
 	});
 
+	$("#preEmpForm").on('change', function(e){
+		e.preventDefault();
+		var file = e.target.files[0].name;
+		document.getElementById("preemplabel").innerHTML = file;
+	});
+
 	$("#preEmpForm").on('submit', function(e) {
 		e.preventDefault();
        $.ajaxSetup({
@@ -386,6 +392,7 @@ jQuery(document).ready(function($) {
 
 	$("#preEmpForm #preEmpClosed").on("click", function(e){
 		e.preventDefault();
+		document.getElementById("preemplabel").innerHTML = 'Choose file'
 		$("input[name='pre_employment_med']").val('');
 	});
 
