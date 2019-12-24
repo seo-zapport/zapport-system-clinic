@@ -11,7 +11,6 @@
 </div>
 <div class="card mb-5">
 	<div class="card-body">
-
 		<div class="row zp-countable">
 			<div class="col-12 col-md-6">
 				<p class="text-primary"><span>Total number of Departments:</span> {{ $depsCount->count() }}</p>

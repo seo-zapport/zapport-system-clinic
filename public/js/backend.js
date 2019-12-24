@@ -690,19 +690,30 @@ jQuery(document).ready(function($){
   });
 
  // Sidebar hide&show_____________________________________________________________________________________________________
+
   $('.zp-navbar-show').on('click', function(e){
-    $('#adminMainMenu').stop(true, true).animate({
-      opacity: 1,
-      marginLeft: '0'
-    }, 'slow', 'linear');
+
+    if ($('#adminMainMenu').css("margin-left") == '-999px' ){
+      $('#adminMainMenu').stop(true, true).animate({
+        opacity: 1,
+        marginLeft: '0'
+      }, 'slow', 'linear');
+      if ($('.zp-navbar-show span').hasClass('navbar-toggler-icon') ) {
+        $('.zp-navbar-show span.navbar-toggler-icon').addClass('fas fa-times');
+        $('.zp-navbar-show span').removeClass('navbar-toggler-icon');
+      }
+    }else{
+      $('#adminMainMenu').stop(true, true).animate({
+        opacity: 0,
+        marginLeft: '-999px'
+      }, 'slow', 'linear');
+      if ($('.zp-navbar-show span').hasClass('fas')) {
+        $('.zp-navbar-show span.fas').addClass('navbar-toggler-icon');
+        $('.zp-navbar-show span').removeClass('fas fa-times');
+      }
+    }
   });
 
-  $('.zp-sidebClose').on('click', function(e){
-    $('#adminMainMenu').stop(true, true).animate({
-      opacity: 0,
-      marginLeft: '-999px'
-    }, 'slow', 'linear');
-  });
 
  // Remove inline style_____________________________________________________________________________________________________
   $(window).on('load resize', function(){

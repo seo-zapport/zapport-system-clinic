@@ -61,7 +61,7 @@
 
                                 </div>                                
                             </div>
-                            @if ( request()->is('dashboard*') || request()->is('hr*')  || request()->is('employees*') || request()->is('register') || request()->is('password/reset') || request()->is('media')  || request()->is('posts*')  || request()->is('inventory*')  || request()->is('medical*') || request()->is('category*') )
+                            @if ( request()->is('dashboard*') || request()->is('hr*')  || request()->is('employees*') || request()->is('register') || request()->is('password/reset') || request()->is('media')  || request()->is('posts*')  || request()->is('inventory*')  || request()->is('medical*') || request()->is('category*') || request()->is('admin*') ) 
                                 @yield('dash-content')
                             @else
                                 <div class="card">

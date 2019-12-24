@@ -92,6 +92,7 @@
 
 	#zapAdminMenuBg, #zapAdminMenuWrap{
 		width: 100%;
+		top: 130px;
 	}
 	.navbar.fixed-top,
 	#zapContent,#zapFoote{
@@ -145,9 +146,9 @@
 		position: relative;
 		z-index: 100;
 	}
-	.zp-sidebClose{
-		display: block;
-	}
+	// .zp-sidebClose{
+	// 	display: block;
+	// }
 	.sticky-menu #zapAdminMenuWrap{
 		height: 100%;
 		overflow-y: scroll;

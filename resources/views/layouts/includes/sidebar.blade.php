@@ -7,7 +7,7 @@
     @endif --}}
 
     <ul class="nav flex-column">
-        <div class="zp-sidebClose"><i class="fas fa-times"></i></div>
+        {{--  <div class="zp-sidebClose"><i class="fas fa-times"></i></div>  --}}
         <div class="zap-user-info">
             <div class="zap-image">
                 @auth()

@@ -6023,6 +6023,15 @@ figure {
   left: 3px;
 }
 
+#zapAdminMenuWrap .nav .dropdown-toggle::after {
+  display: inline;
+  position: absolute;
+  bottom: -4px;
+  left: 45%;
+  color: #00988d;
+  z-index: 5;
+}
+
 #zapAdminMenuWrap .nav-item {
   position: relative;
 }
@@ -6169,7 +6178,7 @@ figure {
 
 .folded #zapAdminMenuBg,
 .folded #zapAdminMenuWrap {
-  width: 50px;
+  width: 53px;
 }
 
 .folded #Notifs {
@@ -6183,13 +6192,10 @@ figure {
 }
 
 .folded #zapAdminMenuWrap .nav {
-  width: 50px;
+  width: 53px;
 }
 
 .folded #zapAdminMenuWrap .nav .dropdown-toggle::after {
-  display: inline;
-  position: absolute;
-  bottom: 0;
   left: 31%;
 }
 
@@ -6214,7 +6220,7 @@ figure {
 .folded .navbar.fixed-top,
 .folded #zapContent,
 .folded #zapFooter {
-  margin-left: 50px;
+  margin-left: 53px;
 }
 
 /**dashboard-sidebar*/
@@ -6327,19 +6333,22 @@ figure {
 
 .navbar-light .zp-navbar-show {
   color: rgba(0, 0, 0, 0.5);
-  border-color: rgba(0, 0, 0, 0.1);
+  width: 53px;
 }
 
-.zp-sidebClose {
-  display: none;
-  position: absolute;
-  right: 5px;
-  z-index: 15;
+.navbar-light .zp-navbar-show .fa-times {
+  color: rgba(227, 52, 47, 0.5) !important;
+  font-size: 1.5em;
 }
 
-.zp-sidebClose i {
-  font-size: 28px;
-  color: #fff;
+#zp_sideOut,
+.zp-navbar-show {
+  border-color: transparent;
+}
+
+#zp_sideOut:focus,
+.zp-navbar-show:focus {
+  outline: none;
 }
 
 /**
@@ -7947,6 +7956,7 @@ label.lbl_upload:focus {
   #zapAdminMenuBg,
   #zapAdminMenuWrap {
     width: 100%;
+    top: 130px;
   }
 
   .navbar.fixed-top,
@@ -8002,10 +8012,6 @@ label.lbl_upload:focus {
     margin-left: -999px;
     position: relative;
     z-index: 100;
-  }
-
-  .zp-sidebClose {
-    display: block;
   }
 
   .sticky-menu #zapAdminMenuWrap {
