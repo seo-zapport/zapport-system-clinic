@@ -27,7 +27,7 @@
 			<div class="col-12 col-md-8 col-lg-10">
 				<div class="row mb-3">
 					<div class="col-12 col-md-6">
-						<p class="med-name">{{ ucwords($employee->last_name . " " . $employee->first_name . " " . $employee->middle_name) }}</p>
+						<p class="med-name">{{ ucwords($employee->last_name . ", " . $employee->first_name . " " . $employee->middle_name) }}</p>
 					</div>
 					<div class="col-12 col-md-6 print-col">
 						<div class="btn-group print-group" role="group">
@@ -95,7 +95,7 @@
 
 									<button class="btn btn-info text-white btn-block" data-toggle="modal" data-target="#exampleModalCenter2">Edit Remarks</button>
 									@if ($employeesmedical->remarks != 'followUp')
-									<button class="btn btn-success text-white btnPrint">Print</button>
+									<button class="btn btn-success btn-block text-white btnPrint">Print</button>
 									@endif
 								</div>
 							@endif
@@ -148,6 +148,7 @@
 
 										<div id="collapse_{{ $followups->id }}" class="collapse" aria-labelledby="heading_{{ $followups->id }}" data-parent="#findings">
 											<div class="card-body">
+												<small>{{ $followups->created_at->format('M d, Y - h:i a') }}</small>
 												<p class="form-group"><strong>Attachments : </strong> 
 												@if ($followups->attachment != null)
 													<a class="btn-dl" href="{{ route('download', ['file_name' => $followups->attachment]) }}" download>{{ $followups->attachment }}</a>
@@ -248,7 +249,9 @@
 						<select name="generic_id[0][0]" id="generic_id" class="form-control">
 								<option selected="true" disabled="disabled" value=""> Select Generic Name </option>
 								@forelse ($gens as $gen)
-									<option value="{{ $gen->id }}">{{ $gen->gname }}</option>
+									@if ($gen->medbrand->count() > 0)
+										<option value="{{ $gen->id }}">{{ $gen->gname }}</option>
+									@endif
 									@empty
 									empty
 								@endforelse
@@ -328,7 +331,7 @@
 					<div class="input-group">
 						<div class="custom-file">
 							<input type="file" id="pre_employment_med" name="pre_employment_med" class="form-control-file file-upload" required>
-							<label for="pre_employment_med" class="custom-file-label">Choose file</label>
+							<label id="preemplabel" for="pre_employment_med" class="custom-file-label">Choose file</label>
 						</div>
 					</div>
 				</div>
@@ -385,8 +388,15 @@ jQuery(document).ready(function($) {
         });
 	});
 
+	$("#preEmpForm2").on('change', function(e){
+		e.preventDefault();
+		var file = e.target.files[0].name;
+		document.getElementById("preemplabel").innerHTML = file;
+	});
+
 	$("#preEmpForm2 #preEmpShow").on("click", function(e){
 		e.preventDefault();
+		document.getElementById("preemplabel").innerHTML = 'Choose file';
 		$("input[name='pre_employment_med']").val("");
 	});
 

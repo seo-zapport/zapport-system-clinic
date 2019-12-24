@@ -272,7 +272,7 @@
 						</div>
 					</div>
 
-					<div class="form-row">
+					<div id="spouse" class="form-row @yield('spouse-class', 'd-none')">
 						<div class="form-group col-md-8">
 							<label for="spouse_name">Spouse Name</label>
 							<input type="text" name="spouse_name" value="@yield('editSpouse', old('spouse_name'))" class="form-control" placeholder="Spouse Name">
@@ -380,6 +380,20 @@
 @section('scripts')
 <script type="application/javascript">
 	jQuery(document).ready(function($) {
+
+		$("#civil_status").on('change', function(e){
+			e.preventDefault();
+			var status = $(this).val();
+			if (status == 'married' || status == 'separated' || status == 'widowed'){
+				$("#spouse").removeClass('d-none');
+				$("input[name='spouse_name']").prop("required", true)
+				$("input[name='date_of_marriage']").prop("required", true)
+			}else{
+				$("#spouse").addClass('d-none');
+				$("input[name='spouse_name']").prop("required", false)
+				$("input[name='date_of_marriage']").prop("required", false)
+			}
+		});
 
 	    $("#birthday").datepicker({
 	    	dateFormat: "yy-mm-dd",

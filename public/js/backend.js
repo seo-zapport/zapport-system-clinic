@@ -45,9 +45,10 @@ jQuery(document).ready(function($){
     jQuery('select[name="generic_id"]').on('change',function(){
        var generic_id = jQuery(this).val();
        // var myUrl = 'medicine/gen/';
-       var url   = window.location.href;
        var hostname = window.location.hostname;
-       if (url ===  "http://"+hostname+"/inventory/medicine") {
+       var url   = window.location.pathname;
+
+       if ("http://"+hostname+""+url ===  "http://"+hostname+"/inventory/medicine") {
          var myUrl = 'medicine/gen/';
        }else {
           var myUrl = "http://"+hostname+"/medical/employees/gen/";
@@ -203,17 +204,17 @@ jQuery(document).ready(function($){
 
       // Spouse if location == create_________________________________________________________________________________
 
-      $("#empForm input[name='spouse_name'], input[name='date_of_marriage']").on('change', function(){
-        var spouse = $("#empForm input[name='spouse_name']").val();
-        var date_of_marriage = $("#empForm input[name='date_of_marriage']").val();
-        if (spouse == '' && date_of_marriage == '') {
-          $("#empForm input[name='spouse_name']").prop('required', false);
-          $("#empForm input[name='date_of_marriage']").prop('required', false);
-        }else{
-          $("#empForm input[name='spouse_name']").prop('required', true);
-          $("#empForm input[name='date_of_marriage']").prop('required', true);
-        }
-      });
+      // $("#empForm input[name='spouse_name'], input[name='date_of_marriage']").on('change', function(){
+      //   var spouse = $("#empForm input[name='spouse_name']").val();
+      //   var date_of_marriage = $("#empForm input[name='date_of_marriage']").val();
+      //   if (spouse == '' && date_of_marriage == '') {
+      //     $("#empForm input[name='spouse_name']").prop('required', false);
+      //     $("#empForm input[name='date_of_marriage']").prop('required', false);
+      //   }else{
+      //     $("#empForm input[name='spouse_name']").prop('required', true);
+      //     $("#empForm input[name='date_of_marriage']").prop('required', true);
+      //   }
+      // });
 
     }else{
 
@@ -259,8 +260,8 @@ jQuery(document).ready(function($){
         var spouse = $("#empForm input[name='spouse_name']").val();
         var date_of_marriage = $("#empForm input[name='date_of_marriage']").val();
         if (spouse == '' && date_of_marriage == '') {
-          $("#empForm input[name='spouse_name']").prop('required', false);
-          $("#empForm input[name='date_of_marriage']").prop('required', false);
+          $("#empForm input[name='spouse_name']").prop('required', true);
+          $("#empForm input[name='date_of_marriage']").prop('required', true);
         }else{
           $("#empForm input[name='spouse_name']").prop('required', true);
           $("#empForm input[name='date_of_marriage']").prop('required', true);

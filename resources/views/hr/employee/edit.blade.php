@@ -57,6 +57,7 @@
 @section('editFatherBday', $employee->father_birthday->format('Y-m-d'))
 @section('editMotherName', ucwords($employee->mother_name))
 @section('editMotherBday', $employee->mother_birthday->format('Y-m-d'))
+@section('spouse-class', ($employee->civil_status == 'married' || $employee->civil_status == 'separated' || $employee->civil_status == 'widowed') ? '' : 'd-none')
 @section('editSpouse', ucwords($employee->spouse_name))
 @section('editMarriageDate', ($employee->date_of_marriage != null) ? $employee->date_of_marriage : $employee->date_of_marriage)
 

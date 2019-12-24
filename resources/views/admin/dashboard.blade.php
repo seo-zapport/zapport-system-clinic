@@ -251,7 +251,7 @@
 									<tr>
 										<td>{{ $i++ }}</td>
 										<td>{{ $medsHistory->diagnoses->diagnosis }}
-											<div class="row-actions"><a href="{{ route('dashboard.show', ['employee' => $medsHistory->employee->emp_id, 'employeesmedical' => $medsHistory->id]) }}" class="btn text-secondary"><i class="far fa-eye"></i> View
+											<div class="row-actions"><a href="{{ route('dashboard.show', ['employee' => $medsHistory->employee->emp_id, 'employeesmedical' => $medsHistory->med_num]) }}" class="btn text-secondary"><i class="far fa-eye"></i> View
 											</a></div></td>
 										<td>{{ Str::words($medsHistory->note, 15) }}</td>
 										<td>{{ ($medsHistory->remarks == 'followUp') ? 'Follow up' : 'Done' }}</td>
