@@ -30,27 +30,28 @@
 					</div>
 					<div class="col-12 col-md-6 print-col">
 						<div class="btn-group print-group" role="group">
-							<button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<button id="btnGroupDrop1" type="button" class="btn  {{ (@$employee->preemployment == null ) ? 'btn-secondary ' : 'btn-success' }} dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								Pre-employment Medical
 							</button>
 							<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
 								@if (@$employee->preemployment == null)
 									@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
-										<a class="dropdown-item" href="#" data-toggle="modal" data-target="#pre-emp">Add</a>
+										<a class="dropdown-item" href="#" data-toggle="modal" data-target="#pre-emp"><i class="fas fa-folder-plus"></i> Add</a>
 									@else
-										<a class="dropdown-item" href="#" onclick="return confirm('Access denied! Only Doctor or Nurse can add an Item')">Add</a>
+										<a class="dropdown-item" href="#" onclick="return confirm('Access denied! Only Doctor or Nurse can add an Item')"><i class="fas fa-folder-plus"></i> Add</a>
 									@endif
 								@else
 									@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
 										<form method="POST" action="{{ route('pre_emp.delete', ['pre_emp.delete' => @$employee->preemployment->id]) }}">
 											@csrf
 											@method('DELETE')
-											<button class="dropdown-item"  onclick="return confirm('Are you sure you want to delete {{ @$employee->preemployment->pre_employment_med }} File?')" data-id="{{ @$employee->preemployment->id }}">
-												Remove
+											<button class="dropdown-item text-danger"  onclick="return confirm('Are you sure you want to delete {{ @$employee->preemployment->pre_employment_med }} File?')" data-id="{{ @$employee->preemployment->id }}">
+												<i class="fas fa-trash-alt"></i> Remove
 											</button>
 										</form>
 									@endif
-										<a class="dropdown-item" href="{{ route('pre_emp.download', ['pre_emp' => @$employee->preemployment->pre_employment_med]) }}" download> View</a>
+										<div class="dropdown-divider"></div>
+										<a class="dropdown-item text-info" href="{{ route('pre_emp.download', ['pre_emp' => @$employee->preemployment->pre_employment_med]) }}" download><i class="far fa-eye"></i> View</a>
 								@endif
 							</div>
 						</div>
@@ -266,7 +267,12 @@
 			</div>
 			<form id="preEmpForm" method="post" enctype="multipart/form-data">
 				<div class="modal-body">
-					<input type="file" name="pre_employment_med" class="form-control-file file-upload" required>
+					<div class="input-group">
+						<div class="custom-file">
+							<input type="file" id="pre_employment_med" name="pre_employment_med" class="form-control-file file-upload" required>
+							<label for="pre_employment_med" class="custom-file-label">Choose file</label>
+						</div>
+					</div>
 				</div>
 				<div class="modal-footer">
 					<button id="preEmpClosed" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
