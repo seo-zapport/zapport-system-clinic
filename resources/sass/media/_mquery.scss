@@ -13,13 +13,13 @@
 }
 @media (min-width: 1024px){
 	#sideInfo{
-		.list-group{
-			width: 250px !important;
-		}
+		// .list-group{
+		// 	width: 250px !important;
+		// }
 		#sideList{
-			position: absolute;
-			left: 0;
-			right: 0;
+			position: sticky;
+			position: -webkit-sticky;
+			top: 83px;
 		}
 	}
 }
@@ -79,12 +79,6 @@
 	}
 	.print-col{
 		text-align: right;
-	}
-	
-	#sideInfo{
-		.list-group{
-			width: 100%;
-		}
 	}
 }
 

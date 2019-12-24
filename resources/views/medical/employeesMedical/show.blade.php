@@ -14,7 +14,7 @@
 <div class="card mb-3">
 	<div class="card-body">
 		<div class="row">
-			<div class="col-12 col-md-4 col-lg-3">
+			<div class="col-12 col-md-4 col-lg-2">
 				@if (@$employee->profile_img != null)
 					<div class="employee_wrap mb-0">
 						<div class="panel employee-photo rounded">
@@ -24,34 +24,35 @@
 						
 				@endif
 			</div>
-			<div class="col-12 col-md-8 col-lg-9">
+			<div class="col-12 col-md-8 col-lg-10">
 				<div class="row mb-3">
 					<div class="col-12 col-md-6">
 						<p class="med-name">{{ ucwords($employee->last_name . " " . $employee->first_name . " " . $employee->middle_name) }}</p>
 					</div>
 					<div class="col-12 col-md-6 print-col">
 						<div class="btn-group print-group" role="group">
-							<button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<button id="btnGroupDrop1" type="button" class="btn {{ (@$employee->preemployment == null ) ? 'btn-secondary ' : 'btn-success' }} dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 								Pre-employment Medical
 							</button>
-							<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+							<div class="dropdown-menu " aria-labelledby="btnGroupDrop1">
 								@if (@$employee->preemployment == null)
 									@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
-										<a class="dropdown-item" href="#" data-toggle="modal" data-target="#pre-emp">Add</a>
+										<a class="dropdown-item" href="#" data-toggle="modal" data-target="#pre-emp"><i class="fas fa-folder-plus"></i> Add</a>
 									@else
-										<a class="dropdown-item" href="#" onclick="return confirm('Access denied! Only Doctor or Nurse can add an Item')">Add</a>
+										<a class="dropdown-item" href="#" onclick="return confirm('Access denied! Only Doctor or Nurse can add an Item')"><i class="fas fa-folder-plus"></i> Add</a>
 									@endif
 								@else
 									@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
 										<form method="POST" action="{{ route('pre_emp.delete', ['pre_emp.delete' => @$employee->preemployment->id]) }}">
 											@csrf
 											@method('DELETE')
-											<button class="dropdown-item"  onclick="return confirm('Are you sure you want to delete {{ @$employee->preemployment->pre_employment_med }} File?')" data-id="{{ @$employee->preemployment->id }}">
-												Remove
+											<button class="dropdown-item text-danger"  onclick="return confirm('Are you sure you want to delete {{ @$employee->preemployment->pre_employment_med }} File?')" data-id="{{ @$employee->preemployment->id }}">
+												<i class="fas fa-trash-alt"></i> Remove
 											</button>
 										</form>
 									@endif
-									<a class="dropdown-item" href="{{ route('pre_emp.download', ['pre_emp' => @$employee->preemployment->pre_employment_med]) }}" download>View</a>
+									<div class="dropdown-divider"></div>
+									<a class="dropdown-item text-info" href="{{ route('pre_emp.download', ['pre_emp' => @$employee->preemployment->pre_employment_med]) }}" download><i class="far fa-eye"></i> View</a>
 								@endif
 							</div>
 						</div>
@@ -77,15 +78,15 @@
 			</div>
 		</div>
 		<hr>
-		<div id="diagnosis" class="row zpr-row">
-			<div class="col-12 col-md-10 m-auto px-0 py-3">
+		<div id="diagnosis" class="zpr-row">
+			<div class="container-fluid m-auto px-0 py-3">
 				<div class="row">
-					<div id="sideInfo" class="col-12 col-lg-4 mb-3">
+					<div id="sideInfo" class="col-12 col-md-4 col-lg-2 mb-3">
 						<div id="sideList" class="list-group m-auto">
-							<h2 class="text-secondary zp-text-16 list-group-item">Medical Number: <span class="text-dark">{{ $employeesmedical->med_num }}</span></h2>
-							<h2 class="text-secondary zp-text-16 list-group-item">Body Part: <span class="text-dark">{{ ucwords($employeesmedical->diagnoses->diseases->bodypart->bodypart) }}</span></h2>
-							<h2 class="text-secondary zp-text-16 list-group-item">Disease: <span class="text-dark">{{ ucwords($employeesmedical->diagnoses->diseases->disease) }}</span></h2>
-							<h2 class="text-secondary zp-text-16 list-group-item">Diagnosis: <span class="text-dark">{{ ucwords($employeesmedical->diagnoses->diagnosis) }}</span></h2>
+							<h2 class="text-secondary zp-text-14 list-group-item">Medical Number: <span class="text-dark">{{ $employeesmedical->med_num }}</span></h2>
+							<h2 class="text-secondary zp-text-14 list-group-item">Body Part: <span class="text-dark">{{ ucwords($employeesmedical->diagnoses->diseases->bodypart->bodypart) }}</span></h2>
+							<h2 class="text-secondary zp-text-14 list-group-item">Disease: <span class="text-dark">{{ ucwords($employeesmedical->diagnoses->diseases->disease) }}</span></h2>
+							<h2 class="text-secondary zp-text-14 list-group-item">Diagnosis: <span class="text-dark">{{ ucwords($employeesmedical->diagnoses->diagnosis) }}</span></h2>
 							@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
 								<div class="list-group-item">
 									@if ($employeesmedical->remarks == 'followUp')
@@ -99,9 +100,8 @@
 								</div>
 							@endif
 						</div>
-
 					</div>
-					<div id="DiagInfo" class="col-12 col-lg-8">
+					<div id="DiagInfo" class="col-12 col-md-8 col-lg-10">
 						<div class="form-group form-row">
 							<div class="col-12 col-md-6">
 								<p class="mb-0"><strong>Remarks:</strong> {{ ($employeesmedical->remarks == 'followUp') ? 'Follow up' : 'Done' }}</p>
@@ -552,14 +552,14 @@ jQuery(document).ready(function($) {
       }
 		});
 
-		$(window).on('load resize',function(){
+		{{--  $(window).on('load resize',function(){
 			let viewWidth = $(window).width();
 			if(viewWidth >= 1024 ){
 				$(document).on('scroll', function(){
 					$('#sideList').stop(true,true).animate({top:$(this).scrollTop()},100,"linear");
 				});
 			}
-		});
+		});  --}}
 });
 
     var brand = $('select[name="brand_id[0][0]"]');
