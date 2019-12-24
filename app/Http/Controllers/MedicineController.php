@@ -27,6 +27,10 @@ class MedicineController extends Controller
      */
     public function index(Request $request)
     {
+        // $qry = Medicine::select('brand_id', 'generic_id', \DB::raw('COUNT(availability) as remaining'))->groupBy('brand_id', 'generic_id', 'availability')->where('availability', 0)->get();
+
+        // dd($qry->where('remaining', '<=', 10));
+
         if (Gate::allows('isAdmin') || Gate::allows('isHr') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
             if ($request->has('search')) {
                 $searchGen = Generic::where('gname', $request->search)->first();
