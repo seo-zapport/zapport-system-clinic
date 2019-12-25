@@ -37,7 +37,7 @@
 	<div class="card-body" id="medical_employee_list">
 		<div class="row zp-countable">
 			<div class="col-12 col-md-6">
-				<p class="text-primary">Total number of Employee: <span>{{ $totalEmps->count() }}</span></p>
+				<p class="zp-2a9">Total number of Employee: <span>{{ $totalEmps->count() }}</span></p>
 			</div>
 			<div class="col-12 col-md-6 count_items">
 				<p><span class="zp-tct">Total Items: </span> {{ $emps->count() }} <span  class="zp-ct"> Items</span></p>

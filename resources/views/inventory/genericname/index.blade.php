@@ -33,7 +33,7 @@
 	<div class="card-body">
 		<div class="row zp-countable">
 			<div class="col-12 col-md-6">
-				<p class="text-primary">Total number of Generics: <span>{{ $gensCount->count() }}</span></p>
+				<p class="zp-2a9">Total number of Generics: <span>{{ $gensCount->count() }}</span></p>
 			</div>
 			<div class="col-12 col-md-6 count_items">
 				<p><span class="zp-tct">Total Items: </span> {{ $gens->count() }} <span  class="zp-ct"> Items</span></p>

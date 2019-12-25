@@ -7086,6 +7086,8 @@ figure {
   position: relative;
   box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.1), inset 0 0 0 1px rgba(0, 0, 0, 0.05);
   background: #eee;
+  transition: box-shadow ease 0.5s;
+  box-shadow: 0 0 0 0px rgba(0, 152, 141, 0);
   cursor: pointer;
 }
 
@@ -7093,6 +7095,13 @@ figure {
   content: "";
   display: block;
   padding-top: 100%;
+}
+
+.zp-core-ui .attachment-preview:active,
+.zp-core-ui .attachment-preview:hover,
+.zp-core-ui .attachment-preview:focus {
+  box-shadow: 0 0 0 3px rgba(0, 152, 141, 0.5);
+  border-radius: 1px;
 }
 
 .zp-core-ui .attachment .thumbnail {
@@ -7569,6 +7578,37 @@ figure {
   background-clip: padding-box;
   border: 1px solid #ced4da;
   border-radius: 0.25rem;
+}
+
+.post-wrap #ftimg {
+  text-align: center;
+  background: rgba(0, 0, 0, 0.35);
+  box-shadow: inset 0 0px 17px rgba(0, 0, 0, 0.26);
+}
+
+.post-wrap #ftimg img {
+  margin: 0 auto;
+}
+
+.post-wrap #rmvImg {
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  line-height: 1.4;
+  font-size: 12px;
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  background: rgba(255, 0, 0, 0.5);
+  text-align: center;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.5s ease;
+}
+
+.post-wrap #rmvImg:hover,
+.post-wrap #rmvImg:focus {
+  background: #ff0000;
 }
 
 #searchDiagnosis ul {

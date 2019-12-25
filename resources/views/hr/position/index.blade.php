@@ -13,7 +13,7 @@
 	<div class="card-body">
 		<div class="row zp-countable">
 			<div class="col-12 col-md-6">
-				<p class="text-primary">Total number of Positions: <span>{{ count($arr) }}</span></p>
+				<p class="zp-2a9">Total number of Positions: <span>{{ count($arr) }}</span></p>
 			</div>
 			<div class="col-12 col-md-6 count_items">
 				<p><span id="totitems" class="zp-ct"> Items</span></p>

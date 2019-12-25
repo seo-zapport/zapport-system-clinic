@@ -399,7 +399,7 @@
 
 		var countTR2 = $("#prntEmpCount tbody #prntEmpRow").length;
 		$("#prntEmpRslt").html('');
-		$("#prntEmpRslt").append('<p class="font-weight-bold" style="font-family: arial; font-size: 10px; color: #212529;">Total number of employees: '+ countTR2 +'</p>');
+		$("#prntEmpRslt").append('<p class="font-weight-bold zp-2a9" style="font-family: arial; font-size: 10px; color: #212529;">Total number of employees: '+ countTR2 +'</p>');
 
 		/**for-addition-of-class-apperance*/
 		zpApperanceClass('gender');
