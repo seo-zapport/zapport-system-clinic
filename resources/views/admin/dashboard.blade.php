@@ -43,7 +43,7 @@
 												<td>{{ $seen->employee->emp_id }}</td>
 												<td>{{ ucwords($seen->employee->last_name) }} {{ ucwords($seen->employee->first_name) }} {{ ucwords($seen->employee->middle_name) }}
 													<div class="row-actions">
-														<a href="{{ route('medical.show', ['employee' => $seen->employee->emp_id, 'employeesmedical' => $seen->id]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a>	
+														<a href="{{ route('medical.show', ['employee' => $seen->employee->emp_id, 'employeesmedical' => $seen->med_num]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a>	
 													</div>
 												</td>
 												<td>{{ $seen->created_at->format('M d, Y - h:i a') }}</td>
@@ -85,7 +85,7 @@
 												<td>
 													{{ ucwords($empMed->employee->last_name) }} {{ ucwords($empMed->employee->first_name) }} {{ ucwords($empMed->employee->middle_name) }}
 													<div class="row-actions">
-														<a href="{{ route('medical.show', ['employee' => $empMed->employee->emp_id, 'employeesmedical' => $empMed->id]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a>
+														<a href="{{ route('medical.show', ['employee' => $empMed->employee->emp_id, 'employeesmedical' => $empMed->med_num]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a>
 													</div>
 												</td>
 												<td>{{ $empMed->created_at->format('M d, Y - h:i a') }}</td>

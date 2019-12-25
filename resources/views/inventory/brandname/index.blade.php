@@ -13,6 +13,22 @@
 	</div>
 @endif
 
+<div class="col-12 col-md-6 p-0">
+	<form method="get" autocomplete="off">
+		<div class="form-row">
+	        <div class="form-group col-12 col-md-8">
+		        <div class="input-group">
+		            <input type="search" name="search" class="form-control" value="{{ (!empty($search)) ? $search : '' }}" placeholder="Search for Brand Name">
+		            <div class="input-group-append">
+		                <button type="submit" class="btn btn-success mr-2">Search</button>
+						<a href="{{ route('brandname') }}" class="btn btn-info text-white">Clear</a>
+		            </div>
+		        </div>
+	        </div>
+		</div>
+	</form>	
+</div>
+
 <div class="card mb-3">
 	<div class="card-body">
 		<div class="row zp-countable">
@@ -33,7 +49,7 @@
 					@forelse ($brands as $brand)
 						<tr>
 							<td>
-				        		{{ ucwords($brand->bname) }}
+				        		{{ strtoupper($brand->bname) }}
 								<div class="row-actions">
 									<a href="{{ route('brandname.show', ['medbrand' => $brand->bname_slug]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i> View</a>
 									@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
@@ -86,7 +102,7 @@
 					<select name="generic_id" id="generic_id" class="form-control" required>
 							<option selected="true" disabled="disabled" value=""> Select Generic Name </option>
 						@foreach ($gens as $gen)
-							<option value="{{ $gen->id }}">{{ $gen->gname }}</option>
+							<option value="{{ $gen->id }}">{{ strtoupper($gen->gname) }}</option>
 						@endforeach
 					</select>
 					</div>

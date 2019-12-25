@@ -65,7 +65,7 @@ jQuery(document).ready(function($){
              {
                 jQuery('select[name="brand_id"]').empty();
                 jQuery.each(data, function(key,value){
-                   $('select[name="brand_id"]').append('<option value="'+ key +'">'+ value +'</option>');
+                   $('select[name="brand_id"]').append('<option value="'+ key +'">'+ value.toUpperCase() +'</option>');
                 });
              }
           });

@@ -24,7 +24,7 @@
 				<tbody>
 					@forelse ($bparts as $bpart)
 						<tr>
-							<td>{{ ucfirst($bpart->bodypart) }}
+							<td>{{ ucwords($bpart->bodypart) }}
 								<div class="row-actions">
 									@if (Gate::check('isAdmin') || Gate::check('isNurse') || Gate::check('isDoctor'))
 										<span id="{{ $bpart->bodypart_slug }}" class="show-edit btn btn-link text-secondary"><i class="far fa-edit"></i> Quick Edit</span> <span class="text-muted">|</span>

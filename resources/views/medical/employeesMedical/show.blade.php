@@ -250,7 +250,7 @@
 								<option selected="true" disabled="disabled" value=""> Select Generic Name </option>
 								@forelse ($gens as $gen)
 									@if ($gen->medbrand->count() > 0)
-										<option value="{{ $gen->id }}">{{ $gen->gname }}</option>
+										<option value="{{ $gen->id }}">{{ strtoupper($gen->gname) }}</option>
 									@endif
 									@empty
 									empty
@@ -406,7 +406,7 @@ jQuery(document).ready(function($) {
     var o = $('#editMedicine').length;
     // Children
     $("#addMedicine").click(function(event) {
-      $('<div id="medicineField" class="col-12 form-row medicine-field"><div class="mb-2 col-md-4"><select name="generic_id['+i+']['+i+']" id="generic_id" class="form-control" required><option selected="true" disabled="disabled"> Select Generic Name </option>@foreach ($gens as $gen)<option value="{{ $gen->id }}">{{ $gen->gname }}</option>@endforeach</select></div><div class="mb-2 col-md-4"><select name="brand_id['+i+']['+i+']" id="brand_id" class="form-control" required><option selected="true" disabled="disabled"> Select Medicine </option></select></div><div class="mb-2 col-md-4"><input type="number" name="quantity['+i+']['+i+']" min="1" class="form-control" placeholder="Quantity"></div><a id="removeChildren" class="btn text-danger text-white position-absolute remove-actions" style="right: -16px;top: 0px;"><i class="fa fa-times"></i></a></div>').appendTo('#meds');
+      $('<div id="medicineField" class="col-12 form-row medicine-field"><div class="mb-2 col-md-4"><select name="generic_id['+i+']['+i+']" id="generic_id" class="form-control" required><option selected="true" disabled="disabled"> Select Generic Name </option>@foreach ($gens as $gen)<option value="{{ $gen->id }}">{{ strtoupper($gen->gname) }}</option>@endforeach</select></div><div class="mb-2 col-md-4"><select name="brand_id['+i+']['+i+']" id="brand_id" class="form-control" required><option selected="true" disabled="disabled"> Select Medicine </option></select></div><div class="mb-2 col-md-4"><input type="number" name="quantity['+i+']['+i+']" min="1" class="form-control" placeholder="Quantity"></div><a id="removeChildren" class="btn text-danger text-white position-absolute remove-actions" style="right: -16px;top: 0px;"><i class="fa fa-times"></i></a></div>').appendTo('#meds');
 
     var gid = $('select[name="generic_id['+i+']['+i+']"]');
     var brand = $('select[name="brand_id['+i+']['+i+']"]');
@@ -438,7 +438,7 @@ jQuery(document).ready(function($) {
                 brand.empty();
                 qty.val('');
                 jQuery.each(data.brand_id, function(key,value){
-                   brand.append('<option value="'+ key +'">'+ value +'</option>');
+                   brand.append('<option value="'+ key +'" class="text-uppercase">'+ value.toUpperCase() +'</option>');
                 });
                 qty.attr('max', data.id);
                 qty.prop('required',true);
@@ -605,7 +605,7 @@ jQuery(document).ready(function($) {
                 brand.empty();
                 qty.val('');
                 jQuery.each(data.brand_id, function(key,value){
-						brand.append('<option value="'+ key +'">'+ value +'</option>');
+						brand.append('<option value="'+ key +'" class="text-uppercase">'+ value.toUpperCase() +'</option>');
         	   
                 });
 

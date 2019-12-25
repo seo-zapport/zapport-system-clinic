@@ -21,16 +21,22 @@ class GenericController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         if (Gate::allows('isAdmin') || Gate::allows('isHr') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
-            $gens = Generic::orderBy('gname', 'asc')->paginate(10);
-            $gensCount = Generic::orderBy('gname', 'asc')->get();
-            $brands = Medbrand::get();
+            if ($request->search) {
+                $rawgens = Generic::where('gname', 'like', '%'.$request->search.'%')->orderBy('gname', 'asc');
+                $gens = $rawgens->paginate(10)->appends(['search' => $request->search]);
+                $gensCount = Generic::where('gname', 'like', '%'.$request->search.'%')->orderBy('gname', 'asc')->get();
+                $search = $request->search;
+            }else{
+                $gens = Generic::orderBy('gname', 'asc')->paginate(10);
+                $gensCount = Generic::orderBy('gname', 'asc')->get();
+            }
 
             $class = ( request()->is('inventory/medicine/generic*') ) ?'admin-inventory admin-med-generic' : '';//**add Class in the body*/
 
-            return view('inventory.genericname.index', compact('class', 'gens', 'brands', 'gensCount'));
+            return view('inventory.genericname.index', compact('class', 'gens', 'gensCount', 'search'));
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();
             return back()->with('message', 'You\'re not employee!');
@@ -119,7 +125,26 @@ class GenericController extends Controller
      */
     public function update(Request $request, Generic $generic)
     {
-        //
+        if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
+            $atts = $request->validate([
+                    'gname' => ['required', 'unique:generics,gname,'.$generic->id],
+                ],
+                [
+                    'gname.required'    =>  'The Generic name is required!',
+                    'gname.unique'      =>  'The Generic name is already taken!',
+                ]);
+            $rep = str_replace([" & ", " / ", "-", " - "], '-', $request->gname);
+            $rep2 = str_replace(['( ', ' )', "'", "(", ")", " ( ", " ) "], "", $rep);
+            $replaced = str_replace([' ', '/'], '-', $rep2);
+            $atts['gname_slug'] = strtolower($replaced);
+            $generic->update($atts);
+            return redirect()->route('genericname.show', ['generic' => $generic->gname_slug]);
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
+        }else{
+            return back();
+        }
     }
 
     /**
