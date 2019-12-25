@@ -46,7 +46,7 @@
 <div class="card mb-3">
 	<div class="card-body">
 		<div class="row zp-countable">
-			<div class="col-12 col-md-6"><p class="text-primary">Total number of Medicines: <span>{{ $total_meds }}</span></p></div>
+			<div class="col-12 col-md-6"><p class="zp-2a9">Total number of Medicines: <span>{{ $total_meds }}</span></p></div>
 			<div id="medTotal" class="col-12 col-md-6 zp-countable"></div>
 		</div>
 		<div class="table-responsive">

@@ -115,18 +115,18 @@
 											<span class="name">Uploaded By</span>
 											<span class="value">admin</span>
 										</div>
-										<label class="setting" data-setting="url">
+										{{--  <label class="setting" data-setting="url">
 											<span class="name">Copy Link</span>
 											<input type="text" value="{{ asset('storage/uploaded/media/'.$m->file_name) }}" readonly="">
-										</label>
+										</label>  --}}
 									</div>
-									<button type="submit" class="btn btn-link text-secondary">Update</button>
+									<button type="submit" class="btn btn-link text-secondary"><i class="fas fa-pencil-alt"></i> Update</button>
 								</form>
 								<div class="actions">
 									<form action="{{ route('media.delete', ['media' => $m->id]) }}" method="post">
 										@method('DELETE')
 										@csrf
-										<button id="InsertPhoto" type="submit" class="btn btn-link text-danger">Delete</button>
+										<button id="InsertPhoto" type="submit" class="btn btn-link text-danger"><i class="fas fa-trash-alt"></i> Delete</button>
 									</form>
 								</div>
 							</div>

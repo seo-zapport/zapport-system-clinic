@@ -13,7 +13,7 @@
 	<div class="card-body">
 		<div class="row zp-countable">
 			<div class="col-12 col-md-6">
-				<p class="text-primary"><span>Total number of Departments:</span> {{ $depsCount->count() }}</p>
+				<p class="zp-2a9"><span>Total number of Departments:</span> {{ $depsCount->count() }}</p>
 			</div>
 			<div class="col-12 col-md-6 count_items">
 				<p><span class="zp-tct">Total Items: </span> {{ $deps->count() }} <span  class="zp-ct"> Items</span></p>

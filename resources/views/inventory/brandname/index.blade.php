@@ -17,7 +17,7 @@
 	<div class="card-body">
 		<div class="row zp-countable">
 			<div class="col-12 col-md-6">
-				<p class="text-primary">Total number of Brands: <span>{{ $brandCount->count() }}</span></p>
+				<p class="zp-2a9">Total number of Brands: <span>{{ $brandCount->count() }}</span></p>
 			</div>
 			<div class="col-12 col-md-6 count_items">
 				<p><span class="zp-tct">Total Items: </span> {{ $brands->count() }} <span  class="zp-ct"> Items</span></p>

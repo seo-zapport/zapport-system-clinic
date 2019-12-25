@@ -21,7 +21,6 @@
 							<img src="{{ asset('storage/uploaded/'.@$employee->profile_img) }}" alt="{{ @$employee->profile_img }}" class="img-fluid rounded" onerror="javascript:this.src='{{url( '/images/default.png' )}}'" >
 						</div>
 					</div>
-						
 				@endif
 			</div>
 			<div class="col-12 col-md-8 col-lg-10">

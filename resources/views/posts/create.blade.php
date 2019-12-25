@@ -9,7 +9,7 @@
 		@csrf
 		@yield('postMethod')
 		<div class="row post-wrap">
-			<div class="col-12 col-md-9">
+			<div class="col-12 col-md-8 col-lg-10">
 				<div class="form-group posts-title">
 					<label for="title"><strong>Title</strong></label>
 					<input type="text" name="title" class="form-control" value="@yield('postEdit', old('title'))" placeholder="Enter Post Title Here!" required autocomplete="off" pattern="[a-zA-Z0-9\s]+" title="Special Characters are not allowed!">
@@ -19,7 +19,7 @@
 					<textarea name="description" id="description" rows="20" class="form-control" placeholder="Enter Your Content Here!">@yield('postEditDes', old('description'))</textarea>
 				</div>		
 			</div>
-			<div class="col-12 offset-md-1 col-md-2">
+			<div class="col-12 col-md-4 col-lg-2">
 				<div class="card">
 					<div class="card-body">
 						<div class="header-title">
@@ -34,7 +34,7 @@
 				<br>
 
 				@if (strstr(url()->current(), 'create'))
-				<div class="card">
+				<div class="card mb-3">
 					<div class="card-body">
 						<div class="header-title">
 							<p><strong>Categories</strong></p>
@@ -73,7 +73,7 @@
 
 				{{-- Important --}}
 				@if (strstr(url()->current(), 'create'))
-				<div class="card">
+				<div class="card mb-3">
 					<div class="card-body">
 						<div class="header-title">
 							<p><strong>Important</strong></p>
@@ -92,17 +92,17 @@
 
 				{{-- Featured Image --}}
 				@if (strstr(url()->current(), 'create'))
-				<div class="card">
+				<div class="card mb-3">
 					<div class="card-body">
 						<div class="header-title">
 							<p><strong>Featured Image</strong></p>
 							<hr>
 							<a href="#" class="btn btn-info text-white btn-block mb-2" href="#" data-toggle="modal" data-target="#featImgModal">Add Featured Image</a>
 						</div>
-						<div>
+						<div class="position-relative">
 							<span id="ftID"></span>
 							<figure id="ftimg"></figure>
-							<span id="rmvImg" class="btn btn-secondary btn-sm d-none">x</span>
+							<span id="rmvImg" class="d-none">x</span>
 						</div>						
 					</div>
 				</div>

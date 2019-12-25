@@ -7,7 +7,7 @@
 @section('dash-content')
 
 	<div class="row post-wrap">
-		<div class="col-12 col-md-9">
+		<div class="col-12 col-md-10">
 			<div class="form-group posts-title">
 				<span class="title mb-1 d-block"><strong>Title</strong></span>
 				<p class="post-title">{{ $post->title }}</p>
@@ -22,7 +22,7 @@
 			</div>	
 		</div>
 
-		<div class="col-12 offset-md-1 col-md-2">
+		<div class="col-12 col-md-2">
 			<div class="card">
 				<div class="card-body">
 					<div class="header-title">

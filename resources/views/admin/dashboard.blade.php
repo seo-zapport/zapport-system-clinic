@@ -213,7 +213,7 @@
 	@else
 		<div class="col-12">
 			<div class="card">
-				<div class="card-header"><strong>Medical Records</strong></div>
+				<div class="card-header"><strong class="zp-2a9">Medical Records</strong></div>
 				<div class="card-body">
 					@if (empty(auth()->user()->employee))
 					<h2>Welcome!</h2>
