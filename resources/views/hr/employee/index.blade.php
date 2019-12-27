@@ -272,21 +272,21 @@
 						@if(@$filter_search != null)
 							<tr id="empRow">
 								<td>{{ $employee->emp_id }}</td>
-								<td>{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}
+								<td>{{ ucwords($employee->last_name) }}, {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}
 									<div class="row-actions"><a href="{{ route('hr.emp.show', ['employee' => $employee->emp_id]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i> View</a></div></td>
 								<td>{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
 							</tr>
 						@elseif (@$filter_age != NULL && @$employee->age == @$filter_age)
 							<tr id="empRow">
 								<td>{{ $employee->emp_id }}</td>
-								<td>{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}
+								<td>{{ ucwords($employee->last_name) }}, {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}
 									<div class="row-actions"><a href="{{ route('hr.emp.show', ['employee' => $employee->emp_id]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i> View</a></div></td>
 								<td>{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
 							</tr>
 						@elseif (@$filter_all != NULL && @$employee->age == @$filter_all['age'])
 							<tr id="empRow">
 								<td>{{ $employee->emp_id }}</td>
-								<td>{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}
+								<td>{{ ucwords($employee->last_name) }}, {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}
 									<div class="row-actions"><a href="{{ route('hr.emp.show', ['employee' => $employee->emp_id]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i> View</a></div></td>
 								<td>{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
 							</tr>
@@ -294,7 +294,7 @@
 							<tr id="empRow">
 
 								<td>{{ $employee->emp_id }}</td>
-								<td>{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}
+								<td>{{ ucwords($employee->last_name) }}, {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}
 									<div class="row-actions"><a href="{{ route('hr.emp.show', ['employee' => $employee->emp_id]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i> View</a></div></td>
 								<td>{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
 							</tr>
@@ -302,42 +302,42 @@
 							<tr id="empRow">
 
 								<td>{{ $employee->emp_id }}</td>
-								<td>{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}
+								<td>{{ ucwords($employee->last_name) }}, {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}
 									<div class="row-actions"><a href="{{ route('hr.emp.show', ['employee' => $employee->emp_id]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i> View</a></div></td>
 								<td>{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
 							</tr>
 						@elseif (@$filter_s_a != NULL && @$employee->age == @$filter_s_a['age'] && @$employee->civil_status == @$filter_s_a['status'])
 							<tr id="empRow">
 								<td>{{ $employee->emp_id }}</td>
-								<td>{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}
+								<td>{{ ucwords($employee->last_name) }}, {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}
 									<div class="row-actions"><a href="{{ route('hr.emp.show', ['employee' => $employee->emp_id]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i> View</a></div></td>
 								<td>{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
 							</tr>
 						@elseif (@$filter_t_a_s != NULL && @$employee->age == @$filter_t_a_s['age'])
 							<tr id="empRow">
 								<td>{{ $employee->emp_id }}</td>
-								<td>{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}
+								<td>{{ ucwords($employee->last_name) }}, {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}
 									<div class="row-actions"><a href="{{ route('hr.emp.show', ['employee' => $employee->emp_id]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i> View</a></div></td>
 								<td>{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
 							</tr>
 						@elseif (@$filter_g_a_s != NULL && @$employee->age == @$filter_g_a_s['age'])
 							<tr id="empRow">
 								<td>{{ $employee->emp_id }}</td>
-								<td>{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}
+								<td>{{ ucwords($employee->last_name) }}, {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}
 									<div class="row-actions"><a href="{{ route('hr.emp.show', ['employee' => $employee->emp_id]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i> View</a></div></td>
 								<td>{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
 							</tr>
 						@elseif (@$filter_super != NULL && @$employee->age == @$filter_super['age'])
 							<tr id="empRow">
 								<td>{{ $employee->emp_id }}</td>
-								<td>{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}
+								<td>{{ ucwords($employee->last_name) }}, {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}
 									<div class="row-actions"><a href="{{ route('hr.emp.show', ['employee' => $employee->emp_id]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i> View</a></div></td>
 								<td>{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
 							</tr>
 						@elseif (@$filter_age == NULL && @$filter_all == NULL && @$filter_g_a == NULL && @$filter_e_a == NULL && @$filter_s_a == NULL && @$filter_t_a_s == NULL && @$filter_g_a_s == NULL && @$filter_super == NULL)
 							<tr id="empRow">
 								<td>{{ $employee->emp_id }}</td>
-								<td>{{ ucwords($employee->last_name) }} {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}
+								<td>{{ ucwords($employee->last_name) }}, {{ ucwords($employee->first_name) }} {{ ucwords($employee->middle_name) }}
 									<div class="row-actions"><a href="{{ route('hr.emp.show', ['employee' => $employee->emp_id]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i> View</a></div></td>
 								<td>{{ ucwords($employee->departments->department) }} - {{ ucwords($employee->positions->position) }}</td>
 							</tr>

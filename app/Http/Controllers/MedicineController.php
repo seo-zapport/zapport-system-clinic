@@ -406,13 +406,35 @@ class MedicineController extends Controller
         File::put(public_path('/storage/uploaded/print/inventory/'.$fileName.'.html'),$datamedsprint);   
     }
 
-    public function inventoryMonitoring()
+    public function inventoryMonitoring(Request $request)
     {
-        $meds = Medicine::select('brand_id', 'generic_id', 'expiration_date', 'created_at', 'qty_stock', 'user_id')
-                        ->groupBy('brand_id', 'generic_id', 'expiration_date', 'created_at', 'qty_stock', 'user_id')
-                        ->distinct('expiration_date')
-                        ->orderBy('updated_at', 'desc')
-                        ->paginate(10);
-        return view('admin.inventory.index', compact('meds'));
+
+         $searchinvmed = ['medbrands.bname','generics.gname', 'users.name'];   
+
+         if ($request->has('search')) {
+
+            $rawmeds = Medicine::select('brand_id', 'generic_id', 'expiration_date', 'medicines.created_at', 'qty_stock', 'user_id')->join('medbrands','medbrands.id', '=', 'brand_id')->join('generics','generics.id' ,'=' ,'generic_id')->join('users', 'users.id', '=', 'user_id');
+                            
+                foreach ($searchinvmed as $search) {
+                    $rawmeds->orWhere($search, "LIKE", "%".$request->search."%")->groupBy('brand_id', 'generic_id', 'expiration_date', 'medicines.created_at', 'qty_stock', 'user_id')
+                        ->distinct('medicines.expiration_date')
+                        ->orderBy('medicines.updated_at', 'desc');
+                }
+            $total_meds = count($rawmeds->get());
+            $meds = $rawmeds->paginate(10)->appends(['search' => $request->search]);
+
+         }else{
+
+            $rawmeds = Medicine::select('brand_id', 'generic_id', 'expiration_date', 'created_at', 'qty_stock', 'user_id')
+                            ->groupBy('brand_id', 'generic_id', 'expiration_date', 'created_at', 'qty_stock', 'user_id')
+                            ->distinct('expiration_date')
+                            ->orderBy('updated_at', 'desc');
+            
+            $total_meds = count($rawmeds->get());
+            $meds = $rawmeds->paginate(10);                
+            
+         }
+
+        return view('admin.inventory.index', compact('meds','total_meds'));
     }
 }

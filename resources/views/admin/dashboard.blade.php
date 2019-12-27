@@ -41,7 +41,7 @@
 										@forelse (@$notSeen as $seen)
 											<tr id="newCons">
 												<td>{{ $seen->employee->emp_id }}</td>
-												<td>{{ ucwords($seen->employee->last_name) }} {{ ucwords($seen->employee->first_name) }} {{ ucwords($seen->employee->middle_name) }}
+												<td>{{ ucwords($seen->employee->last_name) }}, {{ ucwords($seen->employee->first_name) }} {{ ucwords($seen->employee->middle_name) }}
 													<div class="row-actions">
 														<a href="{{ route('medical.show', ['employee' => $seen->employee->emp_id, 'employeesmedical' => $seen->med_num]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a>	
 													</div>
@@ -83,7 +83,7 @@
 											<tr id="FFup">
 												<td>{{ $empMed->employee->emp_id }}</td>
 												<td>
-													{{ ucwords($empMed->employee->last_name) }} {{ ucwords($empMed->employee->first_name) }} {{ ucwords($empMed->employee->middle_name) }}
+													{{ ucwords($empMed->employee->last_name) }}, {{ ucwords($empMed->employee->first_name) }} {{ ucwords($empMed->employee->middle_name) }}
 													<div class="row-actions">
 														<a href="{{ route('medical.show', ['employee' => $empMed->employee->emp_id, 'employeesmedical' => $empMed->med_num]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a>
 													</div>
@@ -119,7 +119,7 @@
 									@forelse (@$noPreEmpMeds as $emp)
 										<tr id="incPre">
 											<td>{{ $emp->emp_id }}</td>
-											<td>{{ ucfirst($emp->last_name) }} {{ ucfirst($emp->first_name) }} {{ ucfirst($emp->middle_name) }}
+											<td>{{ ucfirst($emp->last_name) }}, {{ ucfirst($emp->first_name) }} {{ ucfirst($emp->middle_name) }}
 												<div class="row-actions"><a href="{{ route('medical.employeeInfo', ['employee' => $emp->emp_id]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a></div></td>
 											<td>{{ strtoupper($emp->departments->department) }} - {{ strtoupper($emp->positions->position) }}</td>
 										</tr>
@@ -150,7 +150,7 @@
 									@forelse (@$emps as $emp)
 										<tr id="inc">
 											<td>{{ $emp->emp_id }}</td>
-											<td>{{ ucfirst($emp->last_name) }} {{ ucfirst($emp->first_name) }} {{ ucfirst($emp->middle_name) }}
+											<td>{{ ucfirst($emp->last_name) }}, {{ ucfirst($emp->first_name) }} {{ ucfirst($emp->middle_name) }}
 												<div class="row-actions">
 													{{-- <a href="{{ route('hr.emp.show', ['employee' => $emp->emp_id]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a> --}}
 													<button class="btn btn-link text-secondary" data-toggle="modal" data-target="#id-{{ $emp->emp_id }}">View</button>
@@ -191,7 +191,7 @@
 									@if ($month > 5 || $year >= 1)
 										<tr id="forReg">
 											<td>{{ $emp->emp_id }}</td>
-											<td>{{ ucfirst($emp->last_name) }} {{ ucfirst($emp->first_name) }} {{ ucfirst($emp->middle_name) }}
+											<td>{{ ucfirst($emp->last_name) }}, {{ ucfirst($emp->first_name) }} {{ ucfirst($emp->middle_name) }}
 												<div class="row-actions"><a href="{{ route('hr.emp.show', ['employee' => $emp->emp_id]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a></div></td>
 											<td>{{ strtoupper($emp->departments->department) }} - {{ strtoupper($emp->positions->position) }}</td>
 										</tr>
@@ -237,31 +237,32 @@
 
 						<table class="table table-hover">
 							<thead class="thead-dark">
-								<th width="7%">No.</th>
+								<th>Medical Number</th>
 								<th>Diagnosis</th>
 								<th>Notes</th>
-								<th width="10%">Remarks</th>
-								<th width="15%">Date and Time</th>
+								<th>Date and Time</th>
+								<th>Remarks</th>
 							</thead>
 							<tbody>
-								@php
-									$i = 1;
-								@endphp
+								
 								@forelse ($search as $medsHistory)
 									<tr>
-										<td>{{ $i++ }}</td>
-										<td>{{ $medsHistory->diagnoses->diagnosis }}
-											<div class="row-actions"><a href="{{ route('dashboard.show', ['employee' => $medsHistory->employee->emp_id, 'employeesmedical' => $medsHistory->med_num]) }}" class="btn text-secondary"><i class="far fa-eye"></i> View
-											</a></div></td>
+										<td>{{ $medsHistory->med_num }}
+											<div class="row-actions"><a href="{{ route('dashboard.show', ['employee' => $medsHistory->employee->emp_id, 'employeesmedical' => $medsHistory->med_num]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i> View</a></div>
+										</td>
+										<td>{{ ucwords($medsHistory->diagnoses->diagnosis) }}
+										</td>
 										<td>{{ Str::words($medsHistory->note, 15) }}</td>
-										<td>{{ ($medsHistory->remarks == 'followUp') ? 'Follow up' : 'Done' }}</td>
 										<td>{{ $medsHistory->created_at->format('M d, Y - h:i a') }}</td>
+										<td>{{ ($medsHistory->remarks == 'followUp') ? 'Follow up' : 'Done' }}</td>
 									</tr>
 									@empty
 										<tr>
 											<td colspan="6" class="text-center">No Records Found!</td>
 										</tr>
 								@endforelse
+								
+								
 							</tbody>
 						</table>
 						{{ $search->links() }}
@@ -279,7 +280,7 @@
 	<div class="modal-dialog  modal-lg modal-dialog-centered" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLongTitle">{{ $emp->last_name }} {{ $emp->first_name }}'s Incomplete Requirements</h5>
+				<h5 class="modal-title" id="exampleModalLongTitle">{{ $emp->last_name }}, {{ $emp->first_name }}'s Incomplete Requirements</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
