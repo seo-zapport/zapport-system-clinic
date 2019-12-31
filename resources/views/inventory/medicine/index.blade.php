@@ -22,7 +22,13 @@
 			        </div>
 		        </div>
 			</div>
-		</form>	
+		</form>
+		<form method="get">
+			<div class="form-group col-12 col-md-4 mb-0 mt-2">
+				<label class="form-check-label" for="exampleCheck1"> 
+				<input type="checkbox" {{ (isset($_GET['filter_meds'])) ? 'checked' : '' }} id="exampleCheck1" name="filter_meds" onclick="this.form.submit()"> Filter Less Medicines</label>
+			</div>
+		</form>
 	</div>
 	@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
 		<div class="col-12 col-md-6">

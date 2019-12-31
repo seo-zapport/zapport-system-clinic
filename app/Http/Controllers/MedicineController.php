@@ -27,10 +27,6 @@ class MedicineController extends Controller
      */
     public function index(Request $request)
     {
-        // $qry = Medicine::select('brand_id', 'generic_id', \DB::raw('COUNT(availability) as remaining'))->groupBy('brand_id', 'generic_id', 'availability')->where('availability', 0)->get();
-
-        // dd($qry->where('remaining', '<=', 10));
-
         if (Gate::allows('isAdmin') || Gate::allows('isHr') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
             if ($request->has('search')) {
                 $searchGen = Generic::where('gname', $request->search)->first();
@@ -44,6 +40,11 @@ class MedicineController extends Controller
                     $printmeds = null;
                 }
                 $search = $request->search;
+            }elseif ($request->has('filter_meds')){
+                $qry = Medicine::select('brand_id', 'generic_id', \DB::raw('COUNT(availability) as remaining'))->groupBy('brand_id', 'generic_id', 'availability')->where('availability', 0);
+                $rawmeds = $qry->orderBy('remaining', 'asc');
+                $printmeds = $rawmeds->get();
+                $meds = $rawmeds->paginate(10)->appends(['filter_meds' =>  $request->filter_meds]);
             }else{
                 $rawmeds = Medicine::select('brand_id', 'generic_id')->groupBy('brand_id', 'generic_id')->orderBy('id', 'desc');
                 $countsmed = $rawmeds->count();
