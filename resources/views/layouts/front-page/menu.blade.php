@@ -20,9 +20,6 @@
           <li class="nav-item">
             <a  type="button" class="nav-link" data-toggle="modal" data-target="#frontModal">Notice</a>
           </li>
-{{--  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-  Launch demo modal
-</button>  --}}
           @auth()
           <li class="nav-item">
               <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
