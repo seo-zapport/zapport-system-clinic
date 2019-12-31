@@ -13,6 +13,22 @@
 	</div>
 @endif
 
+<div class="col-12 col-md-6 p-0">
+	<form method="get" autocomplete="off">
+		<div class="form-row">
+	        <div class="form-group col-12 col-md-8">
+		        <div class="input-group">
+		            <input type="search" name="search" class="form-control" value="{{ (!empty($search)) ? $search : '' }}" placeholder="Search for Generic Name">
+		            <div class="input-group-append">
+		                <button type="submit" class="btn btn-success mr-2">Search</button>
+						<a href="{{ route('genericname') }}" class="btn btn-info text-white">Clear</a>
+		            </div>
+		        </div>
+	        </div>
+		</div>
+	</form>	
+</div>
+
 <div class="card mb-3">
 	<div class="card-body">
 		<div class="row zp-countable">
@@ -33,7 +49,7 @@
 					@forelse ($gens as $gen)
 						<tr>
 							<td>
-				        		{{ ucwords($gen->gname) }}
+				        		{{ strtoupper($gen->gname) }}
 								<div class="row-actions">
 									<a href="{{ route('genericname.show', ['generic' => $gen->gname_slug]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i> View</a>
 									@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))

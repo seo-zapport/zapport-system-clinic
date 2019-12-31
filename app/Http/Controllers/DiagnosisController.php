@@ -112,7 +112,7 @@ class DiagnosisController extends Controller
             if (count($data) > 0) {
                 $output = '<ul id="diag" class="list-group" style="display: block; position: relative; z-index: 100">';
                 foreach ($data as $row) {
-                    $output .= '<li class="list-group-item list-group-item-action" style="cursor:pointer">'.$row->diagnosis.'</li>';
+                    $output .= '<li class="list-group-item list-group-item-action text-capitalize" style="cursor:pointer">'.$row->diagnosis.'</li>';
                 }
                 $output .= '</ul>';
             }

@@ -22,7 +22,13 @@
 			        </div>
 		        </div>
 			</div>
-		</form>	
+		</form>
+		<form method="get">
+			<div class="form-group col-12 col-md-4 mb-0 mt-2">
+				<label class="form-check-label" for="exampleCheck1"> 
+				<input type="checkbox" {{ (isset($_GET['filter_meds'])) ? 'checked' : '' }} id="exampleCheck1" name="filter_meds" onclick="this.form.submit()"> Filter Less Medicines</label>
+			</div>
+		</form>
 	</div>
 	@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
 		<div class="col-12 col-md-6">
@@ -61,14 +67,14 @@
 					@if ($meds != null)		
 					@forelse ($meds as $med)
 						<tr id="MedRow">
-							<td>{{ ucfirst($med->generic->gname) }}
+							<td>{{ strtoupper($med->generic->gname) }}
 								<div class="row-actions">
 									<a href="{{ route('medicine.log', ['medbrand' => $med->medBrand->bname_slug, 'generic' => $med->generic->gname_slug]) }}" class="show-edit btn btn-link text-secondary">
 										<i class="far fa-eye"></i>View
 									</a>
 								</div>
 							</td>
-							<td>{{ ucwords($med->medBrand->bname) }}</td>
+							<td>{{ strtoupper($med->medBrand->bname) }}</td>
 							<td class="text-center">{{ $med->where('generic_id', $med->generic_id)->where('brand_id', $med->brand_id)->where('availability', 0)->where('expiration_date', '>', NOW())->count() }}</td>
 						</tr>
 						@empty
@@ -112,7 +118,7 @@
 							<option selected="true" disabled="disabled" value=""> Select Generic name </option>
 							@foreach ($gens as $gen)
 								@if ($gen->medbrand->count() > 0)
-									<option value="{{ $gen->id }}">{{ $gen->gname }}</option>
+									<option value="{{ $gen->id }}">{{ strtoupper($gen->gname) }}</option>
 								@endif
 							@endforeach
 						</select>

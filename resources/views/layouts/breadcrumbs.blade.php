@@ -22,6 +22,7 @@
 			@php 
 				$url = $segment->url();
 				$name = $segment->name(); 
+				$arrspecsym = array("-", "_");
 
 				if($name === "Department"){
 					$url = '/hr/department';
@@ -36,10 +37,20 @@
 				if($name === "Generic"){
 					$url = '/inventory/medicine/generic'; 
 					$genexist = '1';
+					$name = "Generic Name";
 				}
 
 				if($name === "Userroles"){
 					$name = 'User Roles'; 	 	
+				}
+
+				if($name === "Bodyparts" || $name === "bodyparts" ){
+					$name = 'Body parts'; 	 	
+				}
+
+				if($name === "Employeesmedical" || $name === "employeesmedical" ){
+					$name = 'Employees medical';
+					$url = app('url')->previous(); 	 	
 				}
 
 				if($name === 'Position'){
@@ -59,15 +70,16 @@
 				}
 
 			@endphp
-			@if($name != "Dashboard" && $name != "Hr" && $name != "Inventory" && $name != "Medical" && $name != "Logs" && $name != "Inputdate"  && $name != "Expdate"  && !DateTime::createFromFormat('Y-m-d H:i:s', $name) !== FALSE)
+			@if($name != "Dashboard" && $name != "Hr" && $name != "Inventory" && $name != "Medical" && $name != "Logs" && $name != "Inputdate"  && $name != "Expdate"  && !DateTime::createFromFormat('Y-m-d H:i:s', $name) !== FALSE && $name != "Admin")
 				 @if($i != $numsegment)	
 				 	<li class="breadcrumb-item">
-				 		<a href="{{$url}}">{{optional($segment->model())->title?: $name}} </a>
+				 		<a href="{{$url}}">{{optional($segment->model())->title?: str_replace($arrspecsym, " ",$name)}} </a>
 				 	</li>
 				 @else
 					<li class="breadcrumb-item">
-						<span><strong>{{optional($segment->model())->title?: $name}}</strong></span>
+						<span><strong>{{optional($segment->model())->title?: str_replace($arrspecsym, " ",$name)}}</strong></span>
 					</li>
+
 				 @endif
 			@endif
 			@php $i++; @endphp	

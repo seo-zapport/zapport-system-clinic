@@ -43,7 +43,7 @@
 					@forelse(@$emps as $emp)
 						<tr>
 							<td>{{ $emp->emp_id }}</td>
-							<td>{{ ucwords($emp->last_name . " " . $emp->first_name . " " . $emp->middle_name) }}
+							<td>{{ ucwords($emp->last_name . ", " . $emp->first_name . " " . $emp->middle_name) }}
 								<div class="row-actions">
 									<a href="{{ route('medical.employeeInfo', ['employee' => $emp->emp_id]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i> View</a>
 								</div>

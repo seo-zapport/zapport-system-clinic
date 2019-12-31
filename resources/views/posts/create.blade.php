@@ -42,17 +42,17 @@
 							<a href="#" class="btn btn-info text-white btn-block mb-2" href="#" data-toggle="modal" data-target="#tagModal">Add Category</a>
 						</div>
 						<div id="category_lists">
-							@forelse ($tags as $tag)
+							@foreach ($tags as $tag)
 								<div class="mb-1">
 									<input type="checkbox"  name="tag_id[]" value="{{ $tag->id }}" class="zp-chkbox" id="tag_id_{{ $tag->id }}">
 									<label class="form-check-label" for="tag_id_{{ $tag->id }}">{{ $tag->tag_name }}</label>
 								</div>
-							@empty
+{{-- 							@empty
 								<div class="mb-1">
 									<input type="checkbox"  name="tag_id[]" class="zp-chkbox" id="tag_id_0">
 									<label class="form-check-label" for="tag_id_0">Empty</label>
-								</div>
-							@endforelse
+								</div> --}}
+							@endforeach
 							{{--
 								Lumang Code
 								<select multiple name="tag_id[]" id="tag_id" class="form-control" required oninvalid="this.setCustomValidity('Please Select Category')" oninput="setCustomValidity('')">
@@ -81,7 +81,7 @@
 						</div>
 						<div class="mb-1">
 							<input type="checkbox" id="zpImportant" name="important" value="1" class="zp-chkbox">
-							<label for="zpImportant">Check for Important posts</label>
+							<label for="zpImportant"><small class="font-weight-bold">Check for Important posts</small></label>
 						</div>						
 					</div>
 				</div>

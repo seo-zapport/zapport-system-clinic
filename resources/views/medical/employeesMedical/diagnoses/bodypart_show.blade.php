@@ -3,7 +3,7 @@
 @section('bodypartindex', 'active')
 {{-- @section('dash-title', ucwords($employee->last_name) . '\'s information') --}}
 @section('heading-title')
-	<i class="fas fa-list text-secondary"></i> {{ ucfirst($bodypart->bodypart) }}
+	<i class="fas fa-list text-secondary"></i> {{ ucwords($bodypart->bodypart) }}
 @endsection
 @section('dash-content')
 
@@ -28,7 +28,7 @@
 					@forelse ($collection as $disease)
 						<tr>
 							<td>
-								{{ ucfirst($disease->disease) }}
+								{{ ucwords($disease->disease) }}
 								<div class="row-actions">
 									@if (Gate::check('isAdmin') || Gate::check('isNurse') || Gate::check('isDoctor'))
 										<span id="{{ $disease->disease_slug }}" class="show-edit btn btn-link text-secondary"><i class="far fa-edit"></i> Quick Edit</span> <span class="text-muted">|</span>

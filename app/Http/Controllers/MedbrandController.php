@@ -22,13 +22,19 @@ class MedbrandController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         if (Gate::allows('isAdmin') || Gate::allows('isHr') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
-            $gens = Generic::get();
-            $brands = Medbrand::orderBy('bname', 'asc')->paginate(10);
-            $brandCount = Medbrand::orderBy('bname', 'asc')->get();
+            if ($request->search) {
+                $rawbrands = Medbrand::where('bname', 'like', '%'.$request->search.'%')->orderBy('bname', 'asc');
+                $brands = $rawbrands->paginate(10)->appends(['search' => $request->search]);
+                $brandCount = Medbrand::where('bname', 'like', '%'.$request->search.'%')->orderBy('bname', 'asc')->get();
+            }else{
+                $brands = Medbrand::orderBy('bname', 'asc')->paginate(10);
+                $brandCount = Medbrand::orderBy('bname', 'asc')->get();
+            }
 
+            $gens = Generic::get();
             $class = ( request()->is('inventory/medicine/brandname*') ) ?'admin-inventory admin-med-brand' : '';//**add Class in the body*/
 
             return view('inventory.brandname.index', compact('class', 'brands', 'gens', 'brandCount'));
