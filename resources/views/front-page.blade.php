@@ -14,6 +14,20 @@
 			@endguest
 		</div>
 	</section>
+	<section id="importantPost">
+		<div class="container">
+			<div class="text-center mb-4">
+				<h2 class="text-secondary">List of Announcement</h2>
+			</div>
+			<div class="list-group">
+				@foreach ($posts as $post)
+					@if ($post->important == 1)
+						<a href="{{ route('frnt.show.post', ['post' => $post->slug]) }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">{{ $post->title }}  <span class="badge badge-primary badge-pill">admin (HR)</span></a>	
+					@endif
+				@endforeach
+			</div>
+		</div>
+	</section>	
 	<section id="clinic">
 		<div class="container">
 			<div class="title text-center text-secondary">
@@ -73,4 +87,40 @@
 			</div>
 		</div>
 	</section>
+
+
+	<!-- Modal -->
+	<div class="modal fade" id="frontModal" tabindex="-1" role="dialog" aria-labelledby="frontModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="frontModalLabel">Important Announcement</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					@foreach ($posts as $post)
+						@if ($post->important == 1)
+							@if ($loop->first)
+								<div class="post-header">
+									<h2 class="post-title">{{$post->title}}</h2>
+									<span class="zp-article-meta"><span class="text-muted meta-date"><i class="fas fa-calendar-alt"></i> {{ $post->created_at->format('M d, Y') }}</span>
+								</div>
+								<div class="post-content">
+									@if ($post->medias != null)
+										<figure class="post-img-wrap">
+											<img src="{{ asset('storage/uploaded/media/'.$post->medias->file_name)" class="post-img">
+										</figure>													
+									@endif
+									{!!$post->description!!}
+								</div> 
+							@endif
+						@endif
+					@endforeach
+				</div>
+			</div>
+		</div>
+	</div>
+
 @endsection
