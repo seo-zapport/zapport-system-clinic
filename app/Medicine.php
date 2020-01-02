@@ -31,8 +31,8 @@ class Medicine extends Model
         return $this->belongsToMany(User::class, 'employeesmedical_medicine_users', 'medicine_id')->withPivot('quantity')->withTimestamps();
     }
 
-    public function setCreatedatAttribute($value) 
-    {
-        $this->attributes['created_at'] = (new Carbon($value))->format('Y-m-d H');
-    }
+    // public function setCreatedatAttribute($value) 
+    // {
+    //     $this->attributes['created_at'] = (new Carbon($value))->format('Y-m-d H');
+    // }
 }

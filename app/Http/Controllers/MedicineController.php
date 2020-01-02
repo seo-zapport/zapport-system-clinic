@@ -103,6 +103,8 @@ class MedicineController extends Controller
             $atts = $request->except('qty_input');
             $multiplier = $request->input('qty_input');
             $atts['qty_stock'] = $request->input('qty_input');
+            $dtm = \Carbon\carbon::now();
+            // dd($atts);
 
             $meds = Medicine::where('brand_id', $request->brand_id)->where('generic_id', $request->generic_id)->get();
 
@@ -121,6 +123,8 @@ class MedicineController extends Controller
                     $newMeds->brand_id        = $data->brand_id;
                     $newMeds->availability    = 0;
                     $newMeds->user_id         = auth()->user()->id;
+                    $newMeds->created_at      = $dtm;
+                    $newMeds->updated_at      = $dtm;
                     $newMeds->save();
                 }
 
@@ -139,6 +143,8 @@ class MedicineController extends Controller
                     $newMeds->brand_id        = $data->brand_id;
                     $newMeds->availability    = 0;
                     $newMeds->user_id         = auth()->user()->id;
+                    $newMeds->created_at      = $dtm;
+                    $newMeds->updated_at      = $dtm;
                     $newMeds->save();
                 }
 
@@ -409,33 +415,57 @@ class MedicineController extends Controller
 
     public function inventoryMonitoring(Request $request)
     {
+        if (Gate::allows('isAdmin')) {
+            $searchinvmed = ['medbrands.bname','generics.gname', 'users.name'];   
+            $rawdates = Medicine::select('brand_id', 'generic_id', \DB::raw("DATE_FORMAT(created_at, '%Y-%m-%d') as fdate"), 'qty_stock', 'user_id', 'created_at')
+                                ->groupBy('brand_id', 'generic_id', 'created_at', 'qty_stock', 'user_id')
+                                ->orderBy('updated_at', 'desc');
 
-         $searchinvmed = ['medbrands.bname','generics.gname', 'users.name'];   
+            if ($request->has('search')) {
 
-         if ($request->has('search')) {
+                $rawmeds = Medicine::select('brand_id', 'generic_id', 'medicines.created_at', 'qty_stock', 'user_id', \DB::raw('COUNT(medicines.created_at) as remaining'))
+                                    ->join('medbrands','medbrands.id', '=', 'brand_id')
+                                    ->join('generics','generics.id' ,'=' ,'generic_id')
+                                    ->join('users', 'users.id', '=', 'user_id');
 
-            $rawmeds = Medicine::select('brand_id', 'generic_id', 'expiration_date', 'medicines.created_at', 'qty_stock', 'user_id')->join('medbrands','medbrands.id', '=', 'brand_id')->join('generics','generics.id' ,'=' ,'generic_id')->join('users', 'users.id', '=', 'user_id');
-                            
                 foreach ($searchinvmed as $search) {
-                    $rawmeds->orWhere($search, "LIKE", "%".$request->search."%")->groupBy('brand_id', 'generic_id', 'expiration_date', 'medicines.created_at', 'qty_stock', 'user_id')
-                        ->distinct('medicines.expiration_date')
-                        ->orderBy('medicines.updated_at', 'desc');
+                    $rawmeds->orWhere($search, "LIKE", "%".$request->search."%")->groupBy('brand_id', 'generic_id', 'medicines.created_at', 'qty_stock', 'user_id')
+                            ->orderBy('medicines.updated_at', 'desc');
                 }
-            $total_meds = count($rawmeds->get());
-            $meds = $rawmeds->paginate(10)->appends(['search' => $request->search]);
+                $dates = $rawdates->get();
+                $total_meds = count($rawmeds->get());
+                $meds = $rawmeds->paginate(10)->appends(['search' => $request->search]);
+                $search = $request->search;
 
-         }else{
+            }elseif ($request->has('filter_date')){
+                $rawmeds = Medicine::select('brand_id', 'generic_id', 'created_at', \DB::raw('COUNT(created_at) as remaining'), 'user_id')
+                                    ->groupBy('brand_id', 'generic_id', 'created_at', 'user_id')
+                                    ->orderBy('updated_at', 'desc');
+                $dates = $rawdates->where('created_at', '!=', $request->filter_date)->get();
+                $rawmeds->orWhere('created_at', 'like', '%'.$request->filter_date.'%');
+                $total_meds = count($rawmeds->get());
+                $meds = $rawmeds->paginate(10)->appends(['filter_date'  =>  $request->filter_date]);
+                $filter = $request->filter_date;
+            }else{
+                $rawmeds = Medicine::select('brand_id', 'generic_id', \DB::raw("DATE_FORMAT(created_at, '%Y-%m-%d') as fdate"), 'user_id', \DB::raw('COUNT(created_at) as remaining'), 'created_at')
+                                    ->groupBy('brand_id', 'generic_id', 'created_at', 'user_id')
+                                    ->orderBy('updated_at', 'desc');
+                $dates = $rawdates->get();
+                $total_meds = count($rawmeds->get());
+                $meds = $rawmeds->paginate(10);                
 
-            $rawmeds = Medicine::select('brand_id', 'generic_id', 'expiration_date', 'created_at', 'qty_stock', 'user_id')
-                            ->groupBy('brand_id', 'generic_id', 'expiration_date', 'created_at', 'qty_stock', 'user_id')
-                            ->distinct('expiration_date')
-                            ->orderBy('updated_at', 'desc');
-            
-            $total_meds = count($rawmeds->get());
-            $meds = $rawmeds->paginate(10);                
-            
-         }
+            }
 
-        return view('admin.inventory.index', compact('meds','total_meds'));
+            // dd($dates);
+
+            return view('admin.inventory.index', compact('meds','total_meds', 'dates', 'filter', 'search'));
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
+        }else{
+           return back();
+        }
     }
 }
+
+// \DB::raw("DATE_FORMAT(created_at, '%Y-%m-%d') as fdate")
