@@ -53,7 +53,7 @@
 		});
 
 		/**load-more*/
-		$(window).on('load',function(){
+		
 			var _token = $('input[name="_token"]').val();
 			load_data('', _token);
 			function load_data(id="", _token){
@@ -66,8 +66,7 @@
 						$('#listData').append(data);
 					}
 				});
-			}			
-		});
+			}	
 
 		$(document).on('click', '#loadMore', function(){
 			var id = $(this).data('id');
