@@ -14,6 +14,15 @@
 			@endguest
 		</div>
 	</section>
+	<section id="importantPost">
+		<div class="container">
+			<div class="text-center mb-4">
+				<h2 class="text-secondary">List of Announcement</h2>
+			</div>
+			{{ csrf_field() }}
+			<div id="listData" class="list-group mb-4"></div>
+		</div>
+	</section>	
 	<section id="clinic">
 		<div class="container">
 			<div class="title text-center text-secondary">
@@ -73,4 +82,38 @@
 			</div>
 		</div>
 	</section>
+
+
+	<!-- Modal -->
+	<div class="modal fade" id="frontModal" tabindex="-1" role="dialog" aria-labelledby="frontModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="frontModalLabel">Important Announcement</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					@foreach ($annoucement as $post)
+						@if ($loop->first)
+							<div class="post-header">
+								<h2 class="post-title">{{$post->title}}</h2>
+								<span class="zp-article-meta"><span class="text-muted meta-date"><i class="fas fa-calendar-alt"></i> {{ $post->created_at->format('M d, Y') }}</span>
+							</div>
+							<div class="post-content">
+								@if ($post->medias != null)
+									<figure class="post-img-wrap">
+										<img src="{{ asset('storage/uploaded/media/'.$post->medias->file_name)" class="post-img">
+									</figure>													
+								@endif
+								{!!$post->description!!}
+							</div> 
+						@endif
+					@endforeach
+				</div>
+			</div>
+		</div>
+	</div>
+
 @endsection

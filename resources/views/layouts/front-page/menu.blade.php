@@ -16,6 +16,10 @@
           <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="#post">Post</a>
           </li>
+          </li>
+          <li class="nav-item">
+            <a  type="button" class="nav-link" data-toggle="modal" data-target="#frontModal">Notice</a>
+          </li>
           @auth()
           <li class="nav-item">
               <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
