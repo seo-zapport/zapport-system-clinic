@@ -104,7 +104,7 @@
 							<div class="post-content">
 								@if ($post->medias != null)
 									<figure class="post-img-wrap">
-										<img src="{{ asset('storage/uploaded/media/'.$post->medias->file_name)}}" class="post-img">
+										<img src="{{ asset('storage/uploaded/media/'.$post->medias->file_name) }}" class="post-img">
 									</figure>													
 								@endif
 								{!!$post->description!!}
