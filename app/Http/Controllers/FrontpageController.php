@@ -87,4 +87,30 @@ class FrontpageController extends Controller
     {
         //
     }
+
+    /**
+     * Load Data
+     */
+    public function load_data(Request $request){
+        if ( $request->ajax() ) {
+            if($request->id > 0){
+                $data = Post::where('id', '<', $request->id)->Where('important', '1')->orderBy('id', 'desc')->limit(1)->get();
+            }else{
+                $data = Post::orderBy('id', 'desc')->limit(1)->get();
+            }
+            $output = '';
+            $last_id = '';
+
+            if (!$data->isEmpty()) {
+                foreach($data as $row){
+                    $output .= '<a href="' . route('frnt.show.post', ['post' => $row->slug]) . '" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">' . $row->title . '<span class="badge badge-primary badge-pill">admin (HR)</span></a>';
+                    $last_id = $row->id;
+                }
+                $output .= '<div id="load_more" class="text-center mt-4"><button type="button" class="btn btn-primary" id="loadMore" data-id="'.$last_id.'">Load More</button></div>';
+            }else{
+               $output .= '<div id="load_more" class="text-center mt-4"><button type="button" class="btn btn-info text-white" id="loadMore" disabled>No Data Found</button></div>'; 
+            }
+            echo $output;
+        }
+    }
 }

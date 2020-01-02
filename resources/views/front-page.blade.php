@@ -19,13 +19,8 @@
 			<div class="text-center mb-4">
 				<h2 class="text-secondary">List of Announcement</h2>
 			</div>
-			<div class="list-group">
-				@foreach ($posts as $post)
-					@if ($post->important == 1)
-						<a href="{{ route('frnt.show.post', ['post' => $post->slug]) }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">{{ $post->title }}  <span class="badge badge-primary badge-pill">admin (HR)</span></a>	
-					@endif
-				@endforeach
-			</div>
+			{{ csrf_field() }}
+			<div id="listData" class="list-group mb-4"></div>
 		</div>
 	</section>	
 	<section id="clinic">

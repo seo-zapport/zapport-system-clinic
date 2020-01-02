@@ -14,6 +14,7 @@
 
 Route::get('/', 'FrontpageController@index');
 Route::get('show-post/{post}', 'FrontpageController@show')->name('frnt.show.post');
+Route::post('/', 'FrontpageController@load_data')->name('frnt.load_data');
 
 Auth::routes();
 
