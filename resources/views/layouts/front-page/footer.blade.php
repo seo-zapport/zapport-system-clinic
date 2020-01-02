@@ -54,19 +54,19 @@
 
 		/**load-more*/
 		
-			var _token = $('input[name="_token"]').val();
-			load_data('', _token);
-			function load_data(id="", _token){
-				$.ajax({
-					url: "{{route('frnt.load_data')}}",
-					method: 'POST',
-					data: {id:id, _token:_token},
-					success: function(data){
-						$('#load_more').remove();
-						$('#listData').append(data);
-					}
-				});
-			}	
+		var _token = $('input[name="_token"]').val();
+		load_data('', _token);
+		function load_data(id="", _token){
+			$.ajax({
+				url: "{{route('frnt.load_data')}}",
+				method: 'POST',
+				data: {id:id, _token:_token},
+				success: function(data){
+					$('#load_more').remove();
+					$('#listData').append(data);
+				}
+			});
+		}	
 
 		$(document).on('click', '#loadMore', function(){
 			var id = $(this).data('id');

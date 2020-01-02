@@ -18,8 +18,9 @@ class FrontpageController extends Controller
     public function index()
     {
         $users = User::get();
-        $posts = Post::orderBy('id', 'DESC')->get();
-        return view('front-page', compact('users', 'posts'));
+        $posts = Post::get();
+        $annoucement = Post::where('important', '1')->orderBy('id', 'DESC')->get();
+        return view('front-page', compact('users', 'posts', 'annoucement'));
     }
 
     /**
@@ -94,9 +95,9 @@ class FrontpageController extends Controller
     public function load_data(Request $request){
         if ( $request->ajax() ) {
             if($request->id > 0){
-                $data = Post::where('id', '<', $request->id)->Where('important', '1')->orderBy('id', 'desc')->limit(1)->get();
+                $data = Post::where('id', '<', $request->id)->where('important', '1')->orderBy('id', 'desc')->limit(1)->get();
             }else{
-                $data = Post::orderBy('id', 'desc')->limit(1)->get();
+                $data = Post::where('important', '1')->orderBy('id', 'desc')->limit(1)->get();
             }
             $output = '';
             $last_id = '';
