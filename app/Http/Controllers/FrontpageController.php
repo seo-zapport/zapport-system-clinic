@@ -18,7 +18,7 @@ class FrontpageController extends Controller
     public function index()
     {
         $users = User::get();
-        $posts = Post::get();
+        $posts = Post::orderBy('id', 'DESC')->get();
         return view('front-page', compact('users', 'posts'));
     }
 
@@ -102,9 +102,9 @@ class FrontpageController extends Controller
             $last_id = '';
 
             if (!$data->isEmpty()) {
-                foreach($data as $row){
-                    $output .= '<a href="' . route('frnt.show.post', ['post' => $row->slug]) . '" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">' . $row->title . '<span class="badge badge-primary badge-pill">admin (HR)</span></a>';
-                    $last_id = $row->id;
+                foreach($data as $posts){
+                    $output .= '<a href="' . route('frnt.show.post', ['post' => $posts->slug]) . '" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">' . $posts->title . '<span class="badge badge-primary badge-pill">' . $posts->user->name . '</span></a>';
+                    $last_id = $posts->id;
                 }
                 $output .= '<div id="load_more" class="text-center mt-4"><button type="button" class="btn btn-primary" id="loadMore" data-id="'.$last_id.'">Load More</button></div>';
             }else{
