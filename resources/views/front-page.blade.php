@@ -100,6 +100,7 @@
 							@if ($loop->first)
 								<div class="post-header">
 									<h2 class="post-title">{{$post->title}}</h2>
+									<h2 class="post-title">{{$post->user->name}}</h2>
 									<span class="zp-article-meta"><span class="text-muted meta-date"><i class="fas fa-calendar-alt"></i> {{ $post->created_at->format('M d, Y') }}</span>
 								</div>
 								<div class="post-content">
