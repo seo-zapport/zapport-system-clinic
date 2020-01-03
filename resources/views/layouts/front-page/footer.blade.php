@@ -9,10 +9,13 @@
 <script src="{{ asset('/js/app.js') }}"></script>
 <script src="{{ asset('/js/slick.js') }}"></script>
 <script src="{{ asset('/js/jquery.easing.min.js') }}"></script>
+
 <script type="application/javascript">
 	jQuery(document).ready(function($) {
-
-
+		/** remove hashtag parameter */
+		
+		window.history.replaceState('', '/', window.location.pathname) 
+		
 		/**slick*/
 		$('.slick-posts').slick({
 		  slidesToShow: 3,
