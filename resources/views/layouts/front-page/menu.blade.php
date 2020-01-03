@@ -8,13 +8,13 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#hero">Home</a>
+            <a class="nav-link js-scroll-trigger" href="@if(request()->route()->getName() != 'frnt.show.post') #hero @else / @endif">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#clinic">Clinic</a>
+            <a class="nav-link js-scroll-trigger" href="@if(request()->route()->getName() != 'frnt.show.post') #clinic @else /#clinic @endif">Clinic</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#post">Post</a>
+            <a class="nav-link js-scroll-trigger" href="@if(request()->route()->getName() != 'frnt.show.post') #post @else /#post @endif">Post</a>
           </li>
           </li>
           <li class="nav-item">
