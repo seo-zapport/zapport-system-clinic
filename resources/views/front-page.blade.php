@@ -73,7 +73,7 @@
 							</div>
 							<div class="card-body"><!--//344x193-->
 								<a href="{{ route('frnt.show.post', ['post' => $post->slug]) }}">
-									<h5 class="card-title">{{ $post->title }}</h5>
+									<h5 class="card-title">{{ strtoupper($post->title) }}</h5>
 								</a>
 							</div>
 						</div>
