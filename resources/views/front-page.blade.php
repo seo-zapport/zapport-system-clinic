@@ -65,7 +65,7 @@
 	<section id="post">
 		<div class="container">
 			<div class="slick-posts">
-				@foreach ($posts as $post)
+				@foreach ($posts->where('important', 0) as $post)
 					<div class="test">
 						<div class="card p-2 mx-1">
 							<div class="img-wrap">
@@ -82,7 +82,6 @@
 			</div>
 		</div>
 	</section>
-
 
 	<!-- Modal -->
 	<div class="modal fade" id="frontModal" tabindex="-1" role="dialog" aria-labelledby="frontModalLabel" aria-hidden="true">
@@ -102,12 +101,7 @@
 								<span class="zp-article-meta"><span class="text-muted meta-date"><i class="fas fa-calendar-alt"></i> {{ $post->created_at->format('M d, Y') }}</span>
 							</div>
 							<div class="post-content">
-								@if ($post->medias != null)
-									<figure class="post-img-wrap">
-										<img src="{{ asset('storage/uploaded/media/'.$post->medias->file_name) }}" class="post-img">
-									</figure>													
-								@endif
-								{!!$post->description!!}
+								{!! $post->description !!}
 							</div> 
 						@endif
 					@endforeach
