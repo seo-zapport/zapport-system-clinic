@@ -18,9 +18,8 @@ class FrontpageController extends Controller
     public function index()
     {
         $users = User::get();
-        $posts = Post::get();
-        $annoucement = Post::where('important', '1')->orderBy('id', 'DESC')->get();
-        return view('front-page', compact('users', 'posts', 'annoucement'));
+        $posts = Post::orderBy('id', 'DESC')->get();
+        return view('front-page', compact('users', 'posts'));
     }
 
     /**
