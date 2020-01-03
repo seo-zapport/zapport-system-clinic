@@ -41,8 +41,9 @@ class MedicineController extends Controller
                 }
                 $search = $request->search;
             }elseif ($request->has('filter_meds')){
-                $qry = Medicine::select('brand_id', 'generic_id', \DB::raw('COUNT(availability) as remaining'))->groupBy('brand_id', 'generic_id', 'availability')->where('availability', 0);
-                $rawmeds = $qry->orderBy('remaining', 'asc');
+                $qry = Medicine::select('brand_id', 'generic_id', \DB::raw('COUNT(availability) as remaining'))
+                                ->groupBy('brand_id', 'generic_id', 'availability')->where('availability', 0);
+                $rawmeds = $qry->where('expiration_date', '>', NOW())->orderBy('remaining', 'asc');
                 $printmeds = $rawmeds->get();
                 $meds = $rawmeds->paginate(10)->appends(['filter_meds' =>  $request->filter_meds]);
             }else{
