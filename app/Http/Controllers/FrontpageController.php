@@ -103,7 +103,7 @@ class FrontpageController extends Controller
 
             if (!$data->isEmpty()) {
                 foreach($data as $posts){
-                    $output .= '<a href="' . route('frnt.show.post', ['post' => $posts->slug]) . '" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">' . $posts->title . '<span class="badge badge-primary badge-pill">' . $posts->user->name . '</span></a>';
+                    $output .= '<a href="' . route('frnt.show.post', ['post' => $posts->slug]) . '" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">' . strtoupper($posts->title) . '<span class="badge badge-primary badge-pill">' . ucwords($posts->user->name) . '</span></a>';
                     $last_id = $posts->id;
                 }
                 $output .= '<div id="load_more" class="text-center mt-4"><button type="button" class="btn btn-primary" id="loadMore" data-id="'.$last_id.'">Load More</button></div>';
