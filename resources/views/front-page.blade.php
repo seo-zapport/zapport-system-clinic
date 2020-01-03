@@ -19,7 +19,6 @@
 			<div class="text-center mb-4">
 				<h2 class="text-secondary">List of Announcement</h2>
 			</div>
-			{{ csrf_field() }}
 			<div id="listData" class="list-group mb-4"></div>
 		</div>
 	</section>	
@@ -83,7 +82,6 @@
 		</div>
 	</section>
 
-
 	<!-- Modal -->
 	<div class="modal fade" id="frontModal" tabindex="-1" role="dialog" aria-labelledby="frontModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg" role="document">
@@ -95,7 +93,7 @@
 					</button>
 				</div>
 				<div class="modal-body">
-					@foreach ($annoucement as $post)
+					@foreach ($posts->where('important', '1') as $post)
 						@if ($loop->first)
 							<div class="post-header">
 								<h2 class="post-title">{{$post->title}}</h2>
