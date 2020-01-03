@@ -11,7 +11,7 @@
 	<div class="col-12 col-md-6">
 		<form id="diagnosis_suggetions" method="get" autocomplete="off">
 			<div class="form-row">
-		        <div class="form-group col-12 col-md-8">
+		        <div class="form-group col-12 col-md-8 mb-0">
 			        <div class="input-group">
 			            <input type="search" name="search" class="form-control" value="{{ (!empty($search)) ? $search : '' }}" placeholder="Search for Generic Name">
 			            <div id="suggestions_list" class="autocomplete-items" style="position: absolute; width: 75%; padding-right: 10px; margin-top: 37px;"></div>
@@ -23,12 +23,11 @@
 		        </div>
 			</div>
 		</form>
-		<form method="get">
-			<div class="form-group col-12 col-md-4 mb-0 mt-2">
-				<label class="form-check-label" for="exampleCheck1"> 
-				<input type="checkbox" {{ (isset($_GET['filter_meds'])) ? 'checked' : '' }} id="exampleCheck1" name="filter_meds" onclick="this.form.submit()"> Filter Less Medicines</label>
+{{-- 		<form method="get">
+			<div class="form-group col-12 col-md-4 mb-0 mt-2 p-0">
+				<input type="checkbox" {{ (isset($_GET['filter_meds'])) ? 'checked' : '' }} id="exampleCheck1" name="filter_meds" onclick="this.form.submit()"> Filter Less Medicines
 			</div>
-		</form>
+		</form> --}}
 	</div>
 	@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
 		<div class="col-12 col-md-6">
@@ -60,7 +59,15 @@
 				<thead class="thead-dark">
 					<th>Generic Name</th>
 					<th width="25%">Brand Name</th>
-					<th width="10%" class="text-center">Remaining Quantity</th>
+					<th width="25%" class="text-center">
+						<form method="get">
+							<div class="col-12">
+								Remaining Quantity &nbsp;
+								<input type="checkbox" {{ (isset($_GET['filter_meds'])) ? 'checked' : '' }} id="exampleCheck1" name="filter_meds" onclick="this.form.submit()">
+								<small class="text-muted font-weight-bold">(Sort)</small>
+							</div>
+						</form>
+					</th>
 				</thead>
 				<tbody>
 					
