@@ -98,13 +98,13 @@
 					@foreach ($posts->where('important', 1) as $post)
 						@if ($loop->first)
 							<div class="post-header">
-								<h2 class="post-title">{{$post->title}}</h2>
+								<h2 class="post-title">{{ strtoupper($post->title) }}</h2>
 								<span class="zp-article-meta"><span class="text-muted meta-date"><i class="fas fa-calendar-alt"></i> {{ $post->created_at->format('M d, Y') }}</span>
 							</div>
 							<div class="post-content">
 								@if ($post->medias != null)
 									<figure class="post-img-wrap">
-										<img src="{{ asset('storage/uploaded/media/'.$post->medias->file_name)" class="post-img">
+										<img src="{{ asset('storage/uploaded/media/'.$post->medias->file_name) }}" class="post-img">
 									</figure>													
 								@endif
 								{!!$post->description!!}
