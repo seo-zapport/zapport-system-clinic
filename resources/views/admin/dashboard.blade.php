@@ -153,7 +153,7 @@
 											<td>{{ ucfirst($emp->last_name) }}, {{ ucfirst($emp->first_name) }} {{ ucfirst($emp->middle_name) }}
 												<div class="row-actions">
 													{{-- <a href="{{ route('hr.emp.show', ['employee' => $emp->emp_id]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a> --}}
-													<button class="btn btn-link text-secondary" data-toggle="modal" data-target="#id-{{ $emp->emp_id }}">View</button>
+													<button class="btn btn-link text-secondary" data-toggle="modal" data-target="#id-{{ $emp->emp_id }}"><i class="far fa-eye"></i> View</button>
 												</div>
 											</td>
 											<td>{{ strtoupper($emp->departments->department) }} - {{ strtoupper($emp->positions->position) }}</td>
@@ -286,10 +286,10 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				{!! ($emp->tin_no == null) ? "<p>TIN NUMBER</p>" : '' !!}
-				{!! ($emp->sss_no == null) ? "<p>SSS NUMBER</p>" : '' !!}
-				{!! ($emp->philhealth_no == null) ? "<p>PHIL HEALTH NUMBER</p>" : '' !!}
-				{!! ($emp->hdmf_no == null) ? "<p>PAG IBIG NUMBER</p>" : '' !!}
+				{!! ($emp->tin_no == null) ? "<p class=\"text-danger\">* TIN NUMBER</p>" : '' !!}
+				{!! ($emp->sss_no == null) ? "<p class=\"text-danger\">* SSS NUMBER</p>" : '' !!}
+				{!! ($emp->philhealth_no == null) ? "<p class=\"text-danger\">* PHIL HEALTH NUMBER</p>" : '' !!}
+				{!! ($emp->hdmf_no == null) ? "<p class=\"text-danger\">* PAG IBIG NUMBER</p>" : '' !!}
 			</div>
 		</div>
 	</div>

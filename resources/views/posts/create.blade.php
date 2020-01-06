@@ -5,6 +5,7 @@
 	<i class="fas fa-book text-secondary"></i> Add New Post
 @endsection
 @section('dash-content')
+@include('layouts.errors')
 	<form method="post" action="@yield('postAction', route('post.store'))" enctype="multipart/form-data">
 		@csrf
 		@yield('postMethod')
@@ -113,8 +114,6 @@
 		</div>
 	</form>
 
-@include('layouts.errors')
-
 <!-- Modal Add -->
 <div class="modal fade media-model zp-core-ui" id="newMedia" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 	<div class="modal-dialog media-dialog" role="document">
@@ -141,12 +140,19 @@
 						<div class="uploader-inline">
 							<div class="uploader-inline-content">
 								<div class="upload-ui">
-									<h2 class="upload-instructions drop-instructions">Drop Files to upload</h2>
-									<p class="upload-instructions drop-instructions">or</p>
+									<h2 class="upload-instructions drop-instructions">Choose a file</h2>
+									<p class="upload-instructions drop-instructions">&nbsp;</p>
 									<form id="addFileForm" enctype="multipart/form-data">
 										@csrf
-										<input type="file" name="file_name" class="form-control-file" required>
-										<small id="errorlog" class="text-muted mb-2 mt-2"></small>
+										<div class="col-12 col-md-3 col-lg-3 m-auto">
+											<div class="input-group mb-3">
+												<div class="custom-file">
+													<input type="file" name="file_name" id="file_name" class="custom-file-input form-control-file" required>
+													<label for="file_name" class="custom-file-label">Choose file</label>
+												</div>
+											</div>
+											<small id="errorlog" class="text-muted mb-2 mt-2"></small>
+										</div>
 									</form>
 								</div>
 							</div>
@@ -185,7 +191,7 @@
 				<div class="media-frame-toolbar">
 					<div class="media-toolbar">
 						<div class="media-toolbar-primary search-form">
-							<button data-target="#upload" id="InsertPhoto" type="submit" class="btn btn-primary tinymcE">Select</button>
+							<button data-target="#upload" id="InsertPhoto" type="submit" class="btn btn-primary tinymcE">Choose</button>
 						</div>
 					</div>
 				</div>
@@ -245,12 +251,19 @@
 						<div class="uploader-inline">
 							<div class="uploader-inline-content">
 								<div class="upload-ui">
-									<h2 class="upload-instructions drop-instructions">Drop Files to upload</h2>
-									<p class="upload-instructions drop-instructions">or</p>
+									<h2 class="upload-instructions drop-instructions">Select a file</h2>
+									<p class="upload-instructions drop-instructions">&nbsp;</p>
 									<form id="addFileForm2" enctype="multipart/form-data">
 										@csrf
-										<input type="file" name="file_name" class="form-control-file" required>
-										<small id="errorlog2" class="text-muted mb-2 mt-2"></small>
+										<div class="col-12 col-md-3 col-lg-3 m-auto">
+											<div class="input-group mb-3">
+												<div class="custom-file">
+													<input type="file" name="file_name" id="file_name2" class="custom-file-input form-control-file" required>
+													<label for="file_name2" class="custom-file-label">Choose file</label>
+												</div>
+											</div>
+											<small id="errorlog2" class="text-muted mb-2 mt-2"></small>
+										</div>
 									</form>
 								</div>
 							</div>

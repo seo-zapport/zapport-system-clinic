@@ -1044,7 +1044,10 @@
 			background: #ff0000;
 		}
 	}
-
+}
+#featImgModal.modal.media-model *,
+#newMedia.modal.media-model * {
+	box-sizing: border-box !important;
 }
 
 
