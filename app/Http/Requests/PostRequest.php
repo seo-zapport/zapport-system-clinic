@@ -29,4 +29,18 @@ class PostRequest extends FormRequest
             'tag_id'       =>  'required',
         ];
     }
+
+    /**
+     * Get the validation messages that apply to the request.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'title.required'        =>  'Title field is required!',
+            'description.required'  =>  'Description field is required!',
+            'tag_id.required'       =>  'Select at least 1 category!',
+        ];
+    }
 }

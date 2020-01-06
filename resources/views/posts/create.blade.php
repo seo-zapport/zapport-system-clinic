@@ -5,18 +5,18 @@
 	<i class="fas fa-book text-secondary"></i> Add New Post
 @endsection
 @section('dash-content')
-@include('layouts.errors')
+{{-- @include('layouts.errors') --}}
 	<form method="post" action="@yield('postAction', route('post.store'))" enctype="multipart/form-data">
 		@csrf
 		@yield('postMethod')
 		<div class="row post-wrap">
 			<div class="col-12 col-md-8 col-lg-10">
 				<div class="form-group posts-title">
-					<label for="title"><strong>Title</strong></label>
-					<input type="text" name="title" class="form-control" value="@yield('postEdit', old('title'))" placeholder="Enter Post Title Here!" required autocomplete="off" pattern="[a-zA-Z0-9\s]+" title="Special Characters are not allowed!">
+					<label for="title"><strong>Title @error('title') <span class="text-danger">You need to fill this field!</span> @enderror</strong></label>
+					<input type="text" name="title" class="form-control @error('title') border border-danger @enderror" value="@yield('postEdit', old('title'))" placeholder="Enter Post Title Here!" required autocomplete="off" pattern="[a-zA-Z0-9\s]+" title="Special Characters are not allowed!">
 				</div>
 				<div class="form-group posts-description">
-					<label for="description"><strong>Post Content</strong></label>
+					<label for="description"><strong>Post Content @error('description') <span class="text-danger">This field is required!</span> @enderror</strong></label>
 					<textarea name="description" id="description" rows="20" class="form-control" placeholder="Enter Your Content Here!">@yield('postEditDes', old('description'))</textarea>
 				</div>		
 			</div>
@@ -35,10 +35,10 @@
 				<br>
 
 				@if (strstr(url()->current(), 'create'))
-				<div class="card mb-3">
+				<div class="card mb-3 border @error('tag_id') border-danger @enderror">
 					<div class="card-body">
 						<div class="header-title">
-							<p><strong>Categories</strong></p>
+							<p><strong>Categories @error('tag_id')<span class="text-danger"> Select Category</span>@enderror</strong></p>
 							<hr>
 							<a href="#" class="btn btn-info text-white btn-block mb-2" href="#" data-toggle="modal" data-target="#tagModal">Add Category</a>
 						</div>
@@ -118,7 +118,7 @@
 <div class="modal fade media-model zp-core-ui" id="newMedia" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 	<div class="modal-dialog media-dialog" role="document">
 		<div class="media-modal-content modal-content" role="document">
-			<button type="button" class="close media-modal-close" data-dismiss="modal" aria-label="Close">
+			<button id="closeModal" type="button" class="close media-modal-close" data-dismiss="modal" aria-label="Close">
 				<span aria-hidden="true" class="media-modal-icon">×</span>
 			</button>
 			<div class="media-frame zp-core-ui hide-menu">
@@ -148,7 +148,7 @@
 											<div class="input-group mb-3">
 												<div class="custom-file">
 													<input type="file" name="file_name" id="file_name" class="custom-file-input form-control-file" required>
-													<label for="file_name" class="custom-file-label">Choose file</label>
+													<label id="file-label" for="file_name" class="custom-file-label">Choose file</label>
 												</div>
 											</div>
 											<small id="errorlog" class="text-muted mb-2 mt-2"></small>
@@ -206,7 +206,7 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title" id="exampleModalLongTitle">Add New Category</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				<button id="tagmodalclose" type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
@@ -214,7 +214,7 @@
 					<form id="tagForm" method="post">
 						@csrf
 						<input type="text" name="tag" class="form-control" placeholder="Add New Category" required autocomplete="off" pattern="[a-zA-Z0-9\s]+" title="Special Characters are not allowed!">
-						<small id="errorlogTag" class="text-muted mt-2"></small>
+						<small id="errorlogTag" class="text-danger font-weight-bold mt-2"></small>
 					<hr>
 					<div class="form-group text-center">
 						<button class="btn btn-info text-white btn-block" type="submit">Add Category</button>
@@ -315,6 +315,18 @@
 @section('scripts')
 <script type="application/javascript">
 	$(document).ready(function(){
+
+	$("#closeModal").on('click', function(e){
+		e.preventDefault();
+		document.getElementById("file-label").innerHTML = 'Choose file';
+	});
+
+	$("#addFileForm input[name='file_name']").on('change', function(e){
+		e.preventDefault();
+		var file = e.target.files[0].name;
+		document.getElementById("file-label").innerHTML = file;
+	});
+
 		$('#addFileForm').on('submit', function(e){
 			e.preventDefault();
 			var btn = $('#InsertPhoto');
@@ -397,6 +409,11 @@
 	        		$("#tagModal").modal('hide');
 	        		$("#category_lists").append('<div class="mb-1"><input type="checkbox"  name="tag_id[]" value="'+response.id+'" class="zp-chkbox" id="tag_id_'+response.id+'"><label class="form-check-label" for="tag_id_'+response.id+'">'+response.tag_name+'</label></div>')
 	        		// $('select[name="tag_id[]"]').append('<option selected="true" value="'+ response.id +'">'+ response.tag_name +'</option>');
+					if ($('input[name="tag"]').hasClass('border border-danger'))
+					{
+						$('input[name="tag"]').removeClass('border border-danger')
+						document.getElementById("errorlogTag").innerHTML = ''
+					}
 	        	},
 	        	error: function(response){
 	        		document.getElementById("errorlogTag").innerHTML = '';
@@ -404,10 +421,21 @@
 						var errors = response.responseJSON.errors.tag_name;
 						errors.forEach(function(i){
 						document.getElementById("errorlogTag").innerHTML += i + "<br>";
+						$('input[name="tag"]').addClass('border border-danger');
 					});
 					}
 	        	}
 	        });
+		});
+
+		$("#tagmodalclose").on('click', function(e){
+			e.preventDefault();
+			$('#tagForm')[0].reset();
+			if ($('input[name="tag"]').hasClass('border border-danger'))
+			{
+				$('input[name="tag"]').removeClass('border border-danger')
+				document.getElementById("errorlogTag").innerHTML = ''
+			}
 		});
 
 // _____________________________________________________________________________________________________
