@@ -101,7 +101,12 @@
 								<span class="zp-article-meta"><span class="text-muted meta-date"><i class="fas fa-calendar-alt"></i> {{ $post->created_at->format('M d, Y') }}</span>
 							</div>
 							<div class="post-content">
-								{!! $post->description !!}
+								@php
+									//some excerpt
+									$endItm = '... <p class="text-center"><a href="/show-post/' . $post->slug . '" class="btn btn-outline-info">Read More</a>';
+									$test = str_limit($post->description, $limit = '500', $end = $endItm);
+								@endphp
+								{!! $test !!}
 							</div> 
 						@endif
 					@endforeach
