@@ -103,10 +103,9 @@
 							<div class="post-content">
 								@php
 									//some excerpt
-									$endItm = '... <p class="text-center"><a href="/show-post/' . $post->slug . '" class="btn btn-outline-info">Read More</a>';
-									$test = str_limit($post->description, $limit = '500', $end = $endItm);
+									$excerpt = str_limit($post->description, $limit = '500', $end = '... <p class="text-center"><a href="/show-post/' . $post->slug . '" class="btn btn-outline-info">Read More</a>');
 								@endphp
-								{!! $test !!}
+								{!! $excerpt !!}
 							</div> 
 						@endif
 					@endforeach
