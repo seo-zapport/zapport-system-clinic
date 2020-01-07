@@ -71,7 +71,7 @@
 							<div class="img-wrap">
 								<img src="{{ ($post->medias != null) ? asset('storage/uploaded/media/'.$post->medias->file_name) : asset('storage/uploaded/media/No_image.png') }}" class="card-img-top">
 							</div>
-							<div class="card-body"><!--//344x193-->
+							<div class="card-body">
 								<a href="{{ route('frnt.show.post', ['post' => $post->slug]) }}">
 									<h5 class="card-title">{{ strtoupper($post->title) }}</h5>
 								</a>
@@ -101,11 +101,8 @@
 								<span class="zp-article-meta"><span class="text-muted meta-date"><i class="fas fa-calendar-alt"></i> {{ $post->created_at->format('M d, Y') }}</span>
 							</div>
 							<div class="post-content">
-								@php
-									//some excerpt
-									$excerpt = str_limit($post->description, $limit = '500', $end = '... <p class="text-center"><a href="/show-post/' . $post->slug . '" class="btn btn-outline-info">Read More</a>');
-								@endphp
-								{!! $excerpt !!}
+								{!! Str::words(ucfirst($post->description), 100) !!}
+								<p class="text-center"><a href="{{ route('frnt.show.post', ['post' => $post->slug]) }}" class="btn btn-outline-info">Read More</a>
 							</div> 
 						@endif
 					@endforeach
