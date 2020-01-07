@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Department;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use App\Http\Requests\DepartmentRequest;
 
 class DepartmentController extends Controller
 {
@@ -20,10 +22,17 @@ class DepartmentController extends Controller
     public function index()
     {
         if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
-            $deps = Department::orderBy('id', 'desc')->get();
-            return view('hr.department.index', compact('deps'));
+            $deps = Department::orderBy('id', 'desc')->paginate(10);
+            $depsCount = Department::get();
+
+            $class = ( request()->is('hr/department*') ) ?'admin-hr-department' : '';//**add Class in the body*/
+
+            return view('hr.department.index', compact('class', 'deps', 'depsCount'));
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
-            abort(403, 'You are not Authorized on this page!');
+            return back();
         }
     }
 
@@ -35,9 +44,15 @@ class DepartmentController extends Controller
     public function create()
     {
         if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
-            return view('hr.department.create');
+
+            $class = ( request()->is('hr/department*') ) ?'admin-hr-department' : '';//**add Class in the body*/
+            
+            return view('hr.department.create', compact('class'));
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
-            abort(403, 'You are not Authorized on this page!');
+            return back();
         }
     }
 
@@ -47,14 +62,22 @@ class DepartmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(DepartmentRequest $request)
     {
         if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
-            $atts = $this->departmentValidation();
+            $atts = $this->validate($request, $request->rules(), $request->messages());
+            $rep = str_replace([" & ", " / ", "-", " - "], '-', $request->department);
+            $rep2 = str_replace(['( ', ' )', "'", "(", ")", " ( ", " ) "], "", $rep);
+            $replaced = str_replace([' ', '/'], '-', $rep2);
+            $atts['department_slug'] = strtolower($replaced);
+            dd($atts);
             Department::create($atts);
             return back();
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
-            abort(403, 'You are not Authorized on this page!');
+            return back();
         }
     }
 
@@ -66,7 +89,17 @@ class DepartmentController extends Controller
      */
     public function show(Department $department)
     {
-        //
+        if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
+
+            $class = ( request()->is('hr/department*') ) ?'admin-hr-department' : '';//**add Class in the body*/
+            
+            return view('hr.department.show', compact('class','department'));
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
+        }else{
+            return back();
+        }
     }
 
     /**
@@ -106,15 +139,11 @@ class DepartmentController extends Controller
             }
             $department->delete();
             return back();
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
-            abort(403, 'You are not Authorized on this page!');
+            return back();
         }
-    }
-
-    public function departmentValidation()
-    {
-        return request()->validate([
-            'department'    =>  ['required', 'unique:departments'],
-        ]);
     }
 }

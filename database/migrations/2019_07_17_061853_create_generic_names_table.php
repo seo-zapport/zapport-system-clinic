@@ -13,9 +13,9 @@ class CreateGenericNamesTable extends Migration
      */
     public function up()
     {
-        Schema::create('generic_names', function (Blueprint $table) {
-            $table->bigIncrements('id');
-        });
+        // Schema::create('generic_names', function (Blueprint $table) {
+        //     $table->bigIncrements('id');
+        // });
     }
 
     /**

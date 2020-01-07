@@ -18,7 +18,6 @@ class CreateMedicinesTable extends Migration
             $table->unsignedBigInteger('brand_id');
             $table->unsignedBigInteger('generic_id');
             $table->unsignedBigInteger('user_id');
-            // $table->bigInteger('qty_input');
             $table->bigInteger('qty_stock')->nullable();
             $table->date('expiration_date');
             $table->boolean('availability');

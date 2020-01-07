@@ -1,46 +1,89 @@
 @extends('layouts.app')
-@section('title', 'Brand Name')
+@section('title', '| Brand Name')
 @section('brandname', 'active')
-@section('dash-title', 'Brand Names')
+{{-- @section('dash-title', 'Brand Names') --}}
+@section('heading-title')
+	<i class="fas fa-file-prescription text-secondary"></i> Brand Names
+@endsection
 @section('dash-content')
 
-<div class="form-group">
-	<a class="btn btn-info text-white" href="#" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus"></i> Add Brand</a>
+@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
+	<div class="form-group text-right">
+		<a class="btn btn-info text-white" href="#" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus"></i> Add Brand</a>
+	</div>
+@endif
+
+<div class="col-12 col-md-6 p-0">
+	<form method="get" autocomplete="off">
+		<div class="form-row">
+	        <div class="form-group col-12 col-md-8">
+		        <div class="input-group">
+		            <input type="search" name="search" class="form-control" value="{{ (!empty($search)) ? $search : '' }}" placeholder="Search for Brand Name">
+		            <div class="input-group-append">
+		                <button type="submit" class="btn btn-success mr-2">Search</button>
+						<a href="{{ route('brandname') }}" class="btn btn-info text-white">Clear</a>
+		            </div>
+		        </div>
+	        </div>
+		</div>
+	</form>	
 </div>
 
-<table class="table">
-	<thead class="thead-dark">
-		<th>Brand Name</th>
-		<th>No. of Medecines</th>
-	</thead>
-	<tbody>
-		@forelse ($brands as $brand)
-			<tr>
-				<td>
-	        	<form method="post" action="{{ route('brandname.delete', ['medbrand' => $brand->id]) }}">
-	        		@csrf
-	        		@method('DELETE')
-	        		<div class="form-row align-items-center">
-	            		<div class="col-auto my-1 form-inline">
-	        				{{ $brand->bname }}
-							<button class="btn btn-link"  onclick="return confirm('Are you sure you want to delete {{ ucfirst($brand->bname) }} Brand?')" data-id="{{ $brand->id }}">
-								<i class="fas fa-times-circle"></i>
-							</button>
-						</div>
-					</div>
-	        	</form>
-				</td>
-				<td></td>
-			</tr>
-			@empty
-				<tr>
-					<td colspan="2" class="text-center">{{ "No registered Brand Name yet!" }}</td>
-				</tr>
-		@endforelse
-	</tbody>
-</table>
+<div class="card mb-3">
+	<div class="card-body">
+		<div class="row zp-countable">
+			<div class="col-12 col-md-6">
+				<p class="zp-2a9">Total number of Brands: <span>{{ $brandCount->count() }}</span></p>
+			</div>
+			<div class="col-12 col-md-6 count_items">
+				<p><span class="zp-tct">Total Items: </span> {{ $brands->count() }} <span  class="zp-ct"> Items</span></p>
+			</div>
+		</div>
+		<div class="table-responsive">
+			<table class="table table-hover">
+				<thead class="thead-dark">
+					<th>Brand Name</th>
+					<th width="10%" class="text-center">No. of Generics</th>
+				</thead>
+				<tbody>
+					@forelse ($brands as $brand)
+						<tr>
+							<td>
+				        		{{ strtoupper($brand->bname) }}
+								<div class="row-actions">
+									<a href="{{ route('brandname.show', ['medbrand' => $brand->bname_slug]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i> View</a>
+									@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
+									<small class="text-muted">|</small>
+						        	<form method="post" action="{{ route('brandname.delete', ['medbrand' => $brand->bname_slug]) }}" class="d-inline">
+						        		@csrf
+						        		@method('DELETE')
+										<button class="btn btn-link text-danger"   onclick="return confirm('Are you sure you want to delete {{ ucfirst($brand->bname) }} Brand?')" data-id="{{ $brand->bname }}">
+											<i class="fas fa-trash-alt"></i> Delete
+										</button>
+						        	</form>	
+									@endif
+								</div>
+							</td>
+							<td class="text-center">{{ $brand->generic->count() }} </td>
+						</tr>
+						@empty
+							<tr>
+								<td colspan="3" class="text-center">{{ "No registered Brand Name yet!" }}</td>
+							</tr>
+					@endforelse
+				</tbody>
+			</table>			
+		</div>
+	</div>
+</div>
+<div class="pagination-wrap">{{ $brands->links() }}</div>
 @include('layouts.errors')
-
+@if (session('brand_message') || session('pivot_validation'))
+	<div class="alert alert-danger alert-posts">
+		{{ session('brand_message') }}
+		{{ session('pivot_validation') }}
+	</div>
+@endif
 <!-- Modal Add -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
@@ -55,8 +98,17 @@
 				<form method="post" action="{{ route('brandname.add') }}">
 					@csrf
 					<div class="form-group">
+						<label for="generic_id">Generic Name</label>
+					<select name="generic_id" id="generic_id" class="form-control" required>
+							<option selected="true" disabled="disabled" value=""> Select Generic Name </option>
+						@foreach ($gens as $gen)
+							<option value="{{ $gen->id }}">{{ strtoupper($gen->gname) }}</option>
+						@endforeach
+					</select>
+					</div>
+					<div class="form-group">
 						<label for="bname">Brand Name</label>
-						<input type="text" name="bname" class="form-control" placeholder="Add Brand" value="{{ old('bname') }}" required>
+						<input type="text" name="bname" class="form-control" placeholder="Add Brand" value="{{ old('bname') }}" required autocomplete="off" pattern="[a-zA-Z0-9\s()/]+" title="Special Characters are not allowed!">
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

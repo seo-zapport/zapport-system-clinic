@@ -2,9 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Generic;
+use App\Employee;
+use App\Medicine;
+use App\Diagnosis;
+use App\Preemployment;
+use App\Employeesmedical;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use App\Repositories\NotificationRepository;
 
 class DashboardController extends Controller
 {
@@ -19,14 +26,95 @@ class DashboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        if (Gate::allows('isBanned')) {
+        // Pre-Employment
+        $preEmpFold = 'storage/uploaded/pre-employment/';
+        if (!file_exists($preEmpFold)) {
+            mkdir($preEmpFold, 777, true);
+        }
+        // Attachments
+        $attachmentFold = 'storage/uploaded/attachments/';
+        if (!file_exists($attachmentFold)) {
+            mkdir($attachmentFold, 777, true);
+        }
+        // Media
+        $mediaFold = 'storage/uploaded/media/';
+        if (!file_exists($mediaFold)) {
+            mkdir($mediaFold, 777, true);
+        }
+
+        // __________________________________________________________________________________________________________________
+
+        if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')){
+
+            $empMeds = Employeesmedical::where('remarks', 'followUp')->get();
+
+        }
+        if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')){
+
+            $preEmp = Preemployment::get();
+            if ($preEmp->count() > 0) {
+                foreach ($preEmp as $preEmpID) {
+                    $array[] = $preEmpID->employee_id;
+                }
+
+                $noPreEmpMeds = Employee::whereNotIn('id', $array)->get();
+            }else{
+                $noPreEmpMeds = Employee::get();
+            }
+
+        }
+        if (Gate::allows('isAdmin') || Gate::allows('isDoctor')){
+
+            $notSeen = Employeesmedical::where('seen', 0)->get();
+
+        }
+        if (Gate::allows('isAdmin') || Gate::allows('isHr') ) { 
+
+            $emps = Employee::where('tin_no', '=', NULL)->orWhere('sss_no', '=', NULL)
+                                                        ->orWhere('philhealth_no', '=', NULL)
+                                                        ->orWhere('hdmf_no', '=', NULL)
+                                                        ->get();
+
+            $emps2 = Employee::where('employee_type', 0)->get();
+
+        }
+        if(Gate::allows('isBanned')) {
             Auth::logout();
 
             return back()->with('message', 'You\'re not employee!');
         }
-        return view('admin.dashboard');
+
+        if (auth()->user()->employee) {
+            $findEmployee = auth()->user();
+            $employee = $findEmployee->employee->id;
+            $empMed = Employeesmedical::where('employee_id', $employee);
+
+
+            if (!empty($request->search)) {
+                $diagnosis = Diagnosis::where('diagnosis', $request->search)->first();
+
+                if ($diagnosis != null) {
+                    $search = $empMed->where('diagnosis_id', $diagnosis->id)->orderBy('id', 'desc')->paginate(10);
+                }
+
+                $search = $empMed->paginate(10);
+
+                $search->appends(['search' => $request->search]);
+                $result = $request->search;
+
+            }else{
+                $search = $empMed->paginate(10);
+            }
+
+            $gens = Generic::orderBy('gname', 'asc')->get();
+            $meds = Medicine::get();
+        }
+
+        $class = ( request()->is('dashboard*') ) ?'admin-dashboard' : '';//**add Class in the body*/
+
+        return view('admin.dashboard', compact('class','empMeds', 'emps', 'notSeen', 'employee', 'gens', 'meds', 'search', 'result', 'emps2', 'noPreEmpMeds'));
     }
 
     /**
@@ -56,9 +144,19 @@ class DashboardController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Employee $employee, Employeesmedical $employeesmedical)
     {
-        //
+        $this->authorize('view', $employee);
+        $unique = $employeesmedical->medicines->unique(function ($item) {
+            return $item->pivot['created_at']->format('M d, Y H:i').$item['brand_id'].$item['generic_id'].$item->pivot['quantity'];
+        });
+
+        $empMeds =  $unique->values()->all();
+
+        $gens = Generic::orderBy('gname', 'asc')->get();
+        $meds = Medicine::get();
+
+        return view('admin.show', compact('employee', 'employeesmedical', 'empMeds', 'gens', 'meds'));
     }
 
     /**
@@ -94,4 +192,20 @@ class DashboardController extends Controller
     {
         //
     }
+
+    public function notification(Request $request, NotificationRepository $notification)
+    {
+        if (Gate::allows('isAdmin') || Gate::allows('isHr') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
+            if ($request->ajax()) {
+                $notifications = $notification->getNotificationList();
+                return response()->json($notifications);
+            }
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
+        }else{
+           return back();
+        }
+    }
+
 }

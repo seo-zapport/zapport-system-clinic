@@ -32,7 +32,7 @@ class MedicineRequest extends FormRequest
             'brand_id'          =>  ['required'],
             'generic_id'        =>  ['required'],
             'expiration_date'   =>  ['required'],
-            'qty_input'         =>  ['required']
+            'qty_input'         =>  ['required'],
         ];
     }
 
@@ -47,7 +47,7 @@ class MedicineRequest extends FormRequest
             'brand_id.required'          =>  'Brand is required!',
             'generic_id.required'        =>  'Generic is required!',
             'expiration_date.required'   =>  'Expiration date is required!',
-            'qty_input.required'         =>  'Quantity is required!'
+            'qty_input.required'         =>  'Quantity is required!',
         ];
     }
 }

@@ -16,4 +16,9 @@ class Role extends Model
     	return $this->belongsToMany(User_role::class, 'user_roles', 'use_id', 'role_id');
     }
 
+    public function getRouteKeyName()
+    {
+    	return 'role';
+    }
+
 }

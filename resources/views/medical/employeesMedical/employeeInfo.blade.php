@@ -581,7 +581,7 @@ jQuery(document).ready(function($) {
              dataType : "json",
              success:function(data)
              {
-
+             	console.log(data);
                 brand.empty();
                 qty.val('');
                 jQuery.each(data.brand_id, function(key,value){

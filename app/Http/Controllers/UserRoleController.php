@@ -6,7 +6,9 @@ use App\Role;
 use App\User;
 use App\User_role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use App\Http\Requests\UserroleRequest;
 
 class UserRoleController extends Controller
 {
@@ -20,28 +22,27 @@ class UserRoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         if (Gate::allows('isAdmin')) {
-            $users = User::orderBy('id', 'asc')->get();
-
+            $users = User::orWhere('name', 'like', '%'.$request->search.'%')->orderBy('id', 'asc')->get();
             $roles = Role::get();
-
             $userRoles = User_role::get();
-
             // Exclude User with Role
-
             $arr = array();
-
             foreach ($userRoles as $userRole) {
                 $arr[] = $userRole->user_id;
             }
-
             $noRoles = User::whereNotIn('id', $arr)->get();
 
-            return view('admin.userRoles.index', compact('users', 'roles', 'noRoles', 'noUsers'));
+            $class = ( request()->is('dashboard/userRoles*') ) ?'admin-user-roles' : '';//**add Class in the body*/
+
+            return view('admin.userRoles.index', compact('class', 'users', 'roles', 'noRoles', 'noUsers'));
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
-            abort(403, "Hindi ka admin bitch!");
+            return back();
         }
     }
 
@@ -61,18 +62,21 @@ class UserRoleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UserroleRequest $request)
     {
         if (Gate::allows('isAdmin')) {
-            $this->validateUserRoles();
+            $this->validate($request, $request->rules(), $request->messages());
             $user_id = request()->input('user_id');
             $user = User::find($user_id);
             $roles_id = request()->input('role_id');
             $user->roles()->attach($roles_id);
 
             return back();
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
-            abort(403, "Hindi ka admin bitch!");
+            return back();
         }
     }
 
@@ -105,17 +109,19 @@ class UserRoleController extends Controller
      * @param  \App\User_role  $user_role
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, User_role $user_role, $user_id, $role_id)
+    public function update(UserroleRequest $request, User_role $user_role, $user_id, $role_id)
     {
         if (Gate::allows('isAdmin')) {
-            $atts = $this->validateUserRoles();
+            $atts = $this->validate($request, $request->rules(), $request->messages());
             $user = User::find($user_id);
             $user->roles()->updateExistingPivot($role_id, $atts);
             return back();
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
-            abort(403, "Hindi ka admin bitch!");
+            return back();
         }
-
     }
 
     /**
@@ -127,13 +133,5 @@ class UserRoleController extends Controller
     public function destroy(User_role $user_role)
     {
         // 
-    }
-
-    public function validateUserRoles()
-    {
-        return request()->validate([
-            'user_id'   =>  'required',
-            'role_id'   =>  'required',
-        ]);
     }
 }

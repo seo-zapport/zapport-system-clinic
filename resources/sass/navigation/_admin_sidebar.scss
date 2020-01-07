@@ -1,6 +1,11 @@
+// #zapWrap #adminMainMenu{
+// 	margin-left: 0 !important;
+// 	opacity: 1;
+// }
 #zapAdminMenuBg,#zapAdminMenuWrap{
-	width: 210px;
 	background-color: $admin-persian-green;
+	overflow: hidden;
+	width: 240px;
 }
 #zapAdminMenuBg{
 	position: fixed;
@@ -16,7 +21,8 @@
 #zapAdminMenuWrap{
 	position: relative;
 	float: left;
-	z-index: 9990;
+	margin-top: -80px;
+	z-index: 1000;
 
 	.nav{
 		padding: 0;
@@ -25,15 +31,62 @@
 		-moz-user-select: none;
 		-ms-user-select: none;
 		user-select: none;
+		i{
+			display: inline;
+			line-height: 1.5;
+			margin-right: 5px;
+			text-align: center;
+			width: 25px;
+			&[class*='fa-stack-1x']{
+				top:2px;
+				left:3px;
+			}
+		}
+		.dropdown-toggle::after {
+			display: inline;
+			position: absolute;
+			bottom: -4px;
+			left: 45%;
+			color: #00988d;
+			z-index: 5;
+		}
 	}
-	.nav-link{
-		color: #fff;
-    	&.active,
-    	&:hover, &:focus{
-    		background-color: $admin-pine-green;
-    		color: $admin-powder-blue;
-    	}
-
+	.nav-item{
+		position: relative;
+		.nav-link{
+			color: #fff;
+			position: relative;
+	    	&:hover, &:focus{
+	    		background-color: $admin-pine-green;
+	    		color: $admin-powder-blue;
+				&:before{
+					content: '';
+					display: block;
+					position: absolute;
+					width: 100%;
+					height: 100%;
+					border-left: 4px solid #f1f1f1;
+					// border-left-color: #f1f1f1;
+					right: 0;
+					top: 0px;
+				}
+	    	}
+	    	&.active{
+				background-color: $admin-cyprus;
+				color: $navbar-default-bg;
+				&:before{
+					content: '';
+					display: block;
+					position: absolute;
+					width: 100%;
+					height: 100%;
+					border-left: 4px solid #f1f1f1;
+					// border-left-color: #f1f1f1;
+					right: 0;
+					top: 0px;
+				}
+	    }
+		}
 	}
     .zap-user-info{
 	    position: relative;
@@ -114,23 +167,60 @@
     &:hover,&:focus{
     	background-color: $admin-pine-green;
     	color: $admin-powder-blue;
+		&:before{
+			content: '';
+			display: block;
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			border-left: 4px solid #f1f1f1;
+			right: 0;
+			top: 0;
+		}
     }
 }
 
+/**dropdown*/
+.zp-dropdown{
+	&.nav{
+		background-color: #004742;
+		.nav-item{
+			width: 100%;
+		}
+		.zp-sublink-dropdown{
+			&.nav-link{
+				width: 100%;
+			}
+		}
+	}
+}
 /**Collapsed*/
 .folded{
 	#zapAdminMenuBg,#zapAdminMenuWrap{
-		width: 50px;
+		width: 53px;
+	}
+	#Notifs {
+		font-size: 10px;
+		height: 17px;
+		width: 17px;
+		display: block;
+		position: absolute;
+		top: 3px;
+		left: 25px;
 	}
 	#zapAdminMenuWrap{
 		.nav{
-			width: 50px;
+			width: 53px;
+			.dropdown-toggle::after {
+				left: 31%;
+			}
 		}
 		.zap-user-info{
-			padding: 10px 6px;
+			padding: 10px 0px;
 		}
 		.zap-image{
 			margin-right: 0;
+			margin-left: 7px;
 			width: 38px;
 		}
 		.zap-info-wrap{
@@ -140,7 +230,132 @@
 			display: none;
 		}
 	}
-	#zapContent, #zapFooter{
-		margin-left: 50px;
+	.navbar.fixed-top,#zapContent, #zapFooter{
+		margin-left: 53px;
+	}
+
+}
+
+/**dashboard-sidebar*/
+
+
+
+/**dashboard*/
+.admin-dashboard{
+	#v-pills-tab{
+		background-color: #fff;
+		border: 1px solid rgba(0, 0, 0, 0.125);
+		border-radius: 0.075em;
+		padding: 10px;
+	}
+	.nav-pills{
+		.nav-link{
+			color: #6c757d;
+			position: relative;
+			margin-left: 15px;
+			padding: 0.5rem 0.75rem;
+			transition: ease-in 0.7s all;
+			&:before{
+				content: "";
+				display: inline-block;
+				position: absolute;
+				background-color: transparent;
+				width: 90%;
+				height: 2px;
+				left: 0;
+				right: 0;
+				bottom: 0px;
+				margin: auto;
+			}
+			&:hover{
+				color: #00988d;
+			    &:before{
+					background-color: #00988d;
+			    }
+			    .dash-badge{
+			    	background-color: #00988d !important;
+			    }
+			}
+		}
+		.nav-link.active,
+		.show > .nav-link{
+		    background-color: transparent;
+		    color: #00988d;
+		    &:before{
+				background-color: #00988d;
+		    }
+		    .dash-badge{
+		    	background-color: #00988d !important;
+		    }
+		}
+		.dash-badge{
+		    background-color: #6c757d !important;
+			color: #fff;
+			text-align: center;
+		}
 	}
 }
+#zapWrap{
+	#Notifs{
+		background-color: #2dc3b8 !important;
+	}
+}
+
+
+/**notification*/
+#v-new-consultation-tab, #v-follow-up-tab, #v-inc-requirements-tab, #v-inc-emp-6months-tab, #v-inc-preEmp-tab{
+	span{
+		background-color: #bbb;
+		border-radius: 50%;
+		display: inline-block;
+		font-size: 12px;
+		height: 21px;
+		padding: 2px;
+		width: 21px;
+		margin-left: 5px;
+	}
+}
+
+#Notifs{
+	background-color: #bbb;
+	border-radius: 50%;
+	display: inline-block;
+	font-size: 12px;
+	height: 21px;
+	padding: 2px;
+	width: 21px;
+}
+
+/**Mobile-hide-show-btn*/
+.zp-navbar-show {
+    padding: 0.25rem 0.75rem;
+    font-size: 1.125rem;
+    line-height: 1;
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+}
+.navbar-light .zp-navbar-show {
+    color: rgba(0, 0, 0, 0.5);
+		width: 53px;
+		.fa-times{
+			color:rgba(227, 52, 47, 0.5) !important;
+			font-size: 1.5em;
+		}
+}
+#zp_sideOut,.zp-navbar-show{
+	border-color: transparent;
+	&:focus{
+		outline: none;
+	}
+}
+// .zp-sidebClose{
+// 	display: none;
+// 	position: absolute;
+//     right: 5px;
+//     z-index: 15;
+//     i {
+// 	    font-size: 28px;
+// 	    color: #fff;
+// 	}	
+// }

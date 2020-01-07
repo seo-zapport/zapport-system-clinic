@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Position;
+use App\Employee;
 use App\Department;
 use App\DepartmentPosition;
-use App\Position;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use App\Http\Requests\PositionRequest;
 
 class PositionController extends Controller
 {
@@ -23,11 +26,28 @@ class PositionController extends Controller
     public function index()
     {
         if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
-            $positions = Position::orderBy('id', 'desc')->get();
+
+            $deps = Department::get();
+            $arr = [];
+            foreach ($deps as $dep) {
+                foreach ($dep->positions as $pos) {
+                    $arr[] = $pos;
+                }
+            }
+
+            $positions = Position::orderBy('id', 'desc')->paginate(10);
+            $positionsCount = Position::get();
             $departments = Department::orderBy('department', 'asc')->get();
-            return view('hr.position.index', compact('positions', 'departments'));
+            $employees = Employee::get();
+
+            $class = ( request()->is('hr/position*') ) ?'admin-hr-position' : '';//**add Class in the body*/
+
+            return view('hr.position.index', compact('class', 'positions', 'departments', 'employees', 'positionsCount', 'arr'));
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
-            abort(403, 'You are not Authorized on this page!');
+            return back();
         }
     }
 
@@ -47,22 +67,38 @@ class PositionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PositionRequest $request)
     {
         if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
-            $atts = $this->positionValidation();
+            $atts = $this->validate($request, $request->rules(), $request->messages());
             $atts = $request->except('department_id');
-            $data = Position::create($atts);
 
+            $check = Position::where('position', $request->position)->first();
+            if (!empty($check)) {
+                $data = $check;
+            }else{
+                $rep = str_replace([" & ", " / ", "-", " - "], '-', $request->position);
+                $rep2 = str_replace(['( ', ' )', "'", "(", ")", " ( ", " ) "], "", $rep);
+                $replaced = str_replace([' ', '/'], '-', $rep2);
+                $atts['position_slug'] = strtolower($replaced);
+                $data = Position::create($atts);
+            }
+
+            $check2 = DepartmentPosition::where('department_id', $request->department_id)->where('position_id', $data->id)->first();
+            if (!empty($check2)) {
+                return back()->with('pivot_validation', 'Department and Position already exists!');
+            }
             $lastID = $data->id;
             $posID['position_id'] = $lastID;
             $depID = request()->input(['department_id']);
             $dep = Department::find($depID);
-            // dd($dep);
             $dep->positions()->attach($posID);
             return back();
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
-            abort(403, 'You are not Authorized on this page!');
+            return back();
         }
     }
 
@@ -72,9 +108,20 @@ class PositionController extends Controller
      * @param  \App\Position  $position
      * @return \Illuminate\Http\Response
      */
-    public function show(Position $position)
+    public function show(Position $position, Department $department)
     {
-        //
+        if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
+            $employees = Employee::where('position_id', $position->id)->where('department_id', $department->id)->get();
+
+            $class = ( request()->is('hr/position*') ) ?'admin-hr-position' : '';//**add Class in the body*/
+
+            return view('hr.position.show', compact('class', 'position', 'department', 'employees'));
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
+        }else{
+            return back();
+        }
     }
 
     /**
@@ -109,18 +156,16 @@ class PositionController extends Controller
     public function destroy(Position $position)
     {
         if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
+            if (count($position->employee) > 0) {
+                return back()->with('pos_message', 'You cannot delete a position with employee!');
+            }
             $position->delete();
             return back();
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
         }else{
-            abort(403, 'You are not Authorized on this page!');
+            return back();
         }
-    }
-
-    public function positionValidation()
-    {
-        return request()->validate([
-            'position'  =>  ['required', 'unique:positions'],
-            'department_id'  =>  'required',
-        ]);
     }
 }
