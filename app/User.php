@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Cache;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -57,8 +58,49 @@ class User extends Authenticatable
         return $this->hasMany(Medicine::class, 'user_id');
     }
 
+    public function employeesMedical()
+    {
+        return $this->hasMany(Employeesmedical::class, 'user_id');
+    }
+
     public function addMeds(Medicine $medicine)
     {
         return $this->medicine()->save($medicine);
     }
+
+    public function employeesMedicals()
+    {
+        return $this->belongsToMany(Employeesmedical::class, 'employeesmedical_medicine_users', 'user_id')->withPivot('quantity')->withTimestamps();
+    }
+
+    public function medicines()
+    {
+        return $this->belongsToMany(Medicine::class, 'employeesmedical_medicine_users', 'user_id')->withPivot('quantity')->withTimestamps();
+    }
+
+    public function medias()
+    {
+        return $this->hasMany(Media::class);
+    }
+
+    public function addMedia(Media $media)
+    {
+        $this->medias()->save($media);
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
+    public function published(Post $post)
+    {
+        $this->posts()->save($post);
+    }
+
+    public function isOnline()
+    {
+        return Cache::has('user-is-online-' . $this->id);
+    }
+
 }

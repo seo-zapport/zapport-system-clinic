@@ -17,6 +17,9 @@ class AuthServiceProvider extends ServiceProvider
         // 'App\Model' => 'App\Policies\ModelPolicy',
         // 'App\User_role' => 'App\Policies\UserRolePolicy',
         'App\Employee' => 'App\Policies\EmployeePolicy',
+        'App\Employee' => 'App\Policies\DashboardPolicy',
+        'App\Post'     => 'App\Policies\PostPolicy',
+        'App\Media'     => 'App\Policies\MediaPolicy',
     ];
 
     /**
@@ -46,9 +49,21 @@ class AuthServiceProvider extends ServiceProvider
             }
         });
 
+        $gate->define('isNurse', function($user){
+            foreach ($user->roles as $role) {
+                return $role->role == 'nurse';
+            }
+        });
+
         $gate->define('isBanned', function($user){
             foreach ($user->roles as $role) {
                 return $role->role == 'banned';
+            }
+        });
+
+        $gate->define('isEmployee', function($user){
+            foreach ($user->roles as $role) {
+                return $role->role == 'employee';
             }
         });
 
