@@ -13,9 +13,4 @@ class Position extends Model
     {
     	return $this->hasMany(Employee::class, 'position_id');
     }
-
-    public function getRouteKeyName()
-    {
-    	return 'position_slug';
-    }
 }

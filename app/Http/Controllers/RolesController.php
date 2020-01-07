@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Role;
 use Illuminate\Http\Request;
-use App\Http\Requests\RoleRequest;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class RolesController extends Controller
@@ -24,15 +22,9 @@ class RolesController extends Controller
     {
         if (Gate::allows('isAdmin')) {
             $roles = Role::get();
-
-            $class = ( request()->is('dashboard/roles*') ) ?'admin-roles list-roles' : '';//**add Class in the body*/
-
-            return view('admin.roles.index', compact('class','roles'));
-        }elseif (Gate::allows('isBanned')) {
-            Auth::logout();
-            return back()->with('message', 'You\'re not employee!');
+            return view('admin.roles.index', compact('roles'));
         }else{
-            return back();
+            abort(403, "Hindi ka admin bitch!");
         }
 
     }
@@ -53,19 +45,16 @@ class RolesController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(RoleRequest $request)
+    public function store(Request $request)
     {
         if (Gate::allows('isAdmin')) {
-            $atts = $this->validate($request, $request->rules(), $request->messages());
+            $atts = $this->roleValidation();
 
             Role::create($atts);
 
             return back();
-        }elseif (Gate::allows('isBanned')) {
-            Auth::logout();
-            return back()->with('message', 'You\'re not employee!');
         }else{
-            return back();
+            abort(403, "Hindi ka admin bitch!");
         }
     }
 
@@ -77,10 +66,7 @@ class RolesController extends Controller
      */
     public function show(Role $role)
     {
-
-        $class = ( request()->is('dashboard/roles*') ) ?'admin-roles show-roles' : '';//**add Class in the body*/
-
-        return view('admin.roles.show', compact('class','role'));
+        //
     }
 
     /**
@@ -117,17 +103,18 @@ class RolesController extends Controller
         if (Gate::allows('isAdmin')) {
             if ($role->role == 'admin') {
                 return back()->with('role_msg', 'You cannot delete ADMIN role');
-            }elseif (count($role->users) > 0){
-                return back()->with('role_msg', 'You cannot delete a role with user');
-            }else{
-                $role->delete();
-                return back();
             }
-        }elseif (Gate::allows('isBanned')) {
-            Auth::logout();
-            return back()->with('message', 'You\'re not employee!');
-        }else{
+            $role->delete();
             return back();
+        }else{
+            abort(403, "Hindi ka admin bitch!");
         }
+    }
+
+    public function roleValidation()
+    {
+        return request()->validate([
+            'role'  =>  ['required']
+        ]);
     }
 }

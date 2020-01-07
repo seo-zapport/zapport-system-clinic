@@ -77,17 +77,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    @php
-                        $i = 1;
-                        $outopen = "Clinic is Closed";
-                    @endphp
-                    @foreach ($users as $user)
-                        @if ($user->isOnline())
-                            @php $outopen = "Clinic is Open"; @endphp
-                            @break
-                        @endif
-                    @endforeach
-                        {{ $outopen }}
+                    Laravel
                 </div>
 
                 <div class="links">

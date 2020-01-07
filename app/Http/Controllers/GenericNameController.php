@@ -2,18 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\GenericName;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Gate;
 
-class DashboardController extends Controller
+class GenericNameController extends Controller
 {
-
-    public function __construct()
-    {
-        return $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -21,12 +14,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        if (Gate::allows('isBanned')) {
-            Auth::logout();
-
-            return back()->with('message', 'You\'re not employee!');
-        }
-        return view('admin.dashboard');
+        //
     }
 
     /**
@@ -53,10 +41,10 @@ class DashboardController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\GenericName  $genericName
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(GenericName $genericName)
     {
         //
     }
@@ -64,10 +52,10 @@ class DashboardController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\GenericName  $genericName
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(GenericName $genericName)
     {
         //
     }
@@ -76,10 +64,10 @@ class DashboardController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\GenericName  $genericName
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, GenericName $genericName)
     {
         //
     }
@@ -87,10 +75,10 @@ class DashboardController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\GenericName  $genericName
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(GenericName $genericName)
     {
         //
     }

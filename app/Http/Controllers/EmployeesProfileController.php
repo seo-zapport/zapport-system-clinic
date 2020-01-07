@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
 use App\Employee;
+use App\User;
 use App\Department;
 use Illuminate\Http\Request;
 
@@ -21,11 +21,7 @@ class EmployeesProfileController extends Controller
      */
     public function index()
     {
-        if (empty(auth()->user()->employee)) {
-            return view('profile.index');
-        }else{
-            return back();
-        }
+        return view('profile.index');
     }
 
     /**
@@ -81,16 +77,11 @@ class EmployeesProfileController extends Controller
      */
     public function update(Request $request, Employee $employee)
     {
-        if (empty(auth()->user()->employee)) {
-            $userID = auth()->user()->id;
-            $emp = $employee::find($request->input('id'));
-            $emp->user_id = $userID;
-            $emp->save();
-            return redirect('employees/profile/employee/'.$emp->emp_id);
-        }else{
-            $emp = auth()->user()->employee->emp_id;
-            return redirect('employees/profile/employee/'.$emp);
-        }
+        $userID = auth()->user()->id;
+        $emp = $employee::find($request->input('id'));
+        $emp->user_id = $userID;
+        $emp->save();
+        return redirect('employees/profile/employee/'.$emp->id);
     }
 
     /**
@@ -106,18 +97,13 @@ class EmployeesProfileController extends Controller
 
     public function searchResult(Request $request)
     {
-        if (empty(auth()->user()->employee)) {
-            $atts = $this->validateEmployeeID();
-            $emp = Employee::where('emp_id', $atts)->where('user_id', null)->get();
+        $atts = $this->validateEmployeeID();
+        $emp = Employee::where('emp_id', $atts)->where('user_id', null)->get();
 
-            if (count($emp) >= 1) {
-                return view('profile.edit', compact('emp'));
-            }else{
-                return back()->with('noResult', 'No Result Found! Or Employee Number Already Belongs To A User');
-            }
+        if (count($emp) >= 1) {
+            return view('profile.edit', compact('emp'));
         }else{
-            $emp = auth()->user()->employee->emp_id;
-            return redirect('employees/profile/employee/'.$emp);
+            return back()->with('noResult', 'No Result Found! Or Employee Number Already Belongs To A User');
         }
     }
 
@@ -125,9 +111,6 @@ class EmployeesProfileController extends Controller
     {
         return request()->validate([
             'emp_id' => 'required'
-        ],
-        [
-            'emp_id.required' => 'Employee ID is required!'
         ]);
     }
 }

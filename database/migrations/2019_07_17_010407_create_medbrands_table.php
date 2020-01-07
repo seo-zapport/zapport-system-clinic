@@ -16,7 +16,6 @@ class CreateMedbrandsTable extends Migration
         Schema::create('medbrands', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('bname')->unique();
-            $table->string('bname_slug');
         });
     }
 

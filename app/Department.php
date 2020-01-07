@@ -12,9 +12,4 @@ class Department extends Model
     {
     	return $this->hasMany(Employee::class, 'department_id');
     }
-
-    public function getRouteKeyName()
-    {
-    	return 'department_slug';
-    }
 }

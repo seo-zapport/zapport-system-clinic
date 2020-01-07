@@ -1,14 +1,10 @@
-<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm mb-4 top-navbar fixed-top">
+<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm mb-4 top-navbar">
     <div class="container-fluid">
-        <button class="zp-navbar-show" type="button" data-target="#navbarSidebarHideShow" aria-controls="navbarSidebarHideShow" aria-expanded="false" aria-label="{{ __('Hide/Show navigation') }}">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
         <a class="navbar-brand" href="{{ url('/') }}">
             {{-- {{ config('app.name', 'Laravel') }} --}}
-            <img src="{{ url('/images/logo.png') }}" alt="Zapport Clinic">
+            <img src="{{ url('/images/logo.png') }}">
         </a>
-        <button id="zp_sideOut" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -26,7 +22,7 @@
                         <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                     </li>
                 @else
-                    {{--  <li class="nav-item">
+                    <li class="nav-item">
                         <a class="nav-link" href="{{ route('logout') }}"
                            onclick="event.preventDefault();
                                          document.getElementById('logout-form').submit();">
@@ -35,25 +31,24 @@
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
                         </form>
-                    </li>  --}}
-                    <li class="nav-item dropdown">
+                    </li>
+                    {{-- <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            Welcome {{ Auth::user()->name }} 
-                            {{--  <span class="caret"></span>  --}}
+                            {{ Auth::user()->name }} <span class="caret"></span>
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();
                                              document.getElementById('logout-form').submit();">
-                                <i class="fas fa-sign-out-alt"></i> {{ __('Logout') }}
+                                {{ __('Logout') }}
                             </a>
 
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                 @csrf
                             </form>
                         </div>
-                    </li>
+                    </li> --}}
                 @endguest
             </ul>
         </div>

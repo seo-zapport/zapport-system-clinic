@@ -19,7 +19,7 @@ class CreateEmployeesTable extends Migration
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('department_id');
             $table->unsignedBigInteger('position_id');
-            $table->text('profile_img')->nullable();
+            $table->text('profile_img');
             $table->string('first_name');
             $table->string('middle_name')->nullable();
             $table->string('last_name')->nullable();
@@ -40,7 +40,6 @@ class CreateEmployeesTable extends Migration
             $table->text('highschool');
             $table->date('highschool_grad_date');
             $table->text('college')->nullable();
-            $table->text('course')->nullable();
             $table->date('college_grad_date')->nullable();
             // Work Experience
             $table->text('experience')->nullable();
@@ -61,8 +60,6 @@ class CreateEmployeesTable extends Migration
             $table->string('sss_no')->nullable();
             $table->string('philhealth_no')->nullable();
             $table->string('hdmf_no')->nullable();
-            $table->date('hired_date');
-            $table->boolean('employee_type');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

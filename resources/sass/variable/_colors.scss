@@ -3,7 +3,6 @@ $text-color: #636b6f;
 // Body
 $body-bg: #f5f8fa;
 $color__background-body: #f1f1f1;
-$color_white: #fff;
 
 // Borders
 $laravel-border-color: darken($body-bg, 10%);
@@ -24,7 +23,6 @@ $navbar-default-bg: #fff;
 $admin-persian-green: #00988D;
 $admin-pine-green: #007c73;
 $admin-powder-blue:#b2e5e1;
-$admin-cyprus:#004742;
 
 // Buttons
 $btn-default-color: $text-color;
@@ -36,11 +34,3 @@ $input-color-placeholder: lighten($text-color, 30%);
 
 // Panels
 $panel-default-heading-bg: #fff;
-
-//color
-$clr-2a9: #2ab3a9;
-$clr-3b8: #2dc3b8;
-$clr-e8: #e8e8e8;
-$clr-e0: #e0e0e0;
-$clr-b8: #b8b8b8;
-$clr-d: #ddd;

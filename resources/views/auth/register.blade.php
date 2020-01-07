@@ -1,34 +1,18 @@
 @extends('layouts.app')
-@section('title', '| Register User')
+@section('title', 'Dashboard Register User')
 @section('register', 'active')
-{{-- @section('dash-title', 'Register New Usersdfsdf') --}}
-@section('heading-title')
-    <i class="fas fa-user-edit text-secondary"></i> Register User
-@endsection
+@section('dash-title', 'Register New User')
 @section('dash-content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="signin-container">
-            {{-- <div class="sigin-info">
-                <div class="slogan">
-                    Curabitur, Tempus, Lectus
-                </div>
-                <ul>
-                    <li>Convallis quis ac lectus</li>
-                    <li>Consectetur adipiscing elit</li>
-                    <li>Vivamus magna justo</li>
-                    <li>Curabitur non nulla sit amet</li>
-                </ul>
-            </div> --}}
-            <div class="signin-form">
-                {{-- <div class="zp-bg-clan p-1"></div> --}}
-                <form method="POST" action="{{ route('register') }}">
-                    @csrf
-                    <div class="signin-text">
-                        <span>Register new user</span>
-                    </div>
-                    <div class="form-group row">
-                        <label for="name" class="col-form-label text-md-right">{{ __('Name') }}</label>
+        <div class="col-md-8 p-5">
+            <form method="POST" action="{{ route('register') }}">
+                @csrf
+
+                <div class="form-group row">
+                    <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+
+                    <div class="col-md-6">
                         <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
 
                         @error('name')
@@ -37,9 +21,12 @@
                             </span>
                         @enderror
                     </div>
+                </div>
 
-                    <div class="form-group row">
-                        <label for="email" class="col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+                <div class="form-group row">
+                    <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail Address') }}</label>
+
+                    <div class="col-md-6">
                         <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
 
                         @error('email')
@@ -48,9 +35,12 @@
                             </span>
                         @enderror
                     </div>
+                </div>
 
-                    <div class="form-group row">
-                        <label for="password" class="col-form-label text-md-right">{{ __('Password') }}</label>
+                <div class="form-group row">
+                    <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}</label>
+
+                    <div class="col-md-6">
                         <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
 
                         @error('password')
@@ -59,22 +49,24 @@
                             </span>
                         @enderror
                     </div>
+                </div>
 
-                    <div class="form-group row">
-                        <label for="password-confirm" class="col-form-label text-md-right">{{ __('Confirm Password') }}</label>
+                <div class="form-group row">
+                    <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}</label>
+
+                    <div class="col-md-6">
                         <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                     </div>
+                </div>
 
-                    <div class="form-group row mb-0">
-                        <div class="col-md-6 offset-md-4">
-                            <button type="submit" class="btn btn-primary">
-                                {{ __('Register') }}
-                            </button>
-                        </div>
+                <div class="form-group row mb-0">
+                    <div class="col-md-6 offset-md-4">
+                        <button type="submit" class="btn btn-primary">
+                            {{ __('Register') }}
+                        </button>
                     </div>
-
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>
