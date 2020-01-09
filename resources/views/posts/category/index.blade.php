@@ -8,6 +8,11 @@
 <div class="form-group text-right">
 	<a class="btn btn-info text-white" href="#" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus"></i>Add Category</a>
 </div>
+@if (session('tag_error'))
+	<div id="err-msg" class="alert alert-danger alert-posts">
+		{{ session('tag_error') }}
+	</div>
+@endif
 <div class="card mb-3">
 	<div class="card-body">
 
@@ -26,7 +31,7 @@
 					@forelse ($tags as $tag)
 						<tr>
 							<td>
-								{{ $tag->tag_name }}
+								{{ ucwords($tag->tag_name) }}
 								<div class="row-actions">
 									<span id="{{ $tag->tag_slug }}" class="show-edit btn btn-link text-secondary"><i class="far fa-edit"></i> Quick Edit</span> <span class="text-muted">|</span>
 									<form method="post" action="{{ route('destroy.tag', ['tag' => $tag->tag_slug]) }}"  class="d-inline-block">
@@ -49,7 +54,7 @@
 										@csrf
 										@method('PUT')
 										<p class="text-muted">QUICK EDIT</p>
-										<span>Category</span>
+										<span>Category</span> <small class="text-muted font-italic">Enter to save</small>
 										<input type="text" name="tag_name" value="{{ $tag->tag_name }}" class="form-control" required autocomplete="off" pattern="[a-zA-Z0-9\s]+" title="Special Characters are not allowed!">
 									</form>
 								</fieldset>
@@ -70,12 +75,6 @@
 	</div>
 </div>
 <div class="pagination-wrap">{{ $tags->links() }}</div>
-@include('layouts.errors')
-@if (session('tag_error'))
-	<div class="alert alert-danger alert-posts">
-		{{ session('tag_error') }}
-	</div>
-@endif
 
 <!-- Modal Add -->
 <div class="modal fade bd-example-modal-lg" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -91,7 +90,8 @@
 				<form id="cat-cat-form" method="post" action="{{ route('store.tag') }}">
 					@csrf
 					<div class="form-group">
-						<input type="text" name="tag_name" class="form-control" placeholder="Category Name" required autocomplete="off" pattern="[a-zA-Z0-9\s]+" title="Special Characters are not allowed!">
+						<input type="text" name="tag_name" class="form-control @error('tag_name') border border-danger @enderror" placeholder="Category Name" required autocomplete="off" pattern="[a-zA-Z0-9\s]+" title="Special Characters are not allowed!">
+						@error('tag_name') <small class="text-danger">{{ $message }}</small> @enderror
 					</div>
 					<div class="modal-footer">
 						<button id="cat-add" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -115,4 +115,20 @@
 		});
 	});
 </script>
+@error('tag_name')
+	<script type="text/javascript">
+		jQuery(document).ready(function($) {
+			$('#exampleModalCenter').modal('show')
+		});
+	</script>
+@enderror
+@if (session('tag_error'))
+	<script type="text/javascript">
+		jQuery(document).ready(function($){
+			$("#err-msg").on('click', function(e){
+				$(this).fadeOut('slow');
+			});
+		});
+	</script>
+@endif
 @endsection

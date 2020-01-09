@@ -1,16 +1,10 @@
 @extends('layouts.app')
 @section('title', '| Generics | '. $generic->gname)
 @section('genericname', 'active')
-{{-- @section('dash-title', $generic->gname) --}}
 @section('heading-title')
 	<i class="fas fa-tablets text-secondary"></i> {{ strtoupper($generic->gname) }}
 @endsection
 @section('dash-content')
-@section('back')
-<a href="{{ route('genericname') }}">
-	<i class="fas fa-arrow-left"></i>
-</a>
-@endsection
 
 <div class="d-flex align-content-center p-2">
 	<p><span class="text-muted">Generic Name</span>: <strong>{{ strtoupper($generic->gname) }}</strong></p>
@@ -18,8 +12,6 @@
 		<a href="" data-toggle="modal" data-target="#exampleModalCenter"><i class="far fa-edit text-primary p-1"></i></a>
 	@endif
 </div>
-
-@include('layouts.errors')
 
 <div class="card">
 	<div class="card-body">
@@ -65,7 +57,8 @@
 					@method('PUT')
 					<div class="form-group">
 						<label for="bname">Generic Name</label>
-						<input type="text" name="gname" class="form-control" placeholder="Add Generic" value="{{ $generic->gname }}" required autocomplete="off" pattern="[a-zA-Z0-9\s()/]+" title="Special Characters are not allowed!">
+						<input type="text" name="gname" class="form-control @error('gname') border border-danger @enderror" placeholder="Add Generic" value="{{ $generic->gname }}" required autocomplete="off" pattern="[a-zA-Z0-9\s()/]+" title="Special Characters are not allowed!">
+						@error('gname') <small class="text-danger">{{ $message }}</small> @enderror
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -78,3 +71,13 @@
 </div>
 
 @endsection
+
+@error('gname')
+	@section('scripts')
+		<script type="text/javascript">
+			jQuery(document).ready(function($) {
+				$('#exampleModalCenter').modal('show')
+			});
+		</script>
+	@endsection
+@enderror

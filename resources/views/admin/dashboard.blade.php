@@ -10,15 +10,15 @@
 	@if ( Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse') || Gate::check('isHr') )
 		<div class="nav nav-pills mb-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
 		  @if (Gate::check('isAdmin') || Gate::check('isDoctor'))
-		  	<a class="nav-link active" id="v-new-consultation-tab" data-toggle="pill" href="#v-new-consultation" role="tab" aria-controls="v-new-consultation" aria-selected="true"><i class="fas fa-user-md"></i> New Consultations</a>
+		  	<a class="nav-link m-auto active" id="v-new-consultation-tab" data-toggle="pill" href="#v-new-consultation" role="tab" aria-controls="v-new-consultation" aria-selected="true"><i class="fas fa-user-md"></i> New Consultations</a>
 		  @endif
 		  @if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
-		  	<a class="nav-link" id="v-follow-up-tab" data-toggle="pill" href="#v-follow-up" role="tab" aria-controls="v-follow-up" aria-selected="false"><i class="fas fa-notes-medical"></i> For Follow up</a>
-		  	<a class="nav-link" id="v-inc-preEmp-tab" data-toggle="pill" href="#v-inc-preEmp" role="tab" aria-controls="v-inc-preEmp" aria-selected="false"><i class="fas fa-user"></i> Pre-employement Medical</a>
+		  	<a class="nav-link m-auto" id="v-follow-up-tab" data-toggle="pill" href="#v-follow-up" role="tab" aria-controls="v-follow-up" aria-selected="false"><i class="fas fa-notes-medical"></i> For Follow up</a>
+		  	<a class="nav-link m-auto" id="v-inc-preEmp-tab" data-toggle="pill" href="#v-inc-preEmp" role="tab" aria-controls="v-inc-preEmp" aria-selected="false"><i class="fas fa-user"></i> Pre-employement Medical</a>
 		  @endif
 		  @if (Gate::check('isAdmin') || Gate::check('isHr'))
-		  	<a class="nav-link" id="v-inc-requirements-tab" data-toggle="pill" href="#v-inc-requirements" role="tab" aria-controls="v-inc-requirements" aria-selected="false"><i class="fas fa-book-medical"></i> Employees with incomplete requirements</a>
-		  	<a class="nav-link" id="v-inc-emp-6months-tab" data-toggle="pill" href="#v-emp-6months" role="tab" aria-controls="v-emp-6months" aria-selected="false"><i class="fas fa-user-tie"></i> Candidates for Regularization</a>
+		  	<a class="nav-link m-auto" id="v-inc-requirements-tab" data-toggle="pill" href="#v-inc-requirements" role="tab" aria-controls="v-inc-requirements" aria-selected="false"><i class="fas fa-book-medical"></i> Employees with incomplete requirements</a>
+		  	<a class="nav-link m-auto" id="v-inc-emp-6months-tab" data-toggle="pill" href="#v-emp-6months" role="tab" aria-controls="v-emp-6months" aria-selected="false"><i class="fas fa-user-tie"></i> Candidates for Regularization</a>
 		  @endif
 		</div>
 		<div class="tab-content mb-5" id="v-pills-tabContent">
@@ -279,17 +279,27 @@
 <div class="modal fade" id="id-{{ $emp->emp_id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 	<div class="modal-dialog  modal-lg modal-dialog-centered" role="document">
 		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLongTitle">{{ $emp->last_name }}, {{ $emp->first_name }}'s Incomplete Requirements</h5>
+			<div class="modal-header bg-success">
+				<h5 class="modal-title text-white" id="exampleModalLongTitle">{{ $emp->last_name }}, {{ $emp->first_name }}'s Incomplete Requirements</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
 			<div class="modal-body">
-				{!! ($emp->tin_no == null) ? "<p class=\"text-danger\">* TIN NUMBER</p>" : '' !!}
-				{!! ($emp->sss_no == null) ? "<p class=\"text-danger\">* SSS NUMBER</p>" : '' !!}
-				{!! ($emp->philhealth_no == null) ? "<p class=\"text-danger\">* PHIL HEALTH NUMBER</p>" : '' !!}
-				{!! ($emp->hdmf_no == null) ? "<p class=\"text-danger\">* PAG IBIG NUMBER</p>" : '' !!}
+				<div class="list-group list-group-flush">
+					<div class="list-group-item">
+						{!! ($emp->tin_no == null) ? "<p class=\"text-danger mb-0\">* TIN NUMBER</p>" : '' !!}
+					</div>
+					<div class="list-group-item">
+						{!! ($emp->sss_no == null) ? "<p class=\"text-danger mb-0\">* SSS NUMBER</p>" : '' !!}
+					</div>
+					<div class="list-group-item">
+						{!! ($emp->philhealth_no == null) ? "<p class=\"text-danger mb-0\">* PHIL HEALTH NUMBER</p>" : '' !!}
+					</div>
+					<div class="list-group-item">
+						{!! ($emp->hdmf_no == null) ? "<p class=\"text-danger mb-0\">* PAG IBIG NUMBER</p>" : '' !!}
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

@@ -140,9 +140,15 @@ class MedbrandController extends Controller
     public function update(Request $request, Medbrand $medbrand)
     {
         if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
-            $atts = $request->validate([
+            $atts = $request->validate(
+                [
                     'bname' => ['required', 'unique:medbrands,bname,'.$medbrand->id],
-                ]);
+                ],
+                [
+                    'bname.required'    =>  'Brand name is required',
+                    'bname.unique'      =>  'Brand name is already taken',
+                ]
+            );
             $rep = str_replace([" & ", " / ", "-", " - "], '-', $request->bname);
             $rep2 = str_replace(['( ', ' )', "'", "(", ")", " ( ", " ) "], "", $rep);
             $replaced = str_replace([' ', '/'], '-', $rep2);

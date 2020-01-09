@@ -69,7 +69,7 @@ class PostController extends Controller
     {
         if (Gate::check('isAdmin') || Gate::check('isHr') || Gate::check('isDoctor') || Gate::allows('isNurse')) {
             $atts = $request->validated();
-            $atts = $request->except(['tag_id', 'important']);
+            $atts = $request->except(['tag_id', 'important', 'search_tag']);
             if ($request->important != null) {
                 $atts['important'] = 1;
             }else{
@@ -137,8 +137,9 @@ class PostController extends Controller
             foreach ($post->tags as $tag) {
                 $arr[] = $tag->id;
             }
-            foreach ($post->tags as $postTags) {
-                $postTags;
+            $postTags = [];
+            foreach ($post->tags as $arr2) {
+                $postTags[] = $arr2;
             }
             $uniqueTag =  Tag::whereNotIn('id', $arr)->get();
         
@@ -164,7 +165,7 @@ class PostController extends Controller
             'title'        =>  'required',
             'description'  =>  'required',
         ]);
-        $atts = $request->except(['tag_id', 'tag_old', 'important']);
+        $atts = $request->except(['tag_id', 'tag_old', 'important', 'search_tag']);
         if ($request->important != null) {
             $atts['important'] = 1;
         }else{

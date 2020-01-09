@@ -31,8 +31,12 @@
 						</div>
 					@endif
 				</div>
+				@if ($post->user_id == Auth::id())
+					<div class="card-footer">
+						<a href="{{ route('post.edit', ['post' => $post->slug]) }}" class=""><i class="far fa-edit text-primary p-1"></i>Edit</a>
+					</div>
+				@endif
 			</div>
-
 		</div>
 	</section>
 @endsection

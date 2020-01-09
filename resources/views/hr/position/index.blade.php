@@ -19,6 +19,13 @@
 				<p><span id="totitems" class="zp-ct"> Items</span></p>
 			</div>
 		</div>
+		@include('layouts.errors')
+		@if (session('pos_message') || session('pivot_validation'))
+			<div id="err-msg" class="alert alert-danger alert-posts">
+				{{ session('pos_message') }}
+				{{ session('pivot_validation') }}
+			</div>
+		@endif
 		<div class="table-responsive">
 			<table class="table table-hover">
 				<thead class="thead-dark">
@@ -60,15 +67,6 @@
 				</tbody>
 			</table>
 		</div>
-
-		@include('layouts.errors')
-		@if (session('pos_message') || session('pivot_validation'))
-			<div class="alert alert-danger alert-posts">
-				{{ session('pos_message') }}
-				{{ session('pivot_validation') }}
-			</div>
-		@endif
-		
 	</div>
 </div>
 <div class="pagination-wrap">{{ $positions->links() }}</div>
@@ -112,10 +110,20 @@
 @endsection
 
 @section('scripts')
-<script type="application/javascript">
-	jQuery(document).ready(function($) {
-		var count = $("table #rowCount").length;
-		$("#totitems").prepend(count);
-	});
-</script>
+	<script type="application/javascript">
+		jQuery(document).ready(function($) {
+			var count = $("table #rowCount").length;
+			$("#totitems").prepend(count);
+		});
+	</script>
+	@if (session('pos_message') || session('pivot_validation'))
+		<script type="text/javascript">
+			jQuery(document).ready(function($){
+				$("#err-msg").on('click', function(e){
+					e.preventDefault();
+					$(this).fadeOut('slow');
+				});
+			});
+		</script>
+	@endif
 @endsection

@@ -167,4 +167,78 @@ class TagController extends Controller
             return back();
         }
     }
+
+    public function searchTags(Request $request)
+    {
+        if ($request->ajax()) {
+            if ($request->tag != '') {
+                $data = Tag::where('tag_name', 'like', '%'.$request->tag.'%')->get();
+                $output = '';
+                if (count($data) > 0) {
+                    foreach ($data as $row) {
+                        $output .= '<div class="mb-1">';
+                        $output .= '<input type="checkbox"  name="tag_id[]" value="'.$row->id.'" class="zp-chkbox" id="tag_id_'.$row->id.'">';
+                        $output .= '<label class="form-check-label" for="tag_id_'.$row->id.'">'.$row->tag_name.'</label>';
+                        $output .= '</div>';
+                    }
+                }else{
+                    $output .= '<p class="text-center p-2">No Result found!</p>';
+                }
+                return response($output);
+            }
+        }
+    }
+
+    public function searchNull(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = Tag::get();
+            $output = '';
+            foreach ($data as $row) {
+                $output .= '<div class="mb-1">';
+                $output .= '<input type="checkbox"  name="tag_id[]" value="'.$row->id.'" class="zp-chkbox" id="tag_id_'.$row->id.'">';
+                $output .= '<label class="form-check-label" for="tag_id_'.$row->id.'">'.$row->tag_name.'</label>';
+                $output .= '</div>';
+            }
+            return response($output);
+        }
+    }
+
+    public function searchTagsEdit(Request $request)
+    {
+        if ($request->ajax()) {
+            if ($request->tag != '') {
+                $data = Tag::where('tag_name', 'like', '%'.$request->tag.'%')
+                           ->whereNotIn('id', $request->tag_old)
+                           ->get();
+                $output = '';
+                if (count($data) > 0) {
+                    foreach ($data as $row) {
+                        $output .= '<div class="mb-1">';
+                        $output .= '<input type="checkbox"  name="tag_id[]" value="'.$row->id.'" class="zp-chkbox" id="tag_id_'.$row->id.'">';
+                        $output .= '<label class="form-check-label" for="tag_id_'.$row->id.'">'.$row->tag_name.'</label>';
+                        $output .= '</div>';
+                    }
+                }else{
+                    $output .= '<p class="text-center p-2">No Result found!</p>';
+                }
+                return response($output);
+            }
+        }
+    }
+
+    public function searchNullEdit(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = Tag::whereNotIn('id', $request->tag_old)->get();
+            $output = '';
+            foreach ($data as $row) {
+                $output .= '<div class="mb-1">';
+                $output .= '<input type="checkbox"  name="tag_id[]" value="'.$row->id.'" class="zp-chkbox" id="tag_id_'.$row->id.'">';
+                $output .= '<label class="form-check-label" for="tag_id_'.$row->id.'">'.$row->tag_name.'</label>';
+                $output .= '</div>';
+            }
+            return response($output);
+        }
+    }
 }

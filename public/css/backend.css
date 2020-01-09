@@ -7648,6 +7648,16 @@ figure {
   display: block;
 }
 
+#err-msg {
+  width: -webkit-fit-content;
+  width: -moz-fit-content;
+  width: fit-content;
+  bottom: 0;
+  position: fixed;
+  right: 0;
+  z-index: 1000;
+}
+
 /**
  * Section: Medical
  *----------------------*/

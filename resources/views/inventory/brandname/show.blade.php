@@ -43,7 +43,7 @@
 	</div>
 </div>
 
-@include('layouts.errors')
+{{-- @include('layouts.errors') --}}
 <!-- Modal Add -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
@@ -60,7 +60,8 @@
 					@method('PUT')
 					<div class="form-group">
 						<label for="bname">Brand Name</label>
-						<input type="text" name="bname" class="form-control" placeholder="Add Brand" value="{{ $medbrand->bname }}" required autocomplete="off" pattern="[a-zA-Z0-9\s()/]+" title="Special Characters are not allowed!">
+						<input type="text" name="bname" class="form-control @error('bname') border border-danger @enderror" placeholder="Add Brand" value="{{ $medbrand->bname }}" required autocomplete="off" pattern="[a-zA-Z0-9\s()/]+" title="Special Characters are not allowed!">
+						@error('bname') <small class="text-danger">{{ $message }}</small> @enderror
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -73,3 +74,13 @@
 </div>
 
 @endsection
+
+@error('bname')
+	@section('scripts')
+		<script type="text/javascript">
+			jQuery(document).ready(function($) {
+				$('#exampleModalCenter').modal('show')
+			});
+		</script>
+	@endsection
+@enderror

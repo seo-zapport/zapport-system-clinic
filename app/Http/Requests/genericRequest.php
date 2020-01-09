@@ -41,7 +41,8 @@ class genericRequest extends FormRequest
     public function messages()
     {
         return [
-            'gname.required' => 'Generic name is required'
+            'gname.required' => 'Generic name is required',
+            'gname.unique' => 'Generic name is already taken',
         ];
     }
 }

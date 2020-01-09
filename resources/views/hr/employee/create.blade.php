@@ -104,7 +104,7 @@
 
 						<div class="form-group col-md-2">
 							<label for="contact">Contact <i id="contactinfo" class="fas fa-info text-info" data-toggle="tooltip" data-placement="top" title="Number pattern ( 9503648391 )"></i> </label>
-							<input type="tel" name="contact" value="@yield('editContact', old('contact'))" class="form-control" placeholder="+63 ( 9503648391 )" required oninvalid="this.setCustomValidity('Please Enter a Valid Contact Number')" oninput="setCustomValidity('')" pattern="[1-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]">
+							<input type="tel" name="contact" value="@yield('editContact', old('contact'))" class="form-control" placeholder="9503648391" required oninvalid="this.setCustomValidity('Please Enter a Valid Contact Number')" oninput="setCustomValidity('')" pattern="[1-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]">
 						</div>
 					</div>
 

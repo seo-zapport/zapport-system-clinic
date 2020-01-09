@@ -19,24 +19,31 @@
 			<hr>
 			<a href="#" class="btn btn-info text-white btn-block mb-2" href="#" data-toggle="modal" data-target="#tagModal">Add Category</a>
 		</div>
-		<div id="category_lists_edit">
-			<div class="mb-1">
-				<input type="hidden" name="tag_old" value="{{ $postTags->id }}">
-				@foreach ($uniqueTag as $tag)
+		@if (count($uniqueTag) > 3)
+			<div class="tag_search_con mb-2">
+				<input type="text" name="search_tag" class="form-control" placeholder="Search for category">
+			</div>
+		@endif
+		@foreach ($postTags as $postTag)
+			<input type="hidden" name="tag_old" value="{{ $postTag->id }}">
+		@endforeach
+		<div id="category_lists_edit" style="height: 12vh; overflow-y: scroll; width: auto;">
+			@foreach ($uniqueTag as $tag)
+				<div class="mb-1">
 					<input type="checkbox"  name="tag_id[]" class="zp-chkbox" id="tag_id_{{ $tag->id }}" value="{{ $tag->id }}">
 					<label class="form-check-label" for="tag_id_{{ $tag->id }}">{{ $tag->tag_name }}</label>
-				@endforeach
-			</div>
+				</div>
+			@endforeach
 		</div>
 		<hr>
 
 		<div id="rmvTags" class="form-row align-items-center">
 			<div class="col-auto my-1 form-inline">
-				<label for="tags"><p>Tags:</p></label>
+				<label for="tags"><p class="mb-0">Tags:</p></label>
 			</div>
 			@foreach ($post->tags as $tag)
 				<div id="cont-{{ $tag->id }}" class="col-auto my-1 form-inline">
-					<p>
+					<p class="mb-0">
 						{{ $tag->tag_name }} <a href="#" data-toggle="modal" id="delTag" data-target="{{ $tag->id }}">
 							<input id="postID" type="hidden" value="{{ $post->slug }}">
 							<i class="fas fa-times-circle"></i>

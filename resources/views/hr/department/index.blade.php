@@ -19,6 +19,11 @@
 				<p><span class="zp-tct">Total Items: </span> {{ $deps->count() }} <span  class="zp-ct"> Items</span></p>
 			</div>
 		</div>
+		@if (session('dep_message'))
+			<div id="err-msg" class="alert alert-danger alert-posts">
+				{{ session('dep_message') }}
+			</div>
+		@endif
 		<div class="table-responsive">
 			<table class="table table-hover">
 				<thead class="thead-dark">
@@ -53,13 +58,6 @@
 			</table>
 			{{ $deps->links() }}
 		</div>
-
-		@include('layouts.errors')
-		@if (session('dep_message'))
-			<div class="alert alert-danger alert-posts">
-				{{ session('dep_message') }}
-			</div>
-		@endif		
 	</div>
 </div>
 
@@ -80,7 +78,8 @@
 					@csrf
 					<div class="form-group">
 						<label for="department">Department</label>
-						<input type="text" name="department" class="form-control" placeholder="Department Name" value="{{ old('department') }}" required autocomplete="off" pattern="[a-zA-Z0-9\s]+" title="Special Characters are not allowed!">
+						<input type="text" name="department" class="form-control @error('department') border border-danger @enderror" placeholder="Department Name" value="{{ old('department') }}" required autocomplete="off" pattern="[a-zA-Z0-9\s]+" title="Special Characters are not allowed!">
+						@error('department') <small class="text-danger">{{ $message }}</small> @enderror
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -92,4 +91,24 @@
 	</div>
 </div>
 
+@endsection
+
+@section('scripts')
+	@error('department')
+		<script type="text/javascript">
+			jQuery(document).ready(function($) {
+				$('#exampleModalCenter').modal('show')
+			});
+		</script>
+	@enderror
+	@if (session('dep_message'))
+		<script type="text/javascript">
+			jQuery(document).ready(function($){
+				$("#err-msg").on('click', function(e){
+					e.preventDefault();
+					$(this).fadeOut('slow');
+				});
+			});
+		</script>
+	@endif
 @endsection

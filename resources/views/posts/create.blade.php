@@ -21,7 +21,7 @@
 				</div>		
 			</div>
 			<div class="col-12 col-md-4 col-lg-2">
-				<div class="card">
+				<div class="card mb-3">
 					<div class="card-body">
 						<div class="header-title">
 							<p><strong>Publish</strong></p>
@@ -42,28 +42,18 @@
 							<hr>
 							<a href="#" class="btn btn-info text-white btn-block mb-2" href="#" data-toggle="modal" data-target="#tagModal">Add Category</a>
 						</div>
-						<div id="category_lists">
+						@if (count($tags) > 3)
+							<div class="tag_search_con mb-2">
+								<input type="text" name="search_tag" class="form-control" placeholder="Search for category">
+							</div>
+						@endif
+						<div id="category_lists" style="height: 12vh; overflow-y: scroll; width: auto;">
 							@foreach ($tags as $tag)
 								<div class="mb-1">
 									<input type="checkbox"  name="tag_id[]" value="{{ $tag->id }}" class="zp-chkbox" id="tag_id_{{ $tag->id }}">
 									<label class="form-check-label" for="tag_id_{{ $tag->id }}">{{ $tag->tag_name }}</label>
 								</div>
-{{-- 							@empty
-								<div class="mb-1">
-									<input type="checkbox"  name="tag_id[]" class="zp-chkbox" id="tag_id_0">
-									<label class="form-check-label" for="tag_id_0">Empty</label>
-								</div> --}}
 							@endforeach
-							{{--
-								Lumang Code
-								<select multiple name="tag_id[]" id="tag_id" class="form-control" required oninvalid="this.setCustomValidity('Please Select Category')" oninput="setCustomValidity('')">
-								<option value="" selected="true" disabled="disabled"> Select Category </option>
-								@forelse ($tags as $tag)
-									<option value="{{ $tag->id }}">{{ $tag->tag_name }}</option>
-								@empty
-									<option disabled="disabled" value=""> Empty </option>
-								@endforelse
-							</select>  --}}
 						</div>						
 					</div>
 				</div>
@@ -73,23 +63,25 @@
 				<br>
 
 				{{-- Important --}}
-				@if (strstr(url()->current(), 'create'))
-				<div class="card mb-3">
-					<div class="card-body">
-						<div class="header-title">
-							<p><strong>Important</strong></p>
-							<hr>
+				@if (Gate::check('isHr') || Gate::check('isAdmin'))
+					@if (strstr(url()->current(), 'create'))
+						<div class="card mb-3">
+							<div class="card-body">
+								<div class="header-title">
+									<p><strong>Important</strong></p>
+									<hr>
+								</div>
+								<div class="mb-1">
+									<input type="checkbox" id="zpImportant" name="important" value="1" class="zp-chkbox">
+									<label for="zpImportant"><small class="font-weight-bold">Check for Important posts</small></label>
+								</div>						
+							</div>
 						</div>
-						<div class="mb-1">
-							<input type="checkbox" id="zpImportant" name="important" value="1" class="zp-chkbox">
-							<label for="zpImportant"><small class="font-weight-bold">Check for Important posts</small></label>
-						</div>						
-					</div>
-				</div>
-				@else
-					@yield('importantEdit')
+					@else
+						@yield('importantEdit')
+					@endif
+					<br>
 				@endif
-				<br>
 
 				{{-- Featured Image --}}
 				@if (strstr(url()->current(), 'create'))
@@ -315,6 +307,65 @@
 @section('scripts')
 <script type="application/javascript">
 	$(document).ready(function(){
+
+	$("input[name='search_tag']").on('keyup', function(){
+		var query = $(this).val();
+		var loc = location.href;
+		var hostname = window.location.hostname;
+		if (loc === "http://"+hostname+"/posts/create") {
+			var url = '/category/search/';
+			// CREATE BLADE
+			if (query != ''){
+				$.ajax({
+					type: 'GET',
+					url: url+query,
+					data: {'tag':query},
+					success: function(response){
+						document.getElementById("category_lists").innerHTML = response;
+					},
+				});
+			}else{
+				$.ajax({
+					type: 'GET',
+					url : url,
+					success: function(response){
+						document.getElementById("category_lists").innerHTML = response;
+					}
+				});
+			}
+		}else{
+			// Edit Blade
+			var url = '/category/search/edit/';
+			var tag_old = [];
+			$("input[name='tag_old']").each(function(){
+				tag_old.push($(this).val());
+			});
+			if (query != ''){
+				$.ajax({
+					type: 'GET',
+					url: url+query,
+					data: {
+						'tag':query,
+						'tag_old':tag_old,
+					},
+					success: function(response){
+						document.getElementById("category_lists_edit").innerHTML = response;
+					},
+				});
+			}else{
+				$.ajax({
+					type: 'GET',
+					url : url+'tag_old/'+tag_old,
+					data: {
+						'tag_old':tag_old,
+					},
+					success: function(response){
+						document.getElementById("category_lists_edit").innerHTML = response;
+					}
+				});
+			}
+		}
+	});
 
 	$("#closeModal").on('click', function(e){
 		e.preventDefault();

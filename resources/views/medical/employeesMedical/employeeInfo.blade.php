@@ -341,6 +341,7 @@ jQuery(document).ready(function($) {
     		type: "GET",
     		data:{'diagnosis':query},
     		success:function(response){
+    			console.log(response);
     			$('#searchDiagnosis_list').html(response);
     		}
     	});

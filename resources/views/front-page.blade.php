@@ -20,12 +20,12 @@
 				<h2 class="text-secondary">List of Announcement</h2>
 			</div>
 			{{ csrf_field() }}
-			<div id="listData" class="list-group mb-4"></div>
+			<div id="listData" class="list-group"></div>
 		</div>
 	</section>	
 	<section id="clinic">
 		<div class="container">
-			<div class="title text-center text-secondary">
+			<div class="title text-center text-secondary mb-4">
 	            @php
 	                $i = 1;
 	                $outopen = "Closed";
@@ -43,10 +43,10 @@
 	            		@endforeach
 	                @endif
 	            @endforeach
-	            <i class='fas fa-clinic-medical'></i> Clinic is <span class="text-{{ $outopenClass }}">{{ $outopen }}</span>
-	            <hr>
+	            <i class='fas fa-clinic-medical'></i> Clinic is <span class="text-{{ $outopenClass }}">{{ $outopen }}</span><br>
 			</div>
-			<div class="text-center text-secondary">
+            <hr>
+			<div class="text-center text-secondary mb-3">
 	            @if (@$attendant)
 		            @foreach (@$attendant as $in)
 		            @if (count(@$attendant) == 1 && @$in == 'doctor')
@@ -87,26 +87,28 @@
 	<div class="modal fade" id="frontModal" tabindex="-1" role="dialog" aria-labelledby="frontModalLabel" aria-hidden="true">
 		<div class="modal-dialog modal-lg" role="document">
 			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="frontModalLabel">Important Announcement</h5>
+				<div class="modal-header bg-success">
+					<h5 class="modal-title text-white" id="frontModalLabel">Important Announcement</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
-				<div class="modal-body">
-					@foreach ($posts->where('important', 1) as $post)
-						@if ($loop->first)
+				@foreach ($posts->where('important', 1) as $post)
+					@if ($loop->first)
+						<div class="modal-body">
 							<div class="post-header">
 								<h2 class="post-title">{{ strtoupper($post->title) }}</h2>
 								<span class="zp-article-meta"><span class="text-muted meta-date"><i class="fas fa-calendar-alt"></i> {{ $post->created_at->format('M d, Y') }}</span>
 							</div>
 							<div class="post-content">
 								{!! Str::words(ucfirst($post->description), 100) !!}
-								<p class="text-center"><a href="{{ route('frnt.show.post', ['post' => $post->slug]) }}" class="btn btn-outline-info">Read More</a>
-							</div> 
-						@endif
-					@endforeach
-				</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<a href="{{ route('frnt.show.post', ['post' => $post->slug]) }}" class="btn btn-outline-info m-auto">Read More</a>
+						</div>
+					@endif
+				@endforeach
 			</div>
 		</div>
 	</div>

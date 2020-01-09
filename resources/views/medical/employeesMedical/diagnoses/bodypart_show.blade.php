@@ -76,7 +76,7 @@
 </div>
 @include('layouts.errors')
 @if (session('disease_error'))
-	<div class="alert alert-danger alert-posts">
+	<div id="err-msg" class="alert alert-danger alert-posts">
 		{{ session('disease_error') }}
 	</div>
 @endif

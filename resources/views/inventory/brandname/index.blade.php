@@ -28,7 +28,13 @@
 		</div>
 	</form>	
 </div>
-
+@include('layouts.errors')
+@if (session('brand_message') || session('pivot_validation'))
+	<div id="err-msg" class="alert alert-danger alert-posts">
+		{{ session('brand_message') }}
+		{{ session('pivot_validation') }}
+	</div>
+@endif
 <div class="card mb-3">
 	<div class="card-body">
 		<div class="row zp-countable">
@@ -77,13 +83,6 @@
 	</div>
 </div>
 <div class="pagination-wrap">{{ $brands->links() }}</div>
-@include('layouts.errors')
-@if (session('brand_message') || session('pivot_validation'))
-	<div class="alert alert-danger alert-posts">
-		{{ session('brand_message') }}
-		{{ session('pivot_validation') }}
-	</div>
-@endif
 <!-- Modal Add -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
@@ -120,4 +119,17 @@
 	</div>
 </div>
 
+@endsection
+
+@section('scripts')
+	@if (session('brand_message') || session('pivot_validation'))
+		<script type="text/javascript">
+			jQuery(document).ready(function(e){
+				$("#err-msg").on('click', function(e){
+					e.preventDefault();
+					$(this).fadeOut('slow');
+				});
+			});
+		</script>
+	@endif
 @endsection

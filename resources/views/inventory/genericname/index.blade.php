@@ -39,6 +39,9 @@
 				<p><span class="zp-tct">Total Items: </span> {{ $gens->count() }} <span  class="zp-ct"> Items</span></p>
 			</div>
 		</div>
+		@if (session('generic_message'))
+			<div id="err-msg" class="alert alert-danger">{{ session('generic_message') }}</div>
+		@endif
 		<div class="table-responsive">
 			<table class="table table-hover">
 				<thead class="thead-dark">
@@ -77,12 +80,6 @@
 	</div>
 </div>
 <div class="pagination-wrap">{{ $gens->links() }}</div>
-@include('layouts.errors')
-@if (session('generic_message'))
-	<div class="alert alert-danger alert-posts">
-		{{ session('generic_message') }}
-	</div>
-@endif
 <!-- Modal Add -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
@@ -98,7 +95,8 @@
 					@csrf
 					<div class="form-group">
 						<label for="gname">Generic Name</label>
-						<input type="text" name="gname" class="form-control" placeholder="Generic Name" value="{{ old('gname') }}" required autocomplete="off" pattern="[a-zA-Z0-9\s()/]+" title="Special Characters are not allowed!">
+						<input type="text" name="gname" class="form-control @error('gname') border border-danger @enderror" placeholder="Generic Name" value="{{ old('gname') }}" required autocomplete="off" pattern="[a-zA-Z0-9\s()/]+" title="Special Characters are not allowed!">
+						@error('gname') <small class="text-danger">{{ $message }}</small> @enderror
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -110,4 +108,24 @@
 	</div>
 </div>
 
+@endsection
+
+@section('scripts')
+	@error('gname')
+		<script type="text/javascript">
+			jQuery(document).ready(function($) {
+				$('#exampleModalCenter').modal('show')
+			});
+		</script>
+	@enderror
+	@if (session('generic_message'))
+		<script type="text/javascript">
+			jQuery(document).ready(function($){
+				$("#err-msg").on('click', function(e){
+					e.preventDefault();
+					$(this).fadeOut('slow');
+				});
+			});
+		</script>
+	@endif
 @endsection

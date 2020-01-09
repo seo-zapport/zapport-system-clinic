@@ -76,6 +76,10 @@ Route::group(['prefix'	=>	'category'], function(){
 	Route::post('create', 'TagController@createTag')->name('store.tag');
 	Route::put('{tag}/edit', 'TagController@update')->name('update.tag');
 	Route::delete('{tag}', 'TagController@destroy')->name('destroy.tag');
+	Route::get('search/{tag}', 'TagController@searchTags')->name('tag.search');
+	Route::get('search', 'TagController@searchNull')->name('tag.searchNull');
+	Route::get('search/edit/{tag}', 'TagController@searchTagsEdit')->name('tag.searchEdit');
+	Route::get('search/edit/tag_old/{tag_old}', 'TagController@searchNullEdit')->name('tag.searchNullEdit');
 
 });
 
