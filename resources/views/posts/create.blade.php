@@ -5,7 +5,6 @@
 	<i class="fas fa-book text-secondary"></i> Add New Post
 @endsection
 @section('dash-content')
-{{-- @include('layouts.errors') --}}
 	<form method="post" action="@yield('postAction', route('post.store'))" enctype="multipart/form-data">
 		@csrf
 		@yield('postMethod')
@@ -18,7 +17,7 @@
 				<div class="form-group posts-description">
 					<label for="description"><strong>Post Content @error('description') <span class="text-danger">This field is required!</span> @enderror</strong></label>
 					<textarea name="description" id="description" rows="20" class="form-control" placeholder="Enter Your Content Here!">@yield('postEditDes', old('description'))</textarea>
-				</div>		
+				</div>
 			</div>
 			<div class="col-12 col-md-4 col-lg-2">
 				<div class="card mb-3">
@@ -42,11 +41,9 @@
 							<hr>
 							<a href="#" class="btn btn-info text-white btn-block mb-2" href="#" data-toggle="modal" data-target="#tagModal">Add Category</a>
 						</div>
-						@if (count($tags) > 3)
-							<div class="tag_search_con mb-2">
-								<input type="text" name="search_tag" class="form-control form-control-sm" placeholder="Search for category">
-							</div>
-						@endif
+						<div id="search-cats-con" class="tag_search_con mb-2 {{ (count($tags) <= 3) ? 'd-none' : '' }}">
+							<input type="text" name="search_tag" class="form-control form-control-sm" placeholder="Search for category">
+						</div>
 						<div id="category_lists" style="height: 12vh; overflow-y: scroll; width: auto;">
 							@foreach ($tags as $tag)
 								<div class="mb-1">
@@ -221,7 +218,7 @@
 <div id="featImgModal" class="modal fade media-model zp-core-ui" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 	<div class="modal-dialog media-dialog" role="document">
 		<div class="media-modal-content modal-content" role="document">
-			<button type="button" class="close media-modal-close" data-dismiss="modal" aria-label="Close">
+			<button id="closeModal2" type="button" class="close media-modal-close" data-dismiss="modal" aria-label="Close">
 				<span aria-hidden="true" class="media-modal-icon">×</span>
 			</button>
 			<div class="media-frame zp-core-ui hide-menu">
@@ -251,7 +248,7 @@
 											<div class="input-group mb-3">
 												<div class="custom-file">
 													<input type="file" name="file_name" id="file_name2" class="custom-file-input form-control-file" required>
-													<label for="file_name2" class="custom-file-label">Choose file</label>
+													<label id="file-label2" for="file_name2" class="custom-file-label">Choose file</label>
 												</div>
 											</div>
 											<small id="errorlog2" class="text-muted mb-2 mt-2"></small>
@@ -378,6 +375,19 @@
 		document.getElementById("file-label").innerHTML = file;
 	});
 
+// ______________________________________
+
+	$("#closeModal2").on('click', function(e){
+		e.preventDefault();
+		document.getElementById("file-label2").innerHTML = 'Choose file';
+	});
+
+	$("#addFileForm2 input[name='file_name']").on('change', function(e){
+		e.preventDefault();
+		var file = e.target.files[0].name;
+		document.getElementById("file-label2").innerHTML = file;
+	});
+
 		$('#addFileForm').on('submit', function(e){
 			e.preventDefault();
 			var btn = $('#InsertPhoto');
@@ -460,11 +470,17 @@
 	        		$('#tagForm')[0].reset();
 	        		$("#tagModal").modal('hide');
 	        		list.prepend('<div class="mb-1"><input type="checkbox" checked name="tag_id[]" value="'+response.id+'" class="zp-chkbox" id="tag_id_'+response.id+'"><label class="form-check-label" for="tag_id_'+response.id+'">'+response.tag_name+'</label></div>')
-	        		// $('select[name="tag_id[]"]').append('<option selected="true" value="'+ response.id +'">'+ response.tag_name +'</option>');
 					if ($('input[name="tag"]').hasClass('border border-danger'))
 					{
 						$('input[name="tag"]').removeClass('border border-danger')
 						document.getElementById("errorlogTag").innerHTML = ''
+					}
+					var chkbx = list.find('input[type="checkbox"]').length;
+					console.log(chkbx);
+					if (chkbx > 3){
+						$("#search-cats-con").removeClass('d-none');
+					}else{
+						$("#search-cats-con").addClass('d-none');
 					}
 	        	},
 	        	error: function(response){
@@ -572,7 +588,7 @@
 					if (jQuery.isEmptyObject(customError) === false) {
 						// console.log(customError);
 						document.getElementById("errorlog2").innerHTML += customError + "<br>";
-						$("#rmvImg").removeClass('d-none');
+						$("#rmvImg").addClass('d-none');
 					}
 					if (jQuery.isEmptyObject(response.responseJSON.errors) === false) {
 						var errors = response.responseJSON.errors.file_name;

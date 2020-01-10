@@ -93,7 +93,7 @@
 						</div>
 					</div>
 					<div class="form-row">
-						<div class="form-group col-md-5">
+						<div class="form-group col-md-4">
 							<label for="present_address">Present Address</label>
 							<input type="text" name="present_address" value="@yield('editPresentAddress', old('present_address'))" class="form-control" placeholder="Present Address" required oninvalid="this.setCustomValidity('Please Enter Present Address')" oninput="setCustomValidity('')">
 						</div>
@@ -102,9 +102,14 @@
 							<input type="text" name="permanent_address" value="@yield('editPermanentAddress', old('permanent_address'))" class="form-control" placeholder="Permanent Address" required oninvalid="this.setCustomValidity('Please Enter Permanent Address')" oninput="setCustomValidity('')">
 						</div>
 
-						<div class="form-group col-md-2">
+						<div class="form-group col-md-3">
 							<label for="contact">Contact <i id="contactinfo" class="fas fa-info text-info" data-toggle="tooltip" data-placement="top" title="Number pattern ( 9503648391 )"></i> </label>
-							<input type="tel" name="contact" value="@yield('editContact', old('contact'))" class="form-control" placeholder="9503648391" required oninvalid="this.setCustomValidity('Please Enter a Valid Contact Number')" oninput="setCustomValidity('')" pattern="[1-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]">
+							<div class="input-group mb-2">
+								<div class="input-group-prepend">
+									<div class="input-group-text">+63</div>
+								</div>
+								<input type="tel" name="contact" value="@yield('editContact', old('contact'))" class="form-control" placeholder="9503648391" required oninvalid="this.setCustomValidity('Please Enter a Valid Contact Number')" oninput="setCustomValidity('')" pattern="[1-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]">
+							</div>
 						</div>
 					</div>
 

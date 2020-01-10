@@ -44,7 +44,14 @@
 								{{ ucwords($post->title) }}
 								<div class="row-actions">
 									<a href="{{ route('post.show', ['post' => $post->slug]) }}" class="btn btn-link text-secondary"><i class="far fa-eye"></i> View</a> <span class="text-muted">|</span>
-									<a href="{{ route('post.edit', ['post' => $post->slug]) }}" class="btn btn-link text-info"><i class="far fa-edit"></i> Edit</a>
+									<a href="{{ route('post.edit', ['post' => $post->slug]) }}" class="btn btn-link text-info"><i class="far fa-edit"></i> Edit</a> <span class="text-muted">|</span>
+									<form method="post" action="{{ route('post.destroy', ['post' => $post->slug]) }}"  class="d-inline-block">
+										@csrf
+										@method('DELETE')
+										<button class="btn btn-link text-danger" onclick="return confirm('Are you sure you want to delete {{ ucfirst($post->title) }}?')" data-id="{{ $post->title }}">
+											<i class="fas fa-trash-alt"></i> Delete
+										</button>
+									</form>
 								</div>
 							</td>
 							<td>
