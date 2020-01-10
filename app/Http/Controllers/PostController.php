@@ -48,7 +48,7 @@ class PostController extends Controller
     public function create()
     {
         if (Gate::check('isAdmin') || Gate::check('isHr') || Gate::check('isDoctor') || Gate::allows('isNurse')) {
-            $tags = Tag::get();
+            $tags = Tag::orderBy('tag_name', 'asc')->get();
             $employees = Media::where('file_name', '!=', NULL)->where('user_id', auth()->user()->id)->get();
 
             $class = ( request()->is('posts*') ) ?'admin-post' : '';//**add Class in the body*/
@@ -141,7 +141,7 @@ class PostController extends Controller
             foreach ($post->tags as $arr2) {
                 $postTags[] = $arr2;
             }
-            $uniqueTag =  Tag::whereNotIn('id', $arr)->get();
+            $uniqueTag =  Tag::whereNotIn('id', $arr)->orderBy('tag_name', 'asc')->get();
         
             $class = ( request()->is('posts*') ) ?'admin-post' : '';//**add Class in the body*/
             

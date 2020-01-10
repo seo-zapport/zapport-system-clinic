@@ -172,7 +172,9 @@ class TagController extends Controller
     {
         if ($request->ajax()) {
             if ($request->tag != '') {
-                $data = Tag::where('tag_name', 'like', '%'.$request->tag.'%')->get();
+                $data = Tag::orderBy('tag_name', 'asc')
+                           ->where('tag_name', 'like', '%'.$request->tag.'%')
+                           ->get();
                 $output = '';
                 if (count($data) > 0) {
                     foreach ($data as $row) {
@@ -192,7 +194,8 @@ class TagController extends Controller
     public function searchNull(Request $request)
     {
         if ($request->ajax()) {
-            $data = Tag::get();
+            $data = Tag::orderBy('tag_name', 'asc')
+                       ->get();
             $output = '';
             foreach ($data as $row) {
                 $output .= '<div class="mb-1">';
@@ -210,6 +213,7 @@ class TagController extends Controller
             if ($request->tag != '') {
                 $data = Tag::where('tag_name', 'like', '%'.$request->tag.'%')
                            ->whereNotIn('id', $request->tag_old)
+                           ->orderBy('tag_name', 'asc')
                            ->get();
                 $output = '';
                 if (count($data) > 0) {
@@ -230,7 +234,9 @@ class TagController extends Controller
     public function searchNullEdit(Request $request)
     {
         if ($request->ajax()) {
-            $data = Tag::whereNotIn('id', $request->tag_old)->get();
+            $data = Tag::whereNotIn('id', $request->tag_old)
+                       ->orderBy('tag_name', 'asc')
+                       ->get();
             $output = '';
             foreach ($data as $row) {
                 $output .= '<div class="mb-1">';
