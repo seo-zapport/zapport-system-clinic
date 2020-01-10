@@ -180,7 +180,8 @@
 
 		</style>
 	</head>
-	<body id="page-top" class="zp-front-page" data-spy="scroll" data-target="#mainNav">
+	<body id="page-top" class="zp-front-page" data-spy="scroll" data-target="#mainNav" data-postmodal="@yield('modalStatus')">
+		
 		@include('layouts.front-page.menu')
 		<div id="app">
 			@yield('front-content')

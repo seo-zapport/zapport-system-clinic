@@ -47,13 +47,19 @@
 		    offset: 56
 		});
 
+		/**Modal-Status*/
+		var postModalStatus = $('#page-top').data('postmodal');
+
 		/**bootstrap-load*/
-		$(window).on('load', function(){
-			$('#frontModal').modal('show', {
-				backdrop: 'static',
-				keyboard: false
+		if( postModalStatus == 1 ){
+			$(window).on('load', function(){
+				$('#frontModal').modal('show', {
+					backdrop: 'static',
+					keyboard: false
+				});
 			});
-		});
+		}
+
 
 		/**load-more*/
 		
