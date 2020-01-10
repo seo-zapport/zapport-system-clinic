@@ -21,7 +21,7 @@
 		</div>
 		@if (count($uniqueTag) > 3)
 			<div class="tag_search_con mb-2">
-				<input type="text" name="search_tag" class="form-control" placeholder="Search for category">
+				<input type="text" name="search_tag" class="form-control form-control-sm" placeholder="Search for category">
 			</div>
 		@endif
 		@foreach ($postTags as $postTag)

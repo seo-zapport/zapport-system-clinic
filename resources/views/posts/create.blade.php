@@ -44,7 +44,7 @@
 						</div>
 						@if (count($tags) > 3)
 							<div class="tag_search_con mb-2">
-								<input type="text" name="search_tag" class="form-control" placeholder="Search for category">
+								<input type="text" name="search_tag" class="form-control form-control-sm" placeholder="Search for category">
 							</div>
 						@endif
 						<div id="category_lists" style="height: 12vh; overflow-y: scroll; width: auto;">
@@ -440,11 +440,12 @@
 			var hostname = window.location.hostname;
 			if (loc2 === "http://"+hostname+"/posts/create") {
 				var url = 'create/tag';
+				var list = $("#category_lists");
 			}else{
 				var url = '/posts/edit/tag';
+				var list = $("#category_lists_edit");
 			}
 			var tag = $('input[name="tag"]').val();
-			console.log(url);
 	       $.ajaxSetup({
 	            headers: {
 	                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -458,7 +459,7 @@
 	        	success: function(response){
 	        		$('#tagForm')[0].reset();
 	        		$("#tagModal").modal('hide');
-	        		$("#category_lists").append('<div class="mb-1"><input type="checkbox"  name="tag_id[]" value="'+response.id+'" class="zp-chkbox" id="tag_id_'+response.id+'"><label class="form-check-label" for="tag_id_'+response.id+'">'+response.tag_name+'</label></div>')
+	        		list.prepend('<div class="mb-1"><input type="checkbox" checked name="tag_id[]" value="'+response.id+'" class="zp-chkbox" id="tag_id_'+response.id+'"><label class="form-check-label" for="tag_id_'+response.id+'">'+response.tag_name+'</label></div>')
 	        		// $('select[name="tag_id[]"]').append('<option selected="true" value="'+ response.id +'">'+ response.tag_name +'</option>');
 					if ($('input[name="tag"]').hasClass('border border-danger'))
 					{
