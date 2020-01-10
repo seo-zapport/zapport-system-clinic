@@ -54,7 +54,7 @@
 										@csrf
 										@method('PUT')
 										<p class="text-muted">QUICK EDIT</p>
-										<span>Category</span>
+										<span>Category</span> <small class="text-muted font-italic">Enter to save</small>
 										<input type="hidden" name="bodypart_id" value="{{ $bodypart->id }}">
 										<input type="text" name="disease" value="{{ $disease->disease }}" class="form-control" required autocomplete="off" pattern="[a-zA-Z0-9\s()-/]+" title="Special Characters are not allowed!">
 									</form>

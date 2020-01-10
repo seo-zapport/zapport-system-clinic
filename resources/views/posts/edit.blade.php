@@ -19,11 +19,9 @@
 			<hr>
 			<a href="#" class="btn btn-info text-white btn-block mb-2" href="#" data-toggle="modal" data-target="#tagModal">Add Category</a>
 		</div>
-		@if (count($uniqueTag) > 3)
-			<div class="tag_search_con mb-2">
-				<input type="text" name="search_tag" class="form-control form-control-sm" placeholder="Search for category">
-			</div>
-		@endif
+		<div id="search-cats-con" class="tag_search_con mb-2 {{ (count($uniqueTag) <= 3) ? 'd-none' : '' }}">
+			<input type="text" name="search_tag" class="form-control form-control-sm" placeholder="Search for category">
+		</div>
 		@foreach ($postTags as $postTag)
 			<input type="hidden" name="tag_old" value="{{ $postTag->id }}">
 		@endforeach

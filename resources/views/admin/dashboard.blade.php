@@ -301,14 +301,15 @@
 					</div>
 				</div>
 			</div>
+			<div class="modal-footer">
+				<a href="{{ route('hr.emp.show', ['employee' => $emp->emp_id]) }}" class="btn btn-outline-success">View</a>
+			</div>
 		</div>
 	</div>
 </div>
 @endforeach
 @endif
-
 @endsection
-
 @section('scripts')
 <script type="application/javascript">
 	// Search Diagnosis

@@ -50,7 +50,7 @@
 										@csrf
 										@method('PUT')
 										<p class="text-muted">QUICK EDIT</p>
-										<span>Category</span>
+										<span>Category</span> <small class="font-italic text-muted">Enter to save</small>
 										<input type="text" name="bodypart" value="{{ $bpart->bodypart }}" class="form-control" required autocomplete="off" pattern="[a-zA-Z0-9\s()-/]+" title="Special Characters are not allowed!">
 									</form>
 								</fieldset>

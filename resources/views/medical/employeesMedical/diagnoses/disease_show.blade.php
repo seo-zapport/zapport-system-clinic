@@ -35,7 +35,7 @@
 										@csrf
 										@method('PUT')
 										<p class="text-muted">QUICK EDIT</p>
-										<span>Category</span>
+										<span>Category</span> <span class="font-italic text-muted">Enter to save</span>
 										<input type="hidden" name="disease_id" value="{{ $disease->id }}">
 										<input type="text" name="diagnosis" value="{{ $diagnosis->diagnosis }}" autocomplete="off" class="form-control" required>
 									</form>
