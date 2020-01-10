@@ -2,6 +2,7 @@
 
 {{-- @section('front-title',  ucfirst($site_identity->site_title).' | Home') --}}
 @section('front-title', ' Zapport | Home')
+@section('modalStatus', ($posts->where('important', 1)->count() ) ? '1' : '0')
 
 @section('front-content')
 	<section id="hero" class="text-center my-5 overlay">
@@ -64,52 +65,59 @@
 	</section>
 	<section id="post">
 		<div class="container">
-			<div class="slick-posts">
-				@foreach ($posts->where('important', 0) as $post)
-					<div class="test">
-						<div class="card p-2 mx-1">
-							<div class="img-wrap">
-								<img src="{{ ($post->medias != null) ? asset('storage/uploaded/media/'.$post->medias->file_name) : asset('storage/uploaded/media/No_image.png') }}" class="card-img-top">
-							</div>
-							<div class="card-body">
-								<a href="{{ route('frnt.show.post', ['post' => $post->slug]) }}">
-									<h5 class="card-title">{{ strtoupper($post->title) }}</h5>
-								</a>
+			@if ($posts->where('important', 0)->count())
+				<div class="slick-posts">
+					@foreach ($posts->where('important', 0) as $post)
+						<div class="test">
+							<div class="card p-2 mx-1">
+								<div class="img-wrap">
+									<img src="{{ ($post->medias != null) ? asset('storage/uploaded/media/'.$post->medias->file_name) : asset('storage/uploaded/media/No_image.png') }}" class="card-img-top">
+								</div>
+								<div class="card-body">
+									<a href="{{ route('frnt.show.post', ['post' => $post->slug]) }}">
+										<h5 class="card-title">{{ strtoupper($post->title) }}</h5>
+									</a>
+								</div>
 							</div>
 						</div>
-					</div>
-				@endforeach
-			</div>
+					@endforeach
+				</div>
+			@else
+				<h2 class="text-center text-secondary">No Posts Available</h2>
+			@endif
+
 		</div>
 	</section>
 
 	<!-- Modal -->
-	<div class="modal fade" id="frontModal" tabindex="-1" role="dialog" aria-labelledby="frontModalLabel" aria-hidden="true">
-		<div class="modal-dialog modal-lg" role="document">
-			<div class="modal-content">
-				<div class="modal-header bg-success">
-					<h5 class="modal-title text-white" id="frontModalLabel">Important Announcement</h5>
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
+	@if ($posts->where('important', 1)->count())
+		<div class="modal fade" id="frontModal" tabindex="-1" role="dialog" aria-labelledby="frontModalLabel" aria-hidden="true">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
+					<div class="modal-header bg-success">
+						<h5 class="modal-title text-white" id="frontModalLabel">Important Announcement</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					@foreach ($posts->where('important', 1) as $post)
+						@if ($loop->first)
+							<div class="modal-body">
+								<div class="post-header">
+									<h2 class="post-title">{{ strtoupper($post->title) }}</h2>
+									<span class="zp-article-meta"><span class="text-muted meta-date"><i class="fas fa-calendar-alt"></i> {{ $post->created_at->format('M d, Y') }}</span>
+								</div>
+								<div class="post-content">
+									{!! Str::words(ucfirst($post->description), 100) !!}
+								</div>
+							</div>
+							<div class="modal-footer">
+								<a href="{{ route('frnt.show.post', ['post' => $post->slug]) }}" class="btn btn-outline-info m-auto">Read More</a>
+							</div>
+						@endif
+					@endforeach
 				</div>
-				@foreach ($posts->where('important', 1) as $post)
-					@if ($loop->first)
-						<div class="modal-body">
-							<div class="post-header">
-								<h2 class="post-title">{{ strtoupper($post->title) }}</h2>
-								<span class="zp-article-meta"><span class="text-muted meta-date"><i class="fas fa-calendar-alt"></i> {{ $post->created_at->format('M d, Y') }}</span>
-							</div>
-							<div class="post-content">
-								{!! Str::words(ucfirst($post->description), 100) !!}
-							</div>
-						</div>
-						<div class="modal-footer">
-							<a href="{{ route('frnt.show.post', ['post' => $post->slug]) }}" class="btn btn-outline-info m-auto">Read More</a>
-						</div>
-					@endif
-				@endforeach
 			</div>
 		</div>
-	</div>
+	@endif
 @endsection
