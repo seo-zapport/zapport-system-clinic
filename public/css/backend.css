@@ -6589,6 +6589,47 @@ figure {
   width: 5% !important;
 }
 
+/**height*/
+
+.h-35 {
+  height: 35px !important;
+}
+
+/**Button*/
+
+.btn-outline-cylan {
+  border-color: #2ab3a9;
+  color: #2ab3a9;
+}
+
+.btn-outline-cylan:hover {
+  background-color: #2ab3a9;
+  border-color: #2ab3a9;
+  color: #fff;
+}
+
+.btn-outline-cylan:focus {
+  border-color: #2ab3a9;
+}
+
+.btn-outline-cylan:focus,
+.btn-outline-cylan.focus {
+  box-shadow: 0 0 0 0.2rem rgba(0, 152, 141, 0.5);
+}
+
+.btn-outline-cylan:not(:disabled):not(.disabled):active,
+.btn-outline-cylan:not(:disabled):not(.disabled).active,
+.btn-outline-cylan.dropdown-toggle {
+  background-color: #2ab3a9;
+  border-color: #2ab3a9;
+  color: #fff;
+}
+
+.btn-outline-cylan:not(:disabled):not(.disabled):active:focus,
+.btn-outline-cylan:not(:disabled):not(.disabled).active:focus {
+  box-shadow: 0 0 0 0.2rem rgba(0, 152, 141, 0.5);
+}
+
 /**Table*/
 
 .row-actions.visible {
@@ -6658,7 +6699,7 @@ figure {
 }
 
 .zp-bg-clan {
-  background-color: rgba(54, 197, 187, 0.8);
+  background-color: rgba(54, 197, 187, 0.8) !important;
 }
 
 /**color*/

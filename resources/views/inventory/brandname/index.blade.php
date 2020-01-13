@@ -87,8 +87,8 @@
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLongTitle">Add New Brand</h5>
+			<div class="modal-header zp-bg-clan">
+				<h5 class="modal-title text-white" id="exampleModalLongTitle">Add New Brand</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -109,7 +109,7 @@
 						<label for="bname">Brand Name</label>
 						<input type="text" name="bname" class="form-control" placeholder="Add Brand" value="{{ old('bname') }}" required autocomplete="off" pattern="[a-zA-Z0-9\s()/]+" title="Special Characters are not allowed!">
 					</div>
-					<div class="modal-footer">
+					<div class="text-right">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 						<button type="submit" class="btn btn-primary">Save changes</button>
 					</div>

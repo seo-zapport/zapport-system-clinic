@@ -193,8 +193,8 @@
 <div class="modal fade" id="tagModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLongTitle">Add New Category</h5>
+			<div class="modal-header zp-bg-clan">
+				<h5 class="modal-title text-white" id="exampleModalLongTitle">Add New Category</h5>
 				<button id="tagmodalclose" type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -204,8 +204,7 @@
 						@csrf
 						<input type="text" name="tag" class="form-control" placeholder="Add New Category" required autocomplete="off" pattern="[a-zA-Z0-9\s]+" title="Special Characters are not allowed!">
 						<small id="errorlogTag" class="text-danger font-weight-bold mt-2"></small>
-					<hr>
-					<div class="form-group text-center">
+					<div class="text-center mt-3">
 						<button class="btn btn-info text-white btn-block" type="submit">Add Category</button>
 					</div>	
 					</form>
@@ -290,7 +289,7 @@
 				<div class="media-frame-toolbar">
 					<div class="media-toolbar">
 						<div class="media-toolbar-primary search-form">
-							<button data-target="#upload2" id="InsertPhoto-upload" type="submit" class="btn btn-primary tinymcE">Select</button>
+							<button data-target="#upload2" id="InsertPhoto-upload" type="submit" class="btn btn-primary tinymcE h-35">Select</button>
 						</div>
 					</div>
 				</div>

@@ -70,7 +70,7 @@ class DepartmentController extends Controller
             $rep2 = str_replace(['( ', ' )', "'", "(", ")", " ( ", " ) "], "", $rep);
             $replaced = str_replace([' ', '/'], '-', $rep2);
             $atts['department_slug'] = strtolower($replaced);
-            dd($atts);
+            // dd($atts);
             Department::create($atts);
             return back();
         }elseif (Gate::allows('isBanned')) {

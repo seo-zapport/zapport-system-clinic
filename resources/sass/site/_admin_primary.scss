@@ -42,6 +42,37 @@
 	width: 5% !important;
 }
 
+/**height*/
+.h-35{
+	height: 35px !important;
+}
+
+/**Button*/
+.btn-outline-cylan{
+  border-color:$clr-2a9;
+  color:$clr-2a9;
+  &:hover{
+		background-color: $clr-2a9;
+		border-color:$clr-2a9;
+    color: $color_white;
+	}
+	&:focus{border-color:$clr-2a9;}
+	&:focus, &.focus{
+		box-shadow: 0 0 0 0.2rem rgba(0, 152, 141, 0.5);
+	}
+	&:not(:disabled):not(.disabled):active,
+	&:not(:disabled):not(.disabled).active,
+	&.dropdown-toggle{
+		background-color: $clr-2a9;
+		border-color:$clr-2a9;
+    color: $color_white;
+	}
+	&:not(:disabled):not(.disabled):active:focus,
+	&:not(:disabled):not(.disabled).active:focus{
+		box-shadow: 0 0 0 0.2rem rgba(0, 152, 141, 0.5);		
+	}
+}
+
 /**Table*/
 .row-actions.visible{
 	position: static;
@@ -95,7 +126,7 @@
 	color:#00736b;
 }
 .zp-bg-clan{
-	background-color: rgba(54, 197, 187, 0.8);
+	background-color: rgba(54, 197, 187, 0.8) !important;
 }
 
 /**color*/

@@ -85,8 +85,8 @@
 <div class="modal fade" id="add-parts" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
 		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLongTitle">Add Disease for {{ ucfirst($bodypart->bodypart) }}</h5>
+			<div class="modal-header zp-bg-clan">
+				<h5 class="modal-title text-white" id="exampleModalLongTitle">Add Disease for {{ ucfirst($bodypart->bodypart) }}</h5>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
@@ -99,7 +99,7 @@
 						<input type="hidden" name="bodypart_id" value="{{ $bodypart->id }}">
 						<input type="text" class="form-control" name="disease" placeholder="Add Disease" required autocomplete="off" pattern="[a-zA-Z0-9\s()-/']+" title="Special Characters are not allowed!">
 					</div>
-					<div class="modal-footer">
+					<div class="text-right">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 						<button type="submit" class="btn btn-primary">Save changes</button>
 					</div>
