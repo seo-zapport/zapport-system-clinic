@@ -178,6 +178,36 @@
 			background-color: rgba(0, 0, 0, 0.05);
 		}
 
+		.zp-bg-clan{
+			background-color: rgba(54, 197, 187, 0.8) !important;
+		}
+
+		/**buttons*/
+		.btn-outline-cylan{
+			border-color:#2ab3a9;
+			color:#2ab3a9;
+		}
+		.btn-outline-cylan:hover{
+			background-color: #2ab3a9;
+			border-color:#2ab3a9;
+			color: #fff;
+		}
+		.btn-outline-cylan:focus{border-color:#2ab3a9;}
+		.btn-outline-cylan:focus, .btn-outline-cylan.focus{
+			box-shadow: 0 0 0 0.2rem rgba(0, 152, 141, 0.5);
+		}
+		.btn-outline-cylan:not(:disabled):not(.disabled):active,
+		.btn-outline-cylan:not(:disabled):not(.disabled).active,
+		.btn-outline-cylan.dropdown-toggle{
+			background-color: #2ab3a9;
+			border-color:#2ab3a9;
+			color: #fff;
+		}
+		.btn-outline-cylan:not(:disabled):not(.disabled):active:focus,
+		.btn-outline-cylan:not(:disabled):not(.disabled).active:focus{
+			box-shadow: 0 0 0 0.2rem rgba(0, 152, 141, 0.5);		
+		}
+
 		</style>
 	</head>
 	<body id="page-top" class="zp-front-page" data-spy="scroll" data-target="#mainNav" data-postmodal="@yield('modalStatus')">

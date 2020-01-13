@@ -140,8 +140,8 @@
 	<div class="modal fade bd-example-modal-lg" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 		<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
 			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLongTitle">Add Role For Users</h5>
+				<div class="modal-header zp-bg-clan">
+					<h5 class="modal-title text-white" id="exampleModalLongTitle">Add Role For Users</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
@@ -168,7 +168,7 @@
 								@endforeach
 							</select>
 						</div>
-						<div class="modal-footer">
+						<div class="text-right">
 							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 							<button type="submit" class="btn btn-primary">Save changes</button>
 						</div>
