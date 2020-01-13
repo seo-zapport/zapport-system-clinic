@@ -1,7 +1,6 @@
 @extends('layouts.app')
 @section('title', '| Medicines')
 @section('medicine', 'active')
-{{-- @section('dash-title', 'List of Medicines') --}}
 @section('heading-title')
 	<i class="fas fa-pills text-secondary"></i> List of Medicines
 @endsection
@@ -23,11 +22,6 @@
 		        </div>
 			</div>
 		</form>
-{{-- 		<form method="get">
-			<div class="form-group col-12 col-md-4 mb-0 mt-2 p-0">
-				<input type="checkbox" {{ (isset($_GET['filter_meds'])) ? 'checked' : '' }} id="exampleCheck1" name="filter_meds" onclick="this.form.submit()"> Filter Less Medicines
-			</div>
-		</form> --}}
 	</div>
 	@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
 		<div class="col-12 col-md-6">

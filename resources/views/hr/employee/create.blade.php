@@ -99,7 +99,7 @@
 								<div class="input-group-prepend">
 									<div class="input-group-text">+63</div>
 								</div>
-								<input type="tel" name="contact" value="@yield('editContact', old('contact'))" class="form-control" placeholder="9503648391" required oninvalid="this.setCustomValidity('Please Enter a Valid Contact Number')" oninput="setCustomValidity('')" pattern="[1-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]">
+								<input type="tel" name="contact" value="@yield('editContact', old('contact'))" maxlength="10" class="form-control" placeholder="9503648391" required oninvalid="this.setCustomValidity('Please Enter a Valid Contact Number')" oninput="setCustomValidity('')" pattern="[1-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]">
 							</div>
 						</div>
 					</div>
@@ -408,6 +408,16 @@
 			if (keyCode === 13) { 
 				e.preventDefault();
 				return false;
+			}
+		});
+
+		// Contact Number Max 10 numbers only
+		$('input[name="contact"][max]:not([max=""])').on('input', function(ev) {
+			var $this = $(this);
+			var maxlength = $this.attr('max').length;
+			var value = $this.val();
+			if (value && value.length >= maxlength) {
+				$this.val(value.substr(0, maxlength));
 			}
 		});
 
