@@ -75,7 +75,7 @@
 							</tr>
 					@endforelse
 				</tbody>
-			</table>			
+			</table>
 		</div>
 	</div>
 </div>
@@ -95,7 +95,7 @@
 					@csrf
 					<div class="form-group">
 						<label for="gname">Generic Name</label>
-						<input type="text" name="gname" class="form-control @error('gname') border border-danger @enderror" placeholder="Generic Name" value="{{ old('gname') }}" required autocomplete="off" pattern="[a-zA-Z0-9\s()/]+" title="Special Characters are not allowed!">
+						<input type="text" name="gname" class="form-control @error('gname') border border-danger @enderror" placeholder="Generic Name" value="{{ old('gname') }}" required autocomplete="off">
 						@error('gname') <small class="text-danger">{{ $message }}</small> @enderror
 					</div>
 					<div class="text-right">

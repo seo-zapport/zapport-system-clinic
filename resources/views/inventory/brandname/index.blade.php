@@ -78,7 +78,7 @@
 							</tr>
 					@endforelse
 				</tbody>
-			</table>			
+			</table>
 		</div>
 	</div>
 </div>
@@ -118,7 +118,6 @@
 		</div>
 	</div>
 </div>
-
 @endsection
 
 @section('scripts')

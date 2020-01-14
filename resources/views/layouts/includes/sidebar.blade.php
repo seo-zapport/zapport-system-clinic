@@ -131,7 +131,14 @@
             <ul class="zp-dropdown nav collapse {{ $showactiveinv }}" id="inventory">
                 <li class="nav-item"><a href="{{ route('genericname') }}" class="nav-link @yield('genericname')"><i class="fas fa-tablets"></i><span class="collapse-label"> Generic Name</span></a></li>
                 <li class="nav-item"><a href="{{ route('brandname') }}" class="nav-link @yield('brandname')"><i class="fas fa-file-prescription"></i><span class="collapse-label"> Brand Name</span></a></li>
-                <li class="nav-item"><a href="{{ route('medicine') }}" class="nav-link @yield('medicine')"><i class="fas fa-pills"></i> <span class="collapse-label">Medicines</span></a></li>                    
+                <li class="nav-item"><a href="{{ route('medicine') }}" class="nav-link @yield('medicine')"><i class="fas fa-pills"></i> <span class="collapse-label">Medicines</span></a></li>
+                {{-- Medical Supplies --}}
+                <li class="nav-item">
+                    <a href="#supplies" data-toggle="collapse" aria-expanded="{{ $ariaexpandinv }}" class="nav-link dropdown-toggle {{$collapinv}}"><i class="fas fa-warehouse"></i> <span class="collapse-label">Supplies</span></a>
+                    <ul class="zp-dropdown nav collapse {{ $showactiveinv }}" id="supplies">
+                        <li class="nav-item"><a href="{{ route('supply.generic.index') }}" class="nav-link @yield('supplygen')"><i class="fas fa-tablets"></i><span class="collapse-label">Supply Generic Name</span></a></li>
+                    </ul>
+                </li>                   
             </ul>
         </li>
         <li class="nav-item">

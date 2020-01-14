@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Tag;
-use App\Post;
-use App\Media;
 use App\Employee;
-use Illuminate\Http\Request;
 use App\Http\Requests\PostRequest;
+use App\Media;
+use App\Post;
+use App\Tag;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -76,9 +77,7 @@ class PostController extends Controller
                 $atts['important'] = 0;
             }
             $srch = Post::where('title', $request->title)->get();
-            $array = ['%', '^', '*', '/', "'", "-", "_", "@", "&"];
-            $rep = str_replace($array, '', $request->title);
-            $replaced = str_replace(' ', '-', $rep);
+            $replaced = Str::slug($request->title, '-');
             if (count($srch ) > 0) {
                 $count = count($srch)+1;
                 $atts['slug'] = strtolower($replaced).'-'.$count;
@@ -172,9 +171,7 @@ class PostController extends Controller
             $atts['important'] = 0;
         }
         $srch = Post::where('title', $request->title)->get();
-        $array = ['%', '^', '*', '/', "'", "-", "_", "@"];
-        $rep = str_replace($array, '', $request->title);
-        $replaced = str_replace(' ', '-', $rep);
+        $replaced = Str::slug($request->title, '-');
 
         if ($post->title == $request->title) {
             $atts['slug'] = $post->slug;
@@ -193,8 +190,6 @@ class PostController extends Controller
                 $atts['slug'] = strtolower($replaced);
             }
         }
-
-        // dd($request->tag_id);
 
         $post->update($atts);
 

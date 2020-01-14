@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Position;
-use App\Employee;
 use App\Department;
 use App\DepartmentPosition;
+use App\Employee;
+use App\Http\Requests\PositionRequest;
+use App\Position;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-use App\Http\Requests\PositionRequest;
+use Illuminate\Support\Str;
 
 class PositionController extends Controller
 {
@@ -77,9 +78,7 @@ class PositionController extends Controller
             if (!empty($check)) {
                 $data = $check;
             }else{
-                $rep = str_replace([" & ", " / ", "-", " - "], '-', $request->position);
-                $rep2 = str_replace(['( ', ' )', "'", "(", ")", " ( ", " ) "], "", $rep);
-                $replaced = str_replace([' ', '/'], '-', $rep2);
+                $replaced = Str::slug($request->position, '-');
                 $atts['position_slug'] = strtolower($replaced);
                 $data = Position::create($atts);
             }

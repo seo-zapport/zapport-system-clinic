@@ -33,7 +33,7 @@
 					<button class="btn btn-success mr-2">Search</button>
 					<a href="{{ route('medicine.show', ['medbrand' => $medbrand->bname, 'generic' => $generic->gname, 'inputDate' => $inputDate, 'expDate' => 
 							$expDate]) }}" class="btn btn-info text-white">Clear</a>
-				</div>			
+				</div>
 			</div>
 		</div>
 		<div class="form-group col-md-6 text-right">
@@ -77,7 +77,7 @@
 				@endforelse
 
 				</tbody>
-			</table>			
+			</table>
 		</div>
 	</div>
 </div>

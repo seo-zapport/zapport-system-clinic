@@ -23,7 +23,9 @@ class Model extends Eloquent
 		"post_id",
 		"diagnosis_id",
 		"bodypart_id",
-		"disease_id"
+		"disease_id",
+		"supbrand_id",
+		"supgen_id"
 ];
 	protected $dates = [
 		"birthday", 

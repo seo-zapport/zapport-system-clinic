@@ -56,7 +56,7 @@
 										<p class="text-muted">QUICK EDIT</p>
 										<span>Category</span> <small class="text-muted font-italic">Enter to save</small>
 										<input type="hidden" name="bodypart_id" value="{{ $bodypart->id }}">
-										<input type="text" name="disease" value="{{ $disease->disease }}" class="form-control" required autocomplete="off" pattern="[a-zA-Z0-9\s()-/]+" title="Special Characters are not allowed!">
+										<input type="text" name="disease" value="{{ $disease->disease }}" class="form-control" required autocomplete="off">
 									</form>
 								</fieldset>
 							</td>
@@ -74,12 +74,18 @@
 		<div class="pagination-wrap">{{ $collection->links() }}</div>
 	</div>
 </div>
-@include('layouts.errors')
+{{-- @include('layouts.errors') --}}
 @if (session('disease_error'))
 	<div id="err-msg" class="alert alert-danger alert-posts">
 		{{ session('disease_error') }}
 	</div>
 @endif
+
+@error('disease')
+	<div id="err-msg" class="alert alert-danger alert-posts">
+		{{ $message }}
+	</div>
+@enderror
 
 <!-- Modal For Body Parts -->
 <div class="modal fade" id="add-parts" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -97,7 +103,7 @@
 					<div class="form-group">
 						<label for="disease">Disease</label>
 						<input type="hidden" name="bodypart_id" value="{{ $bodypart->id }}">
-						<input type="text" class="form-control" name="disease" placeholder="Add Disease" required autocomplete="off" pattern="[a-zA-Z0-9\s()-/']+" title="Special Characters are not allowed!">
+						<input type="text" class="form-control" name="disease" placeholder="Add Disease" required autocomplete="off">
 					</div>
 					<div class="text-right">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -108,4 +114,15 @@
 		</div>
 	</div>
 </div>
+@endsection
+
+@section('scripts')
+	<script text="text/javascript">
+		jQuery(document).ready(function(){
+			$("#err-msg").on('click', function(e){
+				e.preventDefault();
+				$(this).fadeOut('slow');
+			});
+		});
+	</script>
 @endsection

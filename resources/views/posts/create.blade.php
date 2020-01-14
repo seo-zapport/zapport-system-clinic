@@ -12,7 +12,7 @@
 			<div class="col-12 col-md-8 col-lg-10">
 				<div class="form-group posts-title">
 					<label for="title"><strong>Title @error('title') <span class="text-danger">You need to fill this field!</span> @enderror</strong></label>
-					<input type="text" name="title" class="form-control @error('title') border border-danger @enderror" value="@yield('postEdit', old('title'))" placeholder="Enter Post Title Here!" required autocomplete="off" pattern="[a-zA-Z0-9\s]+" title="Special Characters are not allowed!">
+					<input type="text" name="title" class="form-control @error('title') border border-danger @enderror" value="@yield('postEdit', old('title'))" placeholder="Enter Post Title Here!" required autocomplete="off">
 				</div>
 				<div class="form-group posts-description">
 					<label for="description"><strong>Post Content @error('description') <span class="text-danger">This field is required!</span> @enderror</strong></label>
@@ -202,7 +202,7 @@
 			<div class="modal-body">
 					<form id="tagForm" method="post">
 						@csrf
-						<input type="text" name="tag" class="form-control" placeholder="Add New Category" required autocomplete="off" pattern="[a-zA-Z0-9\s]+" title="Special Characters are not allowed!">
+						<input type="text" name="tag" class="form-control" placeholder="Add New Category" required autocomplete="off">
 						<small id="errorlogTag" class="text-danger font-weight-bold mt-2"></small>
 					<div class="text-center mt-3">
 						<button class="btn btn-info text-white btn-block" type="submit">Add Category</button>

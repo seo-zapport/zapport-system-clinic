@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Disease;
 use App\Bodypart;
+use App\Disease;
+use App\Http\Requests\DiseaseRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use App\Http\Requests\DiseaseRequest;
+use Illuminate\Support\Str;
 
 class DiseaseController extends Controller
 {
@@ -46,9 +47,7 @@ class DiseaseController extends Controller
         if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
             
             $atts = $this->validate($request, $request->rules(), $request->messages());
-            $rep = str_replace([" & ", " / ", "-", " - "], '-', $request->disease);
-            $rep2 = str_replace(['( ', ' )', "'", "(", ")", " ( ", " ) "], "", $rep);
-            $replaced = str_replace([' ', '/'], '-', $rep2);
+            $replaced = Str::slug($request->disease, '-');
             $newDisease                 = new Disease;
             $newDisease->bodypart_id    = $request->bodypart_id;
             $newDisease->disease_slug   = strtolower($replaced);
@@ -111,9 +110,7 @@ class DiseaseController extends Controller
                 'bodypart_id'   =>  'required',
                 'disease'   =>  'required|unique:diseases,disease,'.$disease->id,
             ]);
-            $rep = str_replace([" & ", " / ", "-", " - "], '-', $request->disease);
-            $rep2 = str_replace(['( ', ' )', "'", "(", ")", " ( ", " ) "], "", $rep);
-            $replaced = str_replace([' ', '/'], '-', $rep2);
+            $replaced = Str::slug($request->disease, '-');
             $atts['disease_slug'] = strtolower($replaced);
             $disease->update($atts);
             return back();

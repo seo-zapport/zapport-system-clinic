@@ -54,6 +54,21 @@
 		</div>
 	</div>
 </div>
-@include('layouts.errors')
 
+@error('diagnosis')
+	<div id="err-msg" class="alert alert-danger">
+		{{ $message }}
+	</div>
+@enderror
+
+@endsection
+
+@section('scripts')
+	<script text=text/javascript>
+		jQuery(document).ready(function(){
+			$("#err-msg").on('click', function(e){
+				$(this).fadeOut('slow');
+			});
+		});
+	</script>
 @endsection

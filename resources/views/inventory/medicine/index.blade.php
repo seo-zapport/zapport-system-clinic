@@ -64,8 +64,8 @@
 					</th>
 				</thead>
 				<tbody>
-					
-					@if ($meds != null)		
+
+					@if ($meds != null)
 					@forelse ($meds as $med)
 						<tr id="MedRow">
 							<td>{{ strtoupper($med->generic->gname) }}
@@ -89,7 +89,7 @@
 						</tr>
 					@endif
 				</tbody>
-			</table>			
+			</table>
 		</div>
 	</div>
 </div>

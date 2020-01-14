@@ -80,7 +80,7 @@
 	   					@endif
 	   				</tr>
 	   		@endforelse
-	   	</tbody>	
+	   	</tbody>
 
 	@php 
 		}elseif(@$typeprint == "logsinput"){ 
@@ -135,7 +135,7 @@
 			@endif
 		</tbody>
 	@php } @endphp
-	</table>			
+	</table>
 </div>
 <br/>
 <div id="medCount">

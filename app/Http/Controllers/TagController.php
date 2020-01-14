@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Tag;
-use App\Post;
-use Illuminate\Http\Request;
 use App\Http\Requests\TagRequest;
+use App\Post;
+use App\Tag;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Str;
 
 class TagController extends Controller
 {
@@ -51,7 +52,7 @@ class TagController extends Controller
         if (Gate::check('isAdmin') || Gate::check('isHr') || Gate::check('isDoctor') || Gate::allows('isNurse')) {
             if ($request->ajax()) {
                 $atts = $request->validated();
-                $replaced = str_replace(' ', '-', $request->tag_name);
+                $replaced = Str::slug($request->tag_name, '-');
                 $atts['tag_slug'] = strtolower($replaced);
                 $lastid = Tag::create($atts);
                 $atts['id'] = $lastid->id;
@@ -97,7 +98,7 @@ class TagController extends Controller
             $atts = $request->validate([
                 'tag_name' => ['required', 'unique:tags,tag_name,'.$tag->id],
             ]);
-            $replaced = str_replace(' ', '-', $request->tag_name);
+            $replaced = Str::slug($request->tag_name, '-');
             $atts['tag_slug'] = strtolower($replaced);
             $tag->update($atts);
             return back();
@@ -136,7 +137,7 @@ class TagController extends Controller
         if (Gate::check('isAdmin') || Gate::check('isHr') || Gate::check('isDoctor') || Gate::allows('isNurse')) {
             if ($request->ajax()) {
                 $atts = $request->validated();
-                $replaced = str_replace(' ', '-', $request->tag_name);
+                $replaced = Str::slug($request->tag_name, '-');
                 $atts['tag_slug'] = strtolower($replaced);
                 $lastid = Tag::create($atts);
                 $atts['id'] = $lastid->id;
@@ -159,7 +160,7 @@ class TagController extends Controller
             $atts = $request->validate([
                         'tag_name' => ['required', 'unique:tags'],
                     ]);
-            $replaced = str_replace(' ', '-', $request->tag_name);
+            $replaced = Str::slug($request->tag_name, '-');
             $atts['tag_slug'] = strtolower($replaced);
             Tag::create($atts);
             return back();

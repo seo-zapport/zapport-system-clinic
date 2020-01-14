@@ -78,7 +78,7 @@
 					@csrf
 					<div class="form-group">
 						<label for="department">Department</label>
-						<input type="text" name="department" class="form-control @error('department') border border-danger @enderror" placeholder="Department Name" value="{{ old('department') }}" required autocomplete="off" pattern="[a-zA-Z0-9\s]+" title="Special Characters are not allowed!">
+						<input type="text" name="department" class="form-control @error('department') border border-danger @enderror" placeholder="Department Name" value="{{ old('department') }}" required autocomplete="off">
 						@error('department') <small class="text-danger">{{ $message }}</small> @enderror
 					</div>
 					<div class="text-right">

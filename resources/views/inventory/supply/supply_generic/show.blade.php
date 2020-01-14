@@ -1,0 +1,83 @@
+@extends('layouts.app')
+@section('title', '| Generics')
+@section('supplygen', 'active')
+{{-- @section('dash-title', 'Generic Names') --}}
+@section('heading-title')
+	<i class="fas fa-tablets text-secondary"></i> {{ ucwords($supgen->name) }}
+@endsection
+@section('dash-content')
+
+@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
+	<div class="form-group text-right">
+		<a class="btn btn-info text-white" href="#" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus"></i> Add New</a>
+	</div>
+@endif
+
+
+<div class="card mb-3">
+	<div class="card-body">
+		<div class="row zp-countable">
+			<div class="col-12 col-md-6">
+				{{-- <p class="zp-2a9">Total number of Generics: <span>{{ $gensCount->count() }}</span></p> --}}
+			</div>
+			<div class="col-12 col-md-6 count_items">
+				{{-- <p><span class="zp-tct">Total Items: </span> {{ $gens->count() }} <span  class="zp-ct"> Items</span></p> --}}
+			</div>
+		</div>
+		<div class="table-responsive">
+			<table class="table table-hover">
+				<thead class="thead-dark">
+					<th>Brand Name</th>
+					<th width="10%" class="text-center">Quantity</th>
+				</thead>
+				<tbody>
+					@forelse ($supgen->supbrands as $brand)
+						<tr>
+							<td>
+								{{ strtoupper($brand->name) }}
+							</td>
+							<td>
+								{{ $brand->supgens->count() }}
+							</td>
+						</tr>
+					@empty
+						<tr>
+							<td colspan="2" class="text-center">No Registered Supplies yet!</td>
+						</tr>
+					@endforelse
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+
+<!-- Modal Add -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header zp-bg-clan">
+				<h5 class="modal-title text-white" id="exampleModalLongTitle">Add New Brand</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form method="post" action="{{ route('supply.brand.store', ['supgen'=>$supgen->slug]) }}">
+					@csrf
+					<div class="form-group">
+						<input type="hidden" name="supgen_id" value="{{ $supgen->id }}">
+						<label for="name">Brand Name</label>
+						<input type="text" name="name" class="form-control" placeholder="Add Brand" value="{{ old('name') }}" required autocomplete="off">
+					</div>
+					<div class="text-right">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="submit" class="btn btn-primary">Save changes</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+@endsection

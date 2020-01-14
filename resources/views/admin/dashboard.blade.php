@@ -284,18 +284,10 @@
 					</div>
 					<div class="modal-body">
 						<div class="list-group list-group-flush">
-							<div class="list-group-item">
-								{!! ($emp->tin_no == null) ? "<p class=\"text-danger mb-0\">* TIN NUMBER</p>" : '' !!}
-							</div>
-							<div class="list-group-item">
-								{!! ($emp->sss_no == null) ? "<p class=\"text-danger mb-0\">* SSS NUMBER</p>" : '' !!}
-							</div>
-							<div class="list-group-item">
-								{!! ($emp->philhealth_no == null) ? "<p class=\"text-danger mb-0\">* PHIL HEALTH NUMBER</p>" : '' !!}
-							</div>
-							<div class="list-group-item">
-								{!! ($emp->hdmf_no == null) ? "<p class=\"text-danger mb-0\">* PAG IBIG NUMBER</p>" : '' !!}
-							</div>
+							{!! ($emp->tin_no == null) ? "<div class='list-group-item'><p class='text-danger mb-0'>* TIN NUMBER</p></div>" : '' !!}
+							{!! ($emp->sss_no == null) ? "<div class='list-group-item'><p class='text-danger mb-0'>* SSS NUMBER</p></div>" : '' !!}
+							{!! ($emp->philhealth_no == null) ? "<div class='list-group-item'><p class='text-danger mb-0'>* PHIL HEALTH NUMBER</p></div>" : '' !!}
+							{!! ($emp->hdmf_no == null) ? "<div class='list-group-item'><p class='text-danger mb-0'>* PAG IBIG NUMBER</p></div>" : '' !!}
 						</div>
 					</div>
 					<div class="modal-footer">

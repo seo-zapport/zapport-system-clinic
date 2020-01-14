@@ -7,7 +7,7 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-  
+
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -15,7 +15,7 @@
 
 </head>
 <body>
-<div class="print">	
+<div class="print">
 	<img src="{{url( '/images/logo.png' )}}" alt="Zapport" style="display:block;margin:auto; width: 200px">
 	<div style="margin-top: 20px; margin-bottom: 20px;">
 	<p class="text-center" style="line-height:0px;">14/F UNIT 14-G BURGUNDY CORPORATE TOWER</p>
@@ -82,9 +82,9 @@
 	   					@endif
 	   				</tr>
 	   		@endforelse
-	   	</tbody>	
+	   	</tbody>
 	@php } @endphp
-	</table>			
+	</table>
 </div>
 <br/>
 <div id="medCount">

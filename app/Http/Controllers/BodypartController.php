@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Bodypart;
+use App\Http\Requests\BodypartRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use App\Http\Requests\BodypartRequest;
+use Illuminate\Support\Str;
 
 class BodypartController extends Controller
 {
@@ -58,9 +59,7 @@ class BodypartController extends Controller
         if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
         
             $atts = $this->validate($request, $request->rules(), $request->messages());
-            $rep = str_replace([" & ", " / ", "-", " - "], '-', $request->bodypart);
-            $rep2 = str_replace(['( ', ' )', "'", "(", ")", " ( ", " ) "], "", $rep);
-            $replaced = str_replace([' ', '/'], '-', $rep2);
+            $replaced = Str::slug($request->bodypart, '-');
             $atts['bodypart_slug'] = strtolower($replaced);
             $id = Bodypart::create($atts);
             $atts['id'] = $id->id;
@@ -122,9 +121,7 @@ class BodypartController extends Controller
             $atts = $request->validate([
                 'bodypart'  =>  'required|unique:bodyparts,bodypart,'.$bodypart->id
             ]);
-            $rep = str_replace([" & ", " / ", "-", " - "], '-', $request->bodypart);
-            $rep2 = str_replace(['( ', ' )', "'", "(", ")", " ( ", " ) "], "", $rep);
-            $replaced = str_replace([' ', '/'], '-', $rep2);
+            $replaced = Str::slug($request->bodypart, '-');
             $atts['bodypart_slug'] = strtolower($replaced);
             $bodypart->update($atts);
             return back();

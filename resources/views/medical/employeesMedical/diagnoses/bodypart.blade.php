@@ -51,7 +51,7 @@
 										@method('PUT')
 										<p class="text-muted">QUICK EDIT</p>
 										<span>Category</span> <small class="font-italic text-muted">Enter to save</small>
-										<input type="text" name="bodypart" value="{{ $bpart->bodypart }}" class="form-control" required autocomplete="off" pattern="[a-zA-Z0-9\s()-/]+" title="Special Characters are not allowed!">
+										<input type="text" name="bodypart" value="{{ $bpart->bodypart }}" class="form-control" required autocomplete="off">
 									</form>
 								</fieldset>
 							</td>
@@ -67,12 +67,17 @@
 		<div class="pagination-wrap">{{ $bparts->links() }}</div>
 	</div>
 </div>
-@include('layouts.errors')
+{{-- @include('layouts.errors') --}}
 @if (session('bpart_error'))
 	<div id="err-msg" class="alert alert-danger alert-posts">
 		{{ session('bpart_error') }}
 	</div>
 @endif
+@error('bodypart')
+	<div id="err-msg" class="alert alert-danger alert-posts">
+		{{ $message }}
+	</div>
+@enderror
 
 <!-- Modal For Body Parts -->
 <div class="modal fade" id="add-parts" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -89,7 +94,7 @@
 					@csrf
 					<div class="form-group">
 						<label for="bodypart">Body Part</label>
-						<input type="text" class="form-control" name="bodypart" placeholder="Add Body Part" required autocomplete="off" pattern="[a-zA-Z0-9\s()-/]+" title="Special Characters are not allowed!">
+						<input type="text" class="form-control" name="bodypart" placeholder="Add Body Part" required autocomplete="off">
 					</div>
 					<div class="text-right">
 						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -101,4 +106,15 @@
 	</div>
 </div>
 
+@endsection
+
+@section('scripts')
+<script type="text/javascript">
+	jQuery(document).ready(function(){
+		$("#err-msg").on('click', function(e){
+			e.preventDefault();
+			$(this).fadeOut('slow');
+		});
+	});
+</script>
 @endsection

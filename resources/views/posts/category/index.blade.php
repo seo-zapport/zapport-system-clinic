@@ -55,7 +55,7 @@
 										@method('PUT')
 										<p class="text-muted">QUICK EDIT</p>
 										<span>Category</span> <small class="text-muted font-italic">Enter to save</small>
-										<input type="text" name="tag_name" value="{{ $tag->tag_name }}" class="form-control" required autocomplete="off" pattern="[a-zA-Z0-9\s]+" title="Special Characters are not allowed!">
+										<input type="text" name="tag_name" value="{{ $tag->tag_name }}" class="form-control" required autocomplete="off">
 									</form>
 								</fieldset>
 							</td>
@@ -90,7 +90,7 @@
 				<form id="cat-cat-form" method="post" action="{{ route('store.tag') }}">
 					@csrf
 					<div class="form-group">
-						<input type="text" name="tag_name" class="form-control @error('tag_name') border border-danger @enderror" placeholder="Category Name" required autocomplete="off" pattern="[a-zA-Z0-9\s]+" title="Special Characters are not allowed!">
+						<input type="text" name="tag_name" class="form-control @error('tag_name') border border-danger @enderror" placeholder="Category Name" required autocomplete="off">
 						@error('tag_name') <small class="text-danger">{{ $message }}</small> @enderror
 					</div>
 					<div class="text-right">

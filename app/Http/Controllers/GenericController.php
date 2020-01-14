@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Generic;
+use App\Http\Requests\genericRequest;
 use App\Medbrand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-use App\Http\Requests\genericRequest;
+use Illuminate\Support\Str;
 
 class GenericController extends Controller
 {
@@ -65,9 +66,7 @@ class GenericController extends Controller
     {
         if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
             $atts = $this->validate($request, $request->rules(), $request->messages());
-            $rep = str_replace([" & ", " / ", "-", " - "], '-', $request->gname);
-            $rep2 = str_replace(['( ', ' )', "'", "(", ")", " ( ", " ) "], "", $rep);
-            $replaced = str_replace([' ', '/'], '-', $rep2);
+            $replaced = Str::slug($request->gname, '-');
             $atts['gname_slug'] = strtolower($replaced);
             Generic::create($atts);
             return back();
@@ -133,9 +132,7 @@ class GenericController extends Controller
                     'gname.required'    =>  'The Generic name is required!',
                     'gname.unique'      =>  'The Generic name is already taken!',
                 ]);
-            $rep = str_replace([" & ", " / ", "-", " - "], '-', $request->gname);
-            $rep2 = str_replace(['( ', ' )', "'", "(", ")", " ( ", " ) "], "", $rep);
-            $replaced = str_replace([' ', '/'], '-', $rep2);
+            $replaced = Str::slug($request->gname, '-');
             $atts['gname_slug'] = strtolower($replaced);
             $generic->update($atts);
             return redirect()->route('genericname.show', ['generic' => $generic->gname_slug]);

@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Department;
+use App\Http\Requests\DepartmentRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-use App\Http\Requests\DepartmentRequest;
+use Illuminate\Support\Str;
 
 class DepartmentController extends Controller
 {
@@ -66,11 +67,8 @@ class DepartmentController extends Controller
     {
         if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
             $atts = $this->validate($request, $request->rules(), $request->messages());
-            $rep = str_replace([" & ", " / ", "-", " - "], '-', $request->department);
-            $rep2 = str_replace(['( ', ' )', "'", "(", ")", " ( ", " ) "], "", $rep);
-            $replaced = str_replace([' ', '/'], '-', $rep2);
+            $replaced = Str::slug($request->department, '-');
             $atts['department_slug'] = strtolower($replaced);
-            // dd($atts);
             Department::create($atts);
             return back();
         }elseif (Gate::allows('isBanned')) {

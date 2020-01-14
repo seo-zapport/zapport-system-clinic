@@ -160,6 +160,15 @@ Route::group(['prefix' => 'inventory'], function(){
 	Route::get('medicine/logs/brand/{medbrand}/generic/{generic}', 'MedicineController@logs')->name('medicine.log');
 	Route::get('medicine/logs/brand/{medbrand}/generic/{generic}/inputDate/{inputDate}/expDate/{expDate}', 'MedicineController@show')->name('medicine.show');
 
+	// Supply Generic
+	Route::get('supply/generic', 'SupgenController@index')->name('supply.generic.index');
+	Route::post('supply/generic', 'SupgenController@store')->name('supply.generic.store');
+	Route::get('supply/generic/{supgen}', 'SupgenController@show')->name('supply.generic.show');
+	Route::delete('supply/generic/{supgen}', 'SupgenController@destroy')->name('supply.generic.destroy');
+
+	// Supply Brand
+	Route::post('supply/generic/{supgen}', 'SupbrandController@store')->name('supply.brand.store');
+
 });
 
 Route::group(['prefix' => 'medical'], function(){
