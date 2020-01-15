@@ -81,6 +81,11 @@
 		text-align: right;
 	}
 }
+@media (min-width: 576px){
+	.zp-modal-sm {
+		max-width: 450px;
+	}
+}
 
 @media (max-width: 768px) {
 	/**default*/
