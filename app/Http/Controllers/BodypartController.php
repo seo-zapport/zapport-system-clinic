@@ -59,8 +59,8 @@ class BodypartController extends Controller
         if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
         
             $atts = $this->validate($request, $request->rules(), $request->messages());
-            $replaced = Str::slug($request->bodypart, '-');
-            $atts['bodypart_slug'] = strtolower($replaced);
+            $atts['bodypart_slug'] = Str::slug($request->bodypart, '-');
+            dd($atts);
             $id = Bodypart::create($atts);
             $atts['id'] = $id->id;
             return back();
@@ -121,8 +121,7 @@ class BodypartController extends Controller
             $atts = $request->validate([
                 'bodypart'  =>  'required|unique:bodyparts,bodypart,'.$bodypart->id
             ]);
-            $replaced = Str::slug($request->bodypart, '-');
-            $atts['bodypart_slug'] = strtolower($replaced);
+            $atts['bodypart_slug'] = Str::slug($request->bodypart, '-');
             $bodypart->update($atts);
             return back();
         }elseif (Gate::allows('isBanned')) {

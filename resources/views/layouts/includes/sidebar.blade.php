@@ -136,7 +136,8 @@
                 <li class="nav-item">
                     <a href="#supplies" data-toggle="collapse" aria-expanded="{{ $ariaexpandinv }}" class="nav-link dropdown-toggle {{$collapinv}}"><i class="fas fa-warehouse"></i> <span class="collapse-label">Supplies</span></a>
                     <ul class="zp-dropdown nav collapse {{ $showactiveinv }}" id="supplies">
-                        <li class="nav-item"><a href="{{ route('supply.generic.index') }}" class="nav-link @yield('supplygen')"><i class="fas fa-tablets"></i><span class="collapse-label">Supply Generic Name</span></a></li>
+                        <li class="nav-item"><a href="{{ route('supply.generic.index') }}" class="nav-link @yield('supplygen')"><i class="fas fa-tablets"></i><span class="collapse-label">Register Supply</span></a></li>
+                        <li class="nav-item"><a href="{{ route('supply.index') }}" class="nav-link @yield('supplyinv')"><i class="fas fa-tablets"></i><span class="collapse-label">Supplies</span></a></li>
                     </ul>
                 </li>                   
             </ul>

@@ -66,8 +66,7 @@ class GenericController extends Controller
     {
         if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
             $atts = $this->validate($request, $request->rules(), $request->messages());
-            $replaced = Str::slug($request->gname, '-');
-            $atts['gname_slug'] = strtolower($replaced);
+            $atts['gname_slug'] = Str::slug($request->gname, '-');
             Generic::create($atts);
             return back();
         }elseif (Gate::allows('isBanned')) {
@@ -132,8 +131,7 @@ class GenericController extends Controller
                     'gname.required'    =>  'The Generic name is required!',
                     'gname.unique'      =>  'The Generic name is already taken!',
                 ]);
-            $replaced = Str::slug($request->gname, '-');
-            $atts['gname_slug'] = strtolower($replaced);
+            $atts['gname_slug'] = Str::slug($request->gname, '-');
             $generic->update($atts);
             return redirect()->route('genericname.show', ['generic' => $generic->gname_slug]);
         }elseif (Gate::allows('isBanned')) {

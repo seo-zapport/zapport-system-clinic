@@ -78,8 +78,7 @@ class PositionController extends Controller
             if (!empty($check)) {
                 $data = $check;
             }else{
-                $replaced = Str::slug($request->position, '-');
-                $atts['position_slug'] = strtolower($replaced);
+                $atts['position_slug'] = Str::slug($request->position, '-');
                 $data = Position::create($atts);
             }
 

@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Generic;
+use App\Http\Requests\MedbrandRequest;
 use App\Medbrand;
 use App\MedbrandGeneric;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-use App\Http\Requests\MedbrandRequest;
+use Illuminate\Support\Str;
 
 class MedbrandController extends Controller
 {
@@ -72,10 +73,7 @@ class MedbrandController extends Controller
             if (!empty($check)) {
                 $data = $check;
             }else{
-                $rep = str_replace([" & ", " / ", "-", " - "], '-', $request->bname);
-                $rep2 = str_replace(['( ', ' )', "'", "(", ")", " ( ", " ) "], "", $rep);
-                $replaced = str_replace([' ', '/'], '-', $rep2);
-                $atts['bname_slug'] = strtolower($replaced);
+                $atts['bname_slug'] = Str::slug($request->bname, '-');
                 $data = Medbrand::create($atts);
             }
 
@@ -149,10 +147,7 @@ class MedbrandController extends Controller
                     'bname.unique'      =>  'Brand name is already taken',
                 ]
             );
-            $rep = str_replace([" & ", " / ", "-", " - "], '-', $request->bname);
-            $rep2 = str_replace(['( ', ' )', "'", "(", ")", " ( ", " ) "], "", $rep);
-            $replaced = str_replace([' ', '/'], '-', $rep2);
-            $atts['bname_slug'] = strtolower($replaced);
+            $atts['bname_slug'] = Str::slug($request->bname, '-');
             $medbrand->update($atts);
             return redirect()->route('brandname.update', ['medbrand' => $medbrand->bname_slug]);
         }elseif (Gate::allows('isBanned')) {

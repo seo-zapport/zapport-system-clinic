@@ -161,13 +161,22 @@ Route::group(['prefix' => 'inventory'], function(){
 	Route::get('medicine/logs/brand/{medbrand}/generic/{generic}/inputDate/{inputDate}/expDate/{expDate}', 'MedicineController@show')->name('medicine.show');
 
 	// Supply Generic
-	Route::get('supply/generic', 'SupgenController@index')->name('supply.generic.index');
-	Route::post('supply/generic', 'SupgenController@store')->name('supply.generic.store');
-	Route::get('supply/generic/{supgen}', 'SupgenController@show')->name('supply.generic.show');
-	Route::delete('supply/generic/{supgen}', 'SupgenController@destroy')->name('supply.generic.destroy');
+	Route::get('supply/register', 'SupgenController@index')->name('supply.generic.index');
+	Route::post('supply/register', 'SupgenController@store')->name('supply.generic.store');
+	Route::get('supply/register/{supgen}', 'SupgenController@show')->name('supply.generic.show');
+	Route::put('supply/register/{supgen}', 'SupgenController@update')->name('supply.generic.update');
+	Route::delete('supply/register/{supgen}', 'SupgenController@destroy')->name('supply.generic.destroy');
 
 	// Supply Brand
-	Route::post('supply/generic/{supgen}', 'SupbrandController@store')->name('supply.brand.store');
+	Route::post('supply/register/{supgen}/brand', 'SupbrandController@store')->name('supply.brand.store');
+	Route::put('supply/register/{supgen}/brand/{supbrand}', 'SupbrandController@update')->name('supply.brand.update');
+	Route::delete('supply/register/{supgen}/brand/{supbrand}', 'SupbrandController@destroy')->name('supply.brand.destroy');
+	Route::get('supply/fetch', 'SupbrandController@fetch')->name('supply.generic.fetch');
+
+	// Supply
+	Route::get('supply', 'SupplyController@index')->name('supply.index');
+	Route::post('supply', 'SupplyController@store')->name('supply.store');
+	Route::get('supply/fetch', 'SupplyController@fetch')->name('supply.fetch');
 
 });
 

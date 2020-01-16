@@ -19,7 +19,7 @@ class CreateSuppliesTable extends Migration
             $table->unsignedBigInteger('supbrand_id');
             $table->unsignedBigInteger('supgen_id')->nullable();
             $table->bigInteger('quantity');
-            $table->date('expiration_date');
+            $table->date('expiration_date')->nullable();
             $table->boolean('availability');
             $table->timestamps();
 

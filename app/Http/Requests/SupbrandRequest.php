@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Http\FormRequest;
 
 class SupbrandRequest extends FormRequest
@@ -13,7 +14,11 @@ class SupbrandRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse')) {
+            return true;
+        }else{
+            return false;
+        }
     }
 
     /**
@@ -24,7 +29,7 @@ class SupbrandRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'  =>  ['required', 'unique:supbrands'],
+            'name'  =>  ['required'],
             'supgen_id'    =>  ['required'],
         ];
     }
@@ -38,7 +43,6 @@ class SupbrandRequest extends FormRequest
     {
         return [
             'name.required'  =>  'This field is required!',
-            'name.unique'  =>  'Brand name is already taken!',
         ];
     }
 }

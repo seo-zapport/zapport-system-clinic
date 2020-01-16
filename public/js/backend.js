@@ -344,7 +344,7 @@ jQuery(document).ready(function($){
      var brn = $('select[name="brand_id"]').val();
      var dte = $('input[name="expiration_date"]').val();
      var qty = $('input[name="qty_input"]').val();
-     if (gen != null && brn != null && dte != qty) {
+     if (gen != null && brn != null && dte != null && qty != null) {
       $("#medBtn").prop('disabled', true);
       $("#addMds").submit();
      }

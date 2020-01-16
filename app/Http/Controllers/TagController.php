@@ -52,8 +52,7 @@ class TagController extends Controller
         if (Gate::check('isAdmin') || Gate::check('isHr') || Gate::check('isDoctor') || Gate::allows('isNurse')) {
             if ($request->ajax()) {
                 $atts = $request->validated();
-                $replaced = Str::slug($request->tag_name, '-');
-                $atts['tag_slug'] = strtolower($replaced);
+                $atts['tag_slug'] = Str::slug($request->tag_name, '-');
                 $lastid = Tag::create($atts);
                 $atts['id'] = $lastid->id;
                 return response()->json($atts);
@@ -98,8 +97,7 @@ class TagController extends Controller
             $atts = $request->validate([
                 'tag_name' => ['required', 'unique:tags,tag_name,'.$tag->id],
             ]);
-            $replaced = Str::slug($request->tag_name, '-');
-            $atts['tag_slug'] = strtolower($replaced);
+            $atts['tag_slug'] = Str::slug($request->tag_name, '-');
             $tag->update($atts);
             return back();
         }else{
@@ -137,8 +135,7 @@ class TagController extends Controller
         if (Gate::check('isAdmin') || Gate::check('isHr') || Gate::check('isDoctor') || Gate::allows('isNurse')) {
             if ($request->ajax()) {
                 $atts = $request->validated();
-                $replaced = Str::slug($request->tag_name, '-');
-                $atts['tag_slug'] = strtolower($replaced);
+                $atts['tag_slug'] = Str::slug($request->tag_name, '-');
                 $lastid = Tag::create($atts);
                 $atts['id'] = $lastid->id;
                 return response()->json($atts);
@@ -160,8 +157,7 @@ class TagController extends Controller
             $atts = $request->validate([
                         'tag_name' => ['required', 'unique:tags'],
                     ]);
-            $replaced = Str::slug($request->tag_name, '-');
-            $atts['tag_slug'] = strtolower($replaced);
+            $atts['tag_slug'] = Str::slug($request->tag_name, '-');
             Tag::create($atts);
             return back();
         }else{

@@ -50,7 +50,7 @@ class DiseaseController extends Controller
             $replaced = Str::slug($request->disease, '-');
             $newDisease                 = new Disease;
             $newDisease->bodypart_id    = $request->bodypart_id;
-            $newDisease->disease_slug   = strtolower($replaced);
+            $newDisease->disease_slug   = $replaced;
             $newDisease->disease        = $request->disease;
             $newDisease->save();
 
@@ -110,8 +110,7 @@ class DiseaseController extends Controller
                 'bodypart_id'   =>  'required',
                 'disease'   =>  'required|unique:diseases,disease,'.$disease->id,
             ]);
-            $replaced = Str::slug($request->disease, '-');
-            $atts['disease_slug'] = strtolower($replaced);
+            $atts['disease_slug'] = Str::slug($request->disease, '-');
             $disease->update($atts);
             return back();
         }elseif (Gate::allows('isBanned')) {

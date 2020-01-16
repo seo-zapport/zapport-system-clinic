@@ -80,9 +80,9 @@ class PostController extends Controller
             $replaced = Str::slug($request->title, '-');
             if (count($srch ) > 0) {
                 $count = count($srch)+1;
-                $atts['slug'] = strtolower($replaced).'-'.$count;
+                $atts['slug'] = $replaced.'-'.$count;
             }else{
-                $atts['slug'] = strtolower($replaced);
+                $atts['slug'] = $replaced;
             }
             auth()->user()->published(
                 new Post($atts)
@@ -182,9 +182,9 @@ class PostController extends Controller
                 $fnd = Post::where('slug', $lwr)->get();
                 if (count($fnd) > 0) {
                     $counted = $count + count($fnd);
-                    $atts['slug'] = strtolower($replaced).'-'.$counted;
+                    $atts['slug'] = $replaced.'-'.$counted;
                 }else{
-                    $atts['slug'] = strtolower($replaced).'-'.$count;
+                    $atts['slug'] = $replaced.'-'.$count;
                 }
             }else{
                 $atts['slug'] = strtolower($replaced);

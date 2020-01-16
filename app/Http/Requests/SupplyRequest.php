@@ -2,10 +2,9 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Http\FormRequest;
 
-class SupgenRequest extends FormRequest
+class SupplyRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -14,11 +13,7 @@ class SupgenRequest extends FormRequest
      */
     public function authorize()
     {
-        if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse')) {
-            return true;
-        }else{
-            return false;
-        }
+        return true;
     }
 
     /**
@@ -29,7 +24,9 @@ class SupgenRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'  =>  ['required', 'unique:supgens']
+            'supgen_id'     =>  ['required'],
+            'supbrand_id'   =>  ['required'],
+            'quantity'      =>  ['required'],
         ];
     }
 
@@ -41,8 +38,9 @@ class SupgenRequest extends FormRequest
     public function messages()
     {
         return [
-            'name.required'  =>  'This field is required!',
-            'name.unique'    =>  'Name is already taken!',
+            'supgen_id.required'        =>  'This field is required!',
+            'supbrand_id.required'      =>  'This field is required!',
+            'quantity'                  =>  'This field is required!',
         ];
     }
 }
