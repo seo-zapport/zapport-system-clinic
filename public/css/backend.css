@@ -8024,6 +8024,12 @@ label.lbl_upload:focus {
   }
 }
 
+@media (min-width: 576px) {
+  .zp-modal-sm {
+    max-width: 450px;
+  }
+}
+
 @media (max-width: 768px) {
   /**default*/
 

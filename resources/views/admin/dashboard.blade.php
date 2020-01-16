@@ -274,24 +274,24 @@
 	@foreach (@$emps as $emp)
 		<!-- Modal Add -->
 		<div class="modal fade" id="id-{{ $emp->emp_id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-			<div class="modal-dialog  modal-lg modal-dialog-centered" role="document">
+			<div class="modal-dialog zp-modal-sm modal-dialog-centered" role="document">
 				<div class="modal-content">
-					<div class="modal-header bg-success">
+					<div class="modal-header zp-bg-clan">
 						<h5 class="modal-title text-white" id="exampleModalLongTitle">{{ $emp->last_name }}, {{ $emp->first_name }}'s Incomplete Requirements</h5>
 						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
 					<div class="modal-body">
-						<div class="list-group list-group-flush">
+						<div class="list-group list-group-flush mb-3">
 							{!! ($emp->tin_no == null) ? "<div class='list-group-item'><p class='text-danger mb-0'>* TIN NUMBER</p></div>" : '' !!}
 							{!! ($emp->sss_no == null) ? "<div class='list-group-item'><p class='text-danger mb-0'>* SSS NUMBER</p></div>" : '' !!}
 							{!! ($emp->philhealth_no == null) ? "<div class='list-group-item'><p class='text-danger mb-0'>* PHIL HEALTH NUMBER</p></div>" : '' !!}
 							{!! ($emp->hdmf_no == null) ? "<div class='list-group-item'><p class='text-danger mb-0'>* PAG IBIG NUMBER</p></div>" : '' !!}
 						</div>
-					</div>
-					<div class="modal-footer">
-						<a href="{{ route('hr.emp.show', ['employee' => $emp->emp_id]) }}" class="btn btn-outline-success">View</a>
+						<div class="text-right">
+							<a href="{{ route('hr.emp.show', ['employee' => $emp->emp_id]) }}" class="btn zp-btn btn-outline-zp">View</a>
+						</div>
 					</div>
 				</div>
 			</div>
