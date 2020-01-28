@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Bodypart;
 use App\Disease;
-use App\Http\Requests\DiseaseRequest;
+use App\Bodypart;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Str;
+use App\Http\Requests\DiseaseRequest;
 
 class DiseaseController extends Controller
 {

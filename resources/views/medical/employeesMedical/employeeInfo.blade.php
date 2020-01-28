@@ -99,10 +99,19 @@
 
 				<div class="col-md-5">
 					<div class="form-group text-right">
+						<div class="btn-group">
+							<button type="button" class="btn btn-info dropdown-toggle text-white" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								New
+							</button>
+							<div class="dropdown-menu">
+								<a class="dropdown-item" href="#" data-toggle="modal" data-target="#exampleModalCenter">Medical</a>
+								<a class="dropdown-item" href="#" data-toggle="modal" data-target="#getSupply">Supply</a>
+							</div>
+						</div>
 						@if ($search->count() > 0)
 							<button class="btn btn-success text-white btnPrint">Print</button>
 						@endif
-						<button class="btn btn-info text-white" data-toggle="modal" data-target="#exampleModalCenter">New</button>
+						{{-- <button class="btn btn-info text-white" data-toggle="modal" data-target="#exampleModalCenter">New</button> --}}
 						{{-- <a class="btn btn-success" href="{{ route('medical.form', ['employee'=>$employee->emp_id]) }}">Form</a> --}}
 					</div>
 				</div>
@@ -143,7 +152,7 @@
 </div>
 <div class="pagination-wrap">{{ $search->links() }}</div>
 @include('layouts.errors')
-<!-- Modal Add -->
+<!-- Modal Add Medical -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 	<div class="modal-dialog  modal-lg modal-dialog-centered" role="document">
 		<div class="modal-content">
@@ -157,13 +166,6 @@
 				<form onsubmit="return test(this)" id="myform" method="post" action="{{ route('medical.store', ['employee' => $employee->emp_id]) }}" enctype="multipart/form-data" autocomplete="off">
 					@csrf
 					<input type="hidden" name="employee_id" value="{{ $employee->id }}">
-{{-- 					<div class="form-group">
-					<label for="status">Status of Patient</label>
-					<select name="status" id="status" class="form-control" required>
-							<option selected="true" disabled="disabled" value=""> Select Stats </option>
-							<option value="walkin">Walk-in</option>
-					</select>
-					</div> --}}
 					<div class="form-row">
 						<div class="form-group col-md-4">
 							<label for="bodypart_id">Body Part</label>
@@ -190,16 +192,12 @@
 					</div>
 					<div class="form-group">
 						<p class="mb-1">Attachment</p>
-						{{-- <label for="diagnosis" class="lbl_upload">Select a attachment</label> --}}
 						<div class="input-group mb-3">
 							<div class="custom-file">
 								<input type="file" name="attachment" id="diagnosis" class="custom-file-input form-control-file file-upload">
 								<label for="attachment" class="custom-file-label">Choose file</label>
 							</div>
 						</div>
-						{{-- <div class="uploader_wrap">
-							<input type="file" name="attachment" id="diagnosis" class="form-control-file file-upload">
-						</div> --}}
 					</div>
 					<div class="form-group">
 						<label for="note">Note:</label>
@@ -237,6 +235,39 @@
 						</div>
 					</div>
 
+					<hr>
+
+					<div class="form-group">
+						<a id="addMedicalSupply" class="btn btn-success text-white mb-2"><i class="fa fa-plus"></i> Medical Supplies</a>
+					</div>
+
+					<div id="supmeds" class="form-row">
+						<div class="form-group col-4 position-relative">
+							<label for="supgen_id">Supply Name</label>
+							<select name="supgen_id[0][0]" id="supgen_id" class="form-control">
+								<option selected="true" disabled="disabled" value=""> Select Supply Name </option>
+								@forelse ($supplies as $supply)
+									@if (@$supply->supbrands->count() > 0)
+										<option value="{{ $supply->id }}">{{ strtoupper($supply->name) }}</option>
+									@endif
+									@empty
+									empty
+								@endforelse
+							</select>
+							<span id="select_supgen" class="d-none font-weight-bold zp-filter-clear">x</span>
+						</div>
+						<div class="form-group col-4">
+							<label for="supbrand_id">Supply Brand Name</label>
+							<select name="supbrand_id[0][0]" id="supbrand_id" class="form-control">
+									<option selected="true" disabled="disabled"> Select Supply Brand </option>
+							</select>
+						</div>
+						<div class="form-group col-4">
+							<label for="supqty">Quantity</label>
+							<input type="number" name="supqty[0][0]" class="form-control" min="1" placeholder="Quantity">
+						</div>
+					</div>
+
 					<div class="form-group">
 						<label for="remarks">Remarks</label>
 						<select name="remarks" id="remarks" class="form-control" required>
@@ -258,6 +289,62 @@
 </div>
 
 <div id="test"></div>
+
+<!-- Modal Get Supply -->
+<div class="modal fade" id="getSupply" tabindex="-1" role="dialog" aria-labelledby="getSupplyTitle" aria-hidden="true">
+	<div class="modal-dialog  modal-lg modal-dialog-centered" role="document">
+		<div class="modal-content">
+			<div class="modal-header zp-bg-clan">
+				<h5 class="modal-title text-white" id="exampleModalLongTitle">Medical Supply Form</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form id="getSupplyForm" action="{{ route('medical.getSupply', ['employee' => $employee->emp_id]) }}" method="POST">
+					@csrf
+					<div class="form-group">
+						<a id="addMedicalSupply2" class="btn btn-success text-white mb-2"><i class="fa fa-plus"></i> Medical Supplies</a>
+					</div>
+
+					<div id="supmeds2" class="form-row">
+						<input type="hidden" name="employee_id" value="{{ $employee->id }}">
+						<div class="form-group col-4 position-relative">
+							<label for="supgen_id">Supply Name</label>
+							<select name="supgen_id[0][0]" id="supgen_id" class="form-control" required>
+								<option selected="true" disabled="disabled" value=""> Select Supply Name </option>
+								@forelse (@$supplies as $supply)
+									@if (@$supply->supbrands->count() > 0)
+										<option value="{{ $supply->id }}">{{ strtoupper($supply->name) }}</option>
+									@endif
+									@empty
+									empty
+								@endforelse
+							</select>
+							<span id="select_supgen" class="d-none font-weight-bold zp-filter-clear">x</span>
+						</div>
+						<div class="form-group col-4">
+							<label for="supbrand_id">Supply Brand Name</label>
+							<select name="supbrand_id[0][0]" id="supbrand_id" class="form-control" required>
+									<option selected="true" disabled="disabled"> Select Supply Brand </option>
+							</select>
+						</div>
+						<div class="form-group col-4">
+							<label for="supqty">Quantity</label>
+							<input type="number" name="supqty[0][0]" class="form-control" min="1" placeholder="Quantity" required>
+						</div>
+					</div>
+
+					<div class="text-right">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button id="sbmt" type="submit" class="btn btn-primary">Save changes</button>
+						{{-- <button onclick="test()">test</button> --}}
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
 
 <!-- Modal -->
 <div class="modal fade" id="pre-emp" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -292,6 +379,289 @@
 @section('scripts')
 <script type="application/javascript">
 jQuery(document).ready(function($) {
+
+	// GET SUPPLY FORM
+	$("#getSupplyForm select[name='supgen_id[0][0]']").on('change', function(e){
+		e.preventDefault();
+		var supgen = $(this).val();
+		var supbrnd = $("#getSupplyForm select[name='supbrand_id[0][0]']");
+		var supgn = $("#getSupplyForm select[name='supgen_id[0][0]");
+		var supqty = $("#getSupplyForm input[name='supqty[0][0]']");
+		if (supgen) {
+			$("#select_supgen").removeClass('d-none');
+		}else{
+			$("#select_supgen").addClass('d-none');
+		}
+		var url   = window.location.href;
+		var hostname = window.location.hostname;
+		if (url === "http://"+hostname+"/medical/employees/"+'{{ $employee->emp_id }}') {
+			var supUrl = '/medical/fetch/supply/';
+		}
+		$.ajax({
+			type: 'get',
+			url: supUrl+supgen,
+			data: {'supgen_id':supgen},
+			dataType: 'json',
+			success: function(response){
+				supbrnd.empty();
+				$.each(response.brand, function(key, value){
+					supbrnd.append('<option value="'+ key +'" class="text-capitalize">'+ value +'</option>');
+				});
+				fetchResult2(supbrnd, supgn, supqty);
+			}
+		});
+
+		function fetchResult2(supbrnd, supgn, supqty) {
+			$("#getSupplyForm select[name='supbrand_id[0][0]']").on('change', function(){
+				var sbrnd = supbrnd.find(':selected').attr('value');
+				var sgen = supgn.find(':selected').attr('value');
+				console.log(sgen+'-'+sbrnd);
+				$.ajax({
+					type: 'get',
+					url: '/medical/fetch/supply/'+sgen+'/'+sbrnd,
+					dataType: 'json',
+					success: function(response){
+						supqty.attr('max', response);
+						supqty.prop('required', true);
+						supqty.prop('placeholder', 'Remaining stocks: '+response);
+					}
+				});
+			});
+			$("#getSupplyForm select[name='supbrand_id[0][0]']").each(function(){
+				var sbrnd = supbrnd.find(':selected').attr('value');
+				var sgen = supgn.find(':selected').attr('value');
+				console.log(sgen+'-'+sbrnd);
+				$.ajax({
+					type: 'get',
+					url: '/medical/fetch/supply/'+sgen+'/'+sbrnd,
+					dataType: 'json',
+					success: function(response){
+						supqty.attr('max', response);
+						supqty.prop('required', true);
+						supqty.prop('placeholder', 'Remaining stocks: '+response);
+					}
+				});
+			});
+		}
+	});
+
+    var s = $('#addMedicalSupply2').length;
+    var e = $('#MedSupply').length;
+	$("#addMedicalSupply2").on('click', function(event){
+	    $('<div id="supplyField2" class="col-12 form-row"><div class="mb-2 col-md-4"><select name="supgen_id['+s+']['+s+']" class="form-control" required><option selected="true" disabled="disabled" value=""> Select Supply Name </option>@foreach ($supplies as $supply)<option value="{{ $supply->id }}">{{ strtoupper($supply->name) }}</option>@endforeach</select></div><div class="mb-2 col-md-4"><select name="supbrand_id['+s+']['+s+']" class="form-control" required><option selected="true" disabled="disabled" value=""> Select Supply Brand </option></select></div><div class="mb-2 col-md-4"><input type="number" name="supqty['+s+']['+s+']" min="1" class="form-control" placeholder="Quantity" required></div><a id="removeChildren2" class="btn text-danger text-white position-absolute" style="right: -16px;top: 0px;"><i class="fa fa-times"></i></a></div>').appendTo('#supmeds2');
+
+	    // ____________________________________________________________________________________________________
+
+		var supbrnd = $("#getSupplyForm select[name='supbrand_id["+s+"]["+s+"]']");
+		var supgn = $("#getSupplyForm select[name='supgen_id["+s+"]["+s+"]");
+		var supqty = $("#getSupplyForm input[name='supqty["+s+"]["+s+"]']");
+		$("#getSupplyForm select[name='supgen_id["+s+"]["+s+"]']").on('change', function(e){
+			e.preventDefault();
+			var supgen = $(this).val();
+			var url   = window.location.href;
+			var hostname = window.location.hostname;
+			if (url === "http://"+hostname+"/medical/employees/"+'{{ $employee->emp_id }}') {
+				var supUrl = '/medical/fetch/supply/';
+			}
+			$.ajax({
+				type: 'get',
+				url: supUrl+supgen,
+				data: {'supgen_id':supgen},
+				dataType: 'json',
+				success: function(response){
+					supbrnd.empty();
+					$.each(response.brand, function(key, value){
+						supbrnd.append('<option value="'+ key +'" class="text-capitalize">'+ value +'</option>');
+					});
+					fetchResult(supbrnd, supgn, supqty);
+				}
+			});
+
+			function fetchResult(supbrnd, supgn, supqty) {
+				supbrnd.on('change', function(){
+					var sbrnd = $(this).find(':selected').attr('value');
+					var sgen = supgn.find(':selected').attr('value');
+					console.log(sgen+'-'+sbrnd);
+					$.ajax({
+						type: 'get',
+						url: '/medical/fetch/supply/'+sgen+'/'+sbrnd,
+						dataType: 'json',
+						success: function(response){
+							supqty.attr('max', response);
+							supqty.prop('required', true);
+							supqty.prop('placeholder', 'Remaining stocks: '+response);
+						}
+					});
+				});
+				supbrnd.each(function(){
+					var sbrnd = $(this).find(':selected').attr('value');
+					var sgen = supgn.find(':selected').attr('value');
+					console.log(sgen+'-'+sbrnd);
+					$.ajax({
+						type: 'get',
+						url: '/medical/fetch/supply/'+sgen+'/'+sbrnd,
+						dataType: 'json',
+						success: function(response){
+							supqty.attr('max', response);
+							supqty.prop('required', true);
+							supqty.prop('placeholder', 'Remaining stocks: '+response);
+						}
+					});
+				});
+			}
+		});
+	    // ____________________________________________________________________________________________________
+
+	    s++;
+	})
+    $("body").on("click", "#removeChildren2", function(event){
+      if (s > 1) {
+        $(this).parents("#supplyField2").remove();
+        s--;
+      }
+    });
+
+	// Fetch Medical Supply
+	$("#myform select[name='supgen_id[0][0]']").on('change', function(e){
+		e.preventDefault();
+		var supgen = $(this).val();
+		var supbrnd = $("select[name='supbrand_id[0][0]']");
+		var supgn = $("select[name='supgen_id[0][0]");
+		var supqty = $("input[name='supqty[0][0]']");
+		if (supgen) {
+			$("#select_supgen").removeClass('d-none');
+		}else{
+			$("#select_supgen").addClass('d-none');
+		}
+		var url   = window.location.href;
+		var hostname = window.location.hostname;
+		if (url === "http://"+hostname+"/medical/employees/"+'{{ $employee->emp_id }}') {
+			var supUrl = '/medical/fetch/supply/';
+		}
+		$.ajax({
+			type: 'get',
+			url: supUrl+supgen,
+			data: {'supgen_id':supgen},
+			dataType: 'json',
+			success: function(response){
+				supbrnd.empty();
+				$.each(response.brand, function(key, value){
+					supbrnd.append('<option value="'+ key +'" class="text-capitalize">'+ value +'</option>');
+				});
+				fetchResult(supbrnd, supgn, supqty);
+			}
+		});
+
+		function fetchResult(supbrnd, supgn, supqty) {
+			$("#myform select[name='supbrand_id[0][0]']").on('change', function(){
+				var sbrnd = supbrnd.find(':selected').attr('value');
+				var sgen = supgn.find(':selected').attr('value');
+				console.log(sgen+'-'+sbrnd);
+				$.ajax({
+					type: 'get',
+					url: '/medical/fetch/supply/'+sgen+'/'+sbrnd,
+					dataType: 'json',
+					success: function(response){
+						supqty.attr('max', response);
+						supqty.prop('required', true);
+						supqty.prop('placeholder', 'Remaining stocks: '+response);
+					}
+				});
+			});
+			$("#myform select[name='supbrand_id[0][0]']").each(function(){
+				var sbrnd = supbrnd.find(':selected').attr('value');
+				var sgen = supgn.find(':selected').attr('value');
+				console.log(sgen+'-'+sbrnd);
+				$.ajax({
+					type: 'get',
+					url: '/medical/fetch/supply/'+sgen+'/'+sbrnd,
+					dataType: 'json',
+					success: function(response){
+						supqty.attr('max', response);
+						supqty.prop('required', true);
+						supqty.prop('placeholder', 'Remaining stocks: '+response);
+					}
+				});
+			});
+		}
+	});
+
+    var l = $('#addMedicalSupply').length;
+    var j = $('#MedSupply').length;
+	$("#addMedicalSupply").on('click', function(event){
+	    $('<div id="supplyField" class="col-12 form-row"><div class="mb-2 col-md-4"><select name="supgen_id['+l+']['+l+']" class="form-control" required><option selected="true" disabled="disabled" value=""> Select Supply Name </option>@foreach ($supplies as $supply)<option value="{{ $supply->id }}">{{ strtoupper($supply->name) }}</option>@endforeach</select></div><div class="mb-2 col-md-4"><select name="supbrand_id['+l+']['+l+']" class="form-control" required><option selected="true" disabled="disabled" value=""> Select Supply Brand </option></select></div><div class="mb-2 col-md-4"><input type="number" name="supqty['+l+']['+l+']" min="1" class="form-control" placeholder="Quantity" value=""></div><a id="removeChildren" class="btn text-danger text-white position-absolute" style="right: -16px;top: 0px;"><i class="fa fa-times"></i></a></div>').appendTo('#supmeds');
+
+	    // ____________________________________________________________________________________________________
+
+		var supbrnd = $("select[name='supbrand_id["+l+"]["+l+"]']");
+		var supgn = $("select[name='supgen_id["+l+"]["+l+"]");
+		var supqty = $("input[name='supqty["+l+"]["+l+"]']");
+		$("#myform select[name='supgen_id["+l+"]["+l+"]']").on('change', function(e){
+			e.preventDefault();
+			var supgen = $(this).val();
+			var url   = window.location.href;
+			var hostname = window.location.hostname;
+			if (url === "http://"+hostname+"/medical/employees/"+'{{ $employee->emp_id }}') {
+				var supUrl = '/medical/fetch/supply/';
+			}
+			$.ajax({
+				type: 'get',
+				url: supUrl+supgen,
+				data: {'supgen_id':supgen},
+				dataType: 'json',
+				success: function(response){
+					supbrnd.empty();
+					$.each(response.brand, function(key, value){
+						supbrnd.append('<option value="'+ key +'" class="text-capitalize">'+ value +'</option>');
+					});
+					fetchResult(supbrnd, supgn, supqty);
+				}
+			});
+
+			function fetchResult(supbrnd, supgn, supqty) {
+				supbrnd.on('change', function(){
+					var sbrnd = $(this).find(':selected').attr('value');
+					var sgen = supgn.find(':selected').attr('value');
+					console.log(sgen+'-'+sbrnd);
+					$.ajax({
+						type: 'get',
+						url: '/medical/fetch/supply/'+sgen+'/'+sbrnd,
+						dataType: 'json',
+						success: function(response){
+							supqty.attr('max', response);
+							supqty.prop('required', true);
+							supqty.prop('placeholder', 'Remaining stocks: '+response);
+						}
+					});
+				});
+				supbrnd.each(function(){
+					var sbrnd = $(this).find(':selected').attr('value');
+					var sgen = supgn.find(':selected').attr('value');
+					console.log(sgen+'-'+sbrnd);
+					$.ajax({
+						type: 'get',
+						url: '/medical/fetch/supply/'+sgen+'/'+sbrnd,
+						dataType: 'json',
+						success: function(response){
+							supqty.attr('max', response);
+							supqty.prop('required', true);
+							supqty.prop('placeholder', 'Remaining stocks: '+response);
+						}
+					});
+				});
+			}
+		});
+
+	    // ____________________________________________________________________________________________________
+
+	    l++;
+	})
+    $("body").on("click", "#removeChildren", function(event){
+      if (l > 1) {
+        $(this).parents("#supplyField").remove();
+        l--;
+      }
+    });
 
 	// Fetch Disease_____________________________________________________________________________________________________________________________
 	$("#myform select[name='bodypart_id']").on('change', function(e){
@@ -411,7 +781,7 @@ jQuery(document).ready(function($) {
     var e = $(this).find('.editmedicine').length;
     var o = $('#editMedicine').length;
     $("#addMedicine").click(function(event) {
-    	$('<div id="medicineField" class="col-12 form-row"><div class="mb-2 col-md-4"><select name="generic_id['+i+']['+i+']" id="generic_id" class="form-control" required><option selected="true" disabled="disabled"> Select Generic Name </option>@foreach ($gens as $gen)<option value="{{ $gen->id }}">{{ strtoupper($gen->gname) }}</option>@endforeach</select></div><div class="mb-2 col-md-4"><select name="brand_id['+i+']['+i+']" id="brand_id" class="form-control" required><option selected="true" disabled="disabled"> Select Medicine </option></select></div><div class="mb-2 col-md-4"><input type="number" name="quantity['+i+']['+i+']" min="1" class="form-control" placeholder="Quantity"></div><a id="removeChildren" class="btn text-danger text-white position-absolute remove-actions" style="right: -16px;top: 0px;"><i class="fa fa-times"></i></a></div>').appendTo('#meds');
+    	$('<div id="medicineField" class="col-12 form-row"><div class="mb-2 col-md-4"><select name="generic_id['+i+']['+i+']" id="generic_id" class="form-control" required><option selected="true" disabled="disabled" value=""> Select Generic Name </option>@foreach ($gens as $gen)<option value="{{ $gen->id }}">{{ strtoupper($gen->gname) }}</option>@endforeach</select></div><div class="mb-2 col-md-4"><select name="brand_id['+i+']['+i+']" id="brand_id" class="form-control" required><option selected="true" disabled="disabled" value=""> Select Medicine </option></select></div><div class="mb-2 col-md-4"><input type="number" name="quantity['+i+']['+i+']" min="1" class="form-control" placeholder="Quantity" value=""></div><a id="removeChildren" class="btn text-danger text-white position-absolute remove-actions" style="right: -16px;top: 0px;"><i class="fa fa-times"></i></a></div>').appendTo('#meds');
     
 
 	    var gid = $('select[name="generic_id['+i+']['+i+']"]');

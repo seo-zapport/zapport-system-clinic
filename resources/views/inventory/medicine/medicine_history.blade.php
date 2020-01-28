@@ -6,11 +6,6 @@
 	<i class="fas fa-pills text-secondary"></i> {{ ucwords($generic->gname) }}
 @endsection
 @section('dash-content')
-@section('back')
-<a href="{{ route('medicine.log', ['medbrand' => $medbrand->bname, 'generic' => $generic->gname]) }}">
-	<i class="fas fa-arrow-left"></i>
-</a>
-@endsection
 <div class="mb-4">
 	<h1 class="zp-text">Brand Name: <strong class="zp-color-6b">{{ ucwords($medbrand->bname) }}</strong></h1>
 	<h3 class="zp-text zp-text-16">Generic Name: {{ ucwords($generic->gname) }}</h3>

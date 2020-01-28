@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Generic;
-use App\Http\Requests\genericRequest;
 use App\Medbrand;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Str;
+use App\Http\Requests\genericRequest;
 
 class GenericController extends Controller
 {

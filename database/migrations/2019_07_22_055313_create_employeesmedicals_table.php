@@ -40,14 +40,14 @@ class CreateEmployeesmedicalsTable extends Migration
 
         Schema::create('employeesmedicals', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('med_num');
+            $table->string('med_num')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('employee_id');
-            $table->unsignedBigInteger('diagnosis_id');
-            $table->text('note');
-            $table->string('status');
-            $table->string('remarks');
-            $table->boolean('seen');
+            $table->unsignedBigInteger('diagnosis_id')->nullable();
+            $table->text('note')->nullable();
+            $table->string('status')->nullable();
+            $table->string('remarks')->nullable();
+            $table->boolean('seen')->nullable();
             $table->string('attachment')->nullable();
             $table->timestamps();
 

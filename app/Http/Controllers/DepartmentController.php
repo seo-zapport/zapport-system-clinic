@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Department;
-use App\Http\Requests\DepartmentRequest;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Str;
+use App\Http\Requests\DepartmentRequest;
 
 class DepartmentController extends Controller
 {

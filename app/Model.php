@@ -36,7 +36,6 @@ class Model extends Eloquent
 		"college_grad_date", 
 		"father_birthday", 
 		"mother_birthday", 
-		// "date_of_merriage",
 		"expiration_date",
 		"Distinct_date",
 		"hired_date",

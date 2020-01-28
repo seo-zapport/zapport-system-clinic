@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Employee;
+use App\Position;
 use App\Department;
 use App\DepartmentPosition;
-use App\Employee;
-use App\Http\Requests\PositionRequest;
-use App\Position;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Str;
+use App\Http\Requests\PositionRequest;
 
 class PositionController extends Controller
 {

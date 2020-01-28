@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\TagRequest;
-use App\Post;
 use App\Tag;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
+use App\Post;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Http\Requests\TagRequest;
+use Illuminate\Support\Facades\Gate;
 
 class TagController extends Controller
 {

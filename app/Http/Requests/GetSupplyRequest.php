@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Http\FormRequest;
 
-class SupplyRequest extends FormRequest
+class GetSupplyRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -31,7 +31,7 @@ class SupplyRequest extends FormRequest
         return [
             'supgen_id'     =>  ['required'],
             'supbrand_id'   =>  ['required'],
-            'quantity'      =>  ['required'],
+            'supqty'        =>  ['required'],
         ];
     }
 
@@ -43,9 +43,9 @@ class SupplyRequest extends FormRequest
     public function messages()
     {
         return [
-            'supgen_id.required'        =>  'This field is required!',
-            'supbrand_id.required'      =>  'This field is required!',
-            'quantity'                  =>  'This field is required!',
+            'supgen_id.required'    =>  'Please select a supply name!',
+            'supbrand_id.required'  =>  'Please select a supply brand',
+            'supqty.required'       =>  'Quantity is required!',
         ];
     }
 }

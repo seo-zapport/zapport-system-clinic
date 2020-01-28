@@ -559,6 +559,39 @@ jQuery(document).ready(function($){
    }
   });
 
+    // Employees Medical Supply_____________________________________________________________________________________________________
+
+  $("#myform #select_supgen").on('click', function(e){
+    $('#myform select[name="supgen_id[0][0]"]').prop('selectedIndex',0);
+    $('#myform select[name="supgen_id[0][0]"]').prop('required',false);
+    $('#myform select[name="supbrand_id[0][0]"] option').remove();
+    $('#myform select[name="supbrand_id[0][0]"]').prop('required',false);
+    $('#myform select[name="supbrand_id[0][0]"]').append('<option selected="true" disabled="disabled"> Select Medicine </option>')
+    $('#myform input[name="supqty[0][0]"]').prop('required',false);
+    $('#myform input[name="supqty[0][0]"]').removeAttr('max');
+    $('#myform input[name="supqty[0][0]"]').prop('placeholder','Quantity');
+    $('#myform input[name="supqty[0][0]"]').val('');
+    $(this).addClass('d-none');
+  });
+
+  var status_selected2 = $("#myform select[name='supgen_id[0][0]']").children('option:selected').val();
+  if (status_selected2) {
+    $("#select_supgen").removeClass('d-none');
+  }else{
+    $("#select_supgen").addClass('d-none');
+  }
+
+  $('#myform input[name="supqty[0][0]"]').on('keyup', function(){
+    var empMedQtty2 =  $('#myform input[name="supqty[0][0]"]').val();
+   if (empMedQtty2 != '') {
+    $('#myform select[name="supbrand_id[0][0]"]').prop('required',true);
+    $('#myform select[name="supgen_id[0][0]"]').prop('required',true);
+   }else{
+    $('#myform select[name="supbrand_id[0][0]"]').prop('required',false);
+    $('#myform select[name="supgen_id[0][0]"]').prop('required',false);
+   }
+  });
+
   // Employees Children if any (CREATE)_____________________________________________________________________________________________________
 
   $("#children select[name='children[0][]']").on('change', function(e){

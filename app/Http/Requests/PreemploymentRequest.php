@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Http\FormRequest;
 
 class PreemploymentRequest extends FormRequest
@@ -13,7 +14,11 @@ class PreemploymentRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        if (Gate::check('isAdmin') || Gate::check('isNurse') || Gate::check('isDoctor')) {
+            return true;
+        }else{
+            return false;
+        }
     }
 
     /**

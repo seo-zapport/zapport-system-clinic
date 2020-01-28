@@ -6,12 +6,29 @@
 @endsection
 @section('dash-content')
 
-@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
-	<div class="form-group text-right">
-		<a class="btn btn-info text-white" href="#" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus"></i> Add New</a>
+<div class="row mb-3">
+	<div class="col-12 col-md-6">
+		<form id="diagnosis_suggetions" method="get" autocomplete="off">
+			<div class="form-row">
+		        <div class="form-group col-12 col-md-8 mb-0">
+			        <div class="input-group">
+			            <input type="search" name="search" class="form-control" value="{{ @$search }}" placeholder="Search for Supply Name | Supply Brand Name">
+			            <div class="input-group-append">
+			                <button type="submit" class="btn btn-success mr-2">Search</button>
+							<a href="{{ route('supply.index') }}" class="btn btn-info text-white">Clear</a>
+			            </div>
+			        </div>
+		        </div>
+			</div>
+		</form>
 	</div>
-@endif
 
+	@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
+		<div class="col-12 col-md-6 text-right">
+			<a class="btn btn-info text-white" href="#" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus"></i> Add New</a>
+		</div>
+	@endif
+</div>
 <div class="card mb-3">
 	<div class="card-body">
 		<div class="row zp-countable">
@@ -30,11 +47,19 @@
 					<th width="10%" class="text-center">Quantity</th>
 				</thead>
 				<tbody>
+					@if ($supplies->count() > 0)
 					@foreach ($supplies as $supply)
 						<tr>
-							<td>{{ strtoupper($supply->supgen->name) }}</td>
-							<td>{{ strtoupper($supply->supbrand->name) }}</td>
 							<td>
+								{{ strtoupper($supply->supgen->name) }}
+								<div class="row-actions">
+									<a href="{{ route('supply.show', ['supgen' => $supply->supgen->slug, 'supbrand' => $supply->supbrand->slug]) }}" class="show-edit btn btn-link text-secondary">
+										<i class="far fa-eye"></i>View
+									</a>
+								</div>
+							</td>
+							<td>{{ strtoupper($supply->supbrand->name) }}</td>
+							<td class="text-center">
 								{{ 
 									$supply->where('availability', 0)
 										   ->where('supbrand_id', $supply->supbrand_id)
@@ -48,8 +73,14 @@
 							</td>
 						</tr>
 					@endforeach
+					@else
+						<tr>
+							<td colspan="3" class="text-center">No Registered Supplies!</td>
+						</tr>
+					@endif
 				</tbody>
 			</table>
+			{{ $supplies->links() }}
 		</div>
 	</div>
 </div>
@@ -112,7 +143,7 @@
 				var url   = window.location.pathname;
 
 				if ("http://"+hostname+""+url ===  "http://"+hostname+"/inventory/supply") {
-					var myUrl = 'supply/fetch';
+					var myUrl = 'supply/fetch_result';
 				}
 				$.ajax({
 					type: 'GET',

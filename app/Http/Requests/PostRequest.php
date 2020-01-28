@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Http\FormRequest;
 
 class PostRequest extends FormRequest
@@ -13,7 +14,11 @@ class PostRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        if (Gate::check('isAdmin') || Gate::check('isHr') || Gate::check('isDoctor') || Gate::check('isNurse')) {
+            return true;
+        }else{
+            return false;
+        }
     }
 
     /**

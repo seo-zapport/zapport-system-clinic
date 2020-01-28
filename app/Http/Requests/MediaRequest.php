@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Http\FormRequest;
 
 class MediaRequest extends FormRequest
@@ -13,7 +14,11 @@ class MediaRequest extends FormRequest
      */
     public function authorize()
     {
-        return true;
+        if (Gate::check('isAdmin') || Gate::check('isHr') || Gate::check('isNurse') || Gate::check('isDoctor')) {
+            return true;
+        }else{
+            return false;
+        }
     }
 
     /**

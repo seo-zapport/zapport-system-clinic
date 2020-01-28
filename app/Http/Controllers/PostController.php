@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Employee;
-use App\Http\Requests\PostRequest;
-use App\Media;
-use App\Post;
 use App\Tag;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
+use App\Post;
+use App\Media;
+use App\Employee;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Http\Requests\PostRequest;
+use Illuminate\Support\Facades\Gate;
 
 class PostController extends Controller
 {

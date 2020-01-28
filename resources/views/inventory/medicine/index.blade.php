@@ -6,7 +6,7 @@
 @endsection
 @section('dash-content')
 
-<div class="row zp-filters">
+<div class="row zp-filters mb-3">
 	<div class="col-12 col-md-6">
 		<form id="diagnosis_suggetions" method="get" autocomplete="off">
 			<div class="form-row">
@@ -25,7 +25,7 @@
 	</div>
 	@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
 		<div class="col-12 col-md-6">
-			<div class="form-group text-right">
+			<div class="text-right">
 				<a class="btn btn-info text-white" href="#" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-plus"></i> Add New</a>
 				<!--- PRINT --->
 				<button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PRINT <span class="caret"></span>

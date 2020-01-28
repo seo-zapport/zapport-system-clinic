@@ -98,6 +98,16 @@ class User extends Authenticatable
         $this->posts()->save($post);
     }
 
+    public function supplies()
+    {
+        return $this->belongsToMany(Supply::class, 'employeesmedical_supply_users', 'user_id')->withPivot('supqty')->withTimestamps();
+    }
+
+    public function supEmployeesMedicals()
+    {
+        return $this->belongsToMany(Employeesmedical::class, 'employeesmedical_supply_users', 'user_id')->withPivot('supqty')->withTimestamps();
+    }
+
     public function isOnline()
     {
         return Cache::has('user-is-online-' . $this->id);

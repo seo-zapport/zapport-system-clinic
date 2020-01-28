@@ -41,6 +41,16 @@ class Employeesmedical extends Model
         return $this->belongsTo(Diagnosis::class, 'diagnosis_id');
     }
 
+    public function supUsers()
+    {
+        return $this->belongsToMany(User::class, 'employeesmedical_supply_users', 'employeesmedical_id')->withPivot('supqty')->withTimestamps();
+    }
+
+    public function supplies()
+    {
+        return $this->belongsToMany(Supply::class, 'employeesmedical_supply_users', 'employeesmedical_id')->withPivot('supqty')->withTimestamps();
+    }
+
     public function getRouteKeyName()
     {
         return 'med_num';

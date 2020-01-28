@@ -176,7 +176,9 @@ Route::group(['prefix' => 'inventory'], function(){
 	// Supply
 	Route::get('supply', 'SupplyController@index')->name('supply.index');
 	Route::post('supply', 'SupplyController@store')->name('supply.store');
-	Route::get('supply/fetch', 'SupplyController@fetch')->name('supply.fetch');
+	Route::get('supply/name/{supgen}/brand/{supbrand}', 'SupplyController@show')->name('supply.show');
+	Route::get('supply/name/{supgen}/brand/{supbrand}/date-inserted/{created}', 'SupplyController@showLog')->name('supply.showLogs');
+	Route::get('supply/fetch_result', 'SupplyController@fetch')->name('supply.fetch');
 
 });
 
@@ -207,17 +209,19 @@ Route::group(['prefix' => 'medical'], function(){
 	Route::get('employees/diagnosis/{diagnosis}', 'DiagnosisController@fetchDiagnosis')->name('diagnosis.fetch');
 	Route::put('employees/diagnoses/{diagnosis}', 'DiagnosisController@update')->name('diagnosis.update');
 
-	// 
 	// Pre Employment
 	Route::post('employees/{employee}/pre_employee', 'PreemploymentController@store')->name('medical.pre_emp');
 	Route::get('pre_employment/{pre_emp}', 'PreemploymentController@download')->name('pre_emp.download');
 	Route::delete('pre_employment/{preemployment}', 'PreemploymentController@destroy')->name('pre_emp.delete');
+
 	// getBrand
 	Route::get('employees/gen/{id}', 'EmployeesMedicalController@getMedBrand')->name('getBrand');
 	Route::post('employees/{employee}', 'EmployeesMedicalController@store')->name('medical.store');
+
 	// getGenBrd
 	Route::get('employees/generic_id/{generic_id}/brand_id/{brand_id}', 'EmployeesMedicalController@getMedGenBrd')->name('getGenBrd');
 	Route::get('employees/{employee}/employeesmedical/{employeesmedical}', 'EmployeesMedicalController@show')->name('medical.show');
+
 	// getMedGenBrdUpdate
 	Route::get('employees/{employee}/employeesmedical/{employeesmedical}/generic_id/{generic_id}/brand_id/{brand_id}', 'EmployeesMedicalController@getMedGenBrdUpdate')->name('getMedGenBrdUpdate');
 
@@ -229,5 +233,11 @@ Route::group(['prefix' => 'medical'], function(){
 
 	// Fetch Disease
 	Route::get('fetch/{bodypart}', 'EmployeesMedicalController@getDisease')->name('bodyparts.getDisease');
+
+	// Fetch Medical Supply
+	Route::get('fetch/supply/{supgen}', 'EmployeesMedicalController@getSupBrand');
+	Route::get('fetch/supply/{supgen_id}/{supbrand_id}', 'EmployeesMedicalController@getSupBrandAndSupGen');
 	
+	// GetSupply
+	Route::post('employees/{employee}/getSupply', 'EmployeesmedicalController@getSupply')->name('medical.getSupply');
 });

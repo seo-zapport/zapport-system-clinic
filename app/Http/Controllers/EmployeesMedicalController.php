@@ -3,20 +3,24 @@
 namespace App\Http\Controllers;
 
 use File;
+use App\Supgen;
+use App\Supply;
 use App\Disease;
-use App\Bodypart;
-use App\Diagnosis;
-use App\Employee;
-use App\Employeesmedical;
-use App\EmployeesmedicalMedicineUser;
 use App\Generic;
-use App\Http\Requests\EmployeesmedicalRequest;
-use App\Medicine;
 use App\Mednote;
+use App\Bodypart;
+use App\Employee;
+use App\Medicine;
+use App\Diagnosis;
+use App\Employeesmedical;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use App\EmployeesmedicalSupplyUser;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use App\EmployeesmedicalMedicineUser;
+use App\Http\Requests\GetSupplyRequest;
+use App\Http\Requests\EmployeesmedicalRequest;
 
 class EmployeesmedicalController extends Controller
 {
@@ -56,10 +60,11 @@ class EmployeesmedicalController extends Controller
         if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
 
             $this->validate($request, $request->rules(), $request->messages());
+            $dtm = \carbon\carbon::now();
 
-            if (Employeesmedical::orderBy('id', 'desc')->first() != null) {
-                $getID = Employeesmedical::orderBy('id', 'desc')->first();
-                $lastID = str_pad($getID->id+1, 6, '0', STR_PAD_LEFT);
+            if (Employeesmedical::whereNotNull('diagnosis_id')->orderBy('id', 'desc')->count() > 0) {
+                $getID = Employeesmedical::whereNotNull('diagnosis_id')->orderBy('id', 'desc')->count();
+                $lastID = str_pad($getID+1, 6, '0', STR_PAD_LEFT);
             }else{
                 $lastID = str_pad(1, 6, '0', STR_PAD_LEFT);
             }
@@ -76,17 +81,6 @@ class EmployeesmedicalController extends Controller
                 $diagnosis = $newDiagnosis->id;
             }
 
-            if ($request->generic_id != null && $request->brand_id != null && $request->quantity != null) {
-                $arr1 = array_map( 'array_values', $request->generic_id);
-                $generic_id = array_values($arr1);
-
-                $arr2 = array_map( 'array_values', $request->brand_id);
-                $brand_id = array_values($arr2);
-
-                $arr3 = array_map( 'array_values', $request->quantity);
-                $quantity = array_values($arr3);
-            }
-
             if ($request->hasFile('attachment')) {
                 $filepath = 'public/uploaded/attachments';
                 $orig_filename = pathinfo($request->attachment->getClientOriginalName(), PATHINFO_FILENAME).'-'.date("Y-m-d");
@@ -95,35 +89,6 @@ class EmployeesmedicalController extends Controller
                 $request->file('attachment')->storeAs($filepath, $filename);
             }else{
                 $filename = NULL;
-            }
-            
-            if (!empty($request->generic_id) && !empty($request->brand_id) && !empty($request->quantity)) {
-
-            $counter = count($request->generic_id);
-
-            $arr = array();
-            for ($i = 0; $i < $counter; $i++) {
-                $arr[] = Medicine::where('generic_id', $generic_id[$i][0])
-                                 ->where('brand_id', $brand_id[$i][0])
-                                 ->where('expiration_date', '>', NOW())
-                                 ->where('availability', 0)
-                                 ->take($quantity[$i][0])->orderBy('id', 'asc')->get();
-            }
-
-            }else{
-                $newRecord                  = new Employeesmedical;
-                $newRecord->user_id         = auth()->user()->id;
-                $newRecord->employee_id     = $request->employee_id;
-                $newRecord->diagnosis_id    = $diagnosis;
-                $newRecord->note            = $request->note;
-                $newRecord->status          = "walkin";
-                $newRecord->remarks         = $request->remarks;
-                $newRecord->attachment      = $filename;
-                $newRecord->seen            = (Gate::check('isDoctor')) ? 1 : 0;
-                $newRecord->med_num         = $lastID;
-                $newRecord->save();
-
-                return back();
             }
 
             $newRecord                  = new Employeesmedical;
@@ -138,18 +103,76 @@ class EmployeesmedicalController extends Controller
             $newRecord->med_num         = $lastID;
             $newRecord->save();
             $data = $newRecord->id;
+            // medicines
+            if ($request->generic_id != null && $request->brand_id != null && $request->quantity[0][0] != null) {
+                $arr1 = array_map( 'array_values', $request->generic_id);
+                $generic_id = array_values($arr1);
+                $arr2 = array_map( 'array_values', $request->brand_id);
+                $brand_id = array_values($arr2);
+                $arr3 = array_map( 'array_values', $request->quantity);
+                $quantity = array_values($arr3);
 
-            for ($c = 0; $c < count($arr); $c++) { 
+                $counter = count($request->generic_id);
+                $arr = array();
+                for ($i = 0; $i < $counter; $i++) {
+                    $arr[] = Medicine::where('generic_id', $generic_id[$i][0])
+                                     ->where('brand_id', $brand_id[$i][0])
+                                     ->where('expiration_date', '>', NOW())
+                                     ->where('availability', 0)
+                                     ->take($quantity[$i][0])->orderBy('id', 'asc')->get();
+                }
+                for ($c = 0; $c < count($arr); $c++) { 
 
-                foreach ($arr[$c] as $medQty) {
-                    $medQty->availability           = 1;
-                    $medQty->save();
-                    $newData                        = new EmployeesmedicalMedicineUser;
-                    $newData->employeesmedical_id   = $data;
-                    $newData->medicine_id           = $medQty->id;
-                    $newData->user_id               = auth()->user()->id;
-                    $newData->quantity              = $quantity[$c][0];
-                    $newData->save();
+                    foreach ($arr[$c] as $medQty) {
+                        $medQty->availability           = 1;
+                        $medQty->save();
+                        $newData                        = new EmployeesmedicalMedicineUser;
+                        $newData->employeesmedical_id   = $data;
+                        $newData->medicine_id           = $medQty->id;
+                        $newData->user_id               = auth()->user()->id;
+                        $newData->quantity              = $quantity[$c][0];
+                        $newData->created_at            = $dtm;
+                        $newData->updated_at            = $dtm;
+                        $newData->save();
+                    }
+                }
+
+            }
+            // Supplies
+            if ($request->supgen_id != null && $request->supbrand_id != null && $request->supqty[0][0] != null) {
+                $arr4 = array_map( 'array_values', $request->supgen_id);
+                $supgen_id = array_values($arr4);
+                $arr5 = array_map( 'array_values', $request->supbrand_id);
+                $supbrand_id = array_values($arr5);
+                $arr6 = array_map( 'array_values', $request->supqty);
+                $supqty = array_values($arr6);
+
+                $counter2 = count($request->supgen_id);
+                $arrSup = array();
+                for ($i = 0; $i < $counter2; $i++) {
+                    $arrSup[] = Supply::where('supgen_id', $supgen_id[$i][0])
+                                      ->where('supbrand_id', $supbrand_id[$i][0])
+                                      ->where(function($exp_date){
+                                        $exp_date->where('expiration_date', '>', NOW())
+                                                 ->orWhere('expiration_date', NULL);
+                                      })
+                                      ->where('availability', 0)
+                                      ->take($supqty[$i][0])->orderBy('id', 'asc')->get();
+                }
+                for ($c = 0; $c < count($arrSup); $c++) { 
+
+                    foreach ($arrSup[$c] as $supQty) {
+                        $supQty->availability           = 1;
+                        $supQty->save();
+                        $newData2                        = new EmployeesmedicalSupplyUser;
+                        $newData2->employeesmedical_id   = $data;
+                        $newData2->supply_id             = $supQty->id;
+                        $newData2->user_id               = auth()->user()->id;
+                        $newData2->supqty                = $supqty[$c][0];
+                        $newData2->created_at            = $dtm;
+                        $newData2->updated_at            = $dtm;
+                        $newData2->save();
+                    }
                 }
             }
 
@@ -275,7 +298,7 @@ class EmployeesmedicalController extends Controller
     public function employeeinfo(Request $request, Employee $employee)
     {
         if (Gate::allows('isAdmin') || Gate::allows('isHr') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
-            $empMed = Employeesmedical::where('employee_id', $employee->id)->orderBy('id', 'desc');
+            $empMed = Employeesmedical::where('employee_id', $employee->id)->whereNotNull('diagnosis_id')->orderBy('id', 'desc');
 
             if (!empty($request->search)) {
                 $diagnosis = Diagnosis::where('diagnosis', $request->search)->first();
@@ -296,6 +319,7 @@ class EmployeesmedicalController extends Controller
             }
 
             $gens = Generic::orderBy('gname', 'asc')->get();
+            $supplies = Supgen::orderBy('name')->get();
             $meds = Medicine::get();
 
             $bparts = Bodypart::get();
@@ -305,7 +329,7 @@ class EmployeesmedicalController extends Controller
 
              $class = ( request()->is('medical/employees/*') ) ?'admin-medical-emp' : '';//**add Class in the body*/
 
-            return view('medical.employeesMedical.employeeInfo', compact('employee', 'gens', 'meds', 'search', 'result', 'bparts', 'diseases', 'class'));
+            return view('medical.employeesMedical.employeeInfo', compact('employee', 'gens', 'meds', 'search', 'result', 'bparts', 'diseases', 'class', 'supplies'));
         }elseif (Gate::allows('isBanned')) {
             Auth::logout();
             return back()->with('message', 'You\'re not employee!');
@@ -367,6 +391,8 @@ class EmployeesmedicalController extends Controller
                     ]
                 );
 
+            $dtm = \Carbon\carbon::now();
+
             if ($request->generic_id != null && $request->brand_id != null && $request->quantity != null) {
                 $arr1 = array_map( 'array_values', $request->generic_id);
                 $generic_id = array_values($arr1);
@@ -416,6 +442,8 @@ class EmployeesmedicalController extends Controller
                         $newData->medicine_id = $medQty->id;
                         $newData->user_id = auth()->user()->id;
                         $newData->quantity = $quantity[$c][0];
+                        $newData->created_at = $dtm;
+                        $newData->updated_at = $dtm;
                         $newData->save();
                     }
                 }
@@ -446,18 +474,21 @@ class EmployeesmedicalController extends Controller
     {
         if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse') || Gate::allows('isHr')) {
             $emps = Employee::join('employeesmedicals', 'employees.id', 'employeesmedicals.employee_id')
-                            ->select('emp_id', 'first_name', 'last_name', 'middle_name', 'department_id', 'position_id')
-                            ->groupBy('emp_id', 'first_name', 'last_name', 'middle_name', 'department_id', 'position_id')
+                            ->select('emp_id', 'first_name', 'last_name', 'middle_name', 'department_id', 'position_id', 'employeesmedicals.med_num')
+                            ->groupBy('emp_id', 'first_name', 'last_name', 'middle_name', 'department_id', 'position_id', 'employeesmedicals.med_num')
                             ->distinct('emp_id')
                             ->orWhere(\DB::raw("concat(emp_id, ' ', first_name, ' ', last_name, ' ', middle_name)"), 'like', '%'.$request->search.'%')
+                            ->whereNotNull('med_num')
                             ->orWhere(\DB::raw("concat(emp_id, ' ', last_name, ' ', first_name, ' ', middle_name)"), 'like', '%'.$request->search.'%')
+                            ->whereNotNull('med_num')
                             ->paginate(10);
             $emps->appends(['search' => $request->search]);
             $search = $request->search;
             $totalEmps = Employee::join('employeesmedicals', 'employees.id', 'employeesmedicals.employee_id')
-                            ->select('emp_id', 'first_name', 'last_name', 'middle_name', 'department_id', 'position_id')
-                            ->groupBy('emp_id', 'first_name', 'last_name', 'middle_name', 'department_id', 'position_id')
+                            ->select('emp_id', 'first_name', 'last_name', 'middle_name', 'department_id', 'position_id', 'employeesmedicals.med_num')
+                            ->groupBy('emp_id', 'first_name', 'last_name', 'middle_name', 'department_id', 'position_id', 'employeesmedicals.med_num')
                             ->distinct('emp_id')
+                            ->whereNotNull('med_num')
                             ->get();
             return view('medical.employeesMedical.employeesWithRecord', compact('emps', 'search', 'totalEmps'));
         }else{
@@ -528,5 +559,86 @@ class EmployeesmedicalController extends Controller
         $data = array();
         $data['disease'] = $bodypart->diseases->pluck('disease', 'id');
         return json_encode($data);
+    }
+
+    public function getSupBrand(Request $request, $supgen)
+    {
+        if ($request->ajax()) {
+            $result = Supgen::find($supgen);
+            $data['brand'] = $result->supbrands->pluck('name', 'id');
+            return json_encode($data);
+        }
+    }
+
+    public function getSupBrandAndSupGen(Request $request, $supbrand_id, $supgen_id)
+    {
+        if ($request->ajax()) {
+            $count = Supply::where('supbrand_id', $request->supbrand_id)
+                           ->where('supgen_id', $request->supgen_id)
+                           ->where('availability', 0)
+                           ->where(function($date){
+                                $date->where('expiration_date', '>', NOW())
+                                     ->orWhere('expiration_date', NULL);
+                           })
+                           ->orderBy('created_at', 'desc')
+                           ->count();
+            return json_encode($count);
+        }
+    }
+
+    public function getSupply(GetSupplyRequest $request)
+    {
+        if (Gate::allows('isAdmin') || Gate::allows('isDoctor') || Gate::allows('isNurse')) {
+            $atts = $this->validate($request, $request->rules(), $request->messages());
+            $dtm = \carbon\carbon::now();
+            $newRecord                  = new Employeesmedical;
+            $newRecord->user_id         = auth()->user()->id;
+            $newRecord->employee_id     = $request->employee_id;
+            $newRecord->save();
+            $data = $newRecord->id;
+            // Supplies
+            if ($request->supgen_id != null && $request->supbrand_id != null && $request->supqty[0][0] != null) {
+                $arr4 = array_map( 'array_values', $request->supgen_id);
+                $supgen_id = array_values($arr4);
+                $arr5 = array_map( 'array_values', $request->supbrand_id);
+                $supbrand_id = array_values($arr5);
+                $arr6 = array_map( 'array_values', $request->supqty);
+                $supqty = array_values($arr6);
+
+                $counter2 = count($request->supgen_id);
+                $arrSup = array();
+                for ($i = 0; $i < $counter2; $i++) {
+                    $arrSup[] = Supply::where('supgen_id', $supgen_id[$i][0])
+                                      ->where('supbrand_id', $supbrand_id[$i][0])
+                                      ->where(function($exp_date){
+                                        $exp_date->where('expiration_date', '>', NOW())
+                                                 ->orWhere('expiration_date', NULL);
+                                      })
+                                      ->where('availability', 0)
+                                      ->take($supqty[$i][0])->orderBy('id', 'asc')->get();
+                }
+                for ($c = 0; $c < count($arrSup); $c++) { 
+
+                    foreach ($arrSup[$c] as $supQty) {
+                        $supQty->availability           = 1;
+                        $supQty->save();
+                        $newData2                        = new EmployeesmedicalSupplyUser;
+                        $newData2->employeesmedical_id   = $data;
+                        $newData2->supply_id             = $supQty->id;
+                        $newData2->user_id               = auth()->user()->id;
+                        $newData2->supqty                = $supqty[$c][0];
+                        $newData2->created_at            = $dtm;
+                        $newData2->updated_at            = $dtm;
+                        $newData2->save();
+                    }
+                }
+            }
+            return back();
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
+        }else{
+            return back();
+        }
     }
 }

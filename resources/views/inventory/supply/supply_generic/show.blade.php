@@ -28,7 +28,7 @@
 			<table class="table table-hover">
 				<thead class="thead-dark">
 					<th>Brand Name</th>
-					<th width="15%" class="text-center">Number of Supply Name</th>
+					<th width="15%" class="text-center">Quantity</th>
 				</thead>
 				<tbody>
 					@php
@@ -93,6 +93,12 @@
 	</div>
 @endif
 
+@error('name')
+	<div id="err-msg" class="alert alert-danger">
+		{{ $message }}
+	</div>
+@enderror
+
 <!-- Modal Add -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 	<div class="modal-dialog modal-dialog-centered" role="document">
@@ -121,7 +127,6 @@
 		</div>
 	</div>
 </div>
-@include('layouts.errors')
 @endsection
 
 @section('scripts')
@@ -165,4 +170,14 @@
 			});
 		</script>
 	@endif
+	@error('name')
+		<script text="text/javascript">
+			jQuery(document).ready(function(){
+				$("#err-msg").on('click', function(e){
+					e.preventDefault();
+					$(this).fadeOut('slow');
+				});
+			});
+		</script>
+	@enderror
 @endsection

@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Bodypart;
-use App\Http\Requests\BodypartRequest;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Str;
+use App\Http\Requests\BodypartRequest;
 
 class BodypartController extends Controller
 {
