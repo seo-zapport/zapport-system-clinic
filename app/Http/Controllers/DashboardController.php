@@ -89,7 +89,7 @@ class DashboardController extends Controller
         if (auth()->user()->employee) {
             $findEmployee = auth()->user();
             $employee = $findEmployee->employee->id;
-            $empMed = Employeesmedical::where('employee_id', $employee);
+            $empMed = Employeesmedical::where('employee_id', $employee)->whereNotNull('med_num');
 
 
             if (!empty($request->search)) {
@@ -111,6 +111,8 @@ class DashboardController extends Controller
             $gens = Generic::orderBy('gname', 'asc')->get();
             $meds = Medicine::get();
         }
+
+        // dd($search);
 
         $class = ( request()->is('dashboard*') ) ?'admin-dashboard' : '';//**add Class in the body*/
 
