@@ -36,9 +36,9 @@
 							<td>
 								{{ strtoupper($supgen->name) }}
 								<div class="row-actions">
-									<a href="{{ route('supply.generic.show', ['supgen' => $supgen->slug]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i> View</a>
+									<a href="{{ route('supply.generic.show', ['supgen' => $supgen->slug]) }}" class="show-edit btn btn-link text-secondary"><i class="far fa-eye"></i> View </a>
 									@if (Gate::check('isAdmin') || Gate::check('isDoctor') || Gate::check('isNurse'))
-
+										<span class="text-muted">|</span>
 										<span id="{{ $supgen->slug }}" class="show-edit btn btn-link text-secondary"><i class="far fa-edit"></i> Quick Edit</span> <span class="text-muted">|</span>
 
 										<small class="text-muted">|</small>
@@ -62,7 +62,7 @@
 										@csrf
 										@method('PUT')
 										<p class="text-muted">QUICK EDIT</p>
-										<span>Supply Name</span> <small class="font-italic text-muted">Enter to save</small>
+										<span>Supply Name</span> <small class="font-italic text-muted">( Enter to save )</small>
 										<input type="text" name="name" value="{{ $supgen->name }}" class="form-control" required autocomplete="off">
 									</form>
 								</fieldset>

@@ -68,7 +68,7 @@
 										@csrf
 										@method('PUT')
 										<p class="text-muted">QUICK EDIT</p>
-										<span>Brand Name</span> <small class="font-italic text-muted">Enter to save</small>
+										<span>Brand Name</span> <small class="font-italic text-muted">( Enter to save )</small>
 										<input type="text" name="name" value="{{ $brand->name }}" class="form-control" required autocomplete="off">
 									</form>
 								</fieldset>

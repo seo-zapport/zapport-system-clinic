@@ -29,8 +29,9 @@
 									@if (Gate::check('isAdmin') || Gate::check('isNurse') || Gate::check('isDoctor'))
 										<span id="{{ $bpart->bodypart_slug }}" class="show-edit btn btn-link text-secondary"><i class="far fa-edit"></i> Quick Edit</span> <span class="text-muted">|</span>
 									@endif
-									<a href="{{ route('bodyparts.show', ['bodypart'=>$bpart->bodypart_slug]) }}" class="btn-link text-secondary"><i class="far fa-eye"></i> View |</a> 
+									<a href="{{ route('bodyparts.show', ['bodypart'=>$bpart->bodypart_slug]) }}" class="btn-link text-secondary"><i class="far fa-eye"></i> View </a> 
 									@if (Gate::check('isAdmin') || Gate::check('isNurse') || Gate::check('isDoctor'))
+										<span class="text-muted">|</span>
 										<form method="post" action="{{ route('bodyparts.destroy', ['bodypart'=>$bpart->bodypart_slug]) }}" class="d-inline-block">
 											@csrf
 											@method('DELETE')
@@ -50,7 +51,7 @@
 										@csrf
 										@method('PUT')
 										<p class="text-muted">QUICK EDIT</p>
-										<span>Category</span> <small class="font-italic text-muted">Enter to save</small>
+										<span>Category</span> <small class="font-italic text-muted">( Enter to save )</small>
 										<input type="text" name="bodypart" value="{{ $bpart->bodypart }}" class="form-control" required autocomplete="off">
 									</form>
 								</fieldset>

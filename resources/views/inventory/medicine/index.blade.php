@@ -57,8 +57,10 @@
 						<form method="get">
 							<div class="col-12">
 								Remaining Quantity &nbsp;
-								<input type="checkbox" {{ (isset($_GET['filter_meds'])) ? 'checked' : '' }} id="exampleCheck1" name="filter_meds" onclick="this.form.submit()">
-								<small class="text-muted font-weight-bold">(Sort)</small>
+								<div class="custom-control custom-checkbox mr-sm-2 d-inline-block">
+									<input type="checkbox" {{ (isset($_GET['filter_meds'])) ? 'checked' : '' }} id="exampleCheck1" class="custom-control-input" name="filter_meds" onclick="this.form.submit()">
+									<label class="custom-control-label" for="exampleCheck1"><small class="text-warning font-weight-bold">( Sort )</small></label>
+								</div>								
 							</div>
 						</form>
 					</th>
@@ -71,7 +73,7 @@
 							<td>{{ strtoupper($med->generic->gname) }}
 								<div class="row-actions">
 									<a href="{{ route('medicine.log', ['medbrand' => $med->medBrand->bname_slug, 'generic' => $med->generic->gname_slug]) }}" class="show-edit btn btn-link text-secondary">
-										<i class="far fa-eye"></i>View
+										<i class="far fa-eye"></i> View
 									</a>
 								</div>
 							</td>

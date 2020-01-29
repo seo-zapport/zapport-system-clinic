@@ -118,7 +118,7 @@ jQuery(document).ready(function($){
     // Work
     $("#editWork").click(function(event) {
       // $('<div id="workField" class="col-auto my-1 form-inline editwork"><label for="work" class="mr-2">Name of Company</label><input type="text" class="form-control mr-2" name="experience['+b+'][]" placeholder="Name of Company" value="" required><label for="work" class="mr-2">Position</label><input type="text" class="form-control mr-2" name="experience['+b+'][]" " value="" placeholder="Position" required><label for="work" class="mr-2">Period Covered</label><input type="date" class="form-control mr-2" name="experience['+b+'][]" value=""><label for="work" class="ml-2 mr-2">To</label><input type="date" class="form-control ml-2 mr-2" name="experience['+b+'][]" value="" required><a id="removeWork" class="btn btn-danger text-white"><i class="fa fa-times"></i></a></div>').appendTo('#work');
-      $('<div id="workField" class="form-row editwork"><div class="form-group col-md-3"><input type="text" class="form-control mr-2" name="experience['+b+'][]" placeholder="Name of Company" value="" required></div><div class="form-group col-md-3"><input type="text" class="form-control mr-2" name="experience['+b+'][]" " value="" placeholder="Position" required></div><div class="form-group col-md-5"><div class="form-inline"><div class="form-group"><input type="date" class="form-control" name="experience['+b+'][]" value=""><span class="mx-1"> To</span><input type="date" class="form-control mr-2" name="experience['+b+'][]" value="" required></div></div></div><div class="form-group col-md-1"><a id="removeWork" class="btn btn-danger text-white"><i class="fa fa-times mr-1"></i><i class="fas fa-briefcase"></i></a></div></div>').appendTo('#work');
+      $('<div id="workField" class="form-row editwork"><div class="form-group col-md-3"><input type="text" class="form-control mr-2" name="experience['+b+'][]" placeholder="Name of Company" value="" required></div><div class="form-group col-md-3"><input type="text" class="form-control mr-2" name="experience['+b+'][]" " value="" placeholder="Position" required></div><div class="form-group col-md-5"><div class="form-inline"><div class="form-group"><input type="date" class="form-control mr-2" name="experience['+b+'][]" value=""><span class="mx-1"> To</span><input type="date" class="form-control ml-2" name="experience['+b+'][]" value="" required></div></div></div><div class="form-group col-md-1"><a id="removeWork" class="btn btn-danger text-white"><i class="fa fa-times mr-1"></i><i class="fas fa-briefcase"></i></a></div></div>').appendTo('#work');
     b++;
 
     });
@@ -156,6 +156,13 @@ jQuery(document).ready(function($){
       // $(".collapse-button-icon > i").AddClass("fa-chevron-left");
     }
 
+    /**
+     * Add zp-toggle Class in Dropdown Toggle
+     ---------------------------------------*/
+    $('.nav-link.dropdown-toggle').on('click', function(e){
+      e.preventDefault();
+      $(this).stop(false,false).toggleClass('zp-toggle');
+    });
 
     // Form Validation Add Required IF first OR second input is not EMPTY
 

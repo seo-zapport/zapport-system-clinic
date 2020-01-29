@@ -33,8 +33,9 @@
 									@if (Gate::check('isAdmin') || Gate::check('isNurse') || Gate::check('isDoctor'))
 										<span id="{{ $disease->disease_slug }}" class="show-edit btn btn-link text-secondary"><i class="far fa-edit"></i> Quick Edit</span> <span class="text-muted">|</span>
 									@endif
-									<a href="{{ route('diseases.show', ['disease'=>$disease->disease_slug]) }}" class="btn-link text-secondary"><i class="far fa-eye"></i> View |</a>
+									<a href="{{ route('diseases.show', ['disease'=>$disease->disease_slug]) }}" class="btn-link text-secondary"><i class="far fa-eye"></i> View </a>
 									@if (Gate::check('isAdmin') || Gate::check('isNurse') || Gate::check('isDoctor'))
+										<span class="text-muted">|</span>
 										<form method="post" action="{{ route('diseases.destroy', ['disease'=>$disease->disease_slug]) }}" class="d-inline-block">
 											@csrf
 											@method('DELETE')

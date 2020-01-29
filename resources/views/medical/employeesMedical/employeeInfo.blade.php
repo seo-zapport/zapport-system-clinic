@@ -365,7 +365,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="form-group text-right">
+				<div class="form-group text-right px-3">
 					<button id="preEmpClosed" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 					<button type="submit" class="btn btn-primary">Save changes</button>
 				</div>
