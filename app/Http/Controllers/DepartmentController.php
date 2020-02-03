@@ -119,7 +119,27 @@ class DepartmentController extends Controller
      */
     public function update(Request $request, Department $department)
     {
-        //
+        if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
+            $atts = $request->validate(
+                [
+                    'department'    =>  ['required', 'unique:departments,department,' . $department->id],
+                ],
+                [
+                    'department.requried'   =>  'Department Name is required!',
+                    'department.unique'   =>  'Department Name is already taken!',
+                ]
+            );
+
+            $atts['department_slug'] = Str::slug($request->department, '-');
+
+            $department->update($atts);
+            return redirect()->route('hr.dep.showDep', ['department' => $department->department_slug]);
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
+        }else{
+            return back();
+        }
     }
 
     /**
