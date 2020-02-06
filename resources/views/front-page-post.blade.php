@@ -12,7 +12,7 @@
 					@if ( $post->important === 0 )
 						<figure class="zp-wrap-img">
 							<img src="{{ !empty(@$post->medias->file_name) ? asset('storage/uploaded/media/'.$post->medias->file_name) : asset('storage/uploaded/media/No_image.png') }}">
-					</figure>	
+						</figure>	
 					@endif
 
 					<div class="zp-article-title-wrap m-b-md text-secondary">

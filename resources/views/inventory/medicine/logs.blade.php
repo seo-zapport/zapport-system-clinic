@@ -57,14 +57,16 @@
 			</div>
 		</div>
 		<div class="col-12 col-md-6">
+					@php 
+						$fileName = 'inventory_medicine';
+						$expiredm = '';
+					@endphp
+					{{ @$printstat }}
 			<div class="form-check">
 				<div class="text-right">
 					<!--- PRINT --->
 					<button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PRINT <span class="caret"></span>
 					</button>
-					@php 
-						$fileName = 'inventory_medicine';
-					@endphp
 					<ul class="dropdown-menu print_dropdown">
 						<a class="btnPrint dropdown-item" href="#"><i class="fas fa-print text-secondary"></i> PRINT All</a>
 						@if(app('request')->input('expired') != 'on')
@@ -77,7 +79,6 @@
 						<a href="{{ asset('storage/uploaded/print/inventory/'.@$fileName.'_expired.csv')}}" class="dropdown-item" download="{{ @$fileName.'_expired.csv'}}" target="_blank"><i class="fas fa-file-csv text-secondary"></i> CSV Expired</a></li>
 						@endif
 					</ul>
-
 				</div>
 			</div>
 		</div>
@@ -102,6 +103,13 @@
 						$i = 1;
 					@endphp
 					@forelse ($logs as $log)
+						@php  
+							if($log->expiration_date <= NOW()){
+							 	$expiredm = 'meron'; 
+							}else{
+								$expiredm = '';	
+							}  
+						@endphp
 						<tr id="MedRow">
 							<td class="{{ ($log->expiration_date <= NOW()) ? 'bg-danger text-white' : '' }}">
 							{{ $i }}

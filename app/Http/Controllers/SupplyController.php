@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use File;
 use App\Supply;
 use App\Supgen;
 use App\Supbrand;
@@ -36,9 +37,14 @@ class SupplyController extends Controller
                                 ->orWhere('supbrands.name', 'like', '%'.$request->search.'%')
                                 ->paginate(10);
             }
+            $printsupp = $raw->get();
             $supplies = $raw->paginate(10)->appends(['search' => $request->search]);
             $search = $request->search;
+            
+            $this->PrintSuppCSV($printsupp,'index','','');
+
             return view('inventory.supply.supplies.index', compact('supgens', 'supplies', 'search'));
+        
         }elseif (Gate::check('isBanned')) {
             return back()->with('message', 'You\'re not employee!');
         }else{
@@ -125,8 +131,13 @@ class SupplyController extends Controller
                 $dates = $rawDates->where('created_at', '!=', $request->search)
                                   ->get();
             }
+            
+            $printsupp = $raw->get();
             $rawSup = $raw->paginate(10);
             $dates = $rawDates->get();
+
+            $this->PrintSuppCSV($printsupp,'viewlogs', $supbrand->name, $supgen->name);
+
             return view('inventory.supply.supplies.show', compact('rawSup', 'dates', 'supgen', 'supbrand'));
         }elseif (Gate::check('isBanned')) {
             return back()->with('message', 'You\'re not employee!');
@@ -226,22 +237,31 @@ class SupplyController extends Controller
                                                   ->orderBy('created_at', 'desc');
 
             if ($request->search_name && $request->search_date == NULL) {
+                $printsupp = $rawQry->get();
                 $raw = $rawQry->where(\DB::raw("concat(requested.first_name, ' ', requested.last_name)"), 'like', '%'.$request->search_name.'%')
                               ->paginate(10);
             }elseif ($request->search_name == NULL && $request->search_date) {
+                $printsupp = $rawQry->get();
                 $raw = $rawQry->where('employeesmedical_supply_users.created_at', 'like', '%'.$request->search_date.'%')
                               ->get();
                 $dates = $rawDates->where('employeesmedical_supply_users.created_at', '!=', $request->search_date)
                                   ->get();
             }elseif ($request->search_name && $request->search_date) {
+                $printsupp = $rawQry->get();
                 $raw = $rawQry->where(\DB::raw("concat(requested.first_name, ' ', requested.last_name)"), 'like', '%'.$request->search_name.'%')
                               ->where('employeesmedical_supply_users.created_at', 'like', '%'.$request->search_date.'%')
                               ->get();
                 $dates = $rawDates->where('employeesmedical_supply_users.created_at', '!=', $request->search_date)
                                   ->get();
             }
+            $printsupp = $rawQry->get();
             $raw = $rawQry->paginate(10);
             $dates = $rawDates->get();
+
+            //dd($printsupp);
+
+            $this->PrintSuppCSV($printsupp,'logsinput', $supbrand->name, $supgen->name);
+
             return view('inventory.supply.supplies.logs', compact('raw', 'supgen', 'supbrand', 'created', 'dates'));
         }elseif (Gate::check('isBanned')) {
             return back()->with('message', 'You\'re not employee!');
@@ -264,4 +284,60 @@ class SupplyController extends Controller
             return json_encode($getSupBrand);
         }
     }
+
+    public function PrintSuppCSV($printsupply,$typeprint,$suppbrand,$supps){
+        $relPath = 'storage/uploaded/print/inventory';
+        if (!file_exists($relPath)) {
+            mkdir($relPath, 777, true);
+        }
+
+        $expired = array();
+        $availsups = array();
+
+        $fileName = 'supplies_inventory';
+
+        $supplies = $printsupply;
+        $suppliesexp = $printsupply;
+
+
+        if($typeprint == 'viewlogs'){
+            foreach ($suppliesexp as $suplog) {
+                if($suplog->expiration_date <= NOW() || $suplog->expiration_date == null ){
+                        $expired[] = $suplog;
+                }
+                if($suplog->expiration_date >= NOW()){
+                        $availsups[] = $suplog;
+                }  
+            }
+
+            $datasuppsexpiredcsv = view('inventory.supply.supplies.print.suppsexpiredcsv',compact('expired','typeprint','suppbrand','supps'))->render();
+            $datasuppslogcsv = view('inventory.supply.supplies.print.suppslogcsv',compact('availsups','typeprint','suppbrand','supps'))->render();
+
+            File::put(public_path('/storage/uploaded/print/inventory/'.$fileName.'_expired.csv'),$datasuppsexpiredcsv);   
+            File::put(public_path('/storage/uploaded/print/inventory/'.$fileName.'_log.csv'),$datasuppslogcsv);   
+
+            $datasupsprintexp = view('inventory.supply.supplies.print.printsuppsexp',compact('expired','typeprint','suppbrand','supps'))->render();
+            $datasupsprintlog = view('inventory.supply.supplies.print.printsuppslog',compact('availsups','typeprint','suppbrand','supps'))->render();
+
+            File::put(public_path('/storage/uploaded/print/inventory/'.$fileName.'_printexp.html'),$datasupsprintexp);
+            File::put(public_path('/storage/uploaded/print/inventory/'.$fileName.'_printlog.html'),$datasupsprintlog);
+            
+        }
+
+
+        $datameds = view('inventory.supply.supplies.print.suppscsv',compact('supplies','typeprint','suppbrand','supps'))->render();
+        $datamedsprint = view('inventory.supply.supplies.print.printsupps',compact('supplies','typeprint','suppbrand','supps'))->render();
+
+        File::put(public_path('/storage/uploaded/print/inventory/'.$fileName.'.csv'),$datameds);   
+        File::put(public_path('/storage/uploaded/print/inventory/'.$fileName.'.html'),$datamedsprint);   
+
+
+
+
+
+      
+
+
+    }
+
 }

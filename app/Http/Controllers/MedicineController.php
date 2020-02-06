@@ -322,7 +322,7 @@ class MedicineController extends Controller
                 $search = $request->search;
                 $logs = $rawlogs->where(\DB::raw('DATE_FORMAT(medicines.created_at, "%Y-%m-%d")'), $request->search)
                              ->orderBy('medicines.created_at', 'desc');
-                          $printlogs = $logs->get();  
+                          $printlogs = $logs->get();
                           $logs = $logs->paginate(10)->appends(['search' => $request->search]);
             }
             elseif ($request->has('expired') && $request->has('search') == null) {
@@ -341,9 +341,8 @@ class MedicineController extends Controller
                 $logs = $rawlogs->orderBy('medicines.created_at', 'desc');
                         $printlogs = $logs->get();
                         $logs = $logs->paginate(10)->appends(['search' => $request->search]);
-                
             }
-
+            
             $this->PrintMedCSV($printlogs,'viewlogs',$medbrand->bname, $generic->gname); 
     
             $class = ( request()->is('inventory/medicine*') ) ?'admin-inventory admin-medicine' : '';//**add Class in the body*/
@@ -393,22 +392,22 @@ class MedicineController extends Controller
                 }  
             }
 
-            $datamedsexpired = view('inventory.medicine.expiredcsv',compact('expired','typecsv','medbrand','generic'))->render();
-            $datamedslog = view('inventory.medicine.logcsv',compact('availmeds','typeprint','medbrand','generic','countmed'))->render();
+            $datamedsexpired = view('inventory.medicine.print.expiredcsv',compact('expired','typecsv','medbrand','generic'))->render();
+            $datamedslog = view('inventory.medicine.print.logcsv',compact('availmeds','typeprint','medbrand','generic','countmed'))->render();
 
             File::put(public_path('/storage/uploaded/print/inventory/'.$fileName.'_expired.csv'),$datamedsexpired);   
             File::put(public_path('/storage/uploaded/print/inventory/'.$fileName.'_log.csv'),$datamedslog);   
 
-            $datamedsprintexp = view('inventory.medicine.printmedsexp',compact('expired','typeprint','medbrand','generic','countmed'))->render();
-            $datamedsprintlog = view('inventory.medicine.printmedslog',compact('availmeds','typeprint','medbrand','generic','countmed'))->render();
+            $datamedsprintexp = view('inventory.medicine.print.printmedsexp',compact('expired','typeprint','medbrand','generic','countmed'))->render();
+            $datamedsprintlog = view('inventory.medicine.print.printmedslog',compact('availmeds','typeprint','medbrand','generic','countmed'))->render();
 
             File::put(public_path('/storage/uploaded/print/inventory/'.$fileName.'_printexp.html'),$datamedsprintexp);
             File::put(public_path('/storage/uploaded/print/inventory/'.$fileName.'_printlog.html'),$datamedsprintlog);
             
         }
 
-        $datameds = view('inventory.medicine.csv',compact('medicine','typecsv','medbrand','generic'))->render();
-        $datamedsprint = view('inventory.medicine.printmeds',compact('meds','typeprint','medbrand','generic','countmed'))->render();
+        $datameds = view('inventory.medicine.print.csv',compact('medicine','typecsv','medbrand','generic'))->render();
+        $datamedsprint = view('inventory.medicine.print.printmeds',compact('meds','typeprint','medbrand','generic','countmed'))->render();
 
         File::put(public_path('/storage/uploaded/print/inventory/'.$fileName.'.csv'),$datameds);   
         File::put(public_path('/storage/uploaded/print/inventory/'.$fileName.'.html'),$datamedsprint);   

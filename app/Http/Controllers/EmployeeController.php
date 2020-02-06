@@ -301,7 +301,7 @@ class EmployeeController extends Controller
     {
         if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
      
-            $dataemp = view('hr.employee.printviewinfo',compact('employee'))->render();
+            $dataemp = view('hr.employee.print.printviewinfo',compact('employee'))->render();
             File::put(public_path('/storage/uploaded/print/employees/printinfo.html'),$dataemp); 
 
             $class = ( request()->is('hr/employees*') ) ?'admin-hr-employees' : '';//**add Class in the body*/
@@ -571,8 +571,8 @@ class EmployeeController extends Controller
 
             $employees = $emplist;    
             //dd($emplist);
-            $dataemp = view('hr.employee.csv',compact('employees','filter_age','filter_gender','filter_empType','filter_status','filter_search'))->render();
-            $dataemp_print = view('hr.employee.printemps',compact('emplist','filter_age','filter_gender','filter_empType','filter_status','filter_search'))->render();
+            $dataemp = view('hr.employee.print.csv',compact('employees','filter_age','filter_gender','filter_empType','filter_status','filter_search'))->render();
+            $dataemp_print = view('hr.employee.print.printemps',compact('emplist','filter_age','filter_gender','filter_empType','filter_status','filter_search'))->render();
 
             if($filter_gender != null){
                 $gender = (app('request')->input('filter_gender') == 0) ? "male": "female";

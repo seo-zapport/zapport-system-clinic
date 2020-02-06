@@ -54,17 +54,17 @@
                     $collap = "";
                 @endphp
             @else
-             @php  
-            $ariaexpand = "false";
-            $showactive = "";
-            $collap = "collapsed";
-        @endphp
+                @php  
+                    $ariaexpand = "false";
+                    $showactive = "";
+                    $collap = "collapsed";
+                @endphp
              @endif
                 <li class="nav-item">
                     <a href="#posts" data-toggle="collapse" aria-expanded="{{ $ariaexpand }}" class="nav-link dropdown-toggle {{$collap}}"><i class="fas fa-book"></i> <span class="collapse-label">Posts</span></a>
                     <ul class="zp-dropdown nav collapse {{ $showactive }}" id="posts">
-                        <li class="nav-item"><a href="{{ route('post.create') }}" class="nav-link @yield('new_post')"><i class="fas fa-pencil-alt"></i> <span class="collapse-label">New Post</span></a></li>
                         <li class="nav-item"><a href="{{ route('post.index') }}" class="nav-link @yield('posts')"><i class="fas fa-book"></i> <span class="collapse-label">All Posts</span></a></li>
+                        <li class="nav-item"><a href="{{ route('post.create') }}" class="nav-link @yield('new_post')"><i class="fas fa-pencil-alt"></i> <span class="collapse-label">New Post</span></a></li>
                         <li class="nav-item"><a href="{{ route('tag.index') }}" class="nav-link @yield('category')"><i class="fas fa-folder"></i> <span class="collapse-label">Categories</span></a></li>
                         <li class="nav-item"><a href="{{ route('media.index') }}" class="nav-link @yield('medias')"><i class="fas fa-photo-video"></i> <span class="collapse-label">Media</span></a></li>
                     </ul>
@@ -75,16 +75,16 @@
         @if (Gate::check('isAdmin') || Gate::check('isHr'))
         @if ( Request::is('hr') || Request::is('hr/*') )
            @php  
-               $ariaexpand = "true";
-               $showactive = "show";
-               $collap = "";
+                $ariaexpand = "true";
+                $showactive = "show";
+                $collap = "";
            @endphp
         @else
-         @php  
-            $ariaexpand = "false";
-            $showactive = "";
-            $collap = "collapsed";
-        @endphp
+            @php  
+                $ariaexpand = "false";
+                $showactive = "";
+                $collap = "collapsed";
+            @endphp
         @endif
             <li class="nav-item">
                 <a href="#employees" data-toggle="collapse" aria-expanded="{{ $ariaexpand }}" class="nav-link dropdown-toggle {{$collap}}"><i class="fas fa-users"></i> <span class="collapse-label">Employees</span></a>
@@ -100,6 +100,7 @@
         {{-- For ADMIN, HR, DOCTOR, NURSE --}}
         @if (Gate::check('isAdmin') || Gate::check('isHr') || Gate::check('isDoctor') || Gate::allows('isNurse'))
         @if (!empty(auth()->user()->employee))
+        
         @if ( Request::is('medical') || Request::is('medical/*')  )
            @php  
                $ariaexpand = "true";
@@ -113,6 +114,7 @@
                 $collap = "collapsed";
             @endphp
         @endif
+
         @if ( Request::is('inventory') || Request::is('inventory/*')  )
             @php  
                 $ariaexpandinv = "true";
@@ -126,16 +128,51 @@
                 $collapinv = "collapsed";
             @endphp
         @endif
+
+        @if ( Request::is('inventory/medicine') || Request::is('inventory/medicine/*')  )
+            @php  
+                $ariaexpandinvsub = "true";
+                $showactiveinvsub = "show";
+                $collapinvsub = "";
+            @endphp
+        @else
+            @php  
+                $ariaexpandinvsub = "false";
+                $showactiveinvsub = "";
+                $collapinvsub = "collapsed";
+            @endphp
+        @endif
+
+        
+        @if ( Request::is('inventory/supply') || Request::is('inventory/supply/*')  )
+            @php  
+                $ariaexpandinvssub = "true";
+                $showactiveinvssub = "show";
+                $collapinvssub = "";
+            @endphp
+        @else
+            @php  
+                $ariaexpandinvssub = "false";
+                $showactiveinvssub = "";
+                $collapinvssub = "collapsed";
+            @endphp
+        @endif
         <li class="nav-item">
-            <a href="#inventory" data-toggle="collapse" aria-expanded="{{ $ariaexpandinv }}" class="nav-link dropdown-toggle {{$collapinv}}"><i class="fas fa-warehouse"></i> <span class="collapse-label">Inventory</span></a>
+            <a href="#inventory" data-toggle="collapse" aria-expanded="{{ $ariaexpandinv }}" class="nav-link dropdown-toggle {{@$collapinv}}"><i class="fas fa-warehouse"></i> <span class="collapse-label">Inventory</span></a>
             <ul class="zp-dropdown nav collapse {{ $showactiveinv }}" id="inventory">
-                <li class="nav-item"><a href="{{ route('genericname') }}" class="nav-link @yield('genericname')"><i class="fas fa-tablets"></i><span class="collapse-label"> Generic Name</span></a></li>
-                <li class="nav-item"><a href="{{ route('brandname') }}" class="nav-link @yield('brandname')"><i class="fas fa-file-prescription"></i><span class="collapse-label"> Brand Name</span></a></li>
-                <li class="nav-item"><a href="{{ route('medicine') }}" class="nav-link @yield('medicine')"><i class="fas fa-pills"></i> <span class="collapse-label">Medicines</span></a></li>
+                {{-- Medicine --}}
+                <li class="nav-item">
+                    <a href="#medicines" data-toggle="collapse" aria-expanded="{{ @$ariaexpandinvsub }}" class="nav-link dropdown-toggle {{$collapinvsub}}"><i class="fas fa-warehouse"></i> <span class="collapse-label">Medicines</span></a>
+                     <ul class="zp-dropdown nav collapse {{ $showactiveinvsub }}" id="medicines">
+                         <li class="nav-item"><a href="{{ route('genericname') }}" class="nav-link @yield('genericname')"><i class="fas fa-tablets"></i><span class="collapse-label"> Generic Name</span></a></li>
+                         <li class="nav-item"><a href="{{ route('brandname') }}" class="nav-link @yield('brandname')"><i class="fas fa-file-prescription"></i><span class="collapse-label"> Brand Name</span></a></li>
+                         <li class="nav-item"><a href="{{ route('medicine') }}" class="nav-link @yield('medicine')"><i class="fas fa-pills"></i> <span class="collapse-label">Medicines</span></a></li>   
+                     </ul>
+                </li>
                 {{-- Medical Supplies --}}
                 <li class="nav-item">
-                    <a href="#supplies" data-toggle="collapse" aria-expanded="{{ $ariaexpandinv }}" class="nav-link dropdown-toggle {{$collapinv}}"><i class="fas fa-warehouse"></i> <span class="collapse-label">Supplies</span></a>
-                    <ul class="zp-dropdown nav collapse {{ $showactiveinv }}" id="supplies">
+                    <a href="#supplies" data-toggle="collapse" aria-expanded="{{ @$ariaexpandinvssub }}" class="nav-link dropdown-toggle {{$collapinvssub}}"><i class="fas fa-warehouse"></i> <span class="collapse-label">Supplies</span></a>
+                    <ul class="zp-dropdown nav collapse {{ $showactiveinvssub }}" id="supplies">
                         <li class="nav-item"><a href="{{ route('supply.generic.index') }}" class="nav-link @yield('supplygen')"><i class="fas fa-tablets"></i><span class="collapse-label">Register Supply</span></a></li>
                         <li class="nav-item"><a href="{{ route('supply.index') }}" class="nav-link @yield('supplyinv')"><i class="fas fa-tablets"></i><span class="collapse-label">Supplies</span></a></li>
                     </ul>
