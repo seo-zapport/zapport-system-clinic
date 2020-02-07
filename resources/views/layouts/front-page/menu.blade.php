@@ -1,7 +1,32 @@
-<header>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+<header class="fixed-top">
+  @auth()
+    <div id="dashboardMenu" class="px-4 bg-dark text-white">
+      <div class="d-flex justify-content-between container-fluid">
+        <ul class="mb-0 navbar-nav">
+          <li class="nav-item dropdown">
+            <a href="/dashboard" class="nav-link py-1 dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-tachometer-alt mr-2"></i> Zapport</a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="/dashboard">Dashboard</a>
+              <a class="dropdown-item" href="/medical">Clinic</a>
+              <a class="dropdown-item" href="/hr">Employee</a>
+            </div>
+          </li>
+        </ul>
+        <ul class="mb-0 navbar-nav">
+          <li class="nav-item dropdown">
+            <a href="/dashboard" class="nav-link py-1 dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->name }} </a>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a> <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;"> @csrf </form>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  @endauth
+  {{--  color for text of link 52bec2  --}}
+  <nav class="navbar navbar-expand-lg navbar-dark bg-secondary" id="mainNav">
     <div class="container">
-      <a class="navbar-brand js-scroll-trigger" href="@if(request()->route()->getName() != 'frnt.show.post') dashboard @else / @endif"> <img src="{{ url('/images/logo.png') }}" alt="Zapport Clinic"></a>
+      <a class="navbar-brand js-scroll-trigger" href="/"> <img src="{{ url('/images/logo.png') }}" alt="Zapport Clinic"></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -20,16 +45,6 @@
           <li class="nav-item">
             <a  type="button" class="nav-link" data-toggle="modal" data-target="#frontModal">Notice</a>
           </li>
-          @auth()
-          <li class="nav-item">
-              <a class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                  Logout
-              </a>
-              <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                  @csrf
-              </form>
-          </li>
-          @endauth
         </ul>
       </div>
     </div>

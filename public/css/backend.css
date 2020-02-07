@@ -6295,6 +6295,11 @@ figure {
   width: 53px;
 }
 
+.folded #zapAdminMenuWrap .nav .dropdown-toggle:after,
+.folded #zapAdminMenuWrap .nav .dropdown-toggle[aria-expanded=true].zp-toggle:after {
+  right: 11px;
+}
+
 .folded #zapAdminMenuWrap .zap-user-info {
   padding: 10px 0px;
 }

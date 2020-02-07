@@ -15,11 +15,17 @@ class FrontpageController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $users = User::get();
         $posts = Post::orderBy('id', 'DESC')->get();
-        return view('front-page', compact('users', 'posts'));
+        $limit = Post::orderBy('id', 'DESC')->paginate(3);
+
+        if ($request->ajax()) {
+            $view = view('layouts.front-page.frnt_scroll_data', compact('limit'))->render();
+            return response()->json([ 'data' => $view ]);
+        }
+        return view('front-page', compact('users', 'posts', 'limit'));
     }
 
     /**
@@ -51,7 +57,8 @@ class FrontpageController extends Controller
      */
     public function show(Post $post)
     {
-        return view('front-page-post', compact('post'));
+        $posts = Post::orderBy('id', 'DESC')->get();
+        return view('front-page-post', compact('post', 'posts'));
     }
 
     /**

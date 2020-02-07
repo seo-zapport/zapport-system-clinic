@@ -223,6 +223,10 @@
 	#zapAdminMenuWrap{
 		.nav{
 			width: 53px;
+			.dropdown-toggle:after,
+			.dropdown-toggle[aria-expanded=true].zp-toggle:after{
+				right: 11px;
+			}
 		}
 		.zap-user-info{
 			padding: 10px 0px;
