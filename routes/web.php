@@ -100,12 +100,14 @@ Route::group(['prefix' => 'hr'], function(){
 	Route::get('department', 'DepartmentController@index')->name('hr.dep.department');
 	Route::post('department', 'DepartmentController@store')->name('hr.dep.addDep');
 	Route::get('department/{department}', 'DepartmentController@show')->name('hr.dep.showDep');
+	Route::put('department/{department}', 'DepartmentController@update')->name('hr.dep.update');
 	Route::delete('department/{department}', 'DepartmentController@destroy')->name('hr.dep.deleteDep');
 
 	// Position
 	Route::get('position', 'PositionController@index')->name('hr.pos.position');
 	Route::post('position', 'PositionController@store')->name('hr.pos.addPos');
 	Route::get('position/{position}/department/{department}', 'PositionController@show')->name('hr.pos.show');
+	Route::put('position/{position}/department/{department}', 'PositionController@update')->name('hr.pos.update');
 	Route::delete('position/{position}', 'PositionController@destroy')->name('hr.pos.deletePos');
 
 	// Employee

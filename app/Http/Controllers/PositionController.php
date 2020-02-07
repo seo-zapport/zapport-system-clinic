@@ -140,9 +140,28 @@ class PositionController extends Controller
      * @param  \App\Position  $position
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Position $position)
+    public function update(Request $request, Position $position, Department $department)
     {
-        //
+        if (Gate::allows('isAdmin') || Gate::allows('isHr')) {
+            $atts = $request->validate(
+                [
+                    'position'  =>  ['required', 'unique:positions,position,' . $position->id]
+                ],
+                [
+                    'position.required' =>  'Position Name is required!',
+                    'position.unique'   =>  'Position Name is already taken!',
+                ]
+            );
+            $atts['position_slug'] = Str::slug($request->position, '-');
+            $position->update($atts);
+
+            return redirect()->route('hr.pos.show', ['position' =>  $position->position_slug, 'department'  =>  $department->department_slug]);
+        }elseif (Gate::allows('isBanned')) {
+            Auth::logout();
+            return back()->with('message', 'You\'re not employee!');
+        }else{
+            return back();
+        }
     }
 
     /**

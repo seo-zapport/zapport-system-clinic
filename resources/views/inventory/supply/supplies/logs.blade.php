@@ -34,6 +34,19 @@
 				</div>
 			</div>
 		</div>
+		<div class="form-group col-md-6 text-right">
+			<!--- PRINT --->
+			<button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PRINT <span class="caret"></span>
+			</button>
+			@php 
+				$fileName = 'supplies_inventory';
+			@endphp
+			<div class="dropdown-menu print_dropdown">
+				 <a href="#" class="btnPrint dropdown-item"><i class="fas fa-print text-secondary"></i> PRINT</a>
+				 <a href="{{ asset('storage/uploaded/print/inventory/supplies_inventory.csv')}}" class="dropdown-item" download="{{ @$fileName.'.csv'}}" target="_blank"><i class="fas fa-file-csv text-secondary"></i> CSV</a>
+			</div>
+		</div>
+
 	</div>
 </form>
 <div class="card mb-3">
@@ -57,6 +70,9 @@
 							<td>{{ ucwords($row->givenBy_Fname) }} {{ ucwords($row->givenBy_Lname) }}</td>
 						</tr>
 					@empty
+						<tr>
+							<td colspan="4" class="text-center">0 Result Found!</td>
+						</tr>
 					@endforelse
 				</tbody>
 			</table>
@@ -65,3 +81,28 @@
 	</div>
 </div>
 @endsection
+
+
+
+@section('scripts')
+	<script text='text/javascript'>
+		jQuery(document).ready(function(){
+				$(window).on('hashchange', function(e){
+			    history.replaceState ("", document.title, e.originalEvent.oldURL);
+			});
+
+			//var countTR = $("#MedTable tbody #MedRow").length;
+			//$("#medTotal").html('');
+			//$("#medTotal").append('<p class="count_items"><span class="zp-tct">Total Items: </span>'+ countTR +' <span  class="zp-ct"> Items</span></p>');
+
+			 $('.btnPrint').printPage({
+			  url: "{{ asset('storage/uploaded/print/inventory/supplies_inventory.html') }}",
+			  attr: "href",
+			  message:"Your document is being created"
+			});
+
+		});
+	</script>
+@endsection
+
+

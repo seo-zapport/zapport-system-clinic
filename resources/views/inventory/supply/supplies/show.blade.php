@@ -42,6 +42,30 @@
 				</div>
 			</div>
 		</div>
+		<div class="col-12 col-md-6">
+			@php 
+				$fileName = 'supplies_inventory';
+			@endphp
+			<div class="form-check">
+				<div class="text-right">
+					<!--- PRINT --->
+					<button type="button" class="btn btn-outline-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">PRINT <span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu print_dropdown">
+						<a class="btnPrint dropdown-item" href="#"><i class="fas fa-print text-secondary"></i> PRINT All</a>
+						@if(app('request')->input('expired') != 'on')
+						<a class="btnPrintlog dropdown-item" href="#"><i class="fas fa-print text-secondary"></i> PRINT Available</a>
+						<a class="btnPrintexpire dropdown-item" href="#"><i class="fas fa-print text-secondary"></i> PRINT Expired</a>
+						@endif
+						<a href="{{ asset('storage/uploaded/print/inventory/'.@$fileName.'.csv')}}" class="dropdown-item" download="{{ @$fileName.'.csv'}}" target="_blank"><i class="fas fa-file-csv text-secondary"></i> CSV All</a></li>
+						@if(app('request')->input('expired') != 'on')
+						<a href="{{ asset('storage/uploaded/print/inventory/'.@$fileName.'_log.csv')}}" class="dropdown-item" download="{{ @$fileName.'_log.csv'}}" target="_blank"><i class="fas fa-file-csv text-secondary"></i> CSV Available</a></li>
+						<a href="{{ asset('storage/uploaded/print/inventory/'.@$fileName.'_expired.csv')}}" class="dropdown-item" download="{{ @$fileName.'_expired.csv'}}" target="_blank"><i class="fas fa-file-csv text-secondary"></i> CSV Expired</a></li>
+						@endif
+					</ul>
+				</div>
+			</div>
+		</div>
 	</div>
 </form>
 
@@ -124,4 +148,39 @@
 		</div>
 	</div>
 </div>
+@endsection
+
+@section('scripts')
+<script type="application/javascript">
+
+	jQuery(document).ready(function($){
+		jQuery(window).on('hashchange', function(e){
+		    history.replaceState ("", document.title, e.originalEvent.oldURL);
+		});
+
+		/*var countTR = $("#MedTable tbody #MedRow").length;
+		$("#medTotal").html('');
+		$("#medTotal").append('<span>'+ countTR +' items</span>');*/
+		 
+		 $('.btnPrint').printPage({
+    	  	url: "{{ asset('storage/uploaded/print/inventory/supplies_inventory.html') }}",
+    	  	attr: "href",
+    	  	message:"Your document is being created"
+    	});
+
+		$('.btnPrintexpire').printPage({
+			url: "{{ asset('storage/uploaded/print/inventory/supplies_inventory_printexp.html') }}",
+			attr: "href",
+			message:"Your document is being created"
+		}); 
+
+		$('.btnPrintlog').printPage({
+			url: "{{ asset('storage/uploaded/print/inventory/supplies_inventory_printlog.html') }}",
+			attr: "href",
+			message:"Your document is being created"
+		});
+		 
+	});
+
+</script>
 @endsection

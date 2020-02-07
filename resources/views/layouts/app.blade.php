@@ -84,7 +84,7 @@
     <script src="{{ asset('/js/tinymce/tinymce.jquery.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/datepicker/0.6.5/datepicker.min.js"></script>
     <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js" crossorigin="anonymous"></script>
-   @if ( Request::is('hr/employees') || request()->route()->getName() == 'hr.emp.show' || Request::is('inventory/medicine') || Request::is('inventory/medicine/*') || request()->route()->getName() == 'medical.show' || request()->route()->getName() == 'medical.employeeInfo')
+   @if ( Request::is('hr/employees') || request()->route()->getName() == 'hr.emp.show' || Request::is('inventory/medicine') || Request::is('inventory/medicine/*') || request()->route()->getName() == 'medical.show' || request()->route()->getName() == 'medical.employeeInfo' || Request::is('inventory/supply') || Request::is('inventory/supply/*'))
     <script src="{{ asset('/js/jquery.printPage.js') }}" type="text/javascript" defer></script>
    @endif      
     @yield('scripts')
