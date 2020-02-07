@@ -49518,14 +49518,9 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-<<<<<<< HEAD
-__webpack_require__(/*! c:\xampp\htdocs\clinic\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! c:\xampp\htdocs\clinic\resources\sass\front.scss */"./resources/sass/front.scss");
-module.exports = __webpack_require__(/*! c:\xampp\htdocs\clinic\resources\sass\backend.scss */"./resources/sass/backend.scss");
-=======
+
 __webpack_require__(/*! C:\xampp\htdocs\clinic\resources\js\app.js */"./resources/js/app.js");
 module.exports = __webpack_require__(/*! C:\xampp\htdocs\clinic\resources\sass\backend.scss */"./resources/sass/backend.scss");
->>>>>>> 4f3d864d8dc23fd21293b6a892e64d3545f015fb
 
 
 /***/ })
