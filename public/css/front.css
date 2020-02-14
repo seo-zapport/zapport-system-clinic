@@ -59,6 +59,24 @@ img {
   z-index: 1;
 }
 
+#post,
+#importantPost {
+  background-color: #e4e4e4;
+}
+
+#ajaxLoad {
+  display: none;
+}
+
+#ajaxLoad p {
+  color: #088787 !important;
+  font-size: 16px;
+}
+
+#zp-footer {
+  background-color: #01393a !important;
+}
+
 .btn-custom-trans {
   background-color: transparent;
   border-color: #fff;
@@ -86,24 +104,6 @@ img {
 .btn-custom-trans:hover a {
   color: #fff;
   text-decoration: none;
-}
-
-#post,
-#importantPost {
-  background-color: #e4e4e4;
-}
-
-#ajaxLoad {
-  display: none;
-}
-
-#ajaxLoad p {
-  color: #088787 !important;
-  font-size: 16px;
-}
-
-#zp-footer {
-  background-color: #01393a !important;
 }
 
 /**article*/
@@ -274,8 +274,6 @@ img {
   border-radius: 0;
   margin: 0;
   padding: 0;
-  /*background-color: #31b8bd;
-  background-color: #008388;*/
   background-color: #ececec;
   border-color: #e3e3e3;
   border-bottom-left-radius: 2px;

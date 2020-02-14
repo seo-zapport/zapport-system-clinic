@@ -4,12 +4,7 @@
       <div class="d-flex justify-content-between container-fluid">
         <ul class="mb-0 navbar-nav">
           <li class="nav-item dropdown">
-            <a href="/dashboard" class="nav-link py-1 dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-tachometer-alt mr-2"></i> Zapport</a>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="/dashboard">Dashboard</a>
-              <a class="dropdown-item" href="/medical">Clinic</a>
-              <a class="dropdown-item" href="/hr">Employee</a>
-            </div>
+            <a href="/dashboard" class="nav-link py-1" role="button"><i class="fas fa-tachometer-alt mr-2"></i> Dashboard</a>
           </li>
         </ul>
         <ul class="mb-0 navbar-nav">
