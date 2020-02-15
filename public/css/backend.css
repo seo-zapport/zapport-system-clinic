@@ -7244,6 +7244,10 @@ figure {
   box-sizing: border-box;
 }
 
+.zp-core-ui .attachment-list.selected .attachment-preview.landscape {
+  outline: 5px solid rgba(0, 152, 141, 0.7);
+}
+
 .zp-core-ui .attachment {
   margin: 0;
   -webkit-overflow-scrolling: touch;
@@ -7276,8 +7280,8 @@ figure {
 .zp-core-ui .attachment-preview:active,
 .zp-core-ui .attachment-preview:hover,
 .zp-core-ui .attachment-preview:focus {
-  box-shadow: 0 0 0 3px rgba(0, 152, 141, 0.5);
-  border-radius: 1px;
+  box-shadow: 0 0 0 5px rgba(0, 152, 141, 0.5);
+  border-radius: 0px;
 }
 
 .zp-core-ui .attachment .thumbnail {
@@ -7627,6 +7631,29 @@ figure {
   -webkit-font-smoothing: subpixel-antialiased;
 }
 
+.highlight:before {
+  background-color: rgba(0, 173, 160, 0.72);
+  content: "Drop files to upload";
+  position: absolute;
+  border: 4px dashed #fff;
+  color: white;
+  display: -webkit-box;
+  display: flex;
+  font-size: 41px;
+  font-weight: 600;
+  height: 100%;
+  -webkit-box-pack: center;
+          justify-content: center;
+  justify-items: center;
+  -webkit-box-align: center;
+          align-items: center;
+  padding: 20.82rem;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 1001;
+}
+
 .media-modal-close {
   position: absolute;
   top: 0;
@@ -7799,6 +7826,26 @@ figure {
 #featImgModal.modal.media-model *,
 #newMedia.modal.media-model * {
   box-sizing: border-box !important;
+}
+
+#featImgModal.modal.media-model .media-modal-close {
+  border-color: transparent;
+}
+
+#featImgModal.modal.media-model .nav-tabs .nav-link.active {
+  background-color: #fff;
+  border-bottom-color: transparent;
+}
+
+#featImgModal.modal.media-model .details {
+  font-size: 12px;
+  margin-top: 20px;
+  color: #666;
+}
+
+#featImgModal.modal.media-model .details div {
+  font-weight: 400;
+  line-height: 22px;
 }
 
 #searchDiagnosis ul {
@@ -8021,7 +8068,8 @@ figure {
 
 .uploader_wrap input#upload_file,
 .uploader_wrap input#diagnosis,
-.uploader_wrap input#diagnosis_show {
+.uploader_wrap input#diagnosis_show,
+.uploader_wrap input#file_name2 {
   position: absolute;
   opacity: 0;
   width: 100%;

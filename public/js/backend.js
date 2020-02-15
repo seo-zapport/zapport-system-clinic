@@ -1,3 +1,5 @@
+function _(el){ return document.getElementById(el); }
+
 jQuery(document).ready(function($){
 
 	$('.show-edit').on('click', function(e){
@@ -768,4 +770,10 @@ jQuery(document).ready(function($){
 
   // Disable button
 
+
+  // Add Selected Class_____________________________________________________________________________________________________
+
+  $('.attachment .attachment-list').on('click', function (e) {
+    $(this).addClass('selected').siblings().removeClass('selected');
+  });
 });

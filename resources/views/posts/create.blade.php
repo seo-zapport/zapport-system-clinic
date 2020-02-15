@@ -216,7 +216,7 @@
 <!-- Modal Add -->
 <div id="featImgModal" class="modal fade media-model zp-core-ui" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 	<div class="modal-dialog media-dialog" role="document">
-		<div class="media-modal-content modal-content" role="document">
+		<div id="dropArea" class="media-modal-content modal-content" role="document">
 			<button id="closeModal2" type="button" class="close media-modal-close" data-dismiss="modal" aria-label="Close">
 				<span aria-hidden="true" class="media-modal-icon">×</span>
 			</button>
@@ -239,20 +239,20 @@
 						<div class="uploader-inline">
 							<div class="uploader-inline-content">
 								<div class="upload-ui">
-									<h2 class="upload-instructions drop-instructions">Select a file</h2>
-									<p class="upload-instructions drop-instructions">&nbsp;</p>
+									<h2 class="upload-instructions drop-instructions">Drop files to upload</h2>
+									<p class="upload-instructions drop-instructions">or</p>
 									<form id="addFileForm2" enctype="multipart/form-data">
 										@csrf
-										<div class="col-12 col-md-3 col-lg-3 m-auto">
-											<div class="input-group mb-3">
-												<div class="custom-file">
-													<input type="file" name="file_name" id="file_name2" class="custom-file-input form-control-file" required>
-													<label id="file-label2" for="file_name2" class="custom-file-label">Choose file</label>
-												</div>
+										<div class="col-12 col-md-3 col-lg-3 m-auto mb-3">
+											<div class="custom-file">
+												<label id="file-label2" for="file_name2" class="lbl_upload">Choose file</label>
+												<div class="uploader_wrap"><input type="file" name="file_name" id="file_name2" class="form-control-file" required></div>
 											</div>
-											<small id="errorlog2" class="text-muted mb-2 mt-2"></small>
+											<small id="errorlog2" class="text-danger mb-2 mt-2"></small>
 										</div>
 									</form>
+									<span id="slctdFile" class="d-block"></span>
+									<p class="upload-instructions drop-instructions text-muted">Maximum upload file size: 50 MB.</p>
 								</div>
 							</div>
 						</div>
@@ -304,88 +304,90 @@
 <script type="application/javascript">
 	$(document).ready(function(){
 
-	$("input[name='search_tag']").on('keyup', function(){
-		var query = $(this).val();
-		var loc = location.href;
-		var hostname = window.location.hostname;
-		if (loc === "http://"+hostname+"/posts/create") {
-			var url = '/category/search/';
-			// CREATE BLADE
-			if (query != ''){
-				$.ajax({
-					type: 'GET',
-					url: url+query,
-					data: {'tag':query},
-					success: function(response){
-						document.getElementById("category_lists").innerHTML = response;
-					},
-				});
+		$("input[name='search_tag']").on('keyup', function(){
+			var query = $(this).val();
+			var loc = location.href;
+			var hostname = window.location.hostname;
+			if (loc === "http://"+hostname+"/posts/create") {
+				var url = '/category/search/';
+				// CREATE BLADE
+				if (query != ''){
+					$.ajax({
+						type: 'GET',
+						url: url+query,
+						data: {'tag':query},
+						success: function(response){
+							document.getElementById("category_lists").innerHTML = response;
+						},
+					});
+				}else{
+					$.ajax({
+						type: 'GET',
+						url : url,
+						success: function(response){
+							document.getElementById("category_lists").innerHTML = response;
+						}
+					});
+				}
 			}else{
-				$.ajax({
-					type: 'GET',
-					url : url,
-					success: function(response){
-						document.getElementById("category_lists").innerHTML = response;
-					}
+				// Edit Blade
+				var url = '/category/search/edit/';
+				var tag_old = [];
+				$("input[name='tag_old']").each(function(){
+					tag_old.push($(this).val());
 				});
+				if (query != ''){
+					$.ajax({
+						type: 'GET',
+						url: url+query,
+						data: {
+							'tag':query,
+							'tag_old':tag_old,
+						},
+						success: function(response){
+							document.getElementById("category_lists_edit").innerHTML = response;
+						},
+					});
+				}else{
+					$.ajax({
+						type: 'GET',
+						url : url+'tag_old/'+tag_old,
+						data: {
+							'tag_old':tag_old,
+						},
+						success: function(response){
+							document.getElementById("category_lists_edit").innerHTML = response;
+						}
+					});
+				}
 			}
-		}else{
-			// Edit Blade
-			var url = '/category/search/edit/';
-			var tag_old = [];
-			$("input[name='tag_old']").each(function(){
-				tag_old.push($(this).val());
-			});
-			if (query != ''){
-				$.ajax({
-					type: 'GET',
-					url: url+query,
-					data: {
-						'tag':query,
-						'tag_old':tag_old,
-					},
-					success: function(response){
-						document.getElementById("category_lists_edit").innerHTML = response;
-					},
-				});
-			}else{
-				$.ajax({
-					type: 'GET',
-					url : url+'tag_old/'+tag_old,
-					data: {
-						'tag_old':tag_old,
-					},
-					success: function(response){
-						document.getElementById("category_lists_edit").innerHTML = response;
-					}
-				});
-			}
-		}
-	});
+		});
 
-	$("#closeModal").on('click', function(e){
-		e.preventDefault();
-		document.getElementById("file-label").innerHTML = 'Choose file';
-	});
+		$("#closeModal").on('click', function(e){
+			e.preventDefault();
+			document.getElementById("file-label").innerHTML = 'Choose file';
+		});
 
-	$("#addFileForm input[name='file_name']").on('change', function(e){
-		e.preventDefault();
-		var file = e.target.files[0].name;
-		document.getElementById("file-label").innerHTML = file;
-	});
+		$("#addFileForm input[name='file_name']").on('change', function(e){
+			e.preventDefault();
+			var file = e.target.files[0].name;
+			document.getElementById("file-label").innerHTML = file;
+		});
 
-// ______________________________________
+	// ______________________________________
 
-	$("#closeModal2").on('click', function(e){
-		e.preventDefault();
-		document.getElementById("file-label2").innerHTML = 'Choose file';
-	});
+		$("#closeModal2").on('click', function(e){
+			e.preventDefault();
+			_("file-label2").innerHTML = 'Choose file';
+			_("slctdFile").innerHTML = '';
+			_("errorlog2").innerHTML = '';
+		});
 
-	$("#addFileForm2 input[name='file_name']").on('change', function(e){
-		e.preventDefault();
-		var file = e.target.files[0].name;
-		document.getElementById("file-label2").innerHTML = file;
-	});
+		$("#addFileForm2 input[name='file_name']").on('change', function(e){
+			e.preventDefault();
+			var file = e.target.files[0].name;
+			_("slctdFile").innerHTML = file;
+		});
 
 		$('#addFileForm').on('submit', function(e){
 			e.preventDefault();
@@ -398,12 +400,12 @@
 				var url = 'edit/media';
 			}
 			btn.prop('disabled', true);
-       		setTimeout(function(){btn.prop('disabled', false); }, 3000);
-	       $.ajaxSetup({
-	            headers: {
-	                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-	            },
-	        });
+					setTimeout(function(){btn.prop('disabled', false); }, 3000);
+					$.ajaxSetup({
+							headers: {
+									'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+							},
+					});
 			$.ajax({
 				type: 'POST',
 				url: url,
@@ -455,20 +457,20 @@
 				var list = $("#category_lists_edit");
 			}
 			var tag = $('input[name="tag"]').val();
-	       $.ajaxSetup({
-	            headers: {
-	                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-	            },
-	        });
-	        $.ajax({
-	        	type: 'POST',
-	        	url: url,
-	        	data: {tag_name:tag},
-	        	dataType: 'json',
-	        	success: function(response){
-	        		$('#tagForm')[0].reset();
-	        		$("#tagModal").modal('hide');
-	        		list.prepend('<div class="mb-1"><input type="checkbox" checked name="tag_id[]" value="'+response.id+'" class="zp-chkbox" id="tag_id_'+response.id+'"><label class="form-check-label" for="tag_id_'+response.id+'">'+response.tag_name+'</label></div>')
+					$.ajaxSetup({
+							headers: {
+									'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+							},
+					});
+					$.ajax({
+						type: 'POST',
+						url: url,
+						data: {tag_name:tag},
+						dataType: 'json',
+						success: function(response){
+							$('#tagForm')[0].reset();
+							$("#tagModal").modal('hide');
+							list.prepend('<div class="mb-1"><input type="checkbox" checked name="tag_id[]" value="'+response.id+'" class="zp-chkbox" id="tag_id_'+response.id+'"><label class="form-check-label" for="tag_id_'+response.id+'">'+response.tag_name+'</label></div>')
 					if ($('input[name="tag"]').hasClass('border border-danger'))
 					{
 						$('input[name="tag"]').removeClass('border border-danger')
@@ -481,9 +483,9 @@
 					}else{
 						$("#search-cats-con").addClass('d-none');
 					}
-	        	},
-	        	error: function(response){
-	        		document.getElementById("errorlogTag").innerHTML = '';
+						},
+						error: function(response){
+							document.getElementById("errorlogTag").innerHTML = '';
 					if (jQuery.isEmptyObject(response.responseJSON) == false) {
 						var errors = response.responseJSON.errors.tag_name;
 						errors.forEach(function(i){
@@ -491,8 +493,8 @@
 						$('input[name="tag"]').addClass('border border-danger');
 					});
 					}
-	        	}
-	        });
+						}
+					});
 		});
 
 		$("#tagmodalclose").on('click', function(e){
@@ -505,103 +507,103 @@
 			}
 		});
 
-// _____________________________________________________________________________________________________
+	// _____________________________________________________________________________________________________
 
-		$("#featImgModal").on('click', '#ftdimg', function(event) {
-		  event.preventDefault();
-		  var ft_id = $(this).attr('data-target');
-		  var strs = '';
-		  selectMedia(ft_id, strs);
-		});
+			$("#featImgModal").on('click', '#ftdimg', function(event) {
+				event.preventDefault();
+				var ft_id = $(this).attr('data-target');
+				var strs = '';
+				selectMedia(ft_id, strs);
+			});
 
-		// Upload Feat Img
-		$("#featImgModal").on('click', '#upload2-tab', function(event) {
-			$('.tinymcE').attr('data-target', '#upload2');
-			$('.tinymcE').attr('id', 'InsertPhoto-upload');
-		});
+			// Upload Feat Img
+			$("#featImgModal").on('click', '#upload2-tab', function(event) {
+				$('.tinymcE').attr('data-target', '#upload2');
+				$('.tinymcE').attr('id', 'InsertPhoto-upload');
+			});
 
-		// Media Feat Img
-		$("#featImgModal").on('click', '#media2-tab', function(event) {
-			$('.tinymcE').attr('data-target', '#media2');
-			$('.tinymcE').attr('id', 'InsertPhoto-media');
-		});
+			// Media Feat Img
+			$("#featImgModal").on('click', '#media2-tab', function(event) {
+				$('.tinymcE').attr('data-target', '#media2');
+				$('.tinymcE').attr('id', 'InsertPhoto-media');
+			});
 
-		$("#featImgModal").on('click', '#InsertPhoto-media', function(event) {
-			$('#featImgModal').modal('hide');
-		});
+			$("#featImgModal").on('click', '#InsertPhoto-media', function(event) {
+				$('#featImgModal').modal('hide');
+			});
 
-		$("#featImgModal").on('click', '#InsertPhoto-upload', function(event) {
-			var uploadsel = $(this).attr('data-target');
-			if(uploadsel == "#upload2"){
-				$('#addFileForm2').submit();
-				console.log('triggered')
-			}
-		});
-
-		// Upload on Media Feat Img
-		$('#addFileForm2').on('submit', function(e){
-			e.preventDefault();
-			var btn = $('#InsertPhoto-upload');
-			var loc = location.href;
-			var hostname = window.location.hostname;
-			if (loc === "http://"+hostname+"/posts/create") {
-				var url = 'create/media';
-			}else{
-				var url = 'edit/media';
-			}
-			btn.prop('disabled', true);
-       		setTimeout(function(){btn.prop('disabled', false); }, 3000);
-	       $.ajaxSetup({
-	            headers: {
-	                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-	            },
-	        });
-			document.getElementById("ftimg").innerHTML = '';
-			document.getElementById("ftID").innerHTML = '';
-			$.ajax({
-				type: 'POST',
-				url: url,
-				data: new FormData($("#addFileForm2")[0]),
-				dataType: 'json',
-				cache: false,
-				processData: false,
-				contentType: false,
-				mimeType:"multipart/form-data",
-				success: function(response){
-					console.log(response);
-					var path = '{{ asset('storage/uploaded/media/') }}';
-					$('#addFileForm2')[0].reset();
-					$("#featImgModal").modal('hide');
-					$('#allFT').append('<li class="attachment-list"><div class="attachment-preview type-image landscape"><div class="thumbnail" id="ftdimg" data-target="'+'#modal-'+response.id+'><div class="centered"><img alt="'+ response.file_name +'" class="img-fluid" src="' + path + "/" + response.file_name + '"/></div></div></div></li>');
-					$('#featImgModal #allFT').append('<li class="attachment-list"><div class="attachment-preview type-image landscape"><div class="thumbnail" id="ftdimg" data-target="'+'#modal-'+response.id+'><div class="centered"><img alt="'+ response.file_name +'" class="img-fluid" src="' + path + "/" + response.file_name + '"/></div></div></div></li>');
-			  		$('#ftimg').append('<img alt="'+ response["file_name"] +'" class="img-fluid" src="' + path + "/" + response["file_name"] + '"/>');
-			  		$('#ftID').append('<input name="media_id" type="hidden" value="'+ response["id"] +'">');
-			  		$("#rmvImg").removeClass('d-none');
-				},
-				error: function(response){
-					console.log(response) 
-					$('#addFileForm2')[0].reset();
-					document.getElementById("errorlog2").innerHTML = '';
-
-					var customError = response.responseJSON.errors2;
-					if (jQuery.isEmptyObject(customError) === false) {
-						// console.log(customError);
-						document.getElementById("errorlog2").innerHTML += customError + "<br>";
-						$("#rmvImg").addClass('d-none');
-					}
-					if (jQuery.isEmptyObject(response.responseJSON.errors) === false) {
-						var errors = response.responseJSON.errors.file_name;
-						errors.forEach(function(i){
-						document.getElementById("errorlog2").innerHTML += i + "<br>";
-						$("#rmvImg").addClass('d-none');
-					});
-					}
+			$("#featImgModal").on('click', '#InsertPhoto-upload', function(event) {
+				var uploadsel = $(this).attr('data-target');
+				if(uploadsel == "#upload2"){
+					$('#addFileForm2').submit();
+					console.log('triggered')
 				}
 			});
 
-		});
+			// Upload on Media Feat Img
+			$('#addFileForm2').on('submit', function(e){
+				e.preventDefault();
+				var btn = $('#InsertPhoto-upload');
+				var loc = location.href;
+				var hostname = window.location.hostname;
+				if (loc === "http://"+hostname+"/posts/create") {
+					var url = 'create/media';
+				}else{
+					var url = 'edit/media';
+				}
+				btn.prop('disabled', true);
+						setTimeout(function(){btn.prop('disabled', false); }, 3000);
+					$.ajaxSetup({
+								headers: {
+										'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+								},
+						});
+				document.getElementById("ftimg").innerHTML = '';
+				document.getElementById("ftID").innerHTML = '';
+				$.ajax({
+					type: 'POST',
+					url: url,
+					data: new FormData($("#addFileForm2")[0]),
+					dataType: 'json',
+					cache: false,
+					processData: false,
+					contentType: false,
+					mimeType:"multipart/form-data",
+					success: function(response){
+						console.log(response);
+						var path = '{{ asset('storage/uploaded/media/') }}';
+						$('#addFileForm2')[0].reset();
+						$("#featImgModal").modal('hide');
+						$('#allFT').append('<li class="attachment-list"><div class="attachment-preview type-image landscape"><div class="thumbnail" id="ftdimg" data-target="'+'#modal-'+response.id+'><div class="centered"><img alt="'+ response.file_name +'" class="img-fluid" src="' + path + "/" + response.file_name + '"/></div></div></div></li>');
+						$('#featImgModal #allFT').append('<li class="attachment-list"><div class="attachment-preview type-image landscape"><div class="thumbnail" id="ftdimg" data-target="'+'#modal-'+response.id+'><div class="centered"><img alt="'+ response.file_name +'" class="img-fluid" src="' + path + "/" + response.file_name + '"/></div></div></div></li>');
+							$('#ftimg').append('<img alt="'+ response["file_name"] +'" class="img-fluid" src="' + path + "/" + response["file_name"] + '"/>');
+							$('#ftID').append('<input name="media_id" type="hidden" value="'+ response["id"] +'">');
+							$("#rmvImg").removeClass('d-none');
+					},
+					error: function(response){
+						console.log(response) 
+						$('#addFileForm2')[0].reset();
+						document.getElementById("errorlog2").innerHTML = '';
 
-// _____________________________________________________________________________________________________
+						var customError = response.responseJSON.errors2;
+						if (jQuery.isEmptyObject(customError) === false) {
+							// console.log(customError);
+							document.getElementById("errorlog2").innerHTML += customError + "<br>";
+							$("#rmvImg").addClass('d-none');
+						}
+						if (jQuery.isEmptyObject(response.responseJSON.errors) === false) {
+							var errors = response.responseJSON.errors.file_name;
+							errors.forEach(function(i){
+							document.getElementById("errorlog2").innerHTML += i + "<br>";
+							$("#rmvImg").addClass('d-none');
+						});
+						}
+					}
+				});
+
+			});
+
+	// _____________________________________________________________________________________________________
 
 		$("#rmvImg").click(function(event) {
 			document.getElementById("ftimg").innerHTML = '';
@@ -631,15 +633,15 @@
 		});
 
 		$(function () {
-		    $("#newMedia").on('click', '#InsertPhoto', function(event) {
-		    	var uploadsel = $(this).attr('data-target');
-		    	if(uploadsel === "#media"){
-		    	  var sr = $('input[name="str_slct"]').val();
-		    	  console.log(sr);
-		    	  tinymce.activeEditor.insertContent('<img class="img-fluid" src="' + sr + '"/>');
-		    	  $("#newMedia").modal("hide");
-		    	}
-		    });
+				$("#newMedia").on('click', '#InsertPhoto', function(event) {
+					var uploadsel = $(this).attr('data-target');
+					if(uploadsel === "#media"){
+						var sr = $('input[name="str_slct"]').val();
+						console.log(sr);
+						tinymce.activeEditor.insertContent('<img class="img-fluid" src="' + sr + '"/>');
+						$("#newMedia").modal("hide");
+					}
+				});
 		});
 
 		// Media
@@ -649,90 +651,133 @@
 
 		function selectMedia(ft_id, strs)
 		{
-		  console.log(ft_id);
-		  var loc3 = location.href;
-		  // var ft_id = $('#ftdimg').attr('data-target');
-		  var hostname = window.location.hostname;
+			console.log(ft_id);
+			var loc3 = location.href;
+			// var ft_id = $('#ftdimg').attr('data-target');
+			var hostname = window.location.hostname;
 
-		  if (loc3 === "http://"+hostname+"/posts/create") {
-			  var url = 'create/featured/'+ft_id.replace('#modal-', '');
-		  }else{
-			  var url = '/posts/edit/featured/'+ft_id.replace('#modal-', '');
-		  }
-		  // console.log(ft_id.replace('#modal-', ''));
-		  if (strs == '') {
-			  document.getElementById("filename").innerHTML = '';
-			  document.getElementById("filetype").innerHTML = '';
-			  document.getElementById("uploaded_date").innerHTML = '';
-			  document.getElementById("filesize").innerHTML = '';
-			  document.getElementById("dimensions").innerHTML = '';
-			  document.getElementById("ftimg").innerHTML = '';
-			  document.getElementById("ftID").innerHTML = '';
+			if (loc3 === "http://"+hostname+"/posts/create") {
+				var url = 'create/featured/'+ft_id.replace('#modal-', '');
 			}else{
-			  document.getElementById("filename_media").innerHTML = '';
-			  document.getElementById("filetype_media").innerHTML = '';
-			  document.getElementById("uploaded_date_media").innerHTML = '';
-			  document.getElementById("filesize_media").innerHTML = '';
-			  document.getElementById("dimensions_media").innerHTML = '';
-			  document.getElementById("ftslctd").innerHTML = '';
-			  // document.getElementById("ftimg_media").innerHTML = '';
-			  // document.getElementById("ftID_media").innerHTML = '';
+				var url = '/posts/edit/featured/'+ft_id.replace('#modal-', '');
 			}
-		  $.ajax({
-		    type: 'GET',
-		    url: url,
-		    dataType : "json",
-		    success: function(response)
-		    {
-		      console.log(response);
-		      $('#filename'+strs).append(' '+response["file_name"]);
-		      $('#filetype'+strs).append(' '+response["fileType"]);
-		      $('#uploaded_date'+strs).append(' '+response["created_at"]);
-		      $('#filesize'+strs).append(' '+response["filesize"]);
-		      $('#dimensions'+strs).append(' '+response["dimension"]);
-			  var path = '{{ asset('storage/uploaded/media/') }}';
-			  $('#ftimg'+strs).append('<img alt="'+ response["file_name"] +'" class="img-fluid" src="' + path + "/" + response["file_name"] + '"/>');
-			  $('#ftID'+strs).append('<input name="media_id" type="hidden" value="'+ response["id"] +'">');
-			  $('#ftslctd').append('<input name="str_slct" type="hidden" value="'+ path + "/" + response["file_name"] +'">');
-			  if (strs == '') {
-			  	$("#rmvImg").removeClass('d-none');
-			  }
-		    },
-		    error:function(response)
-		    {
-		    	console.log(response);
-		    }
-		  });
+			// console.log(ft_id.replace('#modal-', ''));
+			if (strs == '') {
+				document.getElementById("filename").innerHTML = '';
+				document.getElementById("filetype").innerHTML = '';
+				document.getElementById("uploaded_date").innerHTML = '';
+				document.getElementById("filesize").innerHTML = '';
+				document.getElementById("dimensions").innerHTML = '';
+				document.getElementById("ftimg").innerHTML = '';
+				document.getElementById("ftID").innerHTML = '';
+			}else{
+				document.getElementById("filename_media").innerHTML = '';
+				document.getElementById("filetype_media").innerHTML = '';
+				document.getElementById("uploaded_date_media").innerHTML = '';
+				document.getElementById("filesize_media").innerHTML = '';
+				document.getElementById("dimensions_media").innerHTML = '';
+				document.getElementById("ftslctd").innerHTML = '';
+				// document.getElementById("ftimg_media").innerHTML = '';
+				// document.getElementById("ftID_media").innerHTML = '';
+			}
+			$.ajax({
+				type: 'GET',
+				url: url,
+				dataType : "json",
+				success: function(response)
+				{
+					console.log(response);
+					$('#filename'+strs).append(' '+response["file_name"]);
+					$('#filetype'+strs).append(' '+response["fileType"]);
+					$('#uploaded_date'+strs).append(' '+response["created_at"]);
+					$('#filesize'+strs).append(' '+response["filesize"]);
+					$('#dimensions'+strs).append(' '+response["dimension"]);
+				var path = '{{ asset('storage/uploaded/media/') }}';
+				$('#ftimg'+strs).append('<img alt="'+ response["file_name"] +'" class="img-fluid" src="' + path + "/" + response["file_name"] + '"/>');
+				$('#ftID'+strs).append('<input name="media_id" type="hidden" value="'+ response["id"] +'">');
+				$('#ftslctd').append('<input name="str_slct" type="hidden" value="'+ path + "/" + response["file_name"] +'">');
+				if (strs == '') {
+					$("#rmvImg").removeClass('d-none');
+				}
+				},
+				error:function(response)
+				{
+					console.log(response);
+				}
+			});
 		}
 
 		$("#rmvTags").on('click', '#delTag', function(event) {
 			var rmvID = $(this).attr('data-target');
 			var pID = $(this).find('#postID').val();
 			// console.log(pID);
-	       $.ajaxSetup({
-	            headers: {
-	                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-	            },
-	        });
-	       $.ajax({
-	       	type: 'POST',
-	       	url: '/posts/'+pID+'/tags/'+rmvID,
-	       	dataType: 'json',
-	       	data: {
-	       		'id': rmvID,
-	       		"_method": 'DELETE'
-	       	},
-	       	success:function(response){
-	       		if (response.ajaxres == 'success') {
-		       		$('#cont-'+response.id).remove();
-		       		$("#category_lists_edit").append('<div class="mb-1"><input type="checkbox"  name="tag_id[]" value="'+response.id+'" class="zp-chkbox" id="tag_id_'+response.id+'"><label class="form-check-label" for="tag_id_'+response.id+'">'+response.tag_name+'</label></div>')
-	       		}else{
-	       			document.getElementById('errorTag').innerHTML = '';
-	       			$('#errorTag').append('<div class="alert alert-danger">'+response.lt+'</div>')
-	       		}
-	       	}
-	       });
+				$.ajaxSetup({
+							headers: {
+									'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+							},
+					});
+				$.ajax({
+					type: 'POST',
+					url: '/posts/'+pID+'/tags/'+rmvID,
+					dataType: 'json',
+					data: {
+						'id': rmvID,
+						"_method": 'DELETE'
+					},
+					success:function(response){
+						if (response.ajaxres == 'success') {
+							$('#cont-'+response.id).remove();
+							$("#category_lists_edit").append('<div class="mb-1"><input type="checkbox"  name="tag_id[]" value="'+response.id+'" class="zp-chkbox" id="tag_id_'+response.id+'"><label class="form-check-label" for="tag_id_'+response.id+'">'+response.tag_name+'</label></div>')
+						}else{
+							document.getElementById('errorTag').innerHTML = '';
+							$('#errorTag').append('<div class="alert alert-danger">'+response.lt+'</div>')
+						}
+					}
+				});
 		});
+
+
+		//drp
+		let dropArea = _('featImgModal');
+		let file_name2 = _('file_name2');
+		dropArea.classList.add('has-advance-upload');
+
+    ['dragenter','dragleave','dragover','drop'].forEach( eventName => {
+      dropArea.addEventListener(eventName, preventDefaults, false);
+    });
+
+		{{-- ['dragenter', 'dragover'].forEach( eventName => {
+				dropArea.addEventListener(eventName, highlight, false);
+		});
+
+		['dragleave', 'drop'].forEach( eventName => {
+				dropArea.addEventListener(eventName, unhighlight, false);
+		}); --}}
+		
+    function preventDefaults(e){
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
+		function highlight(e){
+			_('upload2').classList.add('highlight');
+		}
+
+		function unhighlight(e){
+			_('upload2').classList.remove('highlight');
+		}
+
+		dropArea.ondragover = dropArea.ondragenter = function (evt){
+			evt.preventDefault();
+		}
+
+		dropArea.ondrop = function (e){
+				file_name2.files = e.dataTransfer.files;
+				files = e.dataTransfer.files;
+				_("slctdFile").innerHTML = '';
+				$("#slctdFile").append(file_name2.files[0].name);
+				e.preventDefault();
+		}
 
 	});
 </script>

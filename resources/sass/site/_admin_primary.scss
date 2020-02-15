@@ -582,11 +582,14 @@
     -ms-user-select: none;
     user-select: none;
     width: 25%;
-    box-sizing: border-box;
+		box-sizing: border-box;
+		&.selected .attachment-preview.landscape{
+			outline: 5px solid rgba(0, 152, 141, 0.7);
+		}
 }
 .zp-core-ui .attachment{
     margin: 0;
-    -webkit-overflow-scrolling: touch;	
+		-webkit-overflow-scrolling: touch;
 }
 .media-frame-content[data-columns="11"]  .attachment-list {
     width: 9.09%;
@@ -604,8 +607,8 @@
 	    cursor: pointer;
 			&:before {content: "";display: block;padding-top: 100%;}
 			&:active,&:hover,&:focus{
-				box-shadow: 0 0 0 3px rgba(0, 152, 141, 0.5);
-				border-radius: 1px;
+				box-shadow: 0 0 0 5px rgba(0, 152, 141, 0.5);
+				border-radius: 0px;
 			}
 	}
 	.attachment{
@@ -915,8 +918,30 @@
     min-height: 300px;
     box-shadow: 0 5px 15px rgba(0,0,0,.7);
     background: #fcfcfc;
-    -webkit-font-smoothing: subpixel-antialiased;
+		-webkit-font-smoothing: subpixel-antialiased;
 }
+.highlight{
+	&:before{
+		background-color: rgba(0, 173, 160, 0.72);
+		content: 'Drop files to upload';
+		position:absolute;
+		border: 4px dashed #fff;
+		color: white;
+		display: flex;
+		font-size: 41px;
+		font-weight: 600;
+		height: 100%;
+		justify-content: center;
+		justify-items: center;
+		align-items: center;
+		padding: 20.82rem;
+		top: 0;
+		bottom:0;
+		width: 100%;
+		z-index: 1001;
+	}	
+}
+
 .media-modal-close {
     position: absolute;
     top: 0;
@@ -1080,7 +1105,23 @@
 #newMedia.modal.media-model * {
 	box-sizing: border-box !important;
 }
-
+#featImgModal.modal.media-model{
+	.media-modal-close{border-color:transparent;}
+	.nav-tabs .nav-link.active{
+		background-color: $color_white;
+		border-bottom-color: transparent;
+	}
+	.details{
+		font-size: 12px;
+		margin-top:20px;
+		color:#666;
+		div{
+			// margin-bottom: 5px;
+			font-weight: 400;
+			line-height: 22px;
+		}
+	}
+}
 
 // Autocomplete
 #searchDiagnosis{
