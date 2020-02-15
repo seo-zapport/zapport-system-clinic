@@ -79,7 +79,7 @@
 				},
 				success: function(res){
 					if(res.data === ''){
-						$('#ajaxLoad').html('<p class="text-muted">No more posts to be load.</p>');
+						$('#ajaxLoad').html('<p class="text-muted">No more posts to be loaded.</p>');
 						return ;
 					}
 					$('#ajaxLoad').hide();
