@@ -129,20 +129,28 @@
 						<div class="uploader-inline">
 							<div class="uploader-inline-content">
 								<div class="upload-ui">
-									<h2 class="upload-instructions drop-instructions">Choose a file</h2>
-									<p class="upload-instructions drop-instructions">&nbsp;</p>
+									<h2 class="upload-instructions drop-instructions">Drop files to upload</h2>
+									<p class="upload-instructions drop-instructions">or</p>
 									<form id="addFileForm" enctype="multipart/form-data">
 										@csrf
 										<div class="col-12 col-md-3 col-lg-3 m-auto">
-											<div class="input-group mb-3">
+											{{--  <div class="input-group mb-3">
 												<div class="custom-file">
 													<input type="file" name="file_name" id="file_name" class="custom-file-input form-control-file" required>
 													<label id="file-label" for="file_name" class="custom-file-label">Choose file</label>
 												</div>
-											</div>
-											<small id="errorlog" class="text-muted mb-2 mt-2"></small>
+											</div>  --}}
+											<div class="col-12 col-md-3 col-lg-3 m-auto mb-3">
+												<div class="custom-file">
+													<label id="file-label" for="file_name" class="lbl_upload">Choose file</label>
+													<div class="uploader_wrap"><input type="file" name="file_name" id="file_name" class="form-control-file" required></div>
+												</div>
+												<small id="errorlog" class="text-muted mb-2 mt-2"></small>
+											</div>											
 										</div>
 									</form>
+									<span id="slctdFile" class="d-block"></span>
+									<p class="upload-instructions drop-instructions text-muted">Maximum upload file size: 20 MB.</p>
 								</div>
 							</div>
 						</div>
@@ -251,8 +259,8 @@
 											<small id="errorlog2" class="text-danger mb-2 mt-2"></small>
 										</div>
 									</form>
-									<span id="slctdFile" class="d-block"></span>
-									<p class="upload-instructions drop-instructions text-muted">Maximum upload file size: 50 MB.</p>
+									<span id="slctdFile2" class="d-block"></span>
+									<p class="upload-instructions drop-instructions text-muted">Maximum upload file size: 20 MB.</p>
 								</div>
 							</div>
 						</div>
@@ -365,13 +373,15 @@
 
 		$("#closeModal").on('click', function(e){
 			e.preventDefault();
-			document.getElementById("file-label").innerHTML = 'Choose file';
+			_("file-label").innerHTML = 'Choose file';
+			_('slctdFile').innerHTML = '';
+			_("errorlog").innerHTML = '';
 		});
 
 		$("#addFileForm input[name='file_name']").on('change', function(e){
 			e.preventDefault();
 			var file = e.target.files[0].name;
-			document.getElementById("file-label").innerHTML = file;
+			_('slctdFile').innerHTML = file;
 		});
 
 	// ______________________________________
@@ -379,14 +389,14 @@
 		$("#closeModal2").on('click', function(e){
 			e.preventDefault();
 			_("file-label2").innerHTML = 'Choose file';
-			_("slctdFile").innerHTML = '';
+			_("slctdFile2").innerHTML = '';
 			_("errorlog2").innerHTML = '';
 		});
 
 		$("#addFileForm2 input[name='file_name']").on('change', function(e){
 			e.preventDefault();
 			var file = e.target.files[0].name;
-			_("slctdFile").innerHTML = file;
+			_("slctdFile2").innerHTML = file;
 		});
 
 		$('#addFileForm').on('submit', function(e){
@@ -538,6 +548,7 @@
 					$('#addFileForm2').submit();
 					console.log('triggered')
 				}
+				_('slctdFile2').innerHTML = '';
 			});
 
 			// Upload on Media Feat Img
@@ -622,6 +633,8 @@
 				$('#addFileForm').submit();
 				console.log('triggered')
 			}
+			_('slctdFile').innerHTML = '';
+
 		});
 
 
@@ -737,54 +750,71 @@
 		});
 		
 		//drp
-		let dropArea = _('featImgModal');
-		let file_name2 = _('file_name2');
-		dropArea.classList.add('has-advance-upload');
-		
-		dropArea.addEventListener('drop', handlerDrop, false);
+		let dropArea = _('newMedia');
+		let file_name = _('file_name');
 
-    ['dragenter','dragleave','dragover','drop'].forEach( eventName => {
-      dropArea.addEventListener(eventName, preventDefaults, false);
-    });
+		{{--  let dropArea2 = _('featImgModal');
+		let file_name2 = _('file_name2');  --}}
 
-		['dragenter', 'dragover'].forEach( eventName => {
-				dropArea.addEventListener(eventName, highlight, false);
-		});
+		function dropCall(id, input, uploadClass, selectSpan){
+			let dropArea = _(id);
+			let file_name = _(input);
+			let upClass = _(uploadClass);
+			let slctdFile = selectSpan;
 
-		['dragleave', 'drop'].forEach( eventName => {
-				dropArea.addEventListener(eventName, unhighlight, false);
-		});
+			dropArea.classList.add('has-advance-upload');
+			
+			dropArea.addEventListener('drop', function(e){ handlerDrop(file_name, slctdFile, e) }, false);
+
+			['dragenter','dragleave','dragover','drop'].forEach( eventName => {
+				dropArea.addEventListener(eventName, preventDefaults, false);
+			});
+
+			['dragenter', 'dragover'].forEach( eventName => {
+					dropArea.addEventListener(eventName, function(e){ highlight(upClass, e) }, false);
+			});
+
+			['dragleave', 'drop'].forEach( eventName => {
+					dropArea.addEventListener(eventName, function(e){ unhighlight(upClass, e) }, false);
+			});
+
+			dropArea.addEventListener('dragenter', function(e){ highlight(upClass, e) }, false);
+			dropArea.addEventListener('dragleave', function(e){ unhighlight(upClass, e) }, false);
+			dropArea.addEventListener('dragover', function(e){ unhighlight(upClass, e) }, false);
+			dropArea.addEventListener('drop', function(e){ unhighlight(upClass, e) }, false);
+		}
 		
     function preventDefaults(e){
       e.preventDefault();
       e.stopPropagation();
     }
 
-		function highlight(e){
-			_('upload2').classList.add('highlight');
+		function highlight(highlightId, e){
+			highlightId.classList.add('highlight');
 		}
 
-		function unhighlight(e){
-			_('upload2').classList.remove('highlight');
+		function unhighlight(unhighlightId, e){
+			unhighlightId.classList.remove('highlight');
 		}
 
 		dropArea.ondragover = dropArea.ondragenter = function (evt){
 			evt.preventDefault();
 		}
 
-		function handlerDrop(e){
-				file_name2.files = e.dataTransfer.files;
+		function handlerDrop(file_name, file_selectd, e){
+				file_name.files = e.dataTransfer.files;
 				files = e.dataTransfer.files;
-				_("slctdFile").innerHTML = '';
-				$("#slctdFile").append(file_name2.files[0].name);
+				_(file_selectd).innerHTML = '';
+				console.log(file_name.files[0].name);
+				$("#" + file_selectd).append(file_name.files[0].name);
 				e.preventDefault();
 		}
 
-    dropArea.addEventListener('dragenter', highlight, false);
-    dropArea.addEventListener('dragleave', unhighlight, false);
-    dropArea.addEventListener('dragover', unhighlight, false);
-		dropArea.addEventListener('drop', unhighlight, false);
+		dropCall('featImgModal', 'file_name2', 'upload2','slctdFile2');
 
+		//tinyMCE
+		dropCall('newMedia', 'file_name', 'upload','slctdFile');
+		
 	});
 </script>
 @endsection

@@ -7823,29 +7823,37 @@ figure {
   background: #ff0000;
 }
 
-#featImgModal.modal.media-model *,
-#newMedia.modal.media-model * {
+#newMedia.modal.media-model *,
+#featImgModal.modal.media-model * {
   box-sizing: border-box !important;
 }
 
+#newMedia.modal.media-model .media-modal-close,
 #featImgModal.modal.media-model .media-modal-close {
   border-color: transparent;
 }
 
+#newMedia.modal.media-model .nav-tabs .nav-link.active,
 #featImgModal.modal.media-model .nav-tabs .nav-link.active {
   background-color: #fff;
   border-bottom-color: transparent;
 }
 
+#newMedia.modal.media-model .details,
 #featImgModal.modal.media-model .details {
   font-size: 12px;
   margin-top: 20px;
   color: #666;
 }
 
+#newMedia.modal.media-model .details div,
 #featImgModal.modal.media-model .details div {
   font-weight: 400;
   line-height: 22px;
+}
+
+#newMedia.modal.media-model * button#InsertPhoto {
+  box-sizing: content-box !important;
 }
 
 #searchDiagnosis ul {
@@ -8069,6 +8077,7 @@ figure {
 .uploader_wrap input#upload_file,
 .uploader_wrap input#diagnosis,
 .uploader_wrap input#diagnosis_show,
+.uploader_wrap input#file_name,
 .uploader_wrap input#file_name2 {
   position: absolute;
   opacity: 0;
