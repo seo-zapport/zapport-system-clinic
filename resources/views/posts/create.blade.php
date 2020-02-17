@@ -735,24 +735,25 @@
 					}
 				});
 		});
-
-
+		
 		//drp
 		let dropArea = _('featImgModal');
 		let file_name2 = _('file_name2');
 		dropArea.classList.add('has-advance-upload');
+		
+		dropArea.addEventListener('drop', handlerDrop, false);
 
     ['dragenter','dragleave','dragover','drop'].forEach( eventName => {
       dropArea.addEventListener(eventName, preventDefaults, false);
     });
 
-		{{-- ['dragenter', 'dragover'].forEach( eventName => {
+		['dragenter', 'dragover'].forEach( eventName => {
 				dropArea.addEventListener(eventName, highlight, false);
 		});
 
 		['dragleave', 'drop'].forEach( eventName => {
 				dropArea.addEventListener(eventName, unhighlight, false);
-		}); --}}
+		});
 		
     function preventDefaults(e){
       e.preventDefault();
@@ -771,13 +772,18 @@
 			evt.preventDefault();
 		}
 
-		dropArea.ondrop = function (e){
+		function handlerDrop(e){
 				file_name2.files = e.dataTransfer.files;
 				files = e.dataTransfer.files;
 				_("slctdFile").innerHTML = '';
 				$("#slctdFile").append(file_name2.files[0].name);
 				e.preventDefault();
 		}
+
+    dropArea.addEventListener('dragenter', highlight, false);
+    dropArea.addEventListener('dragleave', unhighlight, false);
+    dropArea.addEventListener('dragover', unhighlight, false);
+		dropArea.addEventListener('drop', unhighlight, false);
 
 	});
 </script>
