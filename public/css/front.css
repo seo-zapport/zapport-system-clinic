@@ -30,6 +30,11 @@ img {
   height: auto;
 }
 
+.loadCardPosts {
+  height: 260px;
+  overflow: hidden;
+}
+
 #hero {
   background: url(/images/bg-hero.jpg?cacf131f063dc299a24e0f4e4b61d519) no-repeat;
   background-size: cover;
@@ -37,6 +42,21 @@ img {
   min-height: 750px;
   padding: 100px 0;
   position: relative;
+}
+
+.img-wrap {
+  height: 190px;
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+}
+
+.img-wrap .card-img-top {
+  height: 190px;
+  margin: 0 auto;
+  -o-object-fit: scale-down;
+     object-fit: scale-down;
+  width: 332px;
 }
 
 .overlay {
@@ -106,6 +126,26 @@ img {
   text-decoration: none;
 }
 
+/**#loadPosts*/
+
+a {
+  color: #6c757d;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+a:hover,
+a:focus {
+  color: #09cbcb;
+  text-decoration: none;
+}
+
+a .card-title {
+  font-size: 14px;
+  line-height: 1.4;
+  margin-bottom: 0;
+}
+
 /**article*/
 
 .zp-article-wrapper {
@@ -138,11 +178,12 @@ img {
 .zp-article-title-wrap {
   border-top: 1px solid #9eaab5;
   border-bottom: 1px solid #9eaab5;
-  padding: 0.25rem 0;
+  padding: 0.5rem 0;
   margin-bottom: 8px;
 }
 
 .zp-article-title {
+  font-size: 18px;
   margin: 0;
   padding: 0;
   line-height: 1.2;

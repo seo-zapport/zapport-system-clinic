@@ -52,16 +52,18 @@
                     $ariaexpand = "true";
                     $showactive = "show";
                     $collap = "";
+                    $toggleClass = "zp-toggle";
                 @endphp
             @else
                 @php  
                     $ariaexpand = "false";
                     $showactive = "";
                     $collap = "collapsed";
+                    $toggleClass = "";
                 @endphp
              @endif
                 <li class="nav-item">
-                    <a href="#posts" data-toggle="collapse" aria-expanded="{{ $ariaexpand }}" class="nav-link dropdown-toggle {{$collap}}"><i class="fas fa-book"></i> <span class="collapse-label">Posts</span></a>
+                    <a href="#posts" data-toggle="collapse" aria-expanded="{{ $ariaexpand }}" class="nav-link dropdown-toggle {{$collap . ' ' . $toggleClass}}"><i class="fas fa-book"></i> <span class="collapse-label">Posts</span></a>
                     <ul class="zp-dropdown nav collapse {{ $showactive }}" id="posts">
                         <li class="nav-item"><a href="{{ route('post.index') }}" class="nav-link @yield('posts')"><i class="fas fa-book"></i> <span class="collapse-label">All Posts</span></a></li>
                         <li class="nav-item"><a href="{{ route('post.create') }}" class="nav-link @yield('new_post')"><i class="fas fa-pencil-alt"></i> <span class="collapse-label">New Post</span></a></li>
@@ -78,16 +80,18 @@
                 $ariaexpand = "true";
                 $showactive = "show";
                 $collap = "";
+                $toggleClass = "zp-toggle";
            @endphp
         @else
             @php  
                 $ariaexpand = "false";
                 $showactive = "";
                 $collap = "collapsed";
+                $toggleClass = "";
             @endphp
         @endif
             <li class="nav-item">
-                <a href="#employees" data-toggle="collapse" aria-expanded="{{ $ariaexpand }}" class="nav-link dropdown-toggle {{$collap}}"><i class="fas fa-users"></i> <span class="collapse-label">Employees</span></a>
+                <a href="#employees" data-toggle="collapse" aria-expanded="{{ $ariaexpand }}" class="nav-link dropdown-toggle {{$collap . ' ' . $toggleClass}}"><i class="fas fa-users"></i> <span class="collapse-label">Employees</span></a>
                 <ul class="zp-dropdown nav collapse {{ $showactive }}" id="employees">
                     <li class="nav-item"><a href="{{ route('hr.employees') }}" class="nav-link @yield('employees')"><i class="fas fa-users"></i> <span class="collapse-label">All Employees</span></a></li>
                     <li class="nav-item"><a href="{{ route('hr.dep.department') }}" class="nav-link @yield('reg_dep')"><i class="fas fa-building"></i> <span class="collapse-label">Departments</span></a></li>
@@ -106,12 +110,14 @@
                $ariaexpand = "true";
                $showactive = "show";
                $collap = "";
+               $toggleClassMed = "zp-toggle";
            @endphp
         @else
             @php  
                 $ariaexpand = "false";
                 $showactive = "";
                 $collap = "collapsed";
+                $toggleClassMed = "";
             @endphp
         @endif
 
@@ -120,12 +126,14 @@
                 $ariaexpandinv = "true";
                 $showactiveinv = "show";
                 $collapinv = "";
+                $toggleClassInv = "zp-toggle";
             @endphp
         @else
             @php  
                 $ariaexpandinv = "false";
                 $showactiveinv = "";
                 $collapinv = "collapsed";
+                $toggleClassInv = "";
             @endphp
         @endif
 
@@ -134,12 +142,14 @@
                 $ariaexpandinvsub = "true";
                 $showactiveinvsub = "show";
                 $collapinvsub = "";
+                $toggleClassInvSub = "zp-toggle";
             @endphp
         @else
             @php  
                 $ariaexpandinvsub = "false";
                 $showactiveinvsub = "";
                 $collapinvsub = "collapsed";
+                $toggleClassInvSub = "";
             @endphp
         @endif
 
@@ -149,20 +159,22 @@
                 $ariaexpandinvssub = "true";
                 $showactiveinvssub = "show";
                 $collapinvssub = "";
+                $toggleClassInvSsub = "zp-toggle";
             @endphp
         @else
             @php  
                 $ariaexpandinvssub = "false";
                 $showactiveinvssub = "";
                 $collapinvssub = "collapsed";
+                $toggleClassInvSsub = "";
             @endphp
         @endif
         <li class="nav-item">
-            <a href="#inventory" data-toggle="collapse" aria-expanded="{{ $ariaexpandinv }}" class="nav-link dropdown-toggle {{@$collapinv}}"><i class="fas fa-warehouse"></i> <span class="collapse-label">Inventory</span></a>
+            <a href="#inventory" data-toggle="collapse" aria-expanded="{{ $ariaexpandinv }}" class="nav-link dropdown-toggle {{@$collapinv . ' ' . $toggleClassInv}}"><i class="fas fa-warehouse"></i> <span class="collapse-label">Inventory</span></a>
             <ul class="zp-dropdown nav collapse {{ $showactiveinv }}" id="inventory">
                 {{-- Medicine --}}
                 <li class="nav-item">
-                    <a href="#medicines" data-toggle="collapse" aria-expanded="{{ @$ariaexpandinvsub }}" class="nav-link dropdown-toggle {{$collapinvsub}}"><i class="fas fa-warehouse"></i> <span class="collapse-label">Medicines</span></a>
+                    <a href="#medicines" data-toggle="collapse" aria-expanded="{{ @$ariaexpandinvsub }}" class="nav-link dropdown-toggle {{$collapinvsub . ' ' . $toggleClassInvSub}}"><i class="fas fa-warehouse"></i> <span class="collapse-label">Medicines</span></a>
                      <ul class="zp-dropdown nav collapse {{ $showactiveinvsub }}" id="medicines">
                          <li class="nav-item"><a href="{{ route('genericname') }}" class="nav-link @yield('genericname')"><i class="fas fa-tablets"></i><span class="collapse-label"> Generic Name</span></a></li>
                          <li class="nav-item"><a href="{{ route('brandname') }}" class="nav-link @yield('brandname')"><i class="fas fa-file-prescription"></i><span class="collapse-label"> Brand Name</span></a></li>
@@ -171,8 +183,8 @@
                 </li>
                 {{-- Medical Supplies --}}
                 <li class="nav-item">
-                    <a href="#supplies" data-toggle="collapse" aria-expanded="{{ @$ariaexpandinvssub }}" class="nav-link dropdown-toggle {{$collapinvssub}}"><i class="fas fa-warehouse"></i> <span class="collapse-label">Supplies</span></a>
-                    <ul class="zp-dropdown nav collapse {{ $showactiveinvssub }}" id="supplies">
+                    <a href="#supplies" data-toggle="collapse" aria-expanded="{{ @$ariaexpandinvssub }}" class="nav-link dropdown-toggle {{$collapinvssub. ' ' . $toggleClassInvSsub}}"><i class="fas fa-warehouse"></i> <span class="collapse-label">Supplies</span></a>
+                    <ul class="zp-dropdown nav collapse {{ $showactiveinvssub}}" id="supplies">
                         <li class="nav-item"><a href="{{ route('supply.generic.index') }}" class="nav-link @yield('supplygen')"><i class="fas fa-tablets"></i><span class="collapse-label">Register Supply</span></a></li>
                         <li class="nav-item"><a href="{{ route('supply.index') }}" class="nav-link @yield('supplyinv')"><i class="fas fa-tablets"></i><span class="collapse-label">Supplies</span></a></li>
                     </ul>
@@ -180,7 +192,7 @@
             </ul>
         </li>
         <li class="nav-item">
-            <a href="#clinic" data-toggle="collapse" aria-expanded="{{ $ariaexpand }}" class="nav-link dropdown-toggle {{$collap}}"><i class="fas fa-clinic-medical"></i> <span class="collapse-label">Clinic</span></a>
+            <a href="#clinic" data-toggle="collapse" aria-expanded="{{ $ariaexpand }}" class="nav-link dropdown-toggle {{$collap . ' ' . $toggleClassMed}}"><i class="fas fa-clinic-medical"></i> <span class="collapse-label">Clinic</span></a>
             <ul class="zp-dropdown nav collapse {{ $showactive }}" id="clinic">
                 <li class="nav-item"><a href="{{ route('bodyparts.index') }}" class="nav-link @yield('bodypartindex')"><i class="fas fa-list"></i><span class="collapse-label">Body Parts</span></a></li>
                 <li class="nav-item"><a href="{{ route('medical.listsofemployees') }}" class="nav-link @yield('employeesMedical')"><i class="fas fa-list"></i><span class="collapse-label">List of Employees</span></a></li>

@@ -780,7 +780,7 @@
 
 			dropArea.addEventListener('dragenter', function(e){ highlight(upClass, e) }, false);
 			dropArea.addEventListener('dragleave', function(e){ unhighlight(upClass, e) }, false);
-			dropArea.addEventListener('dragover', function(e){ unhighlight(upClass, e) }, false);
+			dropArea.addEventListener('dragover', function(e){ highlight(upClass, e) }, false);
 			dropArea.addEventListener('drop', function(e){ unhighlight(upClass, e) }, false);
 		}
 		

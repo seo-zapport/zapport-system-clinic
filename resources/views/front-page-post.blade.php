@@ -15,7 +15,7 @@
 						</figure>	
 					@endif
 
-					<div class="zp-article-title-wrap m-b-md text-secondary">
+					<div class="zp-article-title-wrap m-b-1 text-secondary">
 						<h3 class="zp-article-title">{{ ucwords($post->title) }}</h3>
 					</div>
 					<span class="zp-article-meta">
